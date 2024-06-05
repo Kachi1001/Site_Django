@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from .models import colaborador
 
 def index(request):
@@ -33,3 +33,10 @@ def cadastro_colab(request):
 def visualizacao_colab(request):
     colab_list = colaborador.objects.all()
     return render(request, "lancamento_obra/visualizacao/colaborador.html", {'colab_list': colab_list})
+
+def edit_colab(request, id):
+    try:
+        colab = colaborador.objects.get(pk=id)
+    except colaborador.DoesNotExist:
+        raise Http404("Id não é valido")
+    return render(request, "lancamento_obra/edit/colaborador.html", {'colab': colab})

@@ -4,16 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/color.css' %}">
-    <link rel="stylesheet" href="static/css/index.css">
+
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <title>Ferramentas Tecnika</title>
-    
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"> 
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/bootstrap.esm.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="static/css/index.css">
+
 </head>
 <body>
-    <div class="banner">
-        <img src="static/icon/file.png" class="icon" alt="App_icon">
-        <a href="/lançamento_obra"><p class="app">Aplicativo 1</p></a>
-    </div>
+    <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
+        <div class="card-body">
+          <h5 class="card-title">Lançamento obra</h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary">Versão Alpha 0.1</h6>
+          <p class="card-text">Ferramenta de controle de delegação de ações em obra</p>
+          <a href="/lançamento_obra" class="card-link">Abrir Aplicação</a>
+        </div>
+      </div>
 </body>
 </html>
