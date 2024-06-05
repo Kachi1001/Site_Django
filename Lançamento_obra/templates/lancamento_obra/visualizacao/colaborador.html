@@ -1,0 +1,43 @@
+{% extends 'lançamento_obra.html' %}
+{% block 'head' %}
+<Style>
+  td{
+    font-size: 15px;
+  }
+  th{
+    font-size: 16px;
+  }
+</Style>
+{% endblock %}
+{% block 'main' %}
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Função</th>
+        <th scope="col">Admissão</th>
+        <th scope="col">Demissão</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Diaria</th>
+        <th scope="col">Oberservação</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      
+      {% for colaborador in colab_list %}
+        <tr>
+          <th scope="row">{{colaborador.id}}</th>
+          <td>{{colaborador.nome}}</td>
+          <td>{{colaborador.funcao}}</td>
+          <td>{{colaborador.admissao}}</td>
+          <td>{{colaborador.demissao}}</td>
+          <td>{{colaborador.tipo}}</td>
+          <td>{{colaborador.diaria}}</td>
+          <td>{{colaborador.observacao}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table> 
+{% endblock %}

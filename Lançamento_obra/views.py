@@ -16,7 +16,7 @@ def cadastro_colab(request):
         tipo = request.POST.get("tipo")
         diaria = request.POST.get("diaria")
         observacao = request.POST.get("observacao")
-        
+        # adicionar codigo para poup-up e verificação de dados
         colab = colaborador(
             nome=nome,
             funçao=funçao,
@@ -29,3 +29,7 @@ def cadastro_colab(request):
         
         colab.save()
         return render(request, "lancamento_obra/cadastro/colaborador.html")
+    
+def visualizacao_colab(request):
+    colab_list = colaborador.objects.all()
+    return render(request, "lancamento_obra/visualizacao/colaborador.html", {'colab_list': colab_list})

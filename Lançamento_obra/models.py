@@ -12,8 +12,9 @@ class colaborador(models.Model):
     observacao = models.TextField(blank=True, null=True)
     
     def __str__(self):
-        return self.name
+        return self.nome
     
     class Meta:
         managed = False
         db_table = 'colaborador'
+        

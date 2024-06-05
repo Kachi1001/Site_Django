@@ -8,12 +8,17 @@ body{
 }
 
 header {
-    background-color: var(--cor2);
-    width: 100%;
-    height: 40px;
-    padding-top: 15px;
-    padding-left: 15px;
+    background-color: var(--cor4);
   }
+.sidenav{
+    background-color: var(--cor5);
+}
+.sidenav .nome_app{
+    background-color: var(--cor6);
+}
+.accordion accordion-flush{
+    background-color: var(--cor6);
+}
 /* :root{
     --cor1: #7DFFCA;
     --cor2: #7FE7FA;
