@@ -1,6 +1,32 @@
 body{
-    background-color: lightblue;
+    background-color: var(--cor5);
     margin: 0;
     font-family: "Lato", sans-serif;
 }
+.banner{
+    background-color: var(--cor1);
+}
 
+header {
+    background-color: var(--cor2);
+    width: 100%;
+    height: 40px;
+    padding-top: 15px;
+    padding-left: 15px;
+  }
+/* :root{
+    --cor1: #7DFFCA;
+    --cor2: #7FE7FA;
+    --cor3: #FCD477;
+    --cor4: #FF933C;
+    --cor5: #8BA1A5;
+    --cor6: #678076;
+} */
+:root{
+    --cor1: #ABFFEA;
+    --cor2: #91DBFA;
+    --cor3: #FFE7A0;
+    --cor4: #FFBA6B;
+    --cor5: #94A0A6;
+    --cor6: #5E8077;
+}

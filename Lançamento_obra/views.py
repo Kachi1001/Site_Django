@@ -28,5 +28,4 @@ def cadastro_colab(request):
         )
         
         colab.save()
-        
-        return HttpResponse("Concluido")
+        return render(request, "lancamento_obra/cadastro/colaborador.html")
