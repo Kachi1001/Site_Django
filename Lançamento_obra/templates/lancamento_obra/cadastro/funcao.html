@@ -1,0 +1,24 @@
+{% extends 'lançamento_obra.html' %}
+
+{% block 'head' %}
+  <script src="colaborador.js"></script>
+  <style>
+    .main{
+      padding: 150px 150px;;
+    }
+  </style>
+{% endblock %}
+
+{% block 'main' %}
+  <h2>Cadastro de função</h2>
+  <form action="{% url 'cadastro_funcao' %}" method="POST">{% csrf_token %}
+    <div class="input-group mb-3">
+      <label class="input-group-text" for="inputGroupSelect01">Nome da função:</label>
+      <input type="text" name="nome" id="" class="form-control">
+    </div>
+
+    <input type="submit" class="btn btn-outline-success" value="Registrar" id="liveAlertBtn">
+    <div id="liveAlertPlaceholder"></div>
+  </form>
+  {% block 'edit' %}{% endblock %}
+{% endblock %}

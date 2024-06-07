@@ -1,0 +1,103 @@
+{% extends 'lançamento_obra.html' %}
+
+{% block 'main' %}
+  <h2>Lançamento de Atividade</h2>
+  <form action="{% url 'lancamento_atividade' %}" method="POST">{% csrf_token %}
+    <div class="row align-items-start">
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Obra:</label>
+          <select class="form-select" id="inputGroupSelect01" name="obra">
+            {% for obra in obras_list %}
+            <option value="{{obra.cr}}">{{obra.cr}} - {{obra.empresa}} - {{obra.cidade}}</option>
+            {%endfor%}
+          </select>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Empresa:</label>
+          <input type="text" name="empresa" id="" class="form-control">
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Cidade:</label>
+          <input type="text" name="cidade" id="" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-start">
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Colaborador:</label>
+          <select class="form-select" id="inputGroupSelect01" name="colaborador">
+            {% for colab in colab_list %}
+            <option value="{{colab.nome}}">{{colab.nome}} | {{colab.funcao.funcao}}</option>
+            {%endfor%}
+          </select>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <span class="input-group-text">Descrição:</span>
+          <textarea class="form-control" aria-label="With textarea" name="descricao"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-start">
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Atividade:</label>
+          <select class="form-select" id="inputGroupSelect01" name="atividade">
+            {% for att in att_list %} 
+            <option value="{{att.tipo}}">{{att.tipo}}</option>
+            {%endfor%}
+          </select>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Data de realização:</label>
+          <input type="date" name="dia" id="data" class="form-control">
+  
+        </div>
+      </div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Hora Manhã</label>
+          <input type="time" name="horaini1" id="" class="form-control" value="07:30">
+          <input type="time" name="horafim1" id="" class="form-control" value="11:48">
+        </div>
+
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Hora Tarde</label>
+          <input type="time" name="horaini2" id="" class="form-control" value="13:30">
+          <input type="time" name="horafim2" id="" class="form-control" value="18:00">
+        </div>
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Hora Noite</label>
+          <input type="time" name="horaini3" id="" class="form-control">
+          <input type="time" name="horafim3" id="" class="form-control">
+        </div>
+      </div>
+      
+    </div>
+    <input type="submit" class="btn btn-outline-success" value="Registrar" id="liveAlertBtn">
+  </form>
+
+      
+
+
+
+{% endblock %}
+{% block "script" %}
+<script>
+  var dateControl = document.getElementById("data");
+  dateControl.value = Date.now();
+</script>
+{% endblock %} 

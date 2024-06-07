@@ -1,7 +1,7 @@
 {% extends 'lançamento_obra.html' %}
 
 {% block 'head' %}
-  <script src="colaborador.js"></script>
+  
   <style>
     .main{
       padding: 150px 150px;;
@@ -16,10 +16,15 @@
       <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
       <input type="text" name="nome" id="" class="form-control">
     </div>
-
+    
     <div class="input-group mb-3">
       <label class="input-group-text" for="inputGroupSelect01">Função:</label>
-      <input type="text" name="funcao" id="" class="form-control">
+      <!-- <input type="text" name="funcao" id="" class="form-control"> -->
+      <select class="form-select" id="inputGroupSelect01" name="funcao">
+        {% for func in func_list %}
+        <option value="{{func.funcao}}">{{func.funcao}}</option>
+        {%endfor%}
+      </select>
     </div>
     
     <div class="input-group mb-3">
@@ -29,13 +34,13 @@
 
     <div class="input-group mb-3">
       <label class="input-group-text" for="inputGroupSelect01">Tipo de contrato:</label>
-      <select class="form-select" id="inputGroupSelect01" name="tipo">
+      <select class="form-select" id="contrato" name="tipo" onchange="exibir_diaria(document.getElementById('contrato'))">
         <option value="CLT">CLT</option>
         <option value="Terceiro">Terceiro</option>
       </select>
     </div>
     
-    <div class="input-group mb-3">
+    <div class="input-group mb-3" id="div_diaria" style="display: none">
       <span class="input-group-text">Valor da Diaria</span>
       <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="diaria">
       <span class="input-group-text">R$</span>
@@ -47,7 +52,16 @@
     </div>
 
     <input type="submit" class="btn btn-outline-success" value="Registrar" id="liveAlertBtn">
-    <div id="liveAlertPlaceholder"></div>
+  
   </form>
+  <script>
+    function exibir_diaria(a){
+      div = document.getElementById('div_diaria')
+      if (a.options[a.selectedIndex].value == "Terceiro"){
+          div.style.display = "flex"
+      }else
+          div.style.display = "none"
+    }
+  </script>  
   {% block 'edit' %}{% endblock %}
 {% endblock %}

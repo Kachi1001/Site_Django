@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <title>Ferramentas Tecnika</title>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"> 
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/bootstrap.esm.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="static/css/index.css">
+
+</head>
+<body>
+    <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
+        <div class="card-header">
+            Tela de login
+        </div>
+        <div class="card-body">
+            <form action="{% url 'login'%}" method="post"> {%csrf_token%}
+                <div class="form-floating mb-3">
+                    <input type="name" class="form-control" id="floatingInput" placeholder="Nome" name="nome">
+                    <label for="floatingInput">Nome</label>
+                  </div>
+                  <div class="form-floating" style="margin-bottom: 30px;">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Senha" name="senha">
+                    <label for="floatingPassword">Senha</label>
+                  </div>
+                  <input type="submit" class="btn btn-outline-success" value="Logar" id="liveAlertBtn">
+                  <p>{{cache}}</p>
+              </form>   
+        </div>
+        <div class="card-footer text-body-secondary">
+            É necessário estar logado para ter acesso as ferramentas
+          </div>
+    </div>
+</body>
+</html>

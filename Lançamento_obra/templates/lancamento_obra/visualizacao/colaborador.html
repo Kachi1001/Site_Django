@@ -1,5 +1,5 @@
 {% extends 'lançamento_obra.html' %}
-{% block 'head' %}
+{% block 'style' %}
 <Style>
   td{
     font-size: 15px;
@@ -30,12 +30,12 @@
         <tr>
           <th scope="row">{{colaborador.id}}</th>
           <td>{{colaborador.nome}}</td>
-          <td>{{colaborador.funcao}}</td>
-          <td>{{colaborador.admissao}}</td>
-          <td>{{colaborador.demissao}}</td>
-          <td>{{colaborador.tipo}}</td>
-          <td>{{colaborador.diaria}}</td>
-          <td>{{colaborador.observacao}}</td>
+          <td>{{colaborador.funcao.funcao}}</td>
+          <td>{{colaborador.admissao | date:"SHORT_DATE_FORMAT"}}</td>
+          <td>{%if not colaborador.demissao is None%}{{colaborador.demissao | date:"SHORT_DATE_FORMAT"}}{%endif%}</td>
+          <td>{{colaborador.contrato.contrato}}</td>
+          <td>{%if not colaborador.diaria == "0"%}{{colaborador.diaria}}{%endif%}</td>
+          <td>{{colaborador.observacoes}}</td>
         </tr>
       {% endfor %}
     </tbody>

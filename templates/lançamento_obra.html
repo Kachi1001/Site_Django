@@ -3,11 +3,11 @@
 <html lang="pt-br">
 <head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=0.9">
 <link rel="stylesheet" href= "{% static 'css/color.css' %}">
 <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
-{% block 'style' %}{% endblock %}
+
 <style>
   
 /* Fixed sidenav, full height */
@@ -86,6 +86,7 @@ header{
 <script src="{% static 'js/bootstrap.esm.js' %}"></script>
 
 </head>
+{% block 'style' %}{% endblock %}
 <header>
   <a href="/", style="color: black; text-decoration: none;"><button type="button" class="btn-close" aria-label="Close"></button>Fechar app</a>
 </header>
@@ -102,9 +103,10 @@ header{
         </button>
       </h2>
       <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-        <a href="/lançamento_obra/cadastro/colaborador/">Colaborador</a>
-        <a href="#">Obra</a>
+        <a href="{%url 'cadastro_colab'%}">Colaborador</a>
+        <a href="{%url 'cadastro_obra'%}">Obra</a>
         <a href="#">Diário</a>
+        <a href="{%url 'cadastro_funcao'%}">Função</a>  
       </div>
     </div>
     <div class="accordion-item">
@@ -115,8 +117,9 @@ header{
       </h2>
       <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
         <a href="#">Programações</a>
-        <a href="/lançamento_obra/visualizacao/colaborador/">Colaboradores</a>
-        <a href="#">Obras</a>
+        <a href="{%url 'visualizacao_colab'%}">Colaboradores</a>
+        <a href="{%url 'visualizacao_obra'%}">Obras</a>
+        <a href="{%url 'visualizacao_atividade'%}">Atividade</a>
         <a href="#">Revisões</a>
         <a href="#">Horas / Horas Extras</a>
       </div>
@@ -128,7 +131,7 @@ header{
         </button>
       </h2>
       <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-        <a href="#">Diaria</a>
+        <a href="{%url 'lancamento_atividade'%}">Atividade</a>
         <a href="#">Programação</a>
       </div>
     </div>

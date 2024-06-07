@@ -25,9 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hss4fba%6y**i6$hkin&j@gp3h^^7r5*duji$-f1&(_#m6*gx#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '25.20.67.172']
 
 
 # Application definition
@@ -115,10 +116,11 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'pt-BR'
 
 TIME_ZONE = 'America/Sao_Paulo'
+DATA_INPUT_FORMAT = '%m/%d/%Y'
 
 USE_I18N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -126,7 +128,7 @@ USE_TZ = False
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "templates/static"),)
-# STATIC_ROOT = os.path.join('static')
+STATIC_ROOT = os.path.join('static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'MIDIA')
 MEIDA_URL = '/midia/'
