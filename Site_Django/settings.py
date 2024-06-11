@@ -88,6 +88,7 @@ DATABASES = {
         "PASSWORD": config("DB_PASSWORD"),
         "HOST": config("DB_HOST"),
         "PORT": config("DB_PORT"),
+        "MIRROR": True,
     }
 }
 
@@ -113,10 +114,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'pt-BR'
+LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'America/Sao_Paulo'
-DATA_INPUT_FORMAT = '%m/%d/%Y'
+DATE_INPUT_FORMATS = '%m/%d/%Y'
 
 USE_I18N = True
 

@@ -1,12 +1,17 @@
 {% extends 'lançamento_obra.html' %}
-{% block 'head' %}
+
+{% block 'style' %}
 <Style>
-  td{
-    font-size: 15px;
-  }
-  th{
-    font-size: 16px;
-  }
+  p{
+      margin-bottom: 0;
+      font-size: small;
+    }
+    td{
+        padding: 0;
+    }
+      tr{
+          border-bottom: none;
+      }
 </Style>
 {% endblock %}
 {% block 'main' %}
@@ -14,14 +19,14 @@
     <thead>
       <tr>
         <th scope="col">Cr</th>
-        <th scope="col">Orçamentp</th>
+        <th scope="col">Orçamento</th>
         <th scope="col">Retrabalho</th>
         <th scope="col">Empresa</th>
         <th scope="col">Cidade</th>
         <th scope="col">Descrição</th>
         <th scope="col">Supervisor</th>
         <th scope="col">Finalizada</th>
-        <th scope="col">Indece</th>
+        <th scope="col">Indice</th>
         <th scope="col">Etapas</th>
       </tr>
     </thead>
@@ -29,16 +34,21 @@
       
       {% for obra in obras_list %}
         <tr>
-          <th scope="row">{{obra.cr}}</th>
-          <td>{{obra.orcamento}}</td>
-          <td>{{obra.retrabalho}}</td>
-          <td>{{obra.empresa}}</td>
-          <td>{{obra.cidade}}</td>
-          <td>{{obra.descricao}}</td>
-          <td>{{obra.supervisor.supervisor}}</td>
-          <td>{{obra.finalizada}}</td>
-          <td>{{obra.indice}}</td>
-          <td>{{obra.etapas}}</td>
+          <th scope="row"><p>{{obra.cr}}</p></th>
+          <td><p>{{obra.orcamento}}</p></td>
+          <td><p>{{obra.retrabalho}}</p></td>
+          <td><p>{{obra.empresa}}</p></td>
+          <td><p>{{obra.cidade}}</p></td>
+          <td><p>{{obra.descricao}}</p></td>
+          <td><p>{{obra.supervisor.supervisor}}</p></td>
+          <td>{%if obra.finalizada %}
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked disabled>
+            {%else%}
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" disabled>
+            {%endif%}
+          </td>
+          <td><p>{{obra.indice}}</p></td>
+          <td><p>{{obra.etapas}}</p></td>
         </tr>
       {% endfor %}
     </tbody>

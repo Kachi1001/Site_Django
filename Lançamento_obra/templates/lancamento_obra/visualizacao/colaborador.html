@@ -1,12 +1,16 @@
 {% extends 'lançamento_obra.html' %}
 {% block 'style' %}
 <Style>
-  td{
-    font-size: 15px;
-  }
-  th{
-    font-size: 16px;
-  }
+  p{
+      margin-bottom: 0;
+      font-size: small;
+    }
+    td{
+        padding: 0;
+    }
+      tr{
+          border-bottom: none;
+      }
 </Style>
 {% endblock %}
 {% block 'main' %}
@@ -28,14 +32,14 @@
       
       {% for colaborador in colab_list %}
         <tr>
-          <th scope="row">{{colaborador.id}}</th>
+          <th scope="row"><p>{{colaborador.id}}</p></th>
           <td>{{colaborador.nome}}</td>
-          <td>{{colaborador.funcao.funcao}}</td>
-          <td>{{colaborador.admissao | date:"SHORT_DATE_FORMAT"}}</td>
-          <td>{%if not colaborador.demissao is None%}{{colaborador.demissao | date:"SHORT_DATE_FORMAT"}}{%endif%}</td>
-          <td>{{colaborador.contrato.contrato}}</td>
-          <td>{%if not colaborador.diaria == "0"%}{{colaborador.diaria}}{%endif%}</td>
-          <td>{{colaborador.observacoes}}</td>
+          <td><p>{{colaborador.funcao.funcao}}</p></td>
+          <td><p>{{colaborador.admissao | date:"SHORT_DATE_FORMAT"}}</p></td>
+          <td>{%if not colaborador.demissao is None%}<p>{{colaborador.demissao | date:"SHORT_DATE_FORMAT"}}</p>{%endif%}</td>
+          <td><p>{{colaborador.contrato.contrato}}</p></td>
+          <td>{%if not colaborador.diaria == "0"%}<p>{{colaborador.diaria}}</p>{%endif%}</td>
+          <td><p>{{colaborador.observacoes}}</p></td>
         </tr>
       {% endfor %}
     </tbody>

@@ -14,30 +14,26 @@
           </select>
         </div>
       </div>
-
       <div class="col">
         <div class="input-group mb-3">
-          <label class="input-group-text" for="inputGroupSelect01">Empresa:</label>
-          <input type="text" name="empresa" id="" class="form-control">
-        </div>
+        <label class="input-group-text" for="inputGroupSelect01">Colaborador:</label>
+        <select class="form-select" id="inputGroupSelect01" name="colaborador">
+          {% for colab in colab_list %}
+          <option value="{{colab.nome}}">{{colab.nome}} | {{colab.funcao.funcao}}</option>
+          {%endfor%}
+        </select>
       </div>
-
-      <div class="col">
-        <div class="input-group mb-3">
-          <label class="input-group-text" for="inputGroupSelect01">Cidade:</label>
-          <input type="text" name="cidade" id="" class="form-control">
-        </div>
       </div>
-    </div>
+      
     <div class="row align-items-start">
       <div class="col">
-        <div class="input-group mb-3">
-          <label class="input-group-text" for="inputGroupSelect01">Colaborador:</label>
-          <select class="form-select" id="inputGroupSelect01" name="colaborador">
-            {% for colab in colab_list %}
-            <option value="{{colab.nome}}">{{colab.nome}} | {{colab.funcao.funcao}}</option>
-            {%endfor%}
-          </select>
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Atividade:</label>
+            <select class="form-select" id="inputGroupSelect01" name="atividade">
+              {% for att in att_list %}
+              <option value="{{att.tipo}}">{{att.tipo}}</option>
+              {%endfor%}
+            </select>
         </div>
       </div>
 
@@ -47,24 +43,26 @@
           <textarea class="form-control" aria-label="With textarea" name="descricao"></textarea>
         </div>
       </div>
+    
     </div>
     <div class="row align-items-start">
-      <div class="col">
-        <div class="input-group mb-3">
-          <label class="input-group-text" for="inputGroupSelect01">Atividade:</label>
-          <select class="form-select" id="inputGroupSelect01" name="atividade">
-            {% for att in att_list %} 
-            <option value="{{att.tipo}}">{{att.tipo}}</option>
-            {%endfor%}
-          </select>
-        </div>
-      </div>
-
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="inputGroupSelect01">Data de realização:</label>
           <input type="date" name="dia" id="data" class="form-control">
   
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Indice do diario:</label>
+          <select class="form-select" id="inputGroupSelect01" name="digito">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+
+          </select>
         </div>
       </div>
       <div class="col">
@@ -87,10 +85,21 @@
       </div>
       
     </div>
+    </div>
     <input type="submit" class="btn btn-outline-success" value="Registrar" id="liveAlertBtn">
   </form>
 
-      
+  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
 
 
 

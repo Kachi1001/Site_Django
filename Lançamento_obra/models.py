@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Atividade(models.Model):
     tipo = models.CharField(primary_key=True, max_length=30)
 
@@ -85,6 +86,7 @@ class Colaborador(models.Model):
     observacoes = models.CharField(max_length=255, blank=True, null=True)
     funcao = models.ForeignKey('Funcao', models.DO_NOTHING, db_column='funcao', blank=True, null=True)
     contrato = models.ForeignKey('Tipocontrato', models.DO_NOTHING, db_column='contrato')
+    encarregado = models.BooleanField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -106,7 +108,7 @@ class Diarioobra(models.Model):
     id = models.CharField(primary_key=True, max_length=50)
     data = models.DateField()
     obra = models.IntegerField(blank=True, null=True)
-    encarregado = models.ForeignKey('Encarregado', models.DO_NOTHING, db_column='encarregado', blank=True, null=True)
+    encarregado = models.ForeignKey(Colaborador, models.DO_NOTHING, db_column='encarregado', blank=True, null=True)
     climamanha = models.CharField(max_length=20, blank=True, null=True)
     climatarde = models.CharField(max_length=20, blank=True, null=True)
     imagem = models.CharField(max_length=255, blank=True, null=True)
@@ -161,14 +163,6 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-class Encarregado(models.Model):
-    encarregado = models.OneToOneField(Colaborador, models.DO_NOTHING, db_column='encarregado', primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'encarregado'
-
-
 class Etapa(models.Model):
     cr = models.IntegerField(primary_key=True)  # The composite primary key (cr, etapa) found, that is not supported. The first column is selected.
     etapa = models.IntegerField()
@@ -216,6 +210,7 @@ class Lancamentos(models.Model):
     etapa1 = models.IntegerField(blank=True, null=True)
     etapa2 = models.IntegerField(blank=True, null=True)
     etapa3 = models.IntegerField(blank=True, null=True)
+    diario = models.CharField(max_length=30, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -226,7 +221,7 @@ class Lancamentos(models.Model):
 class Localizacaoprogramada(models.Model):
     colaborador = models.OneToOneField(Colaborador, models.DO_NOTHING, db_column='colaborador', primary_key=True)  # The composite primary key (colaborador, iniciosemana, obra) found, that is not supported. The first column is selected.
     iniciosemana = models.DateField()
-    encarregado = models.ForeignKey(Encarregado, models.DO_NOTHING, db_column='encarregado', blank=True, null=True)
+    encarregado = models.ForeignKey(Colaborador, models.DO_NOTHING, db_column='encarregado', related_name='localizacaoprogramada_encarregado_set', blank=True, null=True)
     observacao = models.CharField(max_length=255, blank=True, null=True)
     obra = models.ForeignKey('Obra', models.DO_NOTHING, db_column='obra')
 

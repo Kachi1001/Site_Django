@@ -1,15 +1,16 @@
 {% extends 'lançamento_obra.html' %}
 {% block 'style' %}
 <Style>
-    p{
-        margin-bottom: 0;
+  p{
+      margin-bottom: 0;
+      font-size: small;
+    }
+    td{
+        padding: 0;
+    }
+      tr{
+          border-bottom: none;
       }
-      td{
-          padding: 0;
-      }
-        tr{
-            border-bottom: none;
-        }
 </Style>
 {% endblock %}
 {% block 'main' %}
@@ -21,12 +22,12 @@
         <th scope="col">Colaborador</th>
         <th scope="col">Dia</th>
         <th scope="col">Descrição</th>
-        <th scope="col">HoraIni1</th>
-        <th scope="col">HoraFim1</th>
-        <th scope="col">HoraIni2</th>
-        <th scope="col">HoraFim2</th>
-        <th scope="col">HoraIni3</th>
-        <th scope="col">HoraFim3</th>
+        <th scope="col">Ini1</th>
+        <th scope="col">Fim1</th>
+        <th scope="col">Ini2</th>
+        <th scope="col">Fim2</th>
+        <th scope="col">Ini3</th>
+        <th scope="col">Fim3</th>
         <th scope="col">Diario</th>
         <th scope="col">Atividade</th>
 
@@ -48,7 +49,9 @@
           <td>{%if not i.horafim2 is Null%}<p>{{i.horafim2}}</p>{%endif%}</td>
           <td>{%if not i.horaini3 is Null%}<p>{{i.horaini3}}</p>{%endif%}</td>
           <td>{%if not i.horafim3 is Null%}<p>{{i.horafim3}}</p>{%endif%}</td>
-          <td><p>{{i.diario}}</p></td>
+          <td><a href="/midia/Lançamento_obra/diarios_digitalizado/{{i.diario}}.png" target="_blank">
+            <p>{{i.diario}}</p>
+          </a></td>
           <td><p>{{i.atividade.tipo}}</p></td>
         </tr>
       {% endfor %}

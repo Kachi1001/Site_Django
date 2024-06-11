@@ -1,8 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from .models import *   
 from django.contrib.auth.decorators import login_required
+from PIL import Image
+import os
+from pathlib import Path  
+from django.conf import settings
+import datetime
 urllogin = "/login"
+
 
 @login_required(login_url=urllogin)
 def index(request):
@@ -22,11 +28,12 @@ def cadastro_colab(request):
             contrato=Tipocontrato(request.POST.get("tipo")),
             diaria=request.POST.get("diaria"),
             observacoes=request.POST.get("observacao"),
+            encarregado=request.POST.get("encarregado"),
         )
         colab.save()
         return render(request, "lancamento_obra/cadastro/colaborador.html", {"func_list": Funcao.objects.all()}) 
 
-# @login_required(login_url=urllogin)
+@login_required(login_url=urllogin)
 def cadastro_funcao(request):
     if request.method == "GET":
         return render(request, "lancamento_obra/cadastro/funcao.html")
@@ -54,7 +61,30 @@ def cadastro_obra(request):
             )
         obra.save()
         return render(request, "lancamento_obra/cadastro/obra.html", {"super_list": Supervisor.objects.all()})
-    
+
+@login_required(login_url=urllogin)
+def cadastro_diario(request):
+    if request.method == "GET":    
+        return render(request, "lancamento_obra/cadastro/diario.html", {'obras_list': Obra.objects.all(), "colab_list": Colaborador.objects.all()})
+    elif request.method == "POST":
+        digitalizacao = request.FILES.get('arquivo')
+        img = Image.open(digitalizacao)
+        path = os.path.join(settings.BASE_DIR, f'midia/Lançamento_obra/diarios_digitalizado/{digitalizacao.name}')
+        img = img.save(path)   
+        
+        diaria = Diarioobra(
+            obra = request.POST.get("obra"),
+            data= request.POST.get("data"),
+            id= digitalizacao.name.split(".")[0],
+            encarregado= request.POST.get("encarregado"),
+            climamanha= request.POST.get("climamanha"),
+            climatarde= request.POST.get("climatarde"),
+            imagem= digitalizacao.name
+        ) 
+        diaria.save()
+        return redirect("cadastro_diario")
+
+
 @login_required(login_url=urllogin)
 def visualizacao_colab(request):
     colab_list = Colaborador.objects.all()
@@ -86,6 +116,9 @@ def lancamento_atividade(request):
             if a != "":
                 hora[b] = a
             b = b + 1
+        data = request.POST.get("dia").split("-")
+        data = data[2] + "-" + data[1] + "-" + data[0]
+        
         att = Lancamentos(
                 obra=Obra(request.POST.get("obra")),
                 colaborador=Colaborador(request.POST.get("colaborador")),
@@ -99,12 +132,13 @@ def lancamento_atividade(request):
                 horafim3=hora[5],
                 atividade=Atividade(request.POST.get("atividade")),
                 diaseguinte=True,
-                digito=1,
+                digito=request.POST.get("digito"),
                 etapa1=1,
                 etapa2=1,
                 etapa3=1,
                 perdevale=True,
                 revisaorh="",
+                diario= "_".join([request.POST.get("obra"), data, request.POST.get("digito")])
             )
         att.save() 
         return render (request, "lancamento_obra/lancamento/atividade.html", {
@@ -113,3 +147,4 @@ def lancamento_atividade(request):
             'att_list': Atividade.objects.all()
             }
         )
+        

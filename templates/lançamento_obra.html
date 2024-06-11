@@ -7,7 +7,6 @@
 <link rel="stylesheet" href= "{% static 'css/color.css' %}">
 <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
-
 <style>
   
 /* Fixed sidenav, full height */
@@ -65,7 +64,7 @@ header{
 .main {
   margin-left: 200px; /* Same as the width of the sidenav */
   font-size: 20px; /* Increased text to enable scrolling */
-  padding: 100px 100px;
+  padding: 100px 100px 0px 100px;
 }
 
 /* Some media queries for responsiveness */
@@ -105,7 +104,6 @@ header{
       <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
         <a href="{%url 'cadastro_colab'%}">Colaborador</a>
         <a href="{%url 'cadastro_obra'%}">Obra</a>
-        <a href="#">Diário</a>
         <a href="{%url 'cadastro_funcao'%}">Função</a>  
       </div>
     </div>
@@ -132,6 +130,7 @@ header{
       </h2>
       <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
         <a href="{%url 'lancamento_atividade'%}">Atividade</a>
+        <a href="{%url 'cadastro_diario'%}">Diário</a>
         <a href="#">Programação</a>
       </div>
     </div>
