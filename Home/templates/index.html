@@ -1,4 +1,5 @@
 {% load static %}
+{% load permission_tags %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -18,6 +19,7 @@
 
 </head>
 <body>
+  {%if user|has_role:'lancanto_obra'%}
     <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
         <div class="card-body">
           <h5 class="card-title">Lançamento obra</h5>
@@ -26,5 +28,6 @@
           <a href="/lançamento_obra" class="card-link">Abrir Aplicação</a>
         </div>
       </div>
+    {%endif%}
 </body>
 </html>

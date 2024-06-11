@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from .models import *   
 from django.contrib.auth.decorators import login_required
+from rolepermissions.decorators import has_role_decorator
 from PIL import Image
 import os
 from pathlib import Path  
@@ -9,12 +10,12 @@ from django.conf import settings
 import datetime
 urllogin = "/login"
 
-
 @login_required(login_url=urllogin)
 def index(request):
     return render(request, "lancamento_obra/index.html")
 
 @login_required(login_url=urllogin)
+@has_role_decorator('lancamento_obra')
 def cadastro_colab(request):
     if request.method == "GET":
         return render(request, "lancamento_obra/cadastro/colaborador.html", {"func_list": Funcao.objects.all()})
