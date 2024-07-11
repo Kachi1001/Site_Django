@@ -10,14 +10,15 @@ from django.contrib.auth.decorators import login_required
 
 def login(request):
     if request.method == "GET":
+        login_django
         return render(request, 'login.html' )
     elif request.method == "POST":
         user = authenticate(username= request.POST.get('nome'), password= request.POST.get('senha'))
         if user:
             login_django(request, user)
-            return redirect('home')
+            return redirect('/')
         else:
-            return render(request, 'login.html', {"cache": [request.POST.get('nome'), request.POST.get('senha')]})
+            return render(request, 'login.html', {"nome": request.POST.get('nome'), "senha": request.POST.get('senha')})
 @login_required (login_url= '/login')
 def index(request):
     return render(request, 'index.html')

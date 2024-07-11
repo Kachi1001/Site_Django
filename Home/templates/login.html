@@ -15,7 +15,19 @@
 
     <link rel="stylesheet" href="{% static 'css/color.css' %}">
     <link rel="stylesheet" href="static/css/index.css">
-
+<style>
+    body{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+        margin-top: 12%;
+    }
+    p{
+        color: red;
+        padding-top: 5px;
+    }
+</style>
 </head>
 <body>
     <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
@@ -25,20 +37,20 @@
         <div class="card-body">
             <form action="{% url 'login'%}" method="post"> {%csrf_token%}
                 <div class="form-floating mb-3">
-                    <input type="name" class="form-control" id="floatingInput" placeholder="Nome" name="nome">
+                    <input type="name" class="form-control" id="floatingInput" placeholder="Nome" name="nome" value="{{nome}}">
                     <label for="floatingInput">Nome</label>
-                  </div>
-                  <div class="form-floating" style="margin-bottom: 30px;">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Senha" name="senha">
+                </div>
+                <div class="form-floating" style="margin-bottom: 30px;">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Senha" name="senha" value="{{senha}}">
                     <label for="floatingPassword">Senha</label>
-                  </div>
-                  <input type="submit" class="btn btn-outline-success" value="Logar" id="liveAlertBtn">
-                  <p>{{cache}}</p>
-              </form>   
+                </div>
+                <input type="submit" class="btn btn-outline-success" value="Logar" id="liveAlertBtn">
+                <p>{%if nome != Null%}Nome ou senha incorreto{%endif%}</p>
+            </form>   
         </div>
         <div class="card-footer text-body-secondary">
             É necessário estar logado para ter acesso as ferramentas
-          </div>
+        </div>
     </div>
 </body>
 </html>

@@ -9,10 +9,11 @@
             "type": "debugpy",
             "request": "launch",
             "args": [
-                "runserver"
+                "runserver",
+                "25.20.67.172:8000"
             ],
             "django": true,
-            "autoStartBrowser": false,
+            "autoStartBrowser": true,
             "program": "${workspaceFolder}\\manage.py"
         }
     ]

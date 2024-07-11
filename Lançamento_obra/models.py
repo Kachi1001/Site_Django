@@ -94,7 +94,7 @@ class Colaborador(models.Model):
 
 
 class Dia(models.Model):
-    data = models.DateField(primary_key=True)
+    dia = models.DateField(primary_key=True)
     diasemana = models.IntegerField()
     feriado = models.BooleanField()
     programacao = models.DateField()
@@ -190,10 +190,45 @@ class Indiceobra(models.Model):
         db_table = 'indiceobra'
 
 
+class JuntaPorDia(models.Model):
+    dia = models.DateField(blank=True, null=True)
+    colaborador = models.CharField(max_length=255, blank=True, null=True)
+    obra = models.IntegerField(blank=True, null=True)
+    atestado = models.DurationField(blank=True, null=True)
+    atividade_obra = models.DurationField(blank=True, null=True)
+    dispensa = models.DurationField(blank=True, null=True)
+    falta = models.DurationField(blank=True, null=True)
+    ferias = models.DurationField(blank=True, null=True)
+    folga = models.DurationField(blank=True, null=True)
+    treinamento = models.DurationField(blank=True, null=True)
+    he100 = models.IntegerField(blank=True, null=True)
+    he50 = models.IntegerField(blank=True, null=True)
+    hn = models.IntegerField(blank=True, null=True)
+    ate2 = models.DurationField(blank=True, null=True)
+    atv2 = models.DurationField(blank=True, null=True)
+    d2 = models.DurationField(blank=True, null=True)
+    fl2 = models.DurationField(blank=True, null=True)
+    fe2 = models.DurationField(blank=True, null=True)
+    fo2 = models.DurationField(blank=True, null=True)
+    tr2 = models.DurationField(blank=True, null=True)
+    totalmax = models.DurationField(blank=True, null=True)
+    totalparc = models.DurationField(blank=True, null=True)
+    uteis = models.DurationField(blank=True, null=True)
+    he_100 = models.DurationField(blank=True, null=True)
+    he_50 = models.DurationField(blank=True, null=True)
+    hesaldo = models.DurationField(blank=True, null=True)
+    dcid = models.TextField(blank=True, null=True)
+    novaid = models.AutoField(primary_key=True)
+    iddcid = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'junta_por_dia'
+
+
 class Lancamentos(models.Model):
-    id = models.AutoField(primary_key=True)
     obra = models.ForeignKey('Obra', models.DO_NOTHING, db_column='obra')
-    colaborador = models.OneToOneField(Colaborador, models.DO_NOTHING, db_column='colaborador')  # The composite primary key (colaborador, dia, horaini1) found, that is not supported. The first column is selected.
+    colaborador = models.ForeignKey(Colaborador, models.DO_NOTHING, db_column='colaborador')
     dia = models.DateField()
     descricao = models.CharField(max_length=600, blank=True, null=True)
     digito = models.IntegerField()
@@ -215,7 +250,6 @@ class Lancamentos(models.Model):
     class Meta:
         managed = False
         db_table = 'lancamentos'
-        unique_together = (('colaborador', 'dia', 'horaini1'),)
 
 
 class Localizacaoprogramada(models.Model):
@@ -245,6 +279,20 @@ class Obra(models.Model):
     class Meta:
         managed = False
         db_table = 'obra'
+
+
+class ResumoJunta(models.Model):
+    dia = models.DateField(blank=True, null=True)
+    colaborador = models.CharField(max_length=255, blank=True, null=True)
+    obra = models.IntegerField(blank=True, null=True)
+    uteis = models.DurationField(blank=True, null=True)
+    naoutil = models.BigIntegerField(blank=True, null=True)
+    total_he50 = models.DurationField(blank=True, null=True)
+    total_he100 = models.DurationField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'resumo_junta'
 
 
 class Supervisor(models.Model):

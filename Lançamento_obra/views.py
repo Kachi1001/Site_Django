@@ -88,18 +88,28 @@ def cadastro_diario(request):
 
 @login_required(login_url=urllogin)
 def visualizacao_colab(request):
-    colab_list = Colaborador.objects.all()
-    return render(request, "lancamento_obra/visualizacao/colaborador.html", {'colab_list': colab_list})
+    data = Colaborador.objects.all()
+    return render(request, "lancamento_obra/visualizacao/colaborador.html", {'colab_list': data})
 
 @login_required(login_url=urllogin)
 def visualizacao_obra(request):
-    obras_list = Obra.objects.all()
-    return render(request, "lancamento_obra/visualizacao/obra.html", {'obras_list': obras_list})
+    data = Obra.objects.all()
+    return render(request, "lancamento_obra/visualizacao/obra.html", {'obras_list': data})
 
 @login_required(login_url=urllogin)
 def visualizacao_atividade(request):
-    atividades_list = Lancamentos.objects.all()
-    return render(request, "lancamento_obra/visualizacao/atividade.html", {'atividades_list': atividades_list})
+    data = Lancamentos.objects.all()
+    return render(request, "lancamento_obra/visualizacao/atividade.html", {'atividades_list': data})
+
+@login_required(login_url=urllogin)
+def visualizacao_diario(request):
+    data = Diarioobra.objects.all()
+    return render(request, "lancamento_obra/visualizacao/diario.html", {'diarios_list': data})
+
+@login_required(login_url=urllogin)
+def visualizacao_hora_horaextra(request):
+    data = JuntaPorDia.objects.all()
+    return render(request, "lancamento_obra/visualizacao/hora_horaextra.html", {'list': data})
 
 @login_required(login_url=urllogin)
 def lancamento_atividade(request):
@@ -118,7 +128,7 @@ def lancamento_atividade(request):
                 hora[b] = a
             b = b + 1
         data = request.POST.get("dia").split("-")
-        data = data[2] + "-" + data[1] + "-" + data[0]
+        data = str(int(data[2])) + "-" + str(int(data[1])) + "-" + data[0]
         
         att = Lancamentos(
                 obra=Obra(request.POST.get("obra")),

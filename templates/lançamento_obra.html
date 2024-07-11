@@ -83,6 +83,9 @@ header{
 <script src="{% static 'js/bootstrap.js' %}"></script>
 <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 <script src="{% static 'js/bootstrap.esm.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{% block "script" %}{% endblock "script" %}   
 
 </head>
 {% block 'style' %}{% endblock %}
@@ -114,12 +117,12 @@ header{
         </button>
       </h2>
       <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-        <a href="#">Programações</a>
         <a href="{%url 'visualizacao_colab'%}">Colaboradores</a>
         <a href="{%url 'visualizacao_obra'%}">Obras</a>
         <a href="{%url 'visualizacao_atividade'%}">Atividade</a>
+        <a href="{%url 'visualizacao_diario'%}">Diario</a>
         <a href="#">Revisões</a>
-        <a href="#">Horas / Horas Extras</a>
+        <a href="{%url 'visualizacao_hora_horaextra'%}">Horas / Horas Extras</a>
       </div>
     </div>
     <div class="accordion-item">
@@ -131,7 +134,6 @@ header{
       <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
         <a href="{%url 'lancamento_atividade'%}">Atividade</a>
         <a href="{%url 'cadastro_diario'%}">Diário</a>
-        <a href="#">Programação</a>
       </div>
     </div>
   </div>
@@ -158,8 +160,7 @@ header{
         }
       });
     }
+    
   </script>
-  
-  {% block "script" %}{% endblock "script" %}    
 </body>
 </html> 

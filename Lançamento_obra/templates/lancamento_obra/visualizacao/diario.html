@@ -1,0 +1,48 @@
+{% extends 'lançamento_obra.html' %}
+{% block 'style' %}
+<Style>
+  p{
+      margin-bottom: 0;
+      font-size: small;
+    }
+    td{
+        padding: 0;
+    }
+      tr{
+          border-bottom: none;
+      }
+</Style>
+{% endblock %}
+{% block 'main' %}
+<h1>Tabela de Diario</h1>
+  <table class="table table-hover table-bordered table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Obra</th>
+        <th scope="col">Data</th>
+        <th scope="col">Encarregado</th>
+        <th scope="col">Clima de Manha</th>
+        <th scope="col">Clima de Tarde</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      
+      {% for i in diarios_list %}
+        <tr>
+          <th scope="row"><p>{{i.id}}</p></th>
+          <td><p>{{i.obra.cr}}</p></td>
+          <td><p>{{i.data | date:"SHORT_DATE_FORMAT"}}</p></td>
+          <td><p>{{i.encarregado}}</p></td>
+          <td>{%if not i.climamanha is Null%}<p>{{i.climamanha}}</p>{%endif%}</td>
+          <td>{%if not i.climatarde is Null%}<p>{{i.climatarde}}</p>{%endif%}</td>
+          
+          <td><a href="/midia/Lançamento_obra/diarios_digitalizado/{{i.id}}.png" target="_blank">
+            <p>Abrir Digitalização</p>
+          </a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table> 
+{% endblock %}

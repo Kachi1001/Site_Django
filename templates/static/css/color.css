@@ -19,6 +19,10 @@ header {
 .accordion accordion-flush{
     background-color: var(--cor6);
 }
+.card-header{
+    background-color: var(--cor6);
+    color: white;
+}
 /* :root{
     --cor1: #7DFFCA;
     --cor2: #7FE7FA;
