@@ -7,6 +7,7 @@
       padding: 150px 150px;;
     }
   </style>
+  
 {% endblock %}
 
 {% block 'main' %}
@@ -14,11 +15,34 @@
   <form action="{% url 'cadastro_funcao' %}" method="POST">{% csrf_token %}
     <div class="input-group mb-3">
       <label class="input-group-text" for="inputGroupSelect01">Nome da função:</label>
-      <input type="text" name="nome" id="" class="form-control">
+      <input type="text" name="nome" id="nome" class="form-control">
     </div>
-
     <input type="submit" class="btn btn-outline-success" value="Registrar" id="liveAlertBtn">
-    <div id="liveAlertPlaceholder"></div>
+
   </form>
+  <button id="botao-criar-tabela" class="btn btn-outline-success">Cadastrar</button>
+
+  <script>
+    $(document).ready(function() {
+      $('#botao-criar-tabela').click(function() {
+          $.ajax({
+              url: "{% url 'criarFuncao' %}",  // URL da sua API no Django
+              type: 'POST',
+              data: {
+                'csrfmiddlewaretoken':"{{ csrf_token }}",
+                'parametro': document.getElementById('nome').value,
+              },
+              success: function(Response) {
+                  if (confirm(Response.message+'\nClique em <OK> para recarregar a página.')){
+                    window.location.reload(true); 
+                  }
+              },  
+              error: function(xhr) {
+                alert(xhr.responseJSON.message);
+              }
+          });
+      });
+    });
+  </script>
   {% block 'edit' %}{% endblock %}
 {% endblock %}

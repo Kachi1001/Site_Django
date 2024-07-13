@@ -39,13 +39,13 @@
     </thead>
     <tbody>
       
-      {% for i in atividades_list %}
+      {% for i in data.object_list %}
         <tr>
           <th scope="row"><p>{{i.id}}</p></th>
           <td><p>{{i.obra.cr}}</p></td>
           <td><p>{{i.colaborador.nome}}</p></td>
           <td><p>{{i.dia | date:"SHORT_DATE_FORMAT"}}</p></td>
-          <td><p>{{i.descricao}}</p></td>
+          <td ><p class="desc">{{i.descricao}}</p></td>
           <td>{%if not i.horaini1 is Null%}<p>{{i.horaini1}}</p>{%endif%}</td>
           <td>{%if not i.horafim1 is Null%}<p>{{i.horafim1}}</p>{%endif%}</td>
 

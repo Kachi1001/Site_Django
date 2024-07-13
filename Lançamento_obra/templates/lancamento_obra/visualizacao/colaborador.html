@@ -18,7 +18,6 @@
   <table class="table table-hover table-bordered">
     <thead>
       <tr>
-        <th scope="col">Id</th>
         <th scope="col">Nome</th>
         <th scope="col">Função</th>
         <th scope="col">Admissão</th>
@@ -31,16 +30,15 @@
     </thead>
     <tbody>
       
-      {% for colaborador in colab_list %}
+      {% for colaborador in data %}
         <tr>
-          <th scope="row"><p>{{colaborador.id}}</p></th>
-          <td>{{colaborador.nome}}</td>
+          <td><p style="font-weight: bold;">{{colaborador.nome}}</p></td>
           <td><p>{{colaborador.funcao.funcao}}</p></td>
           <td><p>{{colaborador.admissao | date:"SHORT_DATE_FORMAT"}}</p></td>
           <td>{%if not colaborador.demissao is None%}<p>{{colaborador.demissao | date:"SHORT_DATE_FORMAT"}}</p>{%endif%}</td>
           <td><p>{{colaborador.contrato.contrato}}</p></td>
-          <td>{%if not colaborador.diaria == "0"%}<p>{{colaborador.diaria}}</p>{%endif%}</td>
-          <td><p>{{colaborador.observacoes}}</p></td>
+          <td>{%if not colaborador.diaria is None%}<p>{{colaborador.diaria}}</p>{%endif%}</td>
+          <td>{%if not colaborador.observacoes is None%}<p>{{colaborador.observacoes}}</p>{%endif%}</td>
         </tr>
       {% endfor %}
     </tbody>

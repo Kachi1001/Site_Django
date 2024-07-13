@@ -3,7 +3,7 @@
 <html lang="pt-br">
 <head>
 
-<meta name="viewport" content="width=device-width, initial-scale=0.9">
+<meta name="viewport" content="width=device-width, initial-scale=0.8">
 <link rel="stylesheet" href= "{% static 'css/color.css' %}">
 <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
@@ -85,7 +85,6 @@ header{
 <script src="{% static 'js/bootstrap.esm.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-{% block "script" %}{% endblock "script" %}   
 
 </head>
 {% block 'style' %}{% endblock %}
@@ -136,12 +135,32 @@ header{
         <a href="{%url 'cadastro_diario'%}">Diário</a>
       </div>
     </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+          Outros
+        </button>
+      </h2>
+      <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <a href="#">Pesquisa Avançada</a>
+        <a href="#">Resumo mensal</a>
+      </div>
+    </div>
   </div>
 </div>
   </div>
 
   <div class="main">
     {% block 'main' %}{% endblock %}
+    <div class="page-links">
+      {%if data.has_previous %}
+        <a href="?page={{data.previous_page_number}}">Anterior  </a>
+      {%endif%}
+      {%if data.has_next %}
+        <a href="?page={{data.next_page_number}}">  Proximo</a>
+      {%endif%}
+    </div>
   </div>
 
   <script>
@@ -162,5 +181,7 @@ header{
     }
     
   </script>
+{% block "script" %}{% endblock "script" %}   
+
 </body>
 </html> 

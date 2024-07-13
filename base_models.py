@@ -237,6 +237,7 @@ class JuntaPorDia(models.Model):
     he_50 = models.DurationField(blank=True, null=True)
     hesaldo = models.DurationField(blank=True, null=True)
     dcid = models.TextField(blank=True, null=True)
+    novaid = models.AutoField()
     iddcid = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:

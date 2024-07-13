@@ -24,17 +24,16 @@
         <th scope="col">Encarregado</th>
         <th scope="col">Clima de Manha</th>
         <th scope="col">Clima de Tarde</th>
-
       </tr>
     </thead>
     <tbody>
       
-      {% for i in diarios_list %}
+      {% for i in data %}
         <tr>
           <th scope="row"><p>{{i.id}}</p></th>
-          <td><p>{{i.obra.cr}}</p></td>
+          <td><p>{{i.obra}}</p></td>
           <td><p>{{i.data | date:"SHORT_DATE_FORMAT"}}</p></td>
-          <td><p>{{i.encarregado}}</p></td>
+          <td>{%if not i.encarregado is Null%}<p>{{i.encarregado}}</p>{%endif%}</td>
           <td>{%if not i.climamanha is Null%}<p>{{i.climamanha}}</p>{%endif%}</td>
           <td>{%if not i.climatarde is Null%}<p>{{i.climatarde}}</p>{%endif%}</td>
           
