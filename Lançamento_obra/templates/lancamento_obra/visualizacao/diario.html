@@ -1,20 +1,20 @@
 {% extends 'lançamento_obra.html' %}
+{% load static %}
+
 {% block 'style' %}
-<Style>
-  p{
-      margin-bottom: 0;
-      font-size: small;
-    }
-    td{
-        padding: 0;
-    }
-      tr{
-          border-bottom: none;
-      }
-</Style>
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
 {% endblock %}
+
+{%block 'caminho'%}
+  <li class="breadcrumb-item" aria-current="page">Visualização</li>
+  <li class="breadcrumb-item active" aria-current="page">Diário</li>
+{%endblock%}
+
+{%block 'header'%}
+<h2>Tabela de Diário</h2>
+{%endblock%}
+
 {% block 'main' %}
-<h1>Tabela de Diario</h1>
   <table class="table table-hover table-bordered table-striped">
     <thead>
       <tr>

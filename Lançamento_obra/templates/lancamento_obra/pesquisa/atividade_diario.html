@@ -1,27 +1,31 @@
 {% extends 'lançamento_obra.html' %}
 {%load static%}
+
 {%block 'caminho'%}
   <li class="breadcrumb-item" aria-current="page">Outros</li>
   <li class="breadcrumb-item active" aria-current="page">Pesquisa Avançada</li>
 {%endblock%}
 
 {%block 'header'%}
-<h2>Pesquisa por Colaborador</h2>
+<h2>Pesquisa por Diário</h2>
 {%endblock%}
 {% block 'style' %}
 <link rel="stylesheet" href="{% static 'css/table.css' %}">
 {% endblock %}
+
 {% block 'main' %}
+
 <select class="form-select" aria-label="Default select example" onchange="reload('id')", id="colab">
     <option {{select}}>{{select}}</option>
-    {% for x in colab %}
-        <option value="{{x.id}}">{{x.nome}}</option>
+    {% for x in info %}
+        <option value="{{x.id}}">{{x.id}}</option>
     {%endfor%}
   </select>
   <table class="table table-hover table-bordered table-striped">
     <thead>
       <tr>
         <th scope="col">Id</th>
+        <th scope="col">Colaborador</th>
         <th scope="col">Obra</th>
         <th scope="col">Dia</th>
         <th scope="col">Descrição</th>
@@ -31,16 +35,14 @@
         <th scope="col">Fim2</th>
         <th scope="col">Ini3</th>
         <th scope="col">Fim3</th>
-        <th scope="col">Diario</th>
-        <th scope="col">Atividade</th>
-
       </tr>
     </thead>
     <tbody>
       
-      {% for i in data %}
+      {% for i in dado %}
         <tr>
           <th scope="row"><p>{{i.id}}</p></th>
+          <td><p>{{i.colaborador}}</p></td>
           <td><p>{{i.obra.cr}}</p></td>
           <td><p>{{i.dia | date:"SHORT_DATE_FORMAT"}}</p></td>
           <td class="desc"><p>{{i.descricao}}</p></td>
@@ -51,10 +53,7 @@
           <td>{%if not i.horafim2 is Null%}<p>{{i.horafim2}}</p>{%endif%}</td>
           <td>{%if not i.horaini3 is Null%}<p>{{i.horaini3}}</p>{%endif%}</td>
           <td>{%if not i.horafim3 is Null%}<p>{{i.horafim3}}</p>{%endif%}</td>
-          <td><a href="/midia/Lançamento_obra/diarios_digitalizado/{{i.diario}}.png" target="_blank">
-            <p>{{i.diario}}</p>
-          </a></td>
-          <td><p>{{i.atividade.tipo}}</p></td>
+        
         </tr>
       {% endfor %}
     </tbody>

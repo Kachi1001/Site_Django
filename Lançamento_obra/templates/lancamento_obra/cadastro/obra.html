@@ -1,9 +1,16 @@
 {% extends 'lançamento_obra.html' %}
 
-{% block 'head' %}{%endblock%}
+{%block 'caminho'%}
+  <li class="breadcrumb-item" aria-current="page">Cadastro</li>
+  <li class="breadcrumb-item active" aria-current="page">Obra</li>
+{%endblock%}
+
+{%block 'header'%}
+<h2>Cadastro de obra</h2>
+{%endblock%}
+
 
 {% block 'main' %}
-  <h1>Cadastro de obra</h1>
   <form action="{% url 'cadastro_obra' %}" method="POST">{% csrf_token %}
     
     <div class="row align-items-start">

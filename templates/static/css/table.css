@@ -1,0 +1,19 @@
+p{
+    margin-bottom: 0;
+    font-size: small;
+  }
+  td{
+      padding: 0;
+  }
+    tr{
+        border-bottom: none;
+    }
+  a{
+    text-decoration: none;
+  }
+.desc{
+  white-space: nowrap;     /* Impede que o texto quebre a linha */
+  overflow: hidden;        /* Oculta qualquer conteúdo que transborde */
+  text-overflow: ellipsis; /* Adiciona reticências (...) no final do texto */
+  max-width: 250px;        /* Define a largura máxima da coluna */
+}

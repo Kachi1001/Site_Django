@@ -1,20 +1,19 @@
 {% extends 'lançamento_obra.html' %}
 
-{% block 'head' %}
-  <script src="colaborador.js"></script>
-  <style>
-    .main{
-      padding: 150px 150px;;
-    }
-  </style>
-{% endblock %}
+{%block 'caminho'%}
+  <li class="breadcrumb-item" aria-current="page">Lançamento</li>
+  <li class="breadcrumb-item active" aria-current="page">Diário</li>
+{%endblock%}
+
+{%block 'header'%}
+<h2>Cadastro de diário</h2>
+{%endblock%}
 
 {% block 'main' %}
-  <form action="{% url 'cadastro_diario' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+  <form action="{% url 'lancamento_diario' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
     <div class="container text-center">
         <div class="row align-items-center">
             <div class="col align-self-center">
-                <h2>Cadastro de Diário</h2> 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="arquivo">Digitalizados</label>
                     <input type="file" class="form-control" id="arquivo" name="arquivo" accept=".png">

@@ -1,23 +1,19 @@
 {% extends 'lançamento_obra.html' %}
+{% load static %}
 {% block 'style' %}
-<Style>
-  p{
-      margin-bottom: 0;
-      font-size: 8pt;
-    }
-    td{
-        padding: 0;
-    }
-      tr{
-          border-bottom: none;
-      }
-    a{
-      text-decoration: none;
-    }
-</Style>
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
 {% endblock %}
+
+{%block 'caminho'%}
+  <li class="breadcrumb-item" aria-current="page">Lançamento</li>
+  <li class="breadcrumb-item active" aria-current="page">Atividade</li>
+{%endblock%}
+
+{%block 'header'%}
+<h2>Lançamento de Atividade</h2>
+{%endblock%}
+
 {% block 'main' %}
-  <h2>Lançamento de Atividade</h2>
   <form action="{% url 'lancamento_atividade' %}" method="POST">{% csrf_token %}
     <div class="row align-items-start">
       <div class="col">
@@ -105,7 +101,7 @@
     <input type="submit" class="btn btn-outline-success" value="Registrar" id="liveAlertBtn">
   </form>
 
-  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  <!-- <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <img src="..." class="rounded me-2" alt="...">
       <strong class="me-auto">Bootstrap</strong>
@@ -115,7 +111,7 @@
     <div class="toast-body">
       Hello, world! This is a toast message.
     </div>
-  </div>
+  </div> -->
 
   <table class="table table-hover table-bordered table-striped">
     <thead>
@@ -136,12 +132,11 @@
       </tr>
     </thead>
     <tbody>
-      
       {% for i in data %}
         <tr>
           <th scope="row"><p>{{i.id}}</p></th>
           <td><p>{{i.obra.cr}}</p></td>
-          <td><p>{{i.colaborador.nome}}</p></td>
+          <td><p>{{i.colaborador}}</p></td>
           <td><p>{{i.dia | date:"SHORT_DATE_FORMAT"}}</p></td>
           <td>{%if not i.horaini1 is Null%}<p>{{i.horaini1}}</p>{%endif%}</td>
           <td>{%if not i.horafim1 is Null%}<p>{{i.horafim1}}</p>{%endif%}</td>
@@ -156,7 +151,4 @@
           <td><p>{{i.atividade.tipo}}</p></td>
         </tr>
       {% endfor %}
-
-
-
 {% endblock %}

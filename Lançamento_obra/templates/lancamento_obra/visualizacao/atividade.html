@@ -1,26 +1,24 @@
 {% extends 'lançamento_obra.html' %}
+{% load static %}
+
 {% block 'style' %}
-<Style>
-  p{
-      margin-bottom: 0;
-      font-size: small;
-    }
-    td{
-        padding: 0;
-    }
-      tr{
-          border-bottom: none;
-      }
-    a{
-      text-decoration: none;
-    }
-</Style>
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
 {% endblock %}
+
+{%block 'caminho'%}
+  <li class="breadcrumb-item" aria-current="page">Visualização</li>
+  <li class="breadcrumb-item active" aria-current="page">Atividade</li>
+{%endblock%}
+
+{%block 'header'%}
+<h2>Tabela de Atividade</h2>
+{%endblock%}
+
+
 {% block 'main' %}
-<h1>Tabela de Atividade</h1>
   <table class="table table-hover table-bordered table-striped">
     <thead>
-      <tr>
+      <tr>  
         <th scope="col">Id</th>
         <th scope="col">Obra</th>
         <th scope="col">Colaborador</th>
@@ -43,9 +41,9 @@
         <tr>
           <th scope="row"><p>{{i.id}}</p></th>
           <td><p>{{i.obra.cr}}</p></td>
-          <td><p>{{i.colaborador.nome}}</p></td>
+          <td><p>{{i.colaborador}}</p></td>
           <td><p>{{i.dia | date:"SHORT_DATE_FORMAT"}}</p></td>
-          <td ><p class="desc">{{i.descricao}}</p></td>
+          <td class="desc"><p>{{i.descricao}}</p></td>
           <td>{%if not i.horaini1 is Null%}<p>{{i.horaini1}}</p>{%endif%}</td>
           <td>{%if not i.horafim1 is Null%}<p>{{i.horafim1}}</p>{%endif%}</td>
 

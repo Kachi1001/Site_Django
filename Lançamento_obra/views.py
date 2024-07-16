@@ -33,7 +33,7 @@ def cadastro_colab(request):
         colab.save()
     return render(request, "lancamento_obra/cadastro/colaborador.html", {
         'func_list': Funcao.objects.all(),
-        'data': Colaborador.objects.all().order_by('-admissao')[:7],
+        'data': Colaborador.objects.all().order_by('-admissao')[:10],
         }
     ) 
 
@@ -66,34 +66,14 @@ def cadastro_obra(request):
         obra.save()
         return render(request, "lancamento_obra/cadastro/obra.html", {"super_list": Supervisor.objects.all()})
 
-@login_required(login_url=urllogin)
-def cadastro_diario(request):
-    if request.method == "GET":    
-        return render(request, "lancamento_obra/cadastro/diario.html", {'obras_list': Obra.objects.all(), "colab_list": Colaborador.objects.all()})
-    elif request.method == "POST":
-        digitalizacao = request.FILES.get('arquivo')
-        img = Image.open(digitalizacao)
-        path = os.path.join(settings.BASE_DIR, f'midia/Lançamento_obra/diarios_digitalizado/{digitalizacao.name}')
-        img = img.save(path)   
-        
-        diaria = Diarioobra(
-            obra = request.POST.get("obra"),
-            data= request.POST.get("data"),
-            id= digitalizacao.name.split(".")[0],
-            encarregado= request.POST.get("encarregado"),
-            climamanha= request.POST.get("climamanha"),
-            climatarde= request.POST.get("climatarde"),
-            imagem= digitalizacao.name
-        ) 
-        diaria.save()
-        return redirect("cadastro_diario")
+
 
 
 @login_required(login_url=urllogin)
 def visualizacao_colab(request):
     data = Colaborador.objects.all()
     
-    data_paginator = Paginator(data, 10)
+    data_paginator = Paginator(data, 15)
     page_num = request.GET.get('page')
     data_page = data_paginator.get_page(page_num)
     
@@ -141,7 +121,7 @@ def lancamento_atividade(request):
             'data': Lancamentos.objects.all().order_by('-id')[:7],
             }
         )
-    if request.method == "POST":
+    elif request.method == "POST":
         hora = [None] * 6
         b = 0
         for a in [request.POST.get("horaini1"),request.POST.get("horafim1"),request.POST.get("horaini2"),request.POST.get("horafim2"),request.POST.get("horaini3"),request.POST.get("horafim3")]:
@@ -153,7 +133,7 @@ def lancamento_atividade(request):
         
         att = Lancamentos(
                 obra=Obra(request.POST.get("obra")),
-                colaborador=Colaborador(request.POST.get("colaborador")),
+                colaborador=request.POST.get("colaborador"),
                 dia=request.POST.get("dia"),
                 descricao=request.POST.get("descricao"),
                 horaini1=hora[0],
@@ -173,9 +153,29 @@ def lancamento_atividade(request):
                 diario= "_".join([request.POST.get("obra"), data, request.POST.get("digito")])
             )
         att.save() 
-        return redirect("lancamento_atividade")
+        return redirect(lancamento_atividade)
     
-
+@login_required(login_url=urllogin)
+def lancamento_diario(request):
+    if request.method == "GET":    
+        return render(request, "lancamento_obra/lancamento/diario.html", {'obras_list': Obra.objects.all(), "colab_list": Colaborador.objects.all()})
+    elif request.method == "POST":
+        digitalizacao = request.FILES.get('arquivo')
+        img = Image.open(digitalizacao)
+        path = os.path.join(settings.BASE_DIR, f'midia/Lançamento_obra/diarios_digitalizado/{digitalizacao.name}')
+        img = img.save(path)   
+        
+        diaria = Diarioobra(
+            obra = request.POST.get("obra"),
+            data= request.POST.get("data"),
+            id= digitalizacao.name.split(".")[0],
+            encarregado= request.POST.get("encarregado"),
+            climamanha= request.POST.get("climamanha"),
+            climatarde= request.POST.get("climatarde"),
+            imagem= digitalizacao.name
+        ) 
+        diaria.save()
+        return redirect("lancamento_diario")
 
 @login_required(login_url=urllogin)
 def pesquisa_home(request):
@@ -202,10 +202,25 @@ def pesquisa_historico_obra(request):
     id = request.GET.get("id")
     if id != None:
         select = Obra.objects.get(cr=id)
-        dado = Lancamentos.objects.filter(obra=id).order_by("-id")
+        dado = Lancamentos.objects.filter(obra=select).order_by("-id")
         
     return render(request, "lancamento_obra/pesquisa/historico_obra.html", {
         'info': Obra.objects.all(),
+        'dado': dado,
+        'select': select,
+        })
+    
+@login_required(login_url=urllogin)
+def pesquisa_atividade_diario(request):
+    dado = None
+    select = ""
+    id = request.GET.get("id")
+    if id != None:
+        select = Diarioobra.objects.get(id=id).id
+        dado = Lancamentos.objects.filter(diario=select).order_by("-id")
+        
+    return render(request, "lancamento_obra/pesquisa/atividade_diario.html", {
+        'info': Diarioobra.objects.all(),
         'dado': dado,
         'select': select,
         })
