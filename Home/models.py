@@ -120,7 +120,7 @@ class Diarioobra(models.Model):
     id = models.CharField(primary_key=True, max_length=50)
     data = models.DateField()
     obra = models.IntegerField(blank=True, null=True)
-    encarregado = models.CharField(blank=True, null=True)
+    encarregado = models.CharField(blank=True, null=True, max_length=50)
     climamanha = models.CharField(max_length=20, blank=True, null=True)
     climatarde = models.CharField(max_length=20, blank=True, null=True)
     imagem = models.CharField(max_length=255, blank=True, null=True)
@@ -187,7 +187,7 @@ class Etapa(models.Model):
 
 
 class Funcao(models.Model):
-    funcao = models.CharField(primary_key=True)
+    funcao = models.CharField(primary_key=True, max_length=50)
     grupo = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -249,10 +249,10 @@ class Obra(models.Model):
     retrabalho = models.CharField(max_length=20, blank=True, null=True)
     empresa = models.CharField(max_length=100)
     cidade = models.CharField(max_length=100)
-    descricao = models.CharField(blank=True, null=True)
+    descricao = models.CharField(blank=True, null=True, max_length=100)
     supervisor = models.ForeignKey('Supervisor', models.DO_NOTHING, db_column='supervisor', blank=True, null=True)
     finalizada = models.BooleanField()
-    indice = models.CharField()
+    indice = models.CharField(max_length=50)
 
     class Meta:
         managed = False
