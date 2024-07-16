@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 def login(request):
     if request.method == "GET":
-        login_django
+        # login_django
         return render(request, 'login.html' )
     elif request.method == "POST":
         user = authenticate(username= request.POST.get('nome'), password= request.POST.get('senha'))

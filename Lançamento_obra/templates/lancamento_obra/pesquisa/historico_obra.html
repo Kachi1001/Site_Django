@@ -1,0 +1,86 @@
+{% extends 'lançamento_obra.html' %}
+
+{% block 'main' %}
+<style>
+  p{
+    margin-bottom: 0;
+    font-size: 8pt;
+  }
+  td{
+      padding: 0;
+      max-width: 30px;
+      white-space: nowrap;
+  }
+    tr{
+        border-bottom: none;
+    }
+    .td_desc{
+      white-space: initial;
+      min-width: 300px;
+    }
+    
+    
+</style>
+<select class="form-select" aria-label="Default select example" onchange="reload('id')", id="select">
+    <option {{select.cr}}>{{select.cr}} - {{select.empresa}} - {{select.cidade}}</option>
+    {% for x in info %}
+        <option value="{{x.cr}}">{{x.cr}} - {{x.empresa}} - {{x.cidade}}</option>
+    {%endfor%}
+  </select>
+  <h1>Atividade do {{select.empresa}}</h1>
+  <table class="table table-hover table-bordered table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Colaborador</th>
+        <th scope="col">Dia</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Ini1</th>
+        <th scope="col">Fim1</th>
+        <th scope="col">Ini2</th>
+        <th scope="col">Fim2</th>
+        <th scope="col">Ini3</th>
+        <th scope="col">Fim3</th>
+        <th scope="col">Diario</th>
+        <th scope="col">Atividade</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      
+      {% for i in dado %}
+        <tr>
+          <th scope="row"><p>{{i.id}}</p></th>
+          <td><p>{{i.colaborador}}</p></td>
+          <td><p>{{i.dia | date:"SHORT_DATE_FORMAT"}}</p></td>
+          <td class="td_desc"><p class="desc">{{i.descricao}}</p></td>
+          <td>{%if not i.horaini1 is Null%}<p>{{i.horaini1}}</p>{%endif%}</td>
+          <td>{%if not i.horafim1 is Null%}<p>{{i.horafim1}}</p>{%endif%}</td>
+
+          <td>{%if not i.horaini2 is Null%}<p>{{i.horaini2}}</p>{%endif%}</td>
+          <td>{%if not i.horafim2 is Null%}<p>{{i.horafim2}}</p>{%endif%}</td>
+          <td>{%if not i.horaini3 is Null%}<p>{{i.horaini3}}</p>{%endif%}</td>
+          <td>{%if not i.horafim3 is Null%}<p>{{i.horafim3}}</p>{%endif%}</td>
+          <td><a href="/midia/Lançamento_obra/diarios_digitalizado/{{i.diario}}.png" target="_blank">
+            <p>{{i.diario}}</p>
+          </a></td>
+          <td><p>{{i.atividade.tipo}}</p></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table> 
+  <script>
+    function reload(param) {
+        let url = new URL(window.location.href);
+        let params = new URLSearchParams(url.search);
+        let value = document.getElementById('select').value;
+        
+        // Atualizar o valor do parâmetro
+        params.set(param, value);
+        
+        // Atualizar a URL no navegador e recarregar a página
+        window.location.href = `${url.pathname}?${params}`;
+    }
+    
+  </script>
+{% endblock %}

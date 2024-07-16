@@ -5,6 +5,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=0.8">
 <link rel="stylesheet" href= "{% static 'css/color.css' %}">
+
 <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
 <style>
@@ -143,7 +144,7 @@ header{
         </button>
       </h2>
       <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-        <a href="#">Pesquisa Avançada</a>
+        <a href="{%url 'pesquisa_home'%}">Pesquisa Avançada</a>
         <a href="#">Resumo mensal</a>
       </div>
     </div>
@@ -153,14 +154,34 @@ header{
 
   <div class="main">
     {% block 'main' %}{% endblock %}
-    <div class="page-links">
-      {%if data.has_previous %}
-        <a href="?page={{data.previous_page_number}}">Anterior  </a>
+    {%if data.has_other_pages%}
+      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    
+        <div class="btn-group me-2" role="group" aria-label="First group">
+          {%if data.has_previous %}
+            <a href="?page=1" class="btn btn-info"><img src="{% static 'icons/chevron-double-left.svg' %}" alt="<<"></a>
+            <a href="?page={{data.previous_page_number}}" class="btn btn-info"><img src="{% static 'icons/chevron-left.svg' %}" alt="<"></a>
+          {%endif%}
+        </div>
+        <div class="btn-group me-2" role="group" aria-label="Second group">
+          {%if data.has_previous %}
+            <a href="?page={{ data.number|add:'-1' }}" class="btn btn-secondary">{{ data.number|add:"-1" }}</a>
+          {%endif%}
+            <a  class="btn btn-outline-secondary">{{data.number}}</a>
+          {%if data.has_next %}
+            <a href="?page={{ data.number|add:'1' }}" class="btn btn-secondary">{{ data.number|add:"1" }}</a>
+            <a href="?page={{ data.number|add:'2' }}" class="btn btn-secondary">{{ data.number|add:"2" }}</a>
+          {%endif%}
+
+        </div>
+        <div class="btn-group" role="group" aria-label="Third group">
+          {%if data.has_next %}
+            <a href="?page={{data.next_page_number}}" class="btn btn-info"><img src="{% static 'icons/chevron-right.svg' %}" alt=">"></a>
+            <a href="?page=100000" class="btn btn-info"><img src="{% static 'icons/chevron-double-right.svg' %}" alt=">>"></a>
+          {%endif%}
+        </div>
+      </div>
       {%endif%}
-      {%if data.has_next %}
-        <a href="?page={{data.next_page_number}}">  Proximo</a>
-      {%endif%}
-    </div>
   </div>
 
   <script>

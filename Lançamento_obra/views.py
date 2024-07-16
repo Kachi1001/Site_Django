@@ -18,9 +18,7 @@ def index(request):
 @login_required(login_url=urllogin)
 @has_role_decorator('lancamento_obra')
 def cadastro_colab(request):
-    if request.method == "GET":
-        return render(request, "lancamento_obra/cadastro/colaborador.html", {"func_list": Funcao.objects.all()})
-    elif request.method == "POST":
+    if request.method == "POST":
         # adicionar codigo para poup-up e verificação de dados
         colab = Colaborador(
             nome=request.POST.get("nome"),
@@ -33,7 +31,11 @@ def cadastro_colab(request):
             encarregado=request.POST.get("encarregado"),
         )
         colab.save()
-        return render(request, "lancamento_obra/cadastro/colaborador.html", {"func_list": Funcao.objects.all()}) 
+    return render(request, "lancamento_obra/cadastro/colaborador.html", {
+        'func_list': Funcao.objects.all(),
+        'data': Colaborador.objects.all().order_by('-admissao')[:7],
+        }
+    ) 
 
 @login_required(login_url=urllogin)
 def cadastro_funcao(request):
@@ -107,7 +109,7 @@ def visualizacao_obra(request):
 
 @login_required(login_url=urllogin)
 def visualizacao_atividade(request):
-    data = Lancamentos.objects.all()
+    data = Lancamentos.objects.all().order_by('-id')
     data_paginator = Paginator(data, 10)
     page_num = request.GET.get('page')
     data_page = data_paginator.get_page(page_num)
@@ -115,8 +117,11 @@ def visualizacao_atividade(request):
 
 @login_required(login_url=urllogin)
 def visualizacao_diario(request):
-    data = Diarioobra.objects.all()
-    return render(request, "lancamento_obra/visualizacao/diario.html", {'data': data})
+    data = Diarioobra.objects.all().order_by('-id')
+    data_paginator = Paginator(data, 10)
+    page_num = request.GET.get('page')
+    data_page = data_paginator.get_page(page_num)
+    return render(request, "lancamento_obra/visualizacao/diario.html", {'data': data_page})
 
 @login_required(login_url=urllogin)
 def visualizacao_hora_horaextra(request):
@@ -128,6 +133,14 @@ def visualizacao_hora_horaextra(request):
 
 @login_required(login_url=urllogin)
 def lancamento_atividade(request):
+    if request.method == "GET":
+        return render (request, "lancamento_obra/lancamento/atividade.html", {
+            'obras_list': Obra.objects.all(), 
+            'colab_list': Colaborador.objects.all(),
+            'att_list': Atividade.objects.all(),
+            'data': Lancamentos.objects.all().order_by('-id')[:7],
+            }
+        )
     if request.method == "POST":
         hora = [None] * 6
         b = 0
@@ -160,10 +173,39 @@ def lancamento_atividade(request):
                 diario= "_".join([request.POST.get("obra"), data, request.POST.get("digito")])
             )
         att.save() 
-    return render (request, "lancamento_obra/lancamento/atividade.html", {
-        'obras_list': Obra.objects.all(), 
-        'colab_list': Colaborador.objects.all(),
-        'att_list': Atividade.objects.all(),
-        'data': Lancamentos.objects.all().order_by('-id')[:7],
-        }
-    )
+        return redirect("lancamento_atividade")
+    
+
+
+@login_required(login_url=urllogin)
+def pesquisa_home(request):
+    return render(request, "lancamento_obra/pesquisa/home.html")
+
+@login_required(login_url=urllogin)
+def pesquisa_historico_colab(request):
+    dado = None
+    colab = ""
+    if request.GET.get("id") != None:
+        colab = Colaborador.objects.get(id=request.GET.get("id")).nome
+        dado = Lancamentos.objects.filter(colaborador=colab).order_by("-id")
+        
+    return render(request, "lancamento_obra/pesquisa/historico_colab.html", {
+        'colab': Colaborador.objects.all(),
+        'data': dado,
+        'select': colab,
+        })
+
+@login_required(login_url=urllogin)
+def pesquisa_historico_obra(request):
+    dado = None
+    select = ""
+    id = request.GET.get("id")
+    if id != None:
+        select = Obra.objects.get(cr=id)
+        dado = Lancamentos.objects.filter(obra=id).order_by("-id")
+        
+    return render(request, "lancamento_obra/pesquisa/historico_obra.html", {
+        'info': Obra.objects.all(),
+        'dado': dado,
+        'select': select,
+        })

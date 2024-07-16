@@ -16,7 +16,10 @@ urlpatterns = [
     path("visualizacao/diario/", views.visualizacao_diario, name= "visualizacao_diario"),
     path("visualizacao/hora_horaextra/", views.visualizacao_hora_horaextra, name= "visualizacao_hora_horaextra"),
     
+    path("lancamento/atividade/", views.lancamento_atividade, name= "lancamento_atividade"),
+
+    path("pesquisa/", views.pesquisa_home, name="pesquisa_home"),
+    path("pesquisa/historico_colab/", views.pesquisa_historico_colab, name= "pesquisa_historico_colab"),
+    path("pesquisa/historico_obra/", views.pesquisa_historico_obra, name= "pesquisa_historico_obra"),
     
-    
-    path("lancamento/atividade/", views.lancamento_atividade, name= "lancamento_atividade")
 ]
