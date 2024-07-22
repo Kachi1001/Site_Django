@@ -10,11 +10,12 @@
 <script src="{% static 'js/bootstrap.js' %}"></script>
 <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 <script src="{% static 'js/bootstrap.esm.js' %}"></script>
+<script src="{% static 'js/lançamento_obra.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 <link rel="stylesheet" href= "{% static 'css/color.css' %}">
 <link rel="stylesheet" href= "{% static 'css/lançamento_obra.css' %}">
-<link rel="stylesheet" href= "{% static 'js/lançamento_obra.js' %}">
 
 
 </head>
@@ -23,6 +24,8 @@
 <body>
   <nav class="navbar">
     <a href="/", style="color: black; text-decoration: none; padding-left: 5px;"><img src="{% static 'icons/x-circle-fill.svg'%}" alt="" style="margin-right: 5px;">Fechar app</a>  
+    <span class="user-name">{{nome}}</span>
+
   </nav>
   
   <div class="sidenav">
@@ -148,24 +151,28 @@
     </div>
     {%endif%}
 </footer>
-  <script>
-    /* Percorra todos os botões suspensos para alternar entre ocultar e mostrar o conteúdo do menu suspenso -Isso permite que o usuário tenha vários menus suspensos sem qualquer conflito */
-    var dropdown = document.getElementsByClassName("dropdown-btn");
-    var i;
-
-    for (i = 0; i < dropdown.length; i++) {
-      dropdown[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var dropdownContent = this.nextElementSibling;
-        if (dropdownContent.style.display === "block") {
-          dropdownContent.style.display = "none";
-        } else {
-          dropdownContent.style.display = "block";
+<script>
+  function salvarData(metodo,parametro){
+    $.ajax({
+        url: "{% url 'cadastrar' %}",  // URL da sua API no Django
+        type: 'POST',
+        data: {
+            'csrfmiddlewaretoken':"{{ csrf_token }}",
+            'parametro': JSON.stringify(parametro),
+            'metodo': metodo,
+            'user': "{{ nome }}",
+        },
+        success: function(Response) {
+            if (confirm(Response.message+'\nClique em <OK> para recarregar a página.')){
+                window.location.reload(true); 
+            }
+        },  
+        error: function(xhr) {
+            alert(xhr.responseJSON.message);
         }
-      });
-    }
-    
-  </script>
+    });
+}
+</script>
 {% block "script" %}{% endblock "script" %}   
 
 </body>

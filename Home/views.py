@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login as login_django
 from django.contrib.auth import logout as logout_django
 from django.contrib.auth.decorators import login_required
-
+from rolepermissions.checkers import has_permission
+from rolepermissions.roles import assign_role
 
 
 def login(request):
@@ -22,4 +23,5 @@ def login(request):
             return render(request, 'login.html', {"nome": request.POST.get('nome'), "senha": request.POST.get('senha')})
 @login_required (login_url= '/login')
 def index(request):
-    return render(request, 'index.html')
+    user = request.user
+    return render(request, 'index.html', {"nome": user.username})

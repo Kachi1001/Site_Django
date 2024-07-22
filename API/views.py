@@ -6,8 +6,8 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
 import json   
-from django.db import IntegrityError, transaction
 from django.http import JsonResponse
+from .mani import *
 
 # Configurações de conexão com o banco de dados PostgreSQL
 dbname = settings.DATABASES['default']['NAME']
@@ -40,19 +40,32 @@ def executar_funcao_geraViewJunta(request):
     finally:
         cursor.close()
         conn.close()
-        
-@api_view(['POST']) 
-def criarFuncao(request):
-    try:
-        with transaction.atomic():
-            nome = request.POST.get('parametro')
-            if nome == "":
-                return Response({'message': 'Erro ao adicionar função: Não pode ser valor nulo'}, status=400) 
-            else:
-                func = Funcao(funcao=nome)
-                func.save()
-                return Response({'message': 'Cadastrado com sucesso'})  
-    except IntegrityError as e:
-        # Capturar a exceção e extrair a mensagem de erro
-        error_message = str(e)
-        return Response({'message': f'Erro ao adicionar função: {error_message}'}, status=400)
+
+
+@api_view(['POST'])
+def cadastrar(request):
+    parametro = json.loads(request.POST.get('parametro'))
+    metodo = request.POST.get('metodo')
+    owner = request.POST.get('user') 
+    if metodo == 'Funcao':
+        return register.Funcao(owner, parametro)
+    if metodo == 'Colaborador':
+        return register.Colaborado(owner, parametro)
+    if metodo == 'Historico':
+        return register.Historico("1",'teste','create','teste')
+    
+@api_view(['POST'])
+def salas(request):
+    id = request.POST.get('id')
+    metodo = request.POST.get('metodo')
+    x = AgendaSalas.objects.get(id=id)
+    if metodo == "deletar":
+        x.delete()
+        return Response({'message':'Deletado com sucesso'})
+    elif metodo == 'editar':
+        x.responsavel = request.POST.get('responsavel')
+        x.descricao = request.POST.get('descricao')
+        x.save()
+        return Response({'message':'Editado com sucesso'})
+    else:
+        return Response({'message':'Houve algum problema'})

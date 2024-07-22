@@ -1,7 +1,6 @@
 {% extends 'lançamento_obra.html' %}
 
 {% block 'head' %}
-  <script src="colaborador.js"></script>
   <style>
     .main{
       padding: 150px 150px;;
@@ -16,11 +15,10 @@
 {%endblock%}
 
 {%block 'header'%}
-<h2>Cadastro de funçãor</h2>
+<h2>Cadastro de função</h2>
 {%endblock%}
 
 {% block 'main' %}
-  
     <div class="input-group mb-3">
       <label class="input-group-text" for="inputGroupSelect01">Nome da função:</label>
       <input type="text" name="nome" id="nome" class="form-control">
@@ -30,24 +28,14 @@
   <script>
     $(document).ready(function() {
       $('#enviar').click(function() {
-          $.ajax({
-              url: "{% url 'criarFuncao' %}",  // URL da sua API no Django
-              type: 'POST',
-              data: {
-                'csrfmiddlewaretoken':"{{ csrf_token }}",
-                'parametro': document.getElementById('nome').value,
-              },
-              success: function(Response) {
-                  if (confirm(Response.message+'\nClique em <OK> para recarregar a página.')){
-                    window.location.reload(true); 
-                  }
-              },  
-              error: function(xhr) {
-                alert(xhr.responseJSON.message);
-              }
-          });
-      });
-    });
+        let parametro = {
+          'funcao': document.getElementById('nome').value,
+          'grupo' : 1,
+        }
+        console.log(parametro)
+        salvarData('Funcao', parametro)
+    })
+  })
   </script>
   {% block 'edit' %}{% endblock %}
 {% endblock %}

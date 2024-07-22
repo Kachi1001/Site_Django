@@ -1,7 +1,12 @@
 from rolepermissions.roles import AbstractUserRole
 
-class lancamento_obra(AbstractUserRole):
-    available_permissions = {'Lançamento_obra_app': True}
+class perm1(AbstractUserRole):
+    available_permissions = {
+        'lançamento': True,
+        'teste': True,
+    }
     
-class admin(AbstractUserRole):
-    available_permissions = {'admin': True}
+class perm2(AbstractUserRole):
+    available_permissions = {
+        'admin': True,
+    }

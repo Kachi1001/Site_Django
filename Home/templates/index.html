@@ -58,7 +58,7 @@
 
       <button class="navbar-toggler" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         <img src="./static/icon/user.png" alt="" class="user-icon">
-        <span class="user-name">Teste da silva</span>
+        <span class="user-name">{{nome}}</span>
       </button>
       <ul class="dropdown-menu">
         <li><a class="dropdown-item" href="/login">Desconectar</a></li>
@@ -69,7 +69,7 @@
     <div class="container text-center">
       <h1>Lista de ferramentas disponiveis</h1> 
         <div class="row">
-          {%if perms.lancamentos_obra %}
+          {% if user|can:'lançamento' %}
             <div class="col">
               <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
                 <div class="card-header">
@@ -85,8 +85,24 @@
                 </div>
             </div>
           {%endif%}
+          
+            <div class="col">
+              <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
+                <div class="card-header">
+                  <h5 class="card-title">Sala de reunião</h5>
+                </div>
+                  <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Teste   0.1</h6>
+                    <p class="card-text">Controle de reserva para as salas de reuniões</p>
+                  </div>
+                  <div class="card-footer">
+                    <a href="{%url 'salas'%}" class="card-link">Abrir Aplicação</a>
+                  </div>
+                </div>
+            </div>
+          
 
-          {%if user|has_role:'admin'%}
+          {% if user|can:'master' %}
           <div class="col">
             <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
               <div class="card-header">

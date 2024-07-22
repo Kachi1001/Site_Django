@@ -29,6 +29,8 @@
         <th scope="col">Finalizada</th>
         <th scope="col">Indice</th>
         <th scope="col">Etapas</th>
+        <th scope="col">Editar</th>
+
       </tr>
     </thead>
     <tbody>
@@ -50,6 +52,8 @@
           </td>
           <td><p>{{obra.indice}}</p></td>
           <td><p>{{obra.etapas}}</p></td>
+          <td><a href=""><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
+
         </tr>
       {% endfor %}
     </tbody>

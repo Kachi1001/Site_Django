@@ -2,52 +2,35 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from .models import *   
 from django.contrib.auth.decorators import login_required
-from rolepermissions.decorators import has_role_decorator
 from PIL import Image
 import os
 from pathlib import Path  
 from django.conf import settings
 import datetime
 from django.core.paginator import Paginator
-urllogin = "/login"
+from django.contrib.auth.models import User
 
-@login_required(login_url=urllogin)
+
+@login_required
 def index(request):
-    return render(request, "lancamento_obra/index.html")
+    return render(request, "lancamento_obra/index.html", {"nome": request.user.username})
 
-@login_required(login_url=urllogin)
-@has_role_decorator('lancamento_obra')
+@login_required
 def cadastro_colab(request):
-    if request.method == "POST":
-        # adicionar codigo para poup-up e verificação de dados
-        colab = Colaborador(
-            nome=request.POST.get("nome"),
-            funcao=Funcao(request.POST.get("funcao")),
-            admissao=request.POST.get("admissao"),
-            demissao=request.POST.get("demissao"),
-            contrato=Tipocontrato(request.POST.get("tipo")),
-            diaria=request.POST.get("diaria"),
-            observacoes=request.POST.get("observacao"),
-            encarregado=request.POST.get("encarregado"),
-        )
-        colab.save()
     return render(request, "lancamento_obra/cadastro/colaborador.html", {
         'func_list': Funcao.objects.all(),
-        'data': Colaborador.objects.all().order_by('-admissao')[:10],
+        'data': Colaborador.objects.all().order_by('-id')[:10],
+        'nome': request.user.username,
         }
     ) 
 
-@login_required(login_url=urllogin)
+@login_required
 def cadastro_funcao(request):
     if request.method == "GET":
-        return render(request, "lancamento_obra/cadastro/funcao.html")
-    elif request.method == "POST":
-        func = Funcao(funcao=request.POST.get('nome'),grupo="2")
-        func.save()
-        return render(request, "lancamento_obra/cadastro/funcao.html")
+        return render(request, "lancamento_obra/cadastro/funcao.html", {"nome": request.user.username})
         
 
-@login_required(login_url=urllogin)
+@login_required
 def cadastro_obra(request):
     if request.method == "GET":
         return render(request, "lancamento_obra/cadastro/obra.html", {"super_list": Supervisor.objects.all()})
@@ -69,9 +52,9 @@ def cadastro_obra(request):
 
 
 
-@login_required(login_url=urllogin)
+@login_required
 def visualizacao_colab(request):
-    data = Colaborador.objects.all()
+    data = Colaborador.objects.all().order_by('-id')
     
     data_paginator = Paginator(data, 15)
     page_num = request.GET.get('page')
@@ -79,15 +62,15 @@ def visualizacao_colab(request):
     
     return render(request, "lancamento_obra/visualizacao/colaborador.html", {'data': data_page})
 
-@login_required(login_url=urllogin)
+@login_required
 def visualizacao_obra(request):
-    data = Obra.objects.all()
+    data = Obra.objects.all().order_by('-cr')
     data_paginator = Paginator(data, 10)
     page_num = request.GET.get('page')
     data_page = data_paginator.get_page(page_num)
     return render(request, "lancamento_obra/visualizacao/obra.html", {'data': data_page})
 
-@login_required(login_url=urllogin)
+@login_required
 def visualizacao_atividade(request):
     data = Lancamentos.objects.all().order_by('-id')
     data_paginator = Paginator(data, 10)
@@ -95,7 +78,7 @@ def visualizacao_atividade(request):
     data_page = data_paginator.get_page(page_num)
     return render(request, "lancamento_obra/visualizacao/atividade.html", {'data': data_page})
 
-@login_required(login_url=urllogin)
+@login_required
 def visualizacao_diario(request):
     data = Diarioobra.objects.all().order_by('-id')
     data_paginator = Paginator(data, 10)
@@ -103,7 +86,7 @@ def visualizacao_diario(request):
     data_page = data_paginator.get_page(page_num)
     return render(request, "lancamento_obra/visualizacao/diario.html", {'data': data_page})
 
-@login_required(login_url=urllogin)
+@login_required
 def visualizacao_hora_horaextra(request):
     data = ResumoJunta.objects.all()
     data_paginator = Paginator(data, 15)
@@ -111,7 +94,7 @@ def visualizacao_hora_horaextra(request):
     data_page = data_paginator.get_page(page_num)
     return render(request, "lancamento_obra/visualizacao/hora_horaextra.html", {'data': data_page})
 
-@login_required(login_url=urllogin)
+@login_required
 def lancamento_atividade(request):
     if request.method == "GET":
         return render (request, "lancamento_obra/lancamento/atividade.html", {
@@ -150,12 +133,12 @@ def lancamento_atividade(request):
                 etapa3=0,
                 perdevale=True,
                 revisaorh="",
-                diario= "_".join([request.POST.get("obra"), data, request.POST.get("digito")])
+                # diario= "_".join([request.POST.get("obra"), data, request.POST.get("digito")])
             )
         att.save() 
         return redirect(lancamento_atividade)
     
-@login_required(login_url=urllogin)
+@login_required
 def lancamento_diario(request):
     if request.method == "GET":    
         return render(request, "lancamento_obra/lancamento/diario.html", {'obras_list': Obra.objects.all(), "colab_list": Colaborador.objects.all()})
@@ -177,11 +160,11 @@ def lancamento_diario(request):
         diaria.save()
         return redirect("lancamento_diario")
 
-@login_required(login_url=urllogin)
+@login_required
 def pesquisa_home(request):
     return render(request, "lancamento_obra/pesquisa/home.html")
 
-@login_required(login_url=urllogin)
+@login_required
 def pesquisa_historico_colab(request):
     dado = None
     colab = ""
@@ -195,7 +178,7 @@ def pesquisa_historico_colab(request):
         'select': colab,
         })
 
-@login_required(login_url=urllogin)
+@login_required
 def pesquisa_historico_obra(request):
     dado = None
     select = ""
@@ -210,7 +193,7 @@ def pesquisa_historico_obra(request):
         'select': select,
         })
     
-@login_required(login_url=urllogin)
+@login_required
 def pesquisa_atividade_diario(request):
     dado = None
     select = ""

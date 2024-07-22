@@ -1,0 +1,95 @@
+{% extends 'salas.html' %}
+
+{%block 'main'%}
+<main>
+  <form action="{{url}}" method="POST">{% csrf_token %}
+    <div class="container text-start">
+        <div class="container text-center">
+          <div class="row">
+            <div class="col-4">
+              <h2>Data</h2>
+              <input type="date" name="data-picker" id= 'date' onchange="reload('data')" class="form-control" value="{{data}}">
+              </div>
+              <div class="col align-self-end" >
+                <input type="submit" class="btn btn-outline-success" value="Registrar" id="liveAlertBtn">
+              </div>
+          </div>
+        </div>
+      </div>
+</main>
+  <div class="submain">
+    <div class="container text-start">
+      <div class="row">
+  
+          <div class="col">
+              <table class="table">
+              <h3>Manhã</h3>
+              <thead>
+                  <thead>
+                      <tr>
+                          <th scope="col"></th>
+                          <th scope="col">Horário</th>
+                          <th scope="col">Responsável</th>
+                          <th scope="col">Descrição</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      
+                      {% for h in horarios1 %}
+                      <tr>
+                          <th scope="row">
+                              <input class="form-check-input" type="checkbox" value="True" id="flexCheckCheckedDisabled" {{h.reservado}} name="check{{h.hora}}">
+                          </th>
+                          <th scope="row">
+                              <p>{{h.hora}}</p>
+                          </th>
+                          <th scope="row">
+                              <input type="text" id="nome" class="form-control" name="responsavel{{h.hora}}" value="{{h.responsavel}}" placeholder="Responsável" {{h.reservado}}>
+                          </th>
+                          <th scope="row">
+                              <input type="text" id="descricao" class="form-control" name="descricao{{h.hora}}" value="{{h.descricao}}" placeholder="Descrição" {{h.reservado}}>
+                          </th>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+          <div class="col">
+  
+              <table class="table">
+                  
+                  <h3>Tarde</h3>
+                  <thead>
+                      <tr>
+                          <th scope="col"></th>
+                          <th scope="col">Horário</th>
+                          <th scope="col">Responsável</th>
+                          <th scope="col">Descrição</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for h in horarios2 %}
+                      <tr>
+                          <th scope="row">
+                              <input class="form-check-input" type="checkbox" value="True" id="flexCheckCheckedDisabled" {{h.reservado}} name="check{{h.hora}}">
+                          </th>
+                          <th scope="row">
+                              <p>{{h.hora}}</p>
+                          </th>
+                          <th scope="row">
+                              <input type="text" id="nome" class="form-control" name="responsavel{{h.hora}}" value="{{h.responsavel}}" placeholder="Responsável" {{h.reservado}}>
+                          </th>
+                          <th scope="row">
+                              <input type="text" id="descricao" class="form-control" name="descricao{{h.hora}}" value="{{h.descricao}}" placeholder="Descrição" {{h.reservado}}>
+                          </th>
+                      </tr>
+                      {% endfor %}
+                      
+                          
+                  </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+    </form>
+{%endblock%}

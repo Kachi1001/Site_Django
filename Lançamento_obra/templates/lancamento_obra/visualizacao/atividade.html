@@ -32,7 +32,7 @@
         <th scope="col">Fim3</th>
         <th scope="col">Diario</th>
         <th scope="col">Atividade</th>
-
+        <th scope="col">Editar</th>
       </tr>
     </thead>
     <tbody>
@@ -55,6 +55,7 @@
             <p>{{i.diario}}</p>
           </a></td>
           <td><p>{{i.atividade.tipo}}</p></td>
+          <td><a href=""><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
         </tr>
       {% endfor %}
     </tbody>

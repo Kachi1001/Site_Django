@@ -24,6 +24,9 @@
         <th scope="col">Encarregado</th>
         <th scope="col">Clima de Manha</th>
         <th scope="col">Clima de Tarde</th>
+        <th scope="col">Digital</th>
+        <th scope="col">Editar</th>
+
       </tr>
     </thead>
     <tbody>
@@ -40,6 +43,8 @@
           <td><a href="/midia/Lançamento_obra/diarios_digitalizado/{{i.id}}.png" target="_blank">
             <p>Abrir Digitalização</p>
           </a></td>
+          <td><a href=""><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
+
         </tr>
       {% endfor %}
     </tbody>
