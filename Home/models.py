@@ -212,7 +212,7 @@ class Historico(models.Model):
     user = models.CharField(max_length=100)
     data = models.DateTimeField()
     action = models.CharField(max_length=50)
-    context = models.CharField()
+    context = models.CharField(max_length=255)
 
     class Meta:
         managed = False
