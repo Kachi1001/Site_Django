@@ -26,8 +26,7 @@ def cadastro_colab(request):
 
 @login_required
 def cadastro_funcao(request):
-    if request.method == "GET":
-        return render(request, "lancamento_obra/cadastro/funcao.html", {"nome": request.user.username})
+    return render(request, "lancamento_obra/cadastro/funcao.html", {"nome": request.user.username})
         
 
 @login_required
@@ -47,7 +46,7 @@ def cadastro_obra(request):
                 indice=request.POST.get("indice"),
             )
         obra.save()
-        return render(request, "lancamento_obra/cadastro/obra.html", {"super_list": Supervisor.objects.all()})
+        return redirect(cadastro_obra)
 
 
 

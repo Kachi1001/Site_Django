@@ -181,9 +181,7 @@
                     'id': id,
                 },
                 success: function(Response) {
-                    if (confirm(Response.message+'\nClique em <OK> para recarregar a página.')){
-                        window.location.reload(true); 
-                    }
+                    window.location.reload(true); 
                 },  
                 error: function(xhr) {
                     alert(xhr.responseJSON.message);
@@ -204,9 +202,7 @@
                     'descricao': document.getElementById('descricao'.concat(id))?.value,
                 },
                 success: function(Response) {
-                    if (confirm(Response.message+'\nClique em <OK> para recarregar a página.')){
-                        window.location.reload(true); 
-                    }
+                    window.location.reload(true); 
                 },  
                 error: function(xhr) {
                     alert(xhr.responseJSON.message);

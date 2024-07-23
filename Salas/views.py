@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from datetime import datetime
 from .models import *
 from django.utils import timezone
@@ -52,77 +52,100 @@ horarios2 = [
 def index(request):
     return render(request, "salas/index.html")
 def atendimento(request):
+    sala = 'atendimento'
     date = request.GET.get('data') if request.GET.get('data') != None else hoje
-    reservados = AgendaSalas.objects.all().filter(sala='Atendimento', data=date)
     if request.method == "POST":
         for a in horarios1+horarios2:
-            if request.POST.get('check'+a):
+            if request.POST.get('check'+a) or request.POST.get('descricao'+a):
+                responsavel = request.user.username if request.user.is_authenticated else request.POST.get('responsavel'+a)
+            elif request.POST.get('responsavel'+a): responsavel = request.POST.get('responsavel'+a)
+            else: responsavel = False
+    
+            if responsavel:
                 b = AgendaSalas(
                     data=request.POST.get('data-picker'),
                     hora=a,
-                    sala='Atendimento',
+                    sala=sala,
                     reservado='checked disabled',
-                    responsavel=request.POST.get('responsavel'+a),
+                    responsavel=responsavel,
                     descricao=request.POST.get('descricao'+a),
                 )
                 b.save()
-                date = request.POST.get('data-picker')
-                reservados = AgendaSalas.objects.all().filter(sala='Atendimento', data=date)
+        date = request.POST.get('data-picker')
+        return redirect(f'/salas/{sala}?data={date}')
+    reservados = AgendaSalas.objects.all().filter(sala=sala, data=date)
     context = {
         'data': date,
         'horarios1': reserva.gerarLista(reservados, horarios1),
         'horarios2': reserva.gerarLista(reservados, horarios2),
-        'url': 'atendimento',
+        'url': sala,
         'sala': 'Atendimento',
         }
     return render(request, "salas/tabela.html", context)
+
 def reuniao(request):
+    sala = 'reuniao'
     date = request.GET.get('data') if request.GET.get('data') != None else hoje
-    reservados = AgendaSalas.objects.all().filter(sala='Reuniao', data=date)
     if request.method == "POST":
         for a in horarios1+horarios2:
-            if request.POST.get('check'+a):
+            if request.POST.get('check'+a) or request.POST.get('descricao'+a):
+                responsavel = request.user.username if request.user.is_authenticated else request.POST.get('responsavel'+a)
+            elif request.POST.get('responsavel'+a): responsavel = request.POST.get('responsavel'+a)
+            else: responsavel = False
+    
+            if responsavel:
                 b = AgendaSalas(
                     data=request.POST.get('data-picker'),
                     hora=a,
-                    sala='Reuniao',
+                    sala=sala,
                     reservado='checked disabled',
-                    responsavel=request.POST.get('responsavel'+a),
+                    responsavel=responsavel,
                     descricao=request.POST.get('descricao'+a),
                 )
                 b.save()
-                date = request.POST.get('data-picker')
-                reservados = AgendaSalas.objects.all().filter(sala='Reuniao', data=date)
+        date = request.POST.get('data-picker')
+        return redirect(f'/salas/{sala}?data={date}')
+        
+    reservados = AgendaSalas.objects.all().filter(sala=sala, data=date)
     context = {
         'data': date,
         'horarios1': reserva.gerarLista(reservados, horarios1),
         'horarios2': reserva.gerarLista(reservados, horarios2),
-        'url': 'reuniao',
+        'url': sala,
         'sala': 'Reunião',
         }
     return render(request, "salas/tabela.html", context)
+
+
+            
 def apoio(request):
+    sala = 'apoio'
     date = request.GET.get('data') if request.GET.get('data') != None else hoje
-    reservados = AgendaSalas.objects.all().filter(sala='Apoio', data=date)
     if request.method == "POST":
         for a in horarios1+horarios2:
-            if request.POST.get('check'+a):
+            if request.POST.get('check'+a) or request.POST.get('descricao'+a):
+                responsavel = request.user.username if request.user.is_authenticated else request.POST.get('responsavel'+a)
+            elif request.POST.get('responsavel'+a): responsavel = request.POST.get('responsavel'+a)
+            else: responsavel = False
+    
+            if responsavel:
                 b = AgendaSalas(
                     data=request.POST.get('data-picker'),
                     hora=a,
-                    sala='Apoio',
+                    sala=sala,
                     reservado='checked disabled',
-                    responsavel=request.POST.get('responsavel'+a),
+                    responsavel=responsavel,
                     descricao=request.POST.get('descricao'+a),
                 )
                 b.save()
-                date = request.POST.get('data-picker')
-                reservados = AgendaSalas.objects.all().filter(sala='Apoio', data=date)
+        date = request.POST.get('data-picker')
+        return redirect(f'/salas/{sala}?data={date}')
+    reservados = AgendaSalas.objects.all().filter(sala=sala, data=date)
     context = {
         'data': date,
         'horarios1': reserva.gerarLista(reservados, horarios1),
         'horarios2': reserva.gerarLista(reservados, horarios2),
-        'url': 'apoio',
+        'url': sala,
         'sala': 'Apoio',
         }
     return render(request, "salas/tabela.html", context)
@@ -132,9 +155,9 @@ def lista(request):
     tabela = AgendaSalas.objects.all().order_by('id')
     today = timezone.now().date()
     context = {
-        'atendimento': tabela.filter(sala='Atendimento', data__gte=today),
-        'apoio': tabela.filter(sala='Apoio', data__gte=today),
-        'reuniao': tabela.filter(sala='Reuniao', data__gte=today),
+        'atendimento': tabela.filter(sala='atendimento', data__gte=today),
+        'apoio': tabela.filter(sala='apoio', data__gte=today),
+        'reuniao': tabela.filter(sala='reuniao', data__gte=today),
         
         
         'sala': 'Registros',

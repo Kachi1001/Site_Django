@@ -12,10 +12,10 @@ class AgendaSalas(models.Model):
     id = models.BigAutoField(primary_key=True)
     sala = models.CharField(max_length=100)
     data = models.DateField()
-    responsavel = models.CharField()
-    reservado = models.CharField(blank=True, null=True)
-    hora = models.CharField(blank=True, null=True)
-    descricao = models.CharField(blank=True, null=True)
+    responsavel = models.CharField(max_length=30)
+    reservado = models.CharField(max_length=20, blank=True, null=True)
+    hora = models.CharField(max_length=6, blank=True, null=True)
+    descricao = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False
