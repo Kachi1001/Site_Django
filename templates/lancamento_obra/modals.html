@@ -90,3 +90,93 @@
     </div>
   </div>
   
+  <!-- Modal upadate colaborador-->
+  <div class="modal fade" id="update_colab" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de colaborador</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div class="input-group input-group-sm mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">ID:</label>
+                <input type="text" name="update_id" id="update_id" class="form-control" disabled>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group input-group-sm mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
+                <input type="text" name="update_nome" id="update_nome" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="input-group input-group-sm mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Data de admissão:</label>
+                <input type="date" name="update_admissao" id="update_admissao" class="form-control">
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group input-group-sm mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Função:</label>
+                <select class="form-select" name="update_funcao" id="update_funcao">
+                </select>
+              </div>
+            </div>
+            
+          </div>
+          
+          <div class="row">
+            <div class="col">
+              <div class="input-group input-group-sm mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Data de demissao:</label>
+                <input type="date" name="uptade_demissao" id="update_demissao" class="form-control">
+              </div>
+            </div>
+            
+            <div class="col">
+              <div class="input-group input-group-sm mb-3">
+                <div class="input-group-text">
+                  <input class="form-check-input mt-0" type="checkbox" value="True" aria-label="Checkbox for following text input" name="update_encarregado" id="update_encarregado">
+                </div>
+                <span class="input-group-text">Encarregado</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="input-group input-group-sm mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Tipo de contrato:</label>
+                <select class="form-select" id="update_contrato" name="update_contrato" onchange="exibir_diaria(document.getElementById('update_contrato'))">
+                  <option value="CLT">CLT</option>
+                  <option value="Terceiro">Terceiro</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group input-group-sm mb-3" id="div_diaria" style="display: none">
+                <span class="input-group-text">Valor da Diaria</span>
+                <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="update_diaria" id="update_diaria">
+                <span class="input-group-text">R$</span>
+              </div>
+            </div>
+        
+          </div>
+          
+          <div class="input-group input-group-sm mb-3">
+            <span class="input-group-text">Observações</span>
+            <textarea class="form-control" aria-label="With textarea" name="update_observacao" id="update_observacao"></textarea>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" onclick="deletar('Colaborador')">Deletar</button>
+          <button type="button" class="btn btn-success" onclick="update('colab')">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>

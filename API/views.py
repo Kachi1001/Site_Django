@@ -8,6 +8,9 @@ from .models import *
 import json   
 from django.http import JsonResponse
 from .mani import *
+from .update import *
+
+from .serializers import *
 
 # Configurações de conexão com o banco de dados PostgreSQL
 dbname = settings.DATABASES['default']['NAME']
@@ -50,12 +53,25 @@ def cadastrar(request):
     if metodo == 'Funcao':
         return register.Funcao(owner, parametro)
     if metodo == 'Colaborador':
-        return register.Colaborado(owner, parametro)
+        return register.Colaborador(owner, parametro)
     if metodo == 'Historico':
         return register.Historico("1",'teste','create','teste')
     if metodo == 'Supervisor':
         return register.Supervisor(owner, parametro)
-    
+@api_view(['POST'])
+def update(request):
+    metodo = request.POST.get('metodo')
+    parametro = json.loads(request.POST.get('parametro'))
+    owner = request.POST.get('user')
+    if metodo == 'Colaborador':
+        return edit.Colaborador(owner, parametro) 
+@api_view(['POST'])
+def deletar(request):
+    metodo = request.POST.get('metodo')
+    id = request.POST.get('parametro')
+    owner = request.POST.get('user')
+    if metodo == 'Colaborador':
+        return delete.Colaborador(owner, id) 
 @api_view(['POST'])
 def salas(request):
     id = request.POST.get('id')
@@ -81,3 +97,14 @@ def get_table(request):
         value = Supervisor.objects.all().values('supervisor', 'ativo')
         
     return JsonResponse(list(value), safe=False)
+
+@api_view(['GET'])
+def get_data(request):
+    metodo = request.GET.get('metodo')
+    if metodo == 'colab':
+        try:
+            mymodel = Colaborador.objects.get(id=request.GET.get('id'))
+            serializer = MyModelSerializer(mymodel)
+            return Response(serializer.data)
+        except MyModel.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)

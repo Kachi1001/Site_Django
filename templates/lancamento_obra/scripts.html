@@ -35,6 +35,99 @@
       salvarData('Supervisor', parametro)
     }
   }
+  function updateData(metodo, parametro){
+    $.ajax({
+      url: "{% url 'update' %}",  // URL da sua API no Django
+      type: 'POST',
+      data: {
+          'csrfmiddlewaretoken':"{{ csrf_token }}",
+          'parametro': JSON.stringify(parametro),
+          'metodo': metodo,
+          'user': "{{ user }}",
+      },
+      success: function(Response) {
+          if (confirm(Response.message+'\nClique em <OK> para recarregar a página.')){
+              window.location.reload(true); 
+          }
+      },  
+      error: function(xhr) {
+          alert(xhr.responseJSON.message);
+      }
+  });
+}
+  function update(metodo){
+    if (metodo == 'colab'){
+      let encarregado = false
+      if (document.getElementById('update_encarregado').checked){ encarregado = true}
+      let parametro = {
+        'id': document.getElementById('update_id')?.value,
+        'nome': document.getElementById('update_nome')?.value,
+        'funcao': document.getElementById('update_funcao')?.value,
+        'admissao': document.getElementById('update_admissao')?.value,
+        'demissao': document.getElementById('update_demissao')?.value,
+        'contrato': document.getElementById('update_contrato')?.value,
+        'diaria': document.getElementById('update_diaria')?.value,
+        'observacao': document.getElementById('update_observacao')?.value,
+        'encarregado': encarregado,
+      }
+      updateData('Colaborador', parametro)
+    }
+  }
+  function deletar(metodo){
+    if (metodo == 'Colaborador'){
+      let id = document.getElementById('update_id')?.value
+      deletarData(metodo, id)
+    }
+  }
+  function deletarData(metodo, id){
+    $.ajax({
+      url: "{% url 'deletar' %}",  // URL da sua API no Django
+      type: 'POST',
+      data: {
+        'csrfmiddlewaretoken':"{{ csrf_token }}",
+        'parametro': id,
+        'metodo': metodo,
+        'user': "{{ user }}",
+      },
+      success: function(Response) {
+          if (confirm(Response.message+'\nClique em <OK> para recarregar a página.')){
+              window.location.reload(true); 
+          }
+      },  
+      error: function(xhr) {
+          alert(xhr.responseJSON.message);
+      }
+  });
+}
+  function loadUpdate(metodo,id){
+    $.ajax({
+      url: `{%url 'get_data'%}`, // URL da view Django que retorna os dados
+      method: 'GET',
+      data: {
+          'csrfmiddlewaretoken':"{{ csrf_token }}",
+          'id': id,
+          'metodo': metodo,
+      },
+      success: function(data) {
+        if (metodo == 'colab'){
+          document.getElementById('update_id').value = data.id
+          document.getElementById('update_nome').value = data.nome
+          loadTable('funcao', 'func_list')
+          document.getElementById('update_funcao').value = data.funcao
+          document.getElementById('update_admissao').value = data.admissao
+          document.getElementById('update_contrato').value = data.contrato
+          document.getElementById('update_diaria').value = data.diaria
+          document.getElementById('update_observacao').value = data.observacao
+          document.getElementById('update_encarregado').checked = data.encarregado
+        }
+
+      },
+      error: function(error) {
+          console.error('Erro ao buscar dados:', error);
+      }
+  });
+  }
+  
   function loadTable(tableDB, tableHTML) {
     $.ajax({
         url: '{%url "get_table"%}', // URL da view Django que retorna os dados
@@ -73,7 +166,21 @@
                 row += '</tr>';
                 table.append(row);
             }
+        }else if (tableHTML == 'func_list'){
+          for (let i = 0; i < data.length; i++) {
+            const opt = document.createElement('option');
+            opt.value = data[i].funcao;
+            opt.text = data[i].funcao;
+            $('#update_funcao').append(opt)
+          }
         }
     };
-
+    function exibir_diaria(a){
+      div = document.getElementById('div_diaria')
+      if (a.options[a.selectedIndex].value == "Terceiro"){
+        div.style.display = "flex"
+      }else {
+        div.style.display = "none"
+      }
+    }
   </script>

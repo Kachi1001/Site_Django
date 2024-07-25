@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from .models import *
 
 class SerializerTipo(serializers.Serializer):
     integer_field = serializers.IntegerField()
@@ -19,3 +20,9 @@ class SerializerTipo(serializers.Serializer):
         if not isinstance(value, bool):
             raise serializers.ValidationError("Este campo precisa ser verdadeiro ou falso.")
         return value
+
+
+class MyModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Colaborador
+        fields = '__all__'  # Ou liste os campos que deseja expor na API

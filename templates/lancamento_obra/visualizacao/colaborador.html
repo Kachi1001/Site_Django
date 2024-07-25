@@ -34,13 +34,13 @@
       {% for colaborador in data %}
         <tr>
           <td><p style="font-weight: bold;">{{colaborador.nome}}</p></td>
-          <td><p>{{colaborador.funcao.funcao}}</p></td>
+          <td><p>{{colaborador.funcao}}</p></td>
           <td><p>{{colaborador.admissao | date:"SHORT_DATE_FORMAT"}}</p></td>
           <td>{%if not colaborador.demissao is None%}<p>{{colaborador.demissao | date:"SHORT_DATE_FORMAT"}}</p>{%endif%}</td>
-          <td><p>{{colaborador.contrato.contrato}}</p></td>
+          <td><p>{{colaborador.contrato}}</p></td>
           <td>{%if not colaborador.diaria is None%}<p>{{colaborador.diaria}}</p>{%endif%}</td>
-          <td>{%if not colaborador.observacoes is None%}<p>{{colaborador.observacoes}}</p>{%endif%}</td>
-          <td><a href=""><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
+          <td>{%if not colaborador.observacao is None%}<p>{{colaborador.observacao}}</p>{%endif%}</td>
+          <td><a data-bs-toggle="modal" data-bs-target="#update_colab" onclick="loadUpdate('colab','{{colaborador.id}}')"><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
         </tr>
       {% endfor %}
     </tbody>

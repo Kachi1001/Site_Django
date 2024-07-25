@@ -1,11 +1,10 @@
 from .serializers import SerializerTipo
 from .models import *
 from django.db import IntegrityError, transaction
-from django.utils import timezone
-
+# from django.utils import timezone
 from rest_framework.response import Response
 import json   
-
+from datetime import datetime
 class register:
     
     def Historico(idr,user,action,context):
@@ -38,7 +37,7 @@ class register:
             error_message = str(e)
             return Response({'message': f'Erro ao adicionar função: {error_message}'}, status=400)
 
-    def Colaborado(user, parametro):
+    def Colaborador(user, parametro):
         nome = parametro['nome']
         diaria = None if parametro['contrato'] == 'CLT' else parametro['diaria']
         admissao = None if parametro['admissao'] == '' else parametro['admissao']
@@ -82,4 +81,42 @@ class register:
                 # Capturar a exceção e extrair a mensagem de erro
                 error_message = str(e)
                 return Response({'message': f'Erro ao adicionar função: {error_message}'}, status=400)
-    
+class edit:
+    def Colaborador(user, parametro):
+        try:
+            with transaction.atomic():
+                if parametro['nome'] == "":
+                    return Response({'message': 'Erro ao salvar Colaborador: Não o nome não pode ser nulo'}, status=400) 
+                else:
+                    x = Colaborador.objects.get(id=parametro['id'])
+                    x.nome = parametro['nome'] 
+                    if parametro['admissao'] != '': x.admissao = parametro['admissao'] 
+                    if parametro['demissao'] != '': x.demissao = parametro['demissao']
+                    x.diaria = parametro['diaria']
+                    x.observacao=parametro['observacao']
+                    x.funcao=parametro['funcao']
+                    x.contrato=parametro['contrato']
+                    x.encarregado= parametro['encarregado']     
+                    print(parametro['funcao'] )          
+                    x.save()
+                    Historico(idr=x.id,user=user,action='UPDATE',context=f"COLABORADOR <{x.nome}> EDITADO")
+                    return Response({'message': 'Cadastrado com sucesso'})
+                
+        except IntegrityError as e:
+            # Capturar a exceção e extrair a mensagem de erro
+            error_message = str(e)
+            return Response({'message': f'Erro ao adicionar função: {error_message}'}, status=400)
+        
+class delete:
+    def Colaborador(user, id):
+        try:
+            with transaction.atomic():
+                    x = Colaborador.objects.get(id=id)         
+                    x.delete()
+                    Historico(idr=x.id,user=user,action='UPDATE',context=f"COLABORADOR <{x.nome}> EDITADO")
+                    return Response({'message': 'Deletado com sucesso'})
+                
+        except IntegrityError as e:
+            # Capturar a exceção e extrair a mensagem de erro
+            error_message = str(e)
+            return Response({'message': f'Erro ao adicionar função: {error_message}'}, status=400)

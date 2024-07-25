@@ -100,7 +100,8 @@
     </div>
     <input type="submit" class="btn btn-outline-success" value="Registrar" id="liveAlertBtn">
   </form>
-
+{%endblock%}
+{%block 'submain'%}
   <table class="table table-hover table-bordered table-striped">
     <thead>
       <tr>
@@ -139,4 +140,6 @@
           <td><p>{{i.atividade.tipo}}</p></td>
         </tr>
       {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

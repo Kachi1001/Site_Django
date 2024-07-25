@@ -105,7 +105,7 @@ class Colaborador(models.Model):
     admissao = models.DateField(blank=True, null=True)
     demissao = models.DateField(blank=True, null=True)
     diaria = models.TextField(blank=True, null=True)
-    observacoes = models.CharField(max_length=255, blank=True, null=True)
+    observacao = models.CharField(max_length=255, blank=True, null=True)
     funcao = models.CharField(max_length=100, blank=True, null=True)
     contrato = models.CharField(max_length=20)
     encarregado = models.BooleanField(blank=True, null=True)
