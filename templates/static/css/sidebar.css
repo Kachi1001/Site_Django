@@ -1,9 +1,7 @@
 :root{
     --side-bar_width: 250px
   }
-  
-  
-  .sidenav {
+.sidenav {
     height: 100%;
     width: var(--side-bar_width);
     position: fixed;
@@ -13,7 +11,7 @@
     box-shadow:  3px 0px 15px rgb(145, 145, 145);
   }
 
-  .navbar{
+.navbar{
     position: fixed;
     z-index: 2;
     left: 0;
@@ -23,7 +21,7 @@
   }
   
   /* Styl the sidenav links and the dropdown button */
-  .sidenav a {
+.sidenav a {
     padding: 8px 8px 8px 30px;
     text-decoration: none;
     font-size: 15px;
@@ -38,12 +36,12 @@
   }
   
   /* On mouse-over */
-  .sidenav a:hover{
+.sidenav a:hover{
     color: white;
     background-color: #4b4b4bb6;
   }
   
-  .sidenav .nome_app{
+.sidenav .nome_app{
     color: #f1f1f1;
     font-size: larger;
     padding-bottom: 20px;
@@ -51,36 +49,6 @@
     text-align: center;
     margin: 0;
   }
-  /* Main content */
-header{
-    margin-left: var(--side-bar_width); /* Same as the width of the sidenav */
-    margin-top: 50px;
-    font-size: 20px; /* Increased text to enable scrolling */
-    padding: 20px 100px 20px 100px;
-  }
-main{
-    margin-left: var(--side-bar_width); /* Same as the width of the sidenav */
-    padding: 0px 100px 20px 100px;
-    max-height: 600px;
-}
-  .submain {
-    margin-left: calc(var(--side-bar_width) + 50px);
-    margin-right: 50px;
-    padding: 20px 50px 0px 50px;
-    border-top: 1px solid lightgray;
-  }
-  footer{
-    background-color: azure;
-    border-radius: 5px;
-    padding: 5px;
-    position: fixed;
-    margin-right: 20px;
-    display: flex;
-    justify-content: flex-end;
-    bottom: 20px;
-    right: 20px;
-  }
-  /* Some media queries for responsiveness */
   @media screen and (max-height: 450px) {
     .sidenav a {font-size: 18px;}
   }

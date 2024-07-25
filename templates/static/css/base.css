@@ -1,0 +1,32 @@
+
+
+  /* Main content */
+header{
+    margin-left: var(--side-bar_width); /* Same as the width of the sidenav */
+    margin-top: 50px;
+    font-size: 20px; /* Increased text to enable scrolling */
+    padding: 20px 100px 20px 100px;
+  }
+main{
+    margin-left: var(--side-bar_width); /* Same as the width of the sidenav */
+    padding: 0px 100px 20px 100px;
+    max-height: 600px;
+}
+  .submain {
+    margin-left: calc(var(--side-bar_width) + 50px);
+    margin-right: 50px;
+    padding: 20px 50px 0px 50px;
+    border-top: 1px solid lightgray;
+  }
+  footer{
+    background-color: azure;
+    border-radius: 5px;
+    padding: 5px;
+    position: fixed;
+    margin-right: 20px;
+    display: flex;
+    justify-content: flex-end;
+    bottom: 20px;
+    right: 20px;
+  }
+  /* Some media queries for responsiveness */

@@ -7,7 +7,7 @@
 
 <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
-{%include 'lancamento_obra/imports.html'%}
+{%include 'ti/imports.html'%}
 
 
 </head>
@@ -17,12 +17,12 @@
 <body>
   {%include 'navbar.html'%}
   
-  {%include 'lancamento_obra/sidebar.html'%}
+  {%include 'ti/sidebar.html'%}
 
   <header>
     <div aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item" aria-current="page">Lançamento de obra</li>
+        <li class="breadcrumb-item" aria-current="page">TI</li>
         {%block 'caminho'%}{%endblock%}
       </ol>
     </div>
@@ -42,8 +42,7 @@
     {%include 'pagination.html'%}
   </footer>
 
-  {%include 'lancamento_obra/modals.html'%}
-  {%include 'lancamento_obra/scripts.html'%}
+  {%include 'ti/scripts.html'%}
 
 </body>
 </html> 
