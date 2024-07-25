@@ -1,0 +1,147 @@
+{% extends 'lançamento_obra.html' %}
+{% load static %}
+{% block 'style' %}
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}
+{%block 'caminho'%}
+  <li class="breadcrumb-item" aria-current="page">Cadastro</li>
+  <li class="breadcrumb-item active" aria-current="page">Colaborador</li>
+{%endblock%}
+{%block 'header'%}
+<h2>Cadastro de colaborador</h2>
+{%endblock%}
+{% block 'main' %}
+<style>
+  p{
+    margin-bottom: 0;
+    font-size: 8pt;
+  }
+  td{
+      padding: 0;
+  }
+    tr{
+        border-bottom: none;
+    }
+  
+</style>
+<script>
+  $(document).ready(function() {
+    $('#enviar').click(function() {
+      let parametro = {
+        'nome': document.getElementById('nome')?.value,
+        'funcao': document.getElementById('funcao')?.value,
+        'admissao': document.getElementById('admissao')?.value,
+        'contrato': document.getElementById('contrato')?.value,
+        'diaria': document.getElementById('diaria')?.value,
+        'observacao': document.getElementById('observacao')?.value,
+        'encarregado': document.getElementById('encarregado')?.value,
+      }
+      if (parametro.admissao == "") {
+        if (confirm(  'Tem certeza que deseja salvar sem uma data de admissão?')){
+          salvarData('Colaborador', parametro)
+        }
+      } else {
+        salvarData('Colaborador', parametro)
+      }
+  })
+})
+
+function exibir_diaria(a){
+  div = document.getElementById('div_diaria')
+  if (a.options[a.selectedIndex].value == "Terceiro"){
+    div.style.display = "flex"
+  }else {
+    div.style.display = "none"
+  }
+}
+</script>
+    <div class="row">
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
+          <input type="text" name="nome" id="nome" class="form-control">
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Função:</label>
+          <select class="form-select" name="funcao" id="funcao">
+            {% for func in func_list %}
+            <option value="{{func.funcao}}">{{func.funcao}}</option>
+            {%endfor%}
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Data de admissão:</label>
+          <input type="date" name="admissao" id="admissao" class="form-control">
+        </div>
+      </div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Tipo de contrato:</label>
+          <select class="form-select" id="contrato" name="contrato" onchange="exibir_diaria(document.getElementById('contrato'))">
+            <option value="CLT">CLT</option>
+            <option value="Terceiro">Terceiro</option>
+          </select>
+        </div>
+      </div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-text">
+            <input class="form-check-input mt-0" type="checkbox" value="True" aria-label="Checkbox for following text input" name="encarregado" id="encarregado">
+          </div>
+          <span class="input-group-text">Encarregado</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="input-group mb-3" id="div_diaria" style="display: none">
+      <span class="input-group-text">Valor da Diaria</span>
+      <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="diaria" id="diaria">
+      <span class="input-group-text">R$</span>
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text">Observações</span>
+      <textarea class="form-control" aria-label="With textarea" name="observacao" id="observacao"></textarea>
+    </div>
+    
+    <button id="enviar" class="btn btn-outline-success">Cadastrar</button>
+    
+  {% block 'edit' %}{% endblock %}
+{% endblock %}
+
+{%block 'submain'%}
+<table class="table table-hover table-bordered table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">Função</th>
+      <th scope="col">Admissão</th>
+      <th scope="col">Demissão</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Diaria</th>
+      <th scope="col">Oberservação</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for colaborador in data %}
+      <tr>
+        <td><p style="font-weight: bold;">{{colaborador.nome}}</p></td>
+        <td><p>{{colaborador.funcao.funcao}}</p></td>
+        <td><p>{{colaborador.admissao | date:"SHORT_DATE_FORMAT"}}</p></td>
+        <td>{%if not colaborador.demissao is None%}<p>{{colaborador.demissao | date:"SHORT_DATE_FORMAT"}}</p>{%endif%}</td>
+        <td><p>{{colaborador.contrato.contrato}}</p></td>
+        <td>{%if not colaborador.diaria is None%}<p>{{colaborador.diaria}}</p>{%endif%}</td>
+        <td>{%if not colaborador.observacoes is None%}<p>{{colaborador.observacoes}}</p>{%endif%}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{%endblock%}

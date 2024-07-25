@@ -53,6 +53,8 @@ def cadastrar(request):
         return register.Colaborado(owner, parametro)
     if metodo == 'Historico':
         return register.Historico("1",'teste','create','teste')
+    if metodo == 'Supervisor':
+        return register.Supervisor(owner, parametro)
     
 @api_view(['POST'])
 def salas(request):
@@ -69,3 +71,13 @@ def salas(request):
         return Response({'message':'Editado com sucesso'})
     else:
         return Response({'message':'Houve algum problema'})
+
+@api_view(['GET'])
+def get_table(request):
+    table = request.GET.get('tableDB')
+    if table == 'funcao':
+        value = Funcao.objects.all().values('funcao', 'grupo')
+    elif table == 'supervisor':
+        value = Supervisor.objects.all().values('supervisor', 'ativo')
+        
+    return JsonResponse(list(value), safe=False)

@@ -352,11 +352,3 @@ class Supervisor(models.Model):
     class Meta:
         managed = False
         db_table = 'supervisor'
-
-
-class Tipocontrato(models.Model):
-    contrato = models.CharField(primary_key=True, max_length=20)
-
-    class Meta:
-        managed = False
-        db_table = 'tipocontrato'

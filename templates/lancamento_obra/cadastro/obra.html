@@ -1,0 +1,154 @@
+{% extends 'lançamento_obra.html' %}
+{%load static%}
+{%block 'caminho'%}
+  <li class="breadcrumb-item" aria-current="page">Cadastro</li>
+  <li class="breadcrumb-item active" aria-current="page">Obra</li>
+{%endblock%}
+
+{%block 'header'%}
+<h2>Cadastro de obra</h2>
+{%endblock%}
+
+
+{% block 'main' %}
+
+  <form action="{% url 'cadastro_obra' %}" method="POST">{% csrf_token %}
+    
+    <div class="row align-items-start">
+        <div class="col">
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Obra cr:</label>
+            <input type="text" name="cr" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Orçamento:</label>
+            <input type="text" name="orcamento" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col">
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="inputGroupSelect01">Retrabalho:</label>
+              <input type="text" name="retrabalho" id="" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row align-items-start">
+        <div class="col">
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Empresa:</label>
+            <input type="text" name="empresa" id="" class="form-control">
+          </div>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Cidade:</label>
+            <input type="text" name="cidade" id="" class="form-control">
+          </div>
+        </div>
+    </div>
+    
+    <div class="row align-items-start">
+      <div class="col">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Supervisor:</label>
+            <select class="form-select" id="inputGroupSelect01" name="supervisor">
+              <option value=""></option>
+              {% for super in super_list %}
+              <option value="{{super.supervisor}}">{{super.supervisor}}</option>
+              {%endfor%}
+            </select>
+          </div>
+      </div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Indice:</label>
+          <input type="text" name="indice" id="" class="form-control">
+        </div>
+      </div>
+      <div class="col">
+          <div class="input-group mb-3">
+              <label class="input-group-text" for="inputGroupSelect01">Finalizada:</label>
+              <div class="input-group-text">
+                  <input class="form-check-input mt-0" type="checkbox" value="True" name="finalizada" aria-label="Checkbox for following text input">
+                </div>
+            </div>              
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="input-group mb-3">
+          <span class="input-group-text">Descrição</span>
+          <textarea class="form-control" aria-label="With textarea" name="descricao"></textarea>
+        </div>
+      </div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <span class="input-group-text">Etapas</span>
+          <textarea class="form-control" aria-label="With textarea" name="etapas"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="input-group mb-3">
+    <input type="submit" class="btn btn-outline-success" value="Registrar" id="liveAlertBtn">
+  </form>  
+  {% block 'style' %}{% endblock %}
+{% endblock %}
+{% block 'submain' %}
+<style>
+  p{
+    margin-bottom: 0;
+    font-size: 10pt;
+  }
+  td{
+      padding: 0;
+  }
+    tr{
+        border-bottom: none;
+    }
+  
+</style>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Cr</th>
+        <th scope="col">Orçamento</th>
+        <th scope="col">Retrabalho</th>
+        <th scope="col">Empresa</th>
+        <th scope="col">Cidade</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Supervisor</th>
+        <th scope="col">Finalizada</th>
+        <th scope="col">Indice</th>
+        <th scope="col">Etapas</th>
+        <th scope="col">Editar</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      
+      {% for obra in data %}
+        <tr>
+          <th scope="row"><p>{{obra.cr}}</p></th>
+          <td><p>{{obra.orcamento}}</p></td>
+          <td>{%if not obra.retrabalho is Null%}<p>{{obra.retrabalho}}</p>{%endif%}</td>
+          <td><p>{{obra.empresa}}</p></td>
+          <td><p>{{obra.cidade}}</p></td>
+          <td><p>{{obra.descricao}}</p></td>
+          <td><p>{{obra.supervisor.supervisor}}</p></td>
+          <td>{%if obra.finalizada %}
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked disabled>
+            {%else%}
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" disabled>
+            {%endif%}
+          </td>
+          <td><p>{{obra.indice}}</p></td>
+          <td><p>{{obra.etapas}}</p></td>
+          <td><a href=""><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
+
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table> 
+{% endblock %}

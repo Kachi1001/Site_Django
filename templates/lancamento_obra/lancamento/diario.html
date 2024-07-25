@@ -1,0 +1,123 @@
+{% extends 'lançamento_obra.html' %}
+
+{%block 'caminho'%}
+  <li class="breadcrumb-item" aria-current="page">Lançamento</li>
+  <li class="breadcrumb-item active" aria-current="page">Diário</li>
+{%endblock%}
+
+{%block 'header'%}
+<h2>Cadastro de diário</h2>
+{%endblock%}
+
+{% block 'main' %}
+  <form action="{% url 'lancamento_diario' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <div class="container text-center">
+        <div class="row align-items-center">
+            <div class="col align-self-center">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="arquivo">Digitalizados</label>
+                    <input type="file" class="form-control" id="arquivo" name="arquivo" accept=".png">
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">Obra:</label>
+                    <select class="form-select" id="obra" name="obra">
+                        {% for obra in obras_list %}
+                        <option value="{{obra.cr}}">{{obra.cr}} - {{obra.empresa}} - {{obra.cidade}}</option>
+                        {%endfor%}
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">Data do diario</label>
+                    <input type="date" name="data" id="data" class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">Encarregado:</label>
+                    <select class="form-select" id="super" name="supervisor">
+                    <option value=""></option>
+                    {% for colab in colab_list %}
+                        {%if colab.encarregado %}
+                            <option value="{{colab.nome}}">{{colab.nome}}</option>
+                        {%endif%}
+                    {%endfor%}
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">Indice:</label>
+                    <input type="text" name="indice" id="indice" class="form-control">
+                </div>
+                <div class="col align-self-center" style="max-width: 40%;">
+                    <h4>Climas</h4>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Manhã</label>
+                        <select class="form-select" id="inputGroupSelect01" name="climamanha">
+                        <option>Sol</option>
+                        <option>Chuva</option>
+                        <option>Nublado</option>
+                        <option selected>Não informado</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Tarde</label>
+                        <select class="form-select" id="inputGroupSelect01" name="climatarde">
+                        <option selected>Sol</option>
+                        <option>Chuva</option>
+                        <option>Nublado</option>
+                        <option selected>Não informado</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="text-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/104/104090.png" class="img-thumbnail" alt="Digitalização" style="width: 400px; height: 540px; object-fit: contain;" id= "digitalização">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <input type="submit" class="btn btn-outline-success" value="Registrar" id="liveAlertBtn">
+    <div id="liveAlertPlaceholder"></div>
+  </form>
+  <script>
+    let photo = document.getElementById('digitalização');
+    let file = document.getElementById('arquivo');
+
+    let obra = document.getElementById('obra');
+    let data = document.getElementById('data');
+    let indice = document.getElementById('indice');
+    let sup = document.getElementById('super');
+
+    function adicionaZero(numero){
+        if (numero <= 9) 
+            return "0" + numero;
+        else
+            return numero; 
+    }
+
+        photo.addEventListener('click', () => {
+            file.click();
+        });
+
+        file.addEventListener('change', () => {
+
+            if (file.files.length <= 0) {
+                return;
+            }
+
+            let reader = new FileReader();
+
+            reader.onload = () => {
+                photo.src = reader.result;
+                info = file.value.replace("C:\\fakepath\\", "").split(".")
+                info = info[0].split("_")
+                obra.value = info[0]
+                d = info[1].split("-")
+                d = d[2] + "-" + adicionaZero(d[1]) + "-" + adicionaZero(d[0]);
+                data.value = d
+                indice.value = info[2]
+            }
+
+            reader.readAsDataURL(file.files[0]);
+        });
+</script>
+{% endblock %}

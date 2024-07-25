@@ -21,7 +21,11 @@ def login(request):
             return redirect('/')
         else:
             return render(request, 'login.html', {"nome": request.POST.get('nome'), "senha": request.POST.get('senha')})
-@login_required (login_url= '/login')
+@login_required
 def index(request):
     user = request.user
     return render(request, 'index.html', {"nome": user.username})
+
+@login_required
+def secreto(request):
+    return render(request, 'secreto.html')

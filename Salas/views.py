@@ -52,15 +52,18 @@ horarios2 = [
 def index(request):
     return render(request, "salas/index.html")
 def atendimento(request):
+    user = request.user
     sala = 'atendimento'
     date = request.GET.get('data') if request.GET.get('data') != None else hoje
     if request.method == "POST":
         for a in horarios1+horarios2:
-            if request.POST.get('check'+a) or request.POST.get('descricao'+a):
-                responsavel = request.user.username if request.user.is_authenticated else request.POST.get('responsavel'+a)
-            elif request.POST.get('responsavel'+a): responsavel = request.POST.get('responsavel'+a)
-            else: responsavel = False
-    
+            if request.POST.get('responsavel'+a) == "" and user.is_authenticated and (request.POST.get('check'+a) or request.POST.get('descricao'+a)):
+                responsavel = user.username
+            elif request.POST.get('responsavel'+a):
+                responsavel = request.POST.get('responsavel'+a)
+            else:
+                responsavel = False
+                
             if responsavel:
                 b = AgendaSalas(
                     data=request.POST.get('data-picker'),
@@ -88,10 +91,12 @@ def reuniao(request):
     date = request.GET.get('data') if request.GET.get('data') != None else hoje
     if request.method == "POST":
         for a in horarios1+horarios2:
-            if request.POST.get('check'+a) or request.POST.get('descricao'+a):
-                responsavel = request.user.username if request.user.is_authenticated else request.POST.get('responsavel'+a)
-            elif request.POST.get('responsavel'+a): responsavel = request.POST.get('responsavel'+a)
-            else: responsavel = False
+            if request.POST.get('responsavel'+a) == "" and user.is_authenticated and (request.POST.get('check'+a) or request.POST.get('descricao'+a)):
+                responsavel = user.username
+            elif request.POST.get('responsavel'+a):
+                responsavel = request.POST.get('responsavel'+a)
+            else:
+                responsavel = False
     
             if responsavel:
                 b = AgendaSalas(
@@ -123,10 +128,12 @@ def apoio(request):
     date = request.GET.get('data') if request.GET.get('data') != None else hoje
     if request.method == "POST":
         for a in horarios1+horarios2:
-            if request.POST.get('check'+a) or request.POST.get('descricao'+a):
-                responsavel = request.user.username if request.user.is_authenticated else request.POST.get('responsavel'+a)
-            elif request.POST.get('responsavel'+a): responsavel = request.POST.get('responsavel'+a)
-            else: responsavel = False
+            if request.POST.get('responsavel'+a) == "" and user.is_authenticated and (request.POST.get('check'+a) or request.POST.get('descricao'+a)):
+                responsavel = user.username
+            elif request.POST.get('responsavel'+a):
+                responsavel = request.POST.get('responsavel'+a)
+            else:
+                responsavel = False
     
             if responsavel:
                 b = AgendaSalas(

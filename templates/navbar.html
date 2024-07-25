@@ -1,0 +1,14 @@
+{%load static%}
+<nav class="navbar">
+    <a href="/", style="color: black; text-decoration: none; padding-left: 10px;"><img src="{% static 'icons/x-circle-fill.svg'%}" alt="" style="margin-right: 5px;">Fechar app</a>  
+    <div class="dropdown">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="{% static 'icons/person-circle.svg'%}" alt="" class="user-icon">
+          <span class="user-name">{{user}}</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/login">Desconectar</a></li>
+        </ul>
+      </div>
+  </nav>

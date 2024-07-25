@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 
 @login_required
 def index(request):
-    return render(request, "lancamento_obra/index.html", {"nome": request.user.username})
+    return render(request, "lancamento_obra/index.html",)
 
 @login_required
 def cadastro_colab(request):
@@ -25,14 +25,21 @@ def cadastro_colab(request):
     ) 
 
 @login_required
-def cadastro_funcao(request):
-    return render(request, "lancamento_obra/cadastro/funcao.html", {"nome": request.user.username})
+def cadastro_outros(request):
+    return render(request, "lancamento_obra/cadastro/outros.html", {
+        "nome": request.user.username,
+        'funcao': Funcao.objects.all(),
+        'supervisor': Supervisor.objects.all(),
+        })
         
 
 @login_required
 def cadastro_obra(request):
     if request.method == "GET":
-        return render(request, "lancamento_obra/cadastro/obra.html", {"super_list": Supervisor.objects.all()})
+        return render(request, "lancamento_obra/cadastro/obra.html", {
+            "super_list": Supervisor.objects.all(),
+            'data': Obra.objects.all().order_by('-cr')[:7]
+            })
     elif request.method == "POST":
         obra = Obra(
                 cr=request.POST.get("cr"),
@@ -49,49 +56,32 @@ def cadastro_obra(request):
         return redirect(cadastro_obra)
 
 
-
+def visu_tabela(request, data, html):
+    data_paginator = Paginator(data, 10)
+    page_num = request.GET.get('page')
+    data_page = data_paginator.get_page(page_num)
+    
+    return render(request, f"lancamento_obra/visualizacao/{html}.html", {'data': data_page})
 
 @login_required
 def visualizacao_colab(request):
-    data = Colaborador.objects.all().order_by('-id')
-    
-    data_paginator = Paginator(data, 15)
-    page_num = request.GET.get('page')
-    data_page = data_paginator.get_page(page_num)
-    
-    return render(request, "lancamento_obra/visualizacao/colaborador.html", {'data': data_page})
+    return visu_tabela(request, Colaborador.objects.all().order_by('-id'), 'colaborador')
 
 @login_required
 def visualizacao_obra(request):
-    data = Obra.objects.all().order_by('-cr')
-    data_paginator = Paginator(data, 10)
-    page_num = request.GET.get('page')
-    data_page = data_paginator.get_page(page_num)
-    return render(request, "lancamento_obra/visualizacao/obra.html", {'data': data_page})
-
+    return visu_tabela(request, Obra.objects.all().order_by('-cr'), 'obra')
+    
 @login_required
 def visualizacao_atividade(request):
-    data = Lancamentos.objects.all().order_by('-id')
-    data_paginator = Paginator(data, 10)
-    page_num = request.GET.get('page')
-    data_page = data_paginator.get_page(page_num)
-    return render(request, "lancamento_obra/visualizacao/atividade.html", {'data': data_page})
-
+    return visu_tabela(request, Lancamentos.objects.all().order_by('-id'), 'atividade')
+    
 @login_required
 def visualizacao_diario(request):
-    data = Diarioobra.objects.all().order_by('-id')
-    data_paginator = Paginator(data, 10)
-    page_num = request.GET.get('page')
-    data_page = data_paginator.get_page(page_num)
-    return render(request, "lancamento_obra/visualizacao/diario.html", {'data': data_page})
+    return visu_tabela(request, Diarioobra.objects.all().order_by('-id'), 'diario')
 
 @login_required
 def visualizacao_hora_horaextra(request):
-    data = ResumoJunta.objects.all()
-    data_paginator = Paginator(data, 15)
-    page_num = request.GET.get('page')
-    data_page = data_paginator.get_page(page_num)
-    return render(request, "lancamento_obra/visualizacao/hora_horaextra.html", {'data': data_page})
+    return visu_tabela(request, ResumoJunta.objects.all(), 'hora_horaextra')
 
 @login_required
 def lancamento_atividade(request):
@@ -127,12 +117,6 @@ def lancamento_atividade(request):
                 atividade=Atividade(request.POST.get("atividade")),
                 diaseguinte=True,
                 digito=request.POST.get("digito"),
-                etapa1=0,
-                etapa2=0,
-                etapa3=0,
-                perdevale=True,
-                revisaorh="",
-                # diario= "_".join([request.POST.get("obra"), data, request.POST.get("digito")])
             )
         att.save() 
         return redirect(lancamento_atividade)

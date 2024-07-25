@@ -41,9 +41,6 @@ set "backup_file=%backup_dir%\models_backup_%datetime%.py"
 rem Executa inspectdb e salva em Home/models.py
 py manage.py inspectdb > Home/models.py
 
-rem Executa o servidor Django
-
-py manage.py runserver %DJ_HOS%:%DJ_POR%
 rem Fazendo backup do arquivo Home/models.py
 if exist Home\models.py (
     copy Home\models.py %backup_file%
@@ -51,6 +48,9 @@ if exist Home\models.py (
 ) else (
     echo Arquivo Home\models.py nao encontrado!
 )
+
+rem Executa o servidor Django
+py manage.py runserver %DJ_HOS%:%DJ_POR%
 
 PAUSE
 endlocal

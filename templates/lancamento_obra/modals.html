@@ -1,0 +1,80 @@
+<!-- Modal funcao -->
+<div class="modal fade" id="funcao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de função</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
+            <input type="text" name="nome" id="func_nome" class="form-control">
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Grupo:</label>
+            <select class="form-select" id="func_grupo" name="grupo">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+          <div class="microlist">
+            <table class="table table-hover table-bordered table-striped" id="func_table">
+              <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Grupo</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table> 
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="salvar('funcao')">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal supervisor-->
+  <div class="modal fade" id="super" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de supervisor</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
+            <input type="text" name="super_nome" id='super_nome' class="form-control">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text">Ativo</span>
+            <div class="input-group-text">
+              <input class="form-check-input mt-0" type="checkbox" aria-label="Checkbox for following text input" id="super_ativo" checked>
+            </div>
+          </div>
+          <div class="microlist">
+            <table class="table table-hover table-bordered table-striped" id="super_table">
+              <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Ativo?</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table> 
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="salvar('super')">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

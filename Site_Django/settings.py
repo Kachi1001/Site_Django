@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'Home',
     'API',
     'Salas',
+    'TI',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'Site_Django.context_processors.user'
             ],
         },
     },

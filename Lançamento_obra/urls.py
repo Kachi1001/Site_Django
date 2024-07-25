@@ -6,7 +6,7 @@ urlpatterns = [
     path("", views.index, name= "lancamento_obra"),
     
     path("cadastro/colaborador/", views.cadastro_colab, name= "cadastro_colab"),
-    path("cadastro/função/", views.cadastro_funcao, name= "cadastro_funcao"),
+    path("cadastro/outros/", views.cadastro_outros, name= "cadastro_outros"),
     path("cadastro/obra/", views.cadastro_obra, name= "cadastro_obra"),
     
     path("visualizacao/colaborador/", views.visualizacao_colab, name= "visualizacao_colab"),

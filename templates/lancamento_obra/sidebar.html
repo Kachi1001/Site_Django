@@ -1,0 +1,86 @@
+<style>
+    .microlist {
+      height: 200px;
+      overflow: auto;
+      border-top: 1px solid #dee2e6;
+  }
+    th{
+      font-size: small;
+    }
+  </style>
+<div class="sidenav">
+    <h1 class="nome_app">Lançamento obra</h1>
+    
+     <div class="accordion accordion-flush" id="accordionFlushExample">
+  
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            Cadastros
+          </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <a href="{%url 'cadastro_colab'%}">| Colaborador</a>
+          <a href="{%url 'cadastro_obra'%}">| Obra</a>
+          <a data-bs-toggle="modal" data-bs-target="#funcao" onclick="loadTable('funcao', 'func_table')">| Função</a>
+          <a data-bs-toggle="modal" data-bs-target="#super" onclick="loadTable('supervisor', 'super_table')">| Supervisor</a>    
+        </div>
+      </div>
+  
+  
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+            Visualização
+          </button>
+        </h2>
+        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <a href="{%url 'visualizacao_colab'%}">| Colaboradores</a>
+          <a href="{%url 'visualizacao_obra'%}">| Obras</a>
+          <a href="{%url 'visualizacao_atividade'%}">| Atividade</a>
+          <a href="{%url 'visualizacao_diario'%}">| Diario</a>
+          <a href="#">| Revisões</a>
+          <a href="{%url 'visualizacao_hora_horaextra'%}">| Horas / Horas Extras</a>
+        </div>
+      </div>
+      
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+            Lançamento
+          </button>
+        </h2>
+        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <a href="{%url 'lancamento_atividade'%}">| Atividade</a>
+          <a href="{%url 'lancamento_diario'%}">| Diário</a>
+        </div>
+      </div>
+  
+  
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+            Outros
+          </button>
+        </h2>
+        <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <a href="#">| Resumo mensal</a>
+          
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            | Pesquisa Avançada
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{%url 'pesquisa_historico_colab' %}">Atividade por Colaborador</a></li>
+            <li><a class="dropdown-item" href="{%url 'pesquisa_historico_obra' %}">Atividade por Obra</a></li>
+            <li><a class="dropdown-item" href="{%url 'pesquisa_atividade_diario' %}">Atividade por Diario</a></li>
+            <!-- <li><hr class="dropdown-divider"></li >
+              <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+            </ul>
+            
+          </div>
+        </div>
+
+      
+    </div>
+  </div>
+</div>
