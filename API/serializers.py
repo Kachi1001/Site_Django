@@ -26,3 +26,9 @@ class MyModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Colaborador
         fields = '__all__'  # Ou liste os campos que deseja expor na API
+        
+        
+class ObraSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Obra
+        fields = '__all__'  # Ou liste os campos que deseja expor na API

@@ -197,8 +197,7 @@ class Etapa(models.Model):
 
 
 class Funcao(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    funcao = models.CharField(max_length=100)
+    funcao = models.CharField(primary_key=True, max_length=100)
     grupo = models.IntegerField(blank=True, null=True)
 
     class Meta:

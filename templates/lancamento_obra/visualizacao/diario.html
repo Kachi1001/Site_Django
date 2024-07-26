@@ -43,7 +43,8 @@
           <td><a href="/midia/Lançamento_obra/diarios_digitalizado/{{i.id}}.png" target="_blank">
             <p>Abrir Digitalização</p>
           </a></td>
-          <td><a href=""><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
+          <td data-bs-toggle="modal" data-bs-target="#update_obra" onclick="editObra('{{i.id}}')" class="edit"><a><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
+
 
         </tr>
       {% endfor %}

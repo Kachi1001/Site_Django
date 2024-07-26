@@ -52,7 +52,8 @@
           </td>
           <td><p>{{obra.indice}}</p></td>
           <td><p>{{obra.etapas}}</p></td>
-          <td><a href=""><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
+          <td data-bs-toggle="modal" data-bs-target="#update_obra" onclick="editObra('{{obra.cr}}')" class="edit"><a><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
+
 
         </tr>
       {% endfor %}

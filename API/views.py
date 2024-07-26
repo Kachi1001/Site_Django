@@ -9,7 +9,6 @@ import json
 from django.http import JsonResponse
 from .mani import *
 from .update import *
-
 from .serializers import *
 
 # Configurações de conexão com o banco de dados PostgreSQL
@@ -23,7 +22,6 @@ port = settings.DATABASES['default']['PORT']
 def executar_funcao_geraViewJunta(request): 
     # Parâmetro passado pelo front end
     parametro = request.GET.get('parametro')
-
 
     # Conectando ao banco de dados
     conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host, port=port)
@@ -44,34 +42,45 @@ def executar_funcao_geraViewJunta(request):
         cursor.close()
         conn.close()
 
-
 @api_view(['POST'])
 def cadastrar(request):
     parametro = json.loads(request.POST.get('parametro'))
     metodo = request.POST.get('metodo')
     owner = request.POST.get('user') 
     if metodo == 'Funcao':
-        return register.Funcao(owner, parametro)
-    if metodo == 'Colaborador':
-        return register.Colaborador(owner, parametro)
-    if metodo == 'Historico':
-        return register.Historico("1",'teste','create','teste')
-    if metodo == 'Supervisor':
-        return register.Supervisor(owner, parametro)
+        return Register.Funcao(owner, parametro)
+    elif metodo == 'Colaborador':
+        return Register.Colaborador(owner, parametro)
+    elif metodo == 'Historico':
+        return Register.Historico("1",'teste','create','teste')
+    elif metodo == 'Supervisor':
+        return Register.Supervisor(owner, parametro)
+
 @api_view(['POST'])
 def update(request):
     metodo = request.POST.get('metodo')
     parametro = json.loads(request.POST.get('parametro'))
     owner = request.POST.get('user')
     if metodo == 'Colaborador':
-        return edit.Colaborador(owner, parametro) 
+        return Edit.Colaborador(owner, parametro) 
+    elif metodo == 'Obra':
+        return Edit.Obra(owner, parametro)
+    return Response({'message':'Houve algum problema, não encontramos o metodo'}, status=404)
+
 @api_view(['POST'])
 def deletar(request):
     metodo = request.POST.get('metodo')
     id = request.POST.get('parametro')
     owner = request.POST.get('user')
     if metodo == 'Colaborador':
-        return delete.Colaborador(owner, id) 
+        return Delete.Colaborador(owner, id) 
+    elif metodo == 'Funcao':
+        return Delete.Funcao(owner, id)
+    elif metodo == 'Supervisor':
+        return Delete.Supervisor(owner, id)
+    elif metodo == 'Obra':
+        return Delete.Obra(owner, id)
+    
 @api_view(['POST'])
 def salas(request):
     id = request.POST.get('id')
@@ -106,5 +115,27 @@ def get_data(request):
             mymodel = Colaborador.objects.get(id=request.GET.get('id'))
             serializer = MyModelSerializer(mymodel)
             return Response(serializer.data)
-        except MyModel.DoesNotExist:
+        except Colaborador.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+    if metodo == 'Obra':
+        try:
+            mymodel = Obra.objects.get(cr=request.GET.get('id'))
+            serializer = ObraSerializer(mymodel)
+            return Response(serializer.data)
+        except Colaborador.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+    return Response({'message':'Houve algum problema'}, status=404)
+
+@api_view(['POST'])
+def update_supervisor_status(request):
+    try:
+        supervisor_name = request.POST.get('supervisor')
+        ativo = request.POST.get('ativo') == 'true'
+        supervisor = Supervisor.objects.get(supervisor=supervisor_name)
+        supervisor.ativo = ativo
+        supervisor.save()
+        return Response({'message': 'Status atualizado com sucesso'})
+    except Supervisor.DoesNotExist:
+        return Response({'message': 'Supervisor não encontrado'}, status=404)
+    except Exception as e:
+        return Response({'message': f'Erro ao atualizar status: {str(e)}'}, status=400)

@@ -1,64 +1,73 @@
+{% load static %}
 <script>
-    function salvarData(metodo,parametro){
-      $.ajax({
-          url: "{% url 'cadastrar' %}",  // URL da sua API no Django
-          type: 'POST',
-          data: {
-              'csrfmiddlewaretoken':"{{ csrf_token }}",
-              'parametro': JSON.stringify(parametro),
-              'metodo': metodo,
-              'user': "{{ user }}",
-          },
-          success: function(Response) {
-              if (confirm(Response.message+'\nClique em <OK> para recarregar a página.')){
-                  window.location.reload(true); 
-              }
-          },  
-          error: function(xhr) {
-              alert(xhr.responseJSON.message);
-          }
-      });
+  function salvarData(metodo, parametro, callback){
+    $.ajax({
+      url: "{% url 'cadastrar' %}",  // URL da sua API no Django
+      type: 'POST',
+      data: {
+        'csrfmiddlewaretoken': "{{ csrf_token }}",
+        'parametro': JSON.stringify(parametro),
+        'metodo': metodo,
+        'user': "{{ user }}",
+      },
+      success: function(response) {
+        alert(response.message + '\nClique em <OK> para recarregar a página.');
+        if (callback) {
+          callback();
+        }
+      },  
+      error: function(xhr) {
+        alert(xhr.responseJSON.message);
+      }
+    });
   }
+
   function salvar(metodo){
     if (metodo == 'funcao'){
       let parametro = {
         'funcao': document.getElementById('func_nome').value,
         'grupo' : document.getElementById('func_grupo').value,
       }
-      salvarData('Funcao', parametro)
+      salvarData('Funcao', parametro, function() {
+        loadTable('funcao', 'func_table');
+      });
     } else if (metodo == 'super'){
-      if (document.getElementById('super_ativo').checked){ativo = true} else {ativo =false}
+      let ativo = document.getElementById('super_ativo').checked ? true : false;
       let parametro = {
         'supervisor': document.getElementById('super_nome').value,
         'ativo' : ativo,
-      }
-      salvarData('Supervisor', parametro)
+      };
+      salvarData('Supervisor', parametro, function() {
+        loadTable('supervisor', 'super_table');
+      });
     }
   }
-  function updateData(metodo, parametro){
+
+  function updateData(metodo, parametro, callback){
     $.ajax({
       url: "{% url 'update' %}",  // URL da sua API no Django
       type: 'POST',
       data: {
-          'csrfmiddlewaretoken':"{{ csrf_token }}",
-          'parametro': JSON.stringify(parametro),
-          'metodo': metodo,
-          'user': "{{ user }}",
+        'csrfmiddlewaretoken': "{{ csrf_token }}",
+        'parametro': JSON.stringify(parametro),
+        'metodo': metodo,
+        'user': "{{ user }}",
       },
-      success: function(Response) {
-          if (confirm(Response.message+'\nClique em <OK> para recarregar a página.')){
-              window.location.reload(true); 
-          }
+      success: function(response) {
+        alert(response.message + '\nClique em <OK> para recarregar a página.');
+        if (callback) {
+          callback();
+        }
       },  
       error: function(xhr) {
-          alert(xhr.responseJSON.message);
+        alert(xhr.responseJSON.message);
       }
-  });
-}
+    });
+  }
+
   function update(metodo){
     if (metodo == 'colab'){
-      let encarregado = false
-      if (document.getElementById('update_encarregado').checked){ encarregado = true}
+      let encarregado = document.getElementById('update_encarregado').checked ? true : false;
       let parametro = {
         'id': document.getElementById('update_id')?.value,
         'nome': document.getElementById('update_nome')?.value,
@@ -70,117 +79,256 @@
         'observacao': document.getElementById('update_observacao')?.value,
         'encarregado': encarregado,
       }
-      updateData('Colaborador', parametro)
+      updateData('Colaborador', parametro, function() {
+        loadTable('colab', 'colab_table');
+      });
     }
   }
+
   function deletar(metodo){
     if (metodo == 'Colaborador'){
-      let id = document.getElementById('update_id')?.value
-      deletarData(metodo, id)
+      let id = document.getElementById('update_id')?.value;
+      deletarData(metodo, id, function() {
+        loadTable('colab', 'colab_table');
+      });
+    } else if (metodo == 'Supervisor'){
+      let id = document.getElementById('super_nome')?.value;
+      deletarData(metodo, id, function() {
+        loadTable('supervisor', 'super_table');
+      });
     }
   }
-  function deletarData(metodo, id){
+
+  function deletarData(metodo, id, callback){
     $.ajax({
       url: "{% url 'deletar' %}",  // URL da sua API no Django
       type: 'POST',
       data: {
-        'csrfmiddlewaretoken':"{{ csrf_token }}",
+        'csrfmiddlewaretoken': "{{ csrf_token }}",
         'parametro': id,
         'metodo': metodo,
         'user': "{{ user }}",
       },
-      success: function(Response) {
-          if (confirm(Response.message+'\nClique em <OK> para recarregar a página.')){
-              window.location.reload(true); 
-          }
+      success: function(response) {
+        alert(response.message + '\nClique em <OK> para recarregar a página.');
+        if (callback) {
+          callback();
+        }
       },  
       error: function(xhr) {
-          alert(xhr.responseJSON.message);
+        alert(xhr.responseJSON.message);
       }
-  });
-}
-  function loadUpdate(metodo,id){
+    });
+  }
+
+  function loadUpdate(metodo, id){
     $.ajax({
-      url: `{%url 'get_data'%}`, // URL da view Django que retorna os dados
+      url: `{% url 'get_data' %}`, // URL da view Django que retorna os dados
       method: 'GET',
       data: {
-          'csrfmiddlewaretoken':"{{ csrf_token }}",
-          'id': id,
-          'metodo': metodo,
+        'csrfmiddlewaretoken': "{{ csrf_token }}",
+        'id': id,
+        'metodo': metodo,
       },
       success: function(data) {
         if (metodo == 'colab'){
-          document.getElementById('update_id').value = data.id
-          document.getElementById('update_nome').value = data.nome
-          loadTable('funcao', 'func_list')
-          document.getElementById('update_funcao').value = data.funcao
-          document.getElementById('update_admissao').value = data.admissao
-          document.getElementById('update_contrato').value = data.contrato
-          document.getElementById('update_diaria').value = data.diaria
-          document.getElementById('update_observacao').value = data.observacao
-          document.getElementById('update_encarregado').checked = data.encarregado
+          document.getElementById('update_id').value = data.id;
+          document.getElementById('update_nome').value = data.nome;
+          loadTable('funcao', 'func_list');
+          document.getElementById('update_funcao').value = data.funcao;
+          document.getElementById('update_admissao').value = data.admissao;
+          document.getElementById('update_contrato').value = data.contrato;
+          document.getElementById('update_diaria').value = data.diaria;
+          document.getElementById('update_observacao').value = data.observacao;
+          document.getElementById('update_encarregado').checked = data.encarregado;
         }
-
       },
       error: function(error) {
-          console.error('Erro ao buscar dados:', error);
+        console.error('Erro ao buscar dados:', error);
       }
-  });
-  }
-  
-  function loadTable(tableDB, tableHTML) {
-    $.ajax({
-        url: '{%url "get_table"%}', // URL da view Django que retorna os dados
-        method: 'GET',
-        data: {
-            'csrfmiddlewaretoken':"{{ csrf_token }}",
-            'tableDB': tableDB,
-        },
-        success: function(data) {
-            buildTable(data, tableHTML);
-        },
-        error: function(error) {
-            console.error('Erro ao buscar dados:', error);
-        }
     });
   }
-    function buildTable(data, tableHTML) {
-        let table = $('#'.concat(tableHTML)); // Assumindo que há uma tabela com id="myTable" no HTML
 
-        // Construir as linhas da tabela com os dados
-        if (tableHTML == 'func_table') {
-            for (let i = 0; i < data.length; i++) {
-                let row = '<tr>';
-                row += `<td>${data[i].funcao}</td>`;
-                if (data[i].grupo != null) {row += `<td>${data[i].grupo}</td>`;} 
-                row += '</tr>';
-                table.append(row);
-            }
-        }else if (tableHTML == 'super_table') {
-            for (let i = 0; i < data.length; i++) {
-                let checked
-                let row = '<tr>';
-                row += `<td>${data[i].supervisor}</td>`;
-                if (data[i].ativo) {checked ='checked disabled'} else {checked='disabled'}
-                row += `<td><input class="form-check-input" type="checkbox" ${checked}></td>`;
-                row += '</tr>';
-                table.append(row);
-            }
-        }else if (tableHTML == 'func_list'){
-          for (let i = 0; i < data.length; i++) {
-            const opt = document.createElement('option');
-            opt.value = data[i].funcao;
-            opt.text = data[i].funcao;
-            $('#update_funcao').append(opt)
-          }
-        }
-    };
-    function exibir_diaria(a){
-      div = document.getElementById('div_diaria')
-      if (a.options[a.selectedIndex].value == "Terceiro"){
-        div.style.display = "flex"
-      }else {
-        div.style.display = "none"
+  function loadTable(tableDB, tableHTML) {
+    $.ajax({
+      url: '{% url "get_table" %}', // URL da view Django que retorna os dados
+      method: 'GET',
+      data: {
+        'csrfmiddlewaretoken': "{{ csrf_token }}",
+        'tableDB': tableDB,
+      },
+      success: function(data) {
+        buildTable(data, tableHTML);
+      },
+      error: function(error) {
+        console.error('Erro ao buscar dados:', error);
+      }
+    });
+  }
+
+  function buildTable(data, tableHTML) {
+    let table = $('#'.concat(tableHTML)); // Assumindo que há uma tabela com id="myTable" no HTML
+    table.empty();
+    // Construir as linhas da tabela com os dados
+    if (tableHTML == 'func_table') {
+      for (let i = 0; i < data.length; i++) {
+        let row = '<tr>';
+        row += `<td>${data[i].funcao}</td>`;
+        if (data[i].grupo != null) {row += `<td>${data[i].grupo}</td>`;}
+        row += `<td><img src="{% static 'icons/trash-fill.svg' %}" class="acao" onclick='deletarData("Funcao","${data[i].funcao}", function() { loadTable("funcao", "func_table"); })' style='background:red;'></td>`;
+        row += '</tr>';
+        table.append(row);
+      }
+    } else if (tableHTML == 'super_table') {
+      for (let i = 0; i < data.length; i++) {
+        let checked;
+        let row = '<tr>';
+        row += `<td>${data[i].supervisor}</td>`;
+        checked = data[i].ativo ? 'checked' : '';
+        row += `<td><input class="form-check-input" type="checkbox" ${checked} onclick="toggleAtivo('${data[i].supervisor}', this.checked)"></td>`;
+        row += `<td><img src="{% static 'icons/trash-fill.svg' %}" class="acao" onclick='deletarData("Supervisor","${data[i].supervisor}", function() { loadTable("supervisor", "super_table"); })' style='background:red;'></td>`;
+        row += '</tr>';
+        table.append(row);
+      }
+    } else if (tableHTML == 'func_list'){
+      $('#update_funcao').empty();
+      for (let i = 0; i < data.length; i++) {
+        let opt = document.createElement('option');
+        opt.value = data[i].funcao;
+        opt.text = data[i].funcao;
+        $('#update_funcao').append(opt);
+      }
+    } else if (tableHTML == 'update_obra_supervisor'){
+    $('#update_funcao').empty();
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].ativo) {
+        let opt = document.createElement('option');        
+        opt.value = data[i].supervisor;
+        opt.text = data[i].supervisor;
+        table.append(opt);
       }
     }
-  </script>
+    }
+  }
+
+  function exibir_diaria(a){
+    let div = document.getElementById('div_diaria');
+    if (a.options[a.selectedIndex].value == "Terceiro"){
+      div.style.display = "flex";
+    } else {
+      div.style.display = "none";
+    }
+  }
+
+function toggleAtivo(supervisor, isActive) {
+  $.ajax({
+    url: "{% url 'update_supervisor_status' %}", // URL da sua API no Django para atualizar o status
+    type: 'POST',
+    data: {
+      'csrfmiddlewaretoken': "{{ csrf_token }}",
+      'supervisor': supervisor,
+      'ativo': isActive
+    },
+    success: function(response) {
+      alert(response.message);
+      loadTable('supervisor', 'super_table');
+    },
+    error: function(xhr) {
+      alert(xhr.responseJSON.message);
+    }
+  });
+}function editObra(cr) {
+  $.ajax({
+    url: '{% url "get_data" %}', // URL da view Django que retorna os dados de uma obra
+    method: 'GET',
+    data: {
+      'csrfmiddlewaretoken': "{{ csrf_token }}",
+      'metodo': 'Obra',
+      'id': cr,
+    },
+    success: function(data) {
+      $('#update_obra_cr').val(data.cr);
+      $('#update_obra_orcamento').val(data.orcamento);
+      $('#update_obra_empresa').val(data.empresa);
+      $('#update_obra_cidade').val(data.cidade);
+      $('#update_obra_descricao').val(data.descricao);
+      $('#update_obra_indice').val(data.indice);
+      $('#update_obra_finalizada').prop('checked', data.finalizada);
+      $('#update_obra_retrabalho').val(data.retrabalho);
+
+      // Preencher o select de supervisores
+      loadTable('supervisor','update_obra_supervisor')
+    },
+    error: function(error) {
+      console.error('Erro ao buscar dados:', error);
+    }
+  });
+}
+
+function updateObra() {
+  var cr = $('#update_obra_cr').val();
+  var orcamento = $('#update_obra_orcamento').val();
+  var empresa = $('#update_obra_empresa').val();
+  var cidade = $('#update_obra_cidade').val();
+  var descricao = $('#update_obra_descricao').val();
+  var indice = $('#update_obra_indice').val();
+  var finalizada = $('#update_obra_finalizada').is(':checked');
+  var retrabalho = $('#update_obra_retrabalho').val();
+  var supervisor = $('#update_obra_supervisor').val();
+
+  var data = {
+    'cr': cr,
+    'orcamento': orcamento,
+    'empresa': empresa,
+    'cidade': cidade,
+    'descricao': descricao,
+    'indice': indice,
+    'finalizada': finalizada,
+    'retrabalho': retrabalho,
+    'supervisor': supervisor,
+  };
+
+  $.ajax({
+    url: '{% url "update" %}', // URL da view Django que atualiza a obra
+    method: 'POST',
+    data: {
+      'csrfmiddlewaretoken': "{{ csrf_token }}",
+      'metodo': 'Obra',
+      'parametro': JSON.stringify(data),
+      'user': '{{user}}' // Substitua pelo usuário logado
+    },
+    success: function(response) {
+      alert(response.message);
+      $('#update_obra').modal('hide');
+      // Recarregar a tabela ou fazer outras atualizações necessárias na interface
+    },
+    error: function(error) {
+      console.error('Erro ao atualizar dados:', error);
+    }
+  });
+}
+
+function deletarObra() {
+  var cr = $('#update_obra_cr').val();
+
+  $.ajax({
+    url: '{% url "deletar" %}', // URL da view Django que deleta a obra
+    method: 'POST',
+    data: {
+      'csrfmiddlewaretoken': "{{ csrf_token }}",
+      'metodo': 'Obra',
+      'parametro': cr,
+      'user': '{{user}}' // Substitua pelo usuário logado
+    },
+    success: function(response) {
+      alert(response.message);
+      $('#update_obra').modal('hide');
+      // Recarregar a tabela ou fazer outras atualizações necessárias na interface
+    },
+    error: function(error) {
+      console.error('Erro ao deletar dados:', error);
+    }
+  });
+}
+
+</script>
