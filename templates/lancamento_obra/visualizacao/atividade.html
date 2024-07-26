@@ -11,53 +11,19 @@
 {%endblock%}
 
 {%block 'header'%}
-<h2>Tabela de Atividade</h2>
+<div class="row">
+  <div class="col">
+    <h2>Tabela de Atividade</h2>
+</div>
+<div class="col">
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-success" href="{%url 'lancamento_atividade'%}" role="button">Lançar</a>
+  </div>
+</div>
+</div>
 {%endblock%}
 
 
-{% block 'main' %}
-  <table class="table table-hover table-bordered table-striped">
-    <thead>
-      <tr>  
-        <th scope="col">Id</th>
-        <th scope="col">Obra</th>
-        <th scope="col">Colaborador</th>
-        <th scope="col">Dia</th>
-        <th scope="col">Descrição</th>
-        <th scope="col">Ini1</th>
-        <th scope="col">Fim1</th>
-        <th scope="col">Ini2</th>
-        <th scope="col">Fim2</th>
-        <th scope="col">Ini3</th>
-        <th scope="col">Fim3</th>
-        <th scope="col">Diario</th>
-        <th scope="col">Atividade</th>
-        <th scope="col">Editar</th>
-      </tr>
-    </thead>
-    <tbody>
-      
-      {% for i in data %}
-        <tr>
-          <th scope="row"><p>{{i.id}}</p></th>
-          <td><p>{{i.obra.cr}}</p></td>
-          <td><p>{{i.colaborador}}</p></td>
-          <td><p>{{i.dia | date:"SHORT_DATE_FORMAT"}}</p></td>
-          <td class="desc"><p>{{i.descricao}}</p></td>
-          <td>{%if not i.horaini1 is Null%}<p>{{i.horaini1}}</p>{%endif%}</td>
-          <td>{%if not i.horafim1 is Null%}<p>{{i.horafim1}}</p>{%endif%}</td>
-
-          <td>{%if not i.horaini2 is Null%}<p>{{i.horaini2}}</p>{%endif%}</td>
-          <td>{%if not i.horafim2 is Null%}<p>{{i.horafim2}}</p>{%endif%}</td>
-          <td>{%if not i.horaini3 is Null%}<p>{{i.horaini3}}</p>{%endif%}</td>
-          <td>{%if not i.horafim3 is Null%}<p>{{i.horafim3}}</p>{%endif%}</td>
-          <td><a href="/midia/Lançamento_obra/diarios_digitalizado/{{i.diario}}.png" target="_blank">
-            <p>{{i.diario}}</p>
-          </a></td>
-          <td><p>{{i.atividade.tipo}}</p></td>
-          <td><a href=""><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table> 
+{% block 'submain' %}
+  {%include 'lancamento_obra/tabelas/atividade.html'%}
 {% endblock %}

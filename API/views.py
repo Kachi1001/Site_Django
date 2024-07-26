@@ -4,11 +4,10 @@ from rest_framework.response import Response
 import psycopg2
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from .models import *
+from Home.models import *
 import json   
 from django.http import JsonResponse
 from .mani import *
-from .update import *
 from .serializers import *
 
 # Configurações de conexão com o banco de dados PostgreSQL
@@ -104,7 +103,12 @@ def get_table(request):
         value = Funcao.objects.all().values('funcao', 'grupo')
     elif table == 'supervisor':
         value = Supervisor.objects.all().values('supervisor', 'ativo')
-        
+    elif table == 'atividade':
+        value = Atividade.objects.all().values('tipo')
+    elif table == 'obra':
+        value = Obra.objects.all().values('cr', 'empresa', 'cidade')
+    elif table == 'colaborador':
+        value = Colaborador.objects.all().values('id', 'nome')
     return JsonResponse(list(value), safe=False)
 
 @api_view(['GET'])
@@ -113,18 +117,26 @@ def get_data(request):
     if metodo == 'colab':
         try:
             mymodel = Colaborador.objects.get(id=request.GET.get('id'))
-            serializer = MyModelSerializer(mymodel)
+            serializer = ColaboradorSerializer(mymodel)
             return Response(serializer.data)
         except Colaborador.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-    if metodo == 'Obra':
+    elif metodo == 'Obra':
         try:
             mymodel = Obra.objects.get(cr=request.GET.get('id'))
             serializer = ObraSerializer(mymodel)
             return Response(serializer.data)
         except Colaborador.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-    return Response({'message':'Houve algum problema'}, status=404)
+    elif metodo == 'Lancamentos':
+        try:
+            mymodel = Lancamentos.objects.get(id=request.GET.get('id'))
+            serializer = LancamentosSerializer(mymodel)
+            return Response(serializer.data)
+        except Colaborador.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+    else:
+        return Response({'message':'Houve algum problema'}, status=404)
 
 @api_view(['POST'])
 def update_supervisor_status(request):

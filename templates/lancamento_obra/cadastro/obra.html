@@ -55,7 +55,9 @@
             <label class="input-group-text" for="inputGroupSelect01">Supervisor:</label>
             <select class="form-select" id="inputGroupSelect01" name="supervisor">
               {% for super in super_list %}
+              {%if super.ativo%} 
               <option value="{{super.supervisor}}">{{super.supervisor}}</option>
+              {%endif%}
               {%endfor%}
             </select>
           </div>

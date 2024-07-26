@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
-from .models import *   
+from Home.models import * 
 from django.contrib.auth.decorators import login_required
 from PIL import Image
 import os
@@ -102,7 +102,7 @@ def lancamento_atividade(request):
             b = b + 1
         data = request.POST.get("dia").split("-")
         data = str(int(data[2])) + "-" + str(int(data[1])) + "-" + data[0]
-        
+        diario = str(request.POST.get('obra')) + "_" + data + "_" + str(request.POST.get('indice'))
         att = Lancamentos(
                 obra=Obra(request.POST.get("obra")),
                 colaborador=request.POST.get("colaborador"),
@@ -116,7 +116,8 @@ def lancamento_atividade(request):
                 horafim3=hora[5],
                 atividade=Atividade(request.POST.get("atividade")),
                 diaseguinte=True,
-                digito=request.POST.get("digito"),
+                indice=request.POST.get("indice"),
+                diario=diario
             )
         att.save() 
         return redirect(lancamento_atividade)
@@ -144,10 +145,6 @@ def lancamento_diario(request):
         return redirect("lancamento_diario")
 
 @login_required
-def pesquisa_home(request):
-    return render(request, "lancamento_obra/pesquisa/home.html")
-
-@login_required
 def pesquisa_historico_colab(request):
     dado = None
     colab = ""
@@ -172,7 +169,7 @@ def pesquisa_historico_obra(request):
         
     return render(request, "lancamento_obra/pesquisa/historico_obra.html", {
         'info': Obra.objects.all(),
-        'dado': dado,
+        'data': dado,
         'select': select,
         })
     
@@ -187,6 +184,6 @@ def pesquisa_atividade_diario(request):
         
     return render(request, "lancamento_obra/pesquisa/atividade_diario.html", {
         'info': Diarioobra.objects.all(),
-        'dado': dado,
+        'data': dado,
         'select': select,
         })

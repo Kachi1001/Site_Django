@@ -18,23 +18,24 @@
     <div class="row align-items-start">
       <div class="col">
         <div class="input-group mb-3">
-          <label class="input-group-text" for="inputGroupSelect01">Obra:</label>
-          <select class="form-select" id="inputGroupSelect01" name="obra">
-            {% for obra in obras_list %}
-            <option value="{{obra.cr}}">{{obra.cr}} - {{obra.empresa}} - {{obra.cidade}}</option>
+          <label class="input-group-text" for="inputGroupSelect01">Colaborador:</label>
+          <select class="form-select" id="inputGroupSelect01" name="colaborador">
+            {% for colab in colab_list %}
+            <option value="{{colab.nome}}">{{colab.nome}} | {{colab.funcao.funcao}}</option>
             {%endfor%}
           </select>
         </div>
       </div>
-      <div class="col">
-        <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect01">Colaborador:</label>
-        <select class="form-select" id="inputGroupSelect01" name="colaborador">
-          {% for colab in colab_list %}
-          <option value="{{colab.nome}}">{{colab.nome}} | {{colab.funcao.funcao}}</option>
-          {%endfor%}
-        </select>
-      </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Obra:</label>
+            <select class="form-select" id="inputGroupSelect01" name="obra">
+              {% for obra in obras_list %}
+              <option value="{{obra.cr}}">{{obra.cr}} - {{obra.empresa}} - {{obra.cidade}}</option>
+              {%endfor%}
+            </select>
+          </div>
+        </div>
       </div>
       
     <div class="row align-items-start">
@@ -49,27 +50,11 @@
         </div>
       </div>
 
-      <div class="col">
-        <div class="input-group mb-3">
-          <span class="input-group-text">Descrição:</span>
-          <textarea class="form-control" aria-label="With textarea" name="descricao"></textarea>
-        </div>
-      </div>
-    
-    </div>
-    <div class="row align-items-start">
-      <div class="col">
-        <div class="input-group mb-3">
-          <label class="input-group-text" for="inputGroupSelect01">Data de realização:</label>
-          <input type="date" name="dia" id="data" class="form-control">
-  
-        </div>
-      </div>
-
+      
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="inputGroupSelect01">Indice do diario:</label>
-          <select class="form-select" id="inputGroupSelect01" name="digito">
+          <select class="form-select" id="inputGroupSelect01" name="indice">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -77,6 +62,22 @@
           </select>
         </div>
       </div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Data de realização:</label>
+          <input type="date" name="dia" id="data" class="form-control">
+  
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-start">
+      <div class="col">
+        <div class="input-group mb-3">
+          <span class="input-group-text">Descrição:</span>
+          <textarea class="form-control" aria-label="With textarea" name="descricao"></textarea>
+        </div>
+      </div>
+      
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="inputGroupSelect01">Hora Manhã</label>
@@ -102,44 +103,5 @@
   </form>
 {%endblock%}
 {%block 'submain'%}
-  <table class="table table-hover table-bordered table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Obra</th>
-        <th scope="col">Colaborador</th>
-        <th scope="col">Dia</th>
-        <th scope="col">Ini1</th>
-        <th scope="col">Fim1</th>
-        <th scope="col">Ini2</th>
-        <th scope="col">Fim2</th>
-        <th scope="col">Ini3</th>
-        <th scope="col">Fim3</th>
-        <th scope="col">Diario</th>
-        <th scope="col">Atividade</th>
-
-      </tr>
-    </thead>
-    <tbody>
-      {% for i in data %}
-        <tr>
-          <th scope="row"><p>{{i.id}}</p></th>
-          <td><p>{{i.obra.cr}}</p></td>
-          <td><p>{{i.colaborador}}</p></td>
-          <td><p>{{i.dia | date:"SHORT_DATE_FORMAT"}}</p></td>
-          <td>{%if not i.horaini1 is Null%}<p>{{i.horaini1}}</p>{%endif%}</td>
-          <td>{%if not i.horafim1 is Null%}<p>{{i.horafim1}}</p>{%endif%}</td>
-
-          <td>{%if not i.horaini2 is Null%}<p>{{i.horaini2}}</p>{%endif%}</td>
-          <td>{%if not i.horafim2 is Null%}<p>{{i.horafim2}}</p>{%endif%}</td>
-          <td>{%if not i.horaini3 is Null%}<p>{{i.horaini3}}</p>{%endif%}</td>
-          <td>{%if not i.horafim3 is Null%}<p>{{i.horafim3}}</p>{%endif%}</td>
-          <td><a href="/midia/Lançamento_obra/diarios_digitalizado/{{i.diario}}.png" target="_blank">
-            <p>{{i.diario}}</p>
-          </a></td>
-          <td><p>{{i.atividade.tipo}}</p></td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  {%include 'lancamento_obra/tabelas/atividade.html'%}
 {% endblock %}

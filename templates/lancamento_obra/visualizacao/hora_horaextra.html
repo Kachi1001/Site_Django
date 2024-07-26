@@ -12,12 +12,20 @@
 {%endblock%}
 
 {%block 'header'%}
-<h2>Tabela de Obras</h2>
+<div class="row">
+  <div class="col">
+  <h2>Tabela de Horas</h2>
+</div>
+<div class="col">
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button id="botao-criar-tabela" class="btn btn-outline-success">Atualizar</button>
+  </div>
+</div>
+</div>
 {%endblock%}
 
 {% block 'main' %}
 <div class="row">
-  <button id="botao-criar-tabela" class="btn btn-outline-success">Atualizar</button>
 </div>
   <table class="table table-hover table-bordered table-striped">
     <thead>
@@ -63,7 +71,7 @@
                   }
               },  
               error: function(xhr, status, error) {
-                  console.error('Erro:', error);
+                  console.error ('Erro:', error);
                   // Exiba uma mensagem de erro na div resultado
                   alert('Houve algum erro ao atualizar, contate o suporte tecnico para auxiliar nesse caso.\nerro: ' + error + '-' + status);
               }

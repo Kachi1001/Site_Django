@@ -1,5 +1,5 @@
 from .serializers import SerializerTipo
-from .models import *
+from Home.models import *
 from django.db import IntegrityError, transaction
 from rest_framework.response import Response
 from datetime import datetime

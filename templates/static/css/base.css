@@ -29,4 +29,20 @@ main{
     bottom: 20px;
     right: 20px;
   }
+  .btn-icon{
+    border-radius: 10px;
+    padding: 5px;
+    background-color: gray;
+    width: 25px;
+    display: flex;
+    height: 25px;
+    margin: 2px;
+}
+.btn-icon:hover{
+  cursor: pointer;
+}
+.editar{
+  display:flex; 
+  justify-content: center;
+}
   /* Some media queries for responsiveness */

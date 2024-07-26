@@ -278,7 +278,7 @@ class Lancamentos(models.Model):
     colaborador = models.CharField(max_length=255)
     dia = models.DateField()
     descricao = models.CharField(max_length=600, blank=True, null=True)
-    digito = models.IntegerField()
+    indice = models.IntegerField()
     diaseguinte = models.BooleanField()
     horaini1 = models.TimeField()
     horafim1 = models.TimeField()

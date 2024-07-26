@@ -7,19 +7,7 @@
   th{
     font-size: small;
   }
-  .acao{
-    border-radius: 10px;
-    padding: 3px;
-    background-color: gray;
-    width: 25px;
-    display: flex;
-    height: 25px;
-    margin: 2px;
-    margin-top: 5px;
-}
-.acao:hover{
-  cursor: pointer;
-}
+  
 </style>
 
 
@@ -270,6 +258,91 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" onclick="deletarObra()">Deletar</button>
         <button type="button" class="btn btn-success" onclick="updateObra()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal update att-->
+<div class="modal fade" id="update_lanc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de atividade</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="inputGroupSelect01">Colaborador:</label>
+              <select class="form-select" id="update_att_colaborador" name="colaborador">
+                <!-- <option value="{{colab.nome}}">{{colab.nome}} | {{colab.funcao.funcao}}</option>  -->
+              </select>
+            </div>
+          
+            
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Obra:</label>
+                <select class="form-select" id="update_att_obra" name="obra">
+                  <!-- <option value="{{obra.cr}}">{{obra.cr}} - {{obra.empresa}} - {{obra.cidade}}</option> -->
+                </select>
+              </div>
+          
+          
+          
+        <div class="row align-items-start">
+          <div class="col">
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Atividade:</label>
+                <select class="form-select" id="update_att_atividade" name="atividade">
+                  <!-- <option value="{{att.tipo}}">{{att.tipo}}</option> -->
+                </select>
+            </div>
+          </div>
+    
+          
+          <div class="col">
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="inputGroupSelect01">Indice do diario:</label>
+              <select class="form-select" id="update_att_indice" name="indice">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+    
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Data de realização:</label>
+          <input type="date" name="dia" id="update_att_dia" class="form-control">
+  
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text">Descrição:</span>
+          <textarea class="form-control" aria-label="With textarea" name="descricao" id="update_att_descricao"></textarea>
+        </div>
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="inputGroupSelect01">Hora Manhã</label>
+              <input type="time" name="horaini1" id="update_att_horaini1" class="form-control">
+              <input type="time" name="horafim1" id="update_att_horafim1" class="form-control">
+            </div>
+    
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="inputGroupSelect01">Hora Tarde</label>
+              <input type="time" name="horaini2" id="update_att_horaini2" class="form-control">
+              <input type="time" name="horafim2" id="update_att_horafim2" class="form-control">
+            </div>
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="inputGroupSelect01">Hora Noite</label>
+              <input type="time" name="horaini3" id="update_att_horaini3" class="form-control">
+              <input type="time" name="horafim3" id="update_att_horafim3" class="form-control">
+            </div>
+          
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" onclick="deletarLanc()">Deletar</button>
+        <button type="button" class="btn btn-success" onclick="updateLanc()">Salvar</button>
       </div>
     </div>
   </div>

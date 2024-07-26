@@ -12,7 +12,16 @@
 {%endblock%}
 
 {%block 'header'%}
-<h2>Tabela de Obras</h2>
+<div class="row">
+  <div class="col">
+  <h2>Tabela de Obras</h2>
+</div>
+<div class="col">
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-success" href="{%url 'cadastro_obra'%}" role="button">Registrar</a>
+  </div>
+</div>
+</div>
 {%endblock%}
 
 {% block 'main' %}
@@ -52,7 +61,7 @@
           </td>
           <td><p>{{obra.indice}}</p></td>
           <td><p>{{obra.etapas}}</p></td>
-          <td data-bs-toggle="modal" data-bs-target="#update_obra" onclick="editObra('{{obra.cr}}')" class="edit"><a><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
+          <td class="editar" data-bs-toggle="modal" data-bs-target="#update_obra" onclick="editObra('{{obra.cr}}')"><div class="btn-icon" style="background-color: skyblue;"><img src="{% static 'icons/pencil.svg'%}" alt="edit"></div></td>
 
 
         </tr>

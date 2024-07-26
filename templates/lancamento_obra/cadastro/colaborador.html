@@ -110,30 +110,5 @@
 {% endblock %}
 
 {%block 'submain'%}
-<table class="table table-hover table-bordered table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Nome</th>
-      <th scope="col">Função</th>
-      <th scope="col">Admissão</th>
-      <th scope="col">Demissão</th>
-      <th scope="col">Tipo</th>
-      <th scope="col">Diaria</th>
-      <th scope="col">Oberservação</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for colaborador in data %}
-      <tr>
-        <td><p style="font-weight: bold;">{{colaborador.nome}}</p></td>
-        <td><p>{{colaborador.funcao.funcao}}</p></td>
-        <td><p>{{colaborador.admissao | date:"SHORT_DATE_FORMAT"}}</p></td>
-        <td>{%if not colaborador.demissao is None%}<p>{{colaborador.demissao | date:"SHORT_DATE_FORMAT"}}</p>{%endif%}</td>
-        <td><p>{{colaborador.contrato.contrato}}</p></td>
-        <td>{%if not colaborador.diaria is None%}<p>{{colaborador.diaria}}</p>{%endif%}</td>
-        <td>{%if not colaborador.observacoes is None%}<p>{{colaborador.observacoes}}</p>{%endif%}</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+{%include 'lancamento_obra/tabelas/colaborador.html'%}
 {%endblock%}

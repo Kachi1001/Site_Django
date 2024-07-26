@@ -21,43 +21,6 @@
         <option value="{{x.id}}">{{x.id}}</option>
     {%endfor%}
   </select>
-  <table class="table table-hover table-bordered table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Colaborador</th>
-        <th scope="col">Obra</th>
-        <th scope="col">Dia</th>
-        <th scope="col">Descrição</th>
-        <th scope="col">Ini1</th>
-        <th scope="col">Fim1</th>
-        <th scope="col">Ini2</th>
-        <th scope="col">Fim2</th>
-        <th scope="col">Ini3</th>
-        <th scope="col">Fim3</th>
-      </tr>
-    </thead>
-    <tbody>
-      
-      {% for i in dado %}
-        <tr>
-          <th scope="row"><p>{{i.id}}</p></th>
-          <td><p>{{i.colaborador}}</p></td>
-          <td><p>{{i.obra.cr}}</p></td>
-          <td><p>{{i.dia | date:"SHORT_DATE_FORMAT"}}</p></td>
-          <td class="desc"><p>{{i.descricao}}</p></td>
-          <td>{%if not i.horaini1 is Null%}<p>{{i.horaini1}}</p>{%endif%}</td>
-          <td>{%if not i.horafim1 is Null%}<p>{{i.horafim1}}</p>{%endif%}</td>
-
-          <td>{%if not i.horaini2 is Null%}<p>{{i.horaini2}}</p>{%endif%}</td>
-          <td>{%if not i.horafim2 is Null%}<p>{{i.horafim2}}</p>{%endif%}</td>
-          <td>{%if not i.horaini3 is Null%}<p>{{i.horaini3}}</p>{%endif%}</td>
-          <td>{%if not i.horafim3 is Null%}<p>{{i.horafim3}}</p>{%endif%}</td>
-        
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table> 
   <script>
     function reload(param) {
         let url = new URL(window.location.href);
@@ -73,3 +36,7 @@
     
   </script>
 {% endblock %}
+
+{%block 'submain'%}
+{%include 'lancamento_obra/tabelas/atividade.html'%} 
+{%endblock%}

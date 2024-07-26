@@ -11,7 +11,16 @@
 {%endblock%}
 
 {%block 'header'%}
-<h2>Tabela de Diário</h2>
+<div class="row">
+  <div class="col">
+    <h2>Tabela de Diário</h2>
+</div>
+<div class="col">
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-success" href="{%url 'lancamento_diario'%}" role="button">Lançar</a>
+  </div>
+</div>
+</div>
 {%endblock%}
 
 {% block 'main' %}
@@ -44,8 +53,6 @@
             <p>Abrir Digitalização</p>
           </a></td>
           <td data-bs-toggle="modal" data-bs-target="#update_obra" onclick="editObra('{{i.id}}')" class="edit"><a><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
-
-
         </tr>
       {% endfor %}
     </tbody>

@@ -16,38 +16,18 @@
 {%endblock%}
 
 {%block 'header'%}
-<h2>Tabela de Colaborador</h2>
+<div class="row">
+  <div class="col">
+  <h2>Tabela de Colaborador</h2>
+</div>
+<div class="col">
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-success " href="{%url 'cadastro_colab'%}" role="button">Registrar</a>
+  </div>
+</div>
+</div>
 {%endblock%}
 
 {% block 'main' %}
-<table class="table table-hover table-bordered table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Nome</th>
-        <th scope="col">Função</th>
-        <th scope="col">Admissão</th>
-        <th scope="col">Demissão</th>
-        <th scope="col">Tipo</th>
-        <th scope="col">Diaria</th>
-        <th scope="col">Oberservação</th>
-        <th scope="col">Editar</th>
-        
-      </tr>
-    </thead>
-    <tbody>
-      
-      {% for colaborador in data %}
-        <tr>
-          <td><p style="font-weight: bold;">{{colaborador.nome}}</p></td>
-          <td><p>{{colaborador.funcao}}</p></td>
-          <td><p>{{colaborador.admissao | date:"SHORT_DATE_FORMAT"}}</p></td>
-          <td>{%if not colaborador.demissao is None%}<p>{{colaborador.demissao | date:"SHORT_DATE_FORMAT"}}</p>{%endif%}</td>
-          <td><p>{{colaborador.contrato}}</p></td>
-          <td>{%if not colaborador.diaria is None%}<p>{{colaborador.diaria}}</p>{%endif%}</td>
-          <td>{%if not colaborador.observacao is None%}<p>{{colaborador.observacao}}</p>{%endif%}</td>
-          <td data-bs-toggle="modal" data-bs-target="#update_colab" onclick="loadUpdate('colab','{{colaborador.id}}')" class="edit"><a><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table> 
+{%include 'lancamento_obra/tabelas/colaborador.html'%}
 {% endblock %}

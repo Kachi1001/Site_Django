@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
-from .models import *
+from Home.models import *
 from django.utils import timezone
 
 date = datetime.now()
