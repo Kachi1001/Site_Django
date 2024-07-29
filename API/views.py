@@ -64,7 +64,9 @@ def update(request):
         return Edit.Colaborador(owner, parametro) 
     elif metodo == 'Obra':
         return Edit.Obra(owner, parametro)
-    return Response({'message':'Houve algum problema, não encontramos o metodo'}, status=404)
+    elif metodo == 'Lancamentos':
+        return Edit.Lancamentos(owner, parametro)
+    return Response({'message':'Houve algum problema, não encontramos o metodo'}, status=400)
 
 @api_view(['POST'])
 def deletar(request):
@@ -79,6 +81,8 @@ def deletar(request):
         return Delete.Supervisor(owner, id)
     elif metodo == 'Obra':
         return Delete.Obra(owner, id)
+    elif metodo == 'Lancamentos':
+        return Delete.Lancamentos(owner, id)
     
 @api_view(['POST'])
 def salas(request):

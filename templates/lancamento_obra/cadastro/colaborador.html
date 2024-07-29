@@ -27,6 +27,7 @@
 <script>
   $(document).ready(function() {
     $('#enviar').click(function() {
+      let encarregado = document.getElementById('update_encarregado').checked ? true : false;
       let parametro = {
         'nome': document.getElementById('nome')?.value,
         'funcao': document.getElementById('funcao')?.value,
@@ -34,14 +35,18 @@
         'contrato': document.getElementById('contrato')?.value,
         'diaria': document.getElementById('diaria')?.value,
         'observacao': document.getElementById('observacao')?.value,
-        'encarregado': document.getElementById('encarregado')?.value,
+        'encarregado': encarregado,
       }
       if (parametro.admissao == "") {
         if (confirm(  'Tem certeza que deseja salvar sem uma data de admissão?')){
-          salvarData('Colaborador', parametro)
+          salvarData('Colaborador', parametro, function(){
+            location.reload();
+          })
+
         }
       } else {
         salvarData('Colaborador', parametro)
+
       }
   })
 })

@@ -102,12 +102,32 @@ class Edit:
         obra.retrabalho = parametro.get('retrabalho')
         obra.indice = parametro.get('indice')
         obra.orcamento = parametro.get('orcamento')
+        obra.supervisor = Supervisor(parametro.get('supervisor'))
+        
         obra.save()
         
         save_historico(idr=obra.cr, user=user, action='UPDATE', context=f"OBRA <{obra.empresa}> EDITADO")
         return Response({'message': 'Atualizado com sucesso'})
     
-
+    @handle_transaction
+    def Lancamentos(user, parametro):
+        lanc = Lancamentos.objects.get(id=parametro.get('id'))
+        lanc.dia = parametro.get('dia')
+        lanc.descricao = parametro.get('descricao')
+        lanc.indice = parametro.get('indice')
+        lanc.horaini1 = parametro.get('horaini1') or lanc.horaini1
+        lanc.horaini2 = parametro.get('horaini2') or lanc.horaini2
+        lanc.horaini3 = parametro.get('horaini3') or lanc.horaini3
+        lanc.horafim1 = parametro.get('horafim1') or lanc.horafim1
+        lanc.horafim2 = parametro.get('horafim2') or lanc.horafim2
+        lanc.horafim3 = parametro.get('horafim3') or lanc.horafim3
+        lanc.obra = Obra(cr=parametro.get('obra'))
+        lanc.colaborador = parametro.get('colaborador')
+        
+        lanc.save()
+        save_historico(idr=lanc.id, user=user, action='UPDATE', context=f"LANÇAMENTOS EDITADO")
+        return Response({'message': 'Atualizado com sucesso'})
+        
 class Delete:
     
     @handle_transaction
@@ -136,4 +156,11 @@ class Delete:
         x = Obra.objects.get(cr=id)
         x.delete()
         save_historico(idr=0, user=user, action='DELETE', context=f"OBRA <{id}> FOI EXCLUÍDO")
+        return Response({'message': 'Deletado com sucesso'})
+
+    @handle_transaction
+    def Lancamentos(user, id):
+        x = Lancamentos.objects.get(id=id)
+        x.delete()
+        save_historico(idr=id, user=user, action='DELETE', context=f"ATIVIDADE EXCLUÍDA")
         return Response({'message': 'Deletado com sucesso'})

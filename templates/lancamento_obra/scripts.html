@@ -89,7 +89,7 @@
     if (metodo == 'Colaborador'){
       let id = document.getElementById('update_id')?.value;
       deletarData(metodo, id, function() {
-        loadTable('colab', 'colab_table');
+        location.reload();
       });
     } else if (metodo == 'Supervisor'){
       let id = document.getElementById('super_nome')?.value;
@@ -137,6 +137,7 @@
           loadTable('funcao', 'func_list');
           document.getElementById('update_funcao').value = data.funcao;
           document.getElementById('update_admissao').value = data.admissao;
+          document.getElementById('update_demissao').value = data.demissao;
           document.getElementById('update_contrato').value = data.contrato;
           document.getElementById('update_diaria').value = data.diaria;
           document.getElementById('update_observacao').value = data.observacao;
@@ -200,7 +201,7 @@
       }
     } 
     else if (tableHTML == 'update_obra_supervisor'){
-      $('#update_funcao').empty();
+      table.empty();
       for (let i = 0; i < data.length; i++) {
         if (data[i].ativo) {
           let opt = document.createElement('option');        
@@ -223,7 +224,7 @@
       table.empty();
       for (let i = 0; i < data.length; i++) {      
         let opt = document.createElement('option');        
-        opt.value = data[i].id;
+        opt.value = data[i].nome;
         opt.text = data[i].nome;
         table.append(opt);
       }
@@ -287,6 +288,12 @@ function editObra(cr) {
 
       // Preencher o select de supervisores
       loadTable('supervisor','update_obra_supervisor')
+      $('#update_obra_supervisor').val(data.supervisor)
+      console.log(data.supervisor)
+      setTimeout(function() {
+        $('#update_obra_supervisor').val(data.supervisor);
+    }, 100);
+    
     },
     error: function(error) {
       console.error('Erro ao buscar dados:', error);
@@ -384,10 +391,14 @@ function editLanc(id) {
       $('#update_att_horafim1').val(data.horafim1);
       $('#update_att_horafim2').val(data.horafim2);
       $('#update_att_horafim3').val(data.horafim3);
-      $('#update_att_obra').val(data.obra);
 
       // Preencher o select de supervisores
+      setTimeout(function() {
+        $('#update_att_atividade').val(data.atividade);
+        $('#update_att_obra').val(data.obra);
+        $('#update_att_colaborador').val(data.colaborador);
 
+    }, 100);
     },
     error: function(error) {
       console.error('Erro ao buscar dados:', error);
@@ -396,34 +407,42 @@ function editLanc(id) {
 }
 
 function updateLanc() {
-  var cr = $('#update_obra_cr').val();
-  var orcamento = $('#update_obra_orcamento').val();
-  var empresa = $('#update_obra_empresa').val();
-  var cidade = $('#update_obra_cidade').val();
-  var descricao = $('#update_obra_descricao').val();
-  var indice = $('#update_obra_indice').val();
-  var finalizada = $('#update_obra_finalizada').is(':checked');
-  var retrabalho = $('#update_obra_retrabalho').val();
-  var supervisor = $('#update_obra_supervisor').val();
+  var id = $('#update_att_id').val();
+  var dia = $('#update_att_dia').val();
+  var descricao = $('#update_att_descricao').val();
+  var indice = $('#update_att_indice').val();
+  var horaini1 = $('#update_att_horaini1').val();
+  var horafim1 = $('#update_att_horafim1').val();
+  var horaini2 = $('#update_att_horaini2').val();
+  var horafim2 = $('#update_att_horafim2').val();
+  var horaini3 = $('#update_att_horaini3').val();
+  var horafim3 = $('#update_att_horafim3').val();
+  var obra = $('#update_obra').val();
+  var atividade = $('#update_att_atividade').val();
+  var obra = $('#update_att_obra').val();
+  var colaborador = $('#update_att_colaborador').val();
 
   var data = {
-    'cr': cr,
-    'orcamento': orcamento,
-    'empresa': empresa,
-    'cidade': cidade,
+    'id': id,
+    'dia': dia,
     'descricao': descricao,
     'indice': indice,
-    'finalizada': finalizada,
-    'retrabalho': retrabalho,
-    'supervisor': supervisor,
-  };
+    'horaini1': horaini1,
+    'horafim1': horafim1,
+    'horaini2': horaini2,
+    'horafim2': horafim2,
+    'horaini3': horaini3,
+    'horafim3': horafim3,
+    'obra': obra,
+    'colaborador': colaborador,
+    };
 
   $.ajax({
     url: '{% url "update" %}', // URL da view Django que atualiza a obra
     method: 'POST',
     data: {
       'csrfmiddlewaretoken': "{{ csrf_token }}",
-      'metodo': 'Atividade',
+      'metodo': 'Lancamentos',
       'parametro': JSON.stringify(data),
       'user': '{{user}}' // Substitua pelo usuário logado
     },
@@ -439,7 +458,7 @@ function updateLanc() {
   });
 }
 
-function deletarLanc() {
+function deletarLanc( ) {
   var id = $('#update_att_id').val();
 
   $.ajax({
@@ -447,13 +466,15 @@ function deletarLanc() {
     method: 'POST',
     data: {
       'csrfmiddlewaretoken': "{{ csrf_token }}",
-      'metodo': 'Atividade',
+      'metodo': 'Lancamentos',
       'parametro': id,
       'user': '{{user}}' // Substitua pelo usuário logado
     },
     success: function(response) {
       alert(response.message);
+      location.reload();
       $('#update_obra').modal('hide');
+
       // Recarregar a tabela ou fazer outras atualizações necessárias na interface
     },
     error: function(error) {
