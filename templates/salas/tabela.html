@@ -1,5 +1,5 @@
 {% extends 'salas.html' %}
-
+{%load static%}
 {%block 'main'%}
 <main>
   <form action="{{url}}" method="POST">{% csrf_token %}
@@ -20,6 +20,8 @@
         </div>
       </div>
 </main>
+{%endblock%}
+{%block 'submain'%}
   <div class="submain">
     <div class="container text-start">
       <div class="row">
@@ -103,4 +105,9 @@
         </div>
       </div>
     </form>
+{%endblock%}
+{%block 'icon'%}
+<div class="col-2">
+  <img src="{{icon}}" alt="" class="img-thumbnail">
+</div>
 {%endblock%}

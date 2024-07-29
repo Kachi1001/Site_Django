@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from datetime import datetime
 from Home.models import *
 from django.utils import timezone
-
 date = datetime.now()
 mes = str(date.month) if date.month >9 else '0'+ str(date.month)
 hoje =  str(date.year)+ '-' + mes + '-' + str(date.day)
@@ -83,10 +82,13 @@ def atendimento(request):
         'horarios2': reserva.gerarLista(reservados, horarios2),
         'url': sala,
         'sala': 'Atendimento',
+        'icon': f'/static/image/{sala}.jpg'
+        
         }
     return render(request, "salas/tabela.html", context)
 
 def reuniao(request):
+    user = request.user
     sala = 'reuniao'
     date = request.GET.get('data') if request.GET.get('data') != None else hoje
     if request.method == "POST":
@@ -118,12 +120,15 @@ def reuniao(request):
         'horarios2': reserva.gerarLista(reservados, horarios2),
         'url': sala,
         'sala': 'Reunião',
+        'icon': f'/static/image/{sala}.jpg'
+        
         }
     return render(request, "salas/tabela.html", context)
 
 
             
 def apoio(request):
+    user = request.user
     sala = 'apoio'
     date = request.GET.get('data') if request.GET.get('data') != None else hoje
     if request.method == "POST":
@@ -154,6 +159,7 @@ def apoio(request):
         'horarios2': reserva.gerarLista(reservados, horarios2),
         'url': sala,
         'sala': 'Apoio',
+        'icon': f'/static/image/{sala}.jpg'
         }
     return render(request, "salas/tabela.html", context)
 
@@ -165,8 +171,6 @@ def lista(request):
         'atendimento': tabela.filter(sala='atendimento', data__gte=today),
         'apoio': tabela.filter(sala='apoio', data__gte=today),
         'reuniao': tabela.filter(sala='reuniao', data__gte=today),
-        
-        
         'sala': 'Registros',
     }
     return render(request, "salas/lista.html", context)

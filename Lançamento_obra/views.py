@@ -125,7 +125,11 @@ def lancamento_atividade(request):
 @login_required
 def lancamento_diario(request):
     if request.method == "GET":    
-        return render(request, "lancamento_obra/lancamento/diario.html", {'obras_list': Obra.objects.all(), "colab_list": Colaborador.objects.all()})
+        return render(request, "lancamento_obra/lancamento/diario.html", {
+            'obras_list': Obra.objects.all(), 
+            "colab_list": Colaborador.objects.all(),
+            'data': Diarioobra.objects.all().order_by('-id')[:5],
+            })
     elif request.method == "POST":
         digitalizacao = request.FILES.get('arquivo')
         img = Image.open(digitalizacao)

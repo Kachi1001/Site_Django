@@ -9,7 +9,7 @@ header{
   }
 main{
     margin-left: var(--side-bar_width); /* Same as the width of the sidenav */
-    padding: 0px 100px 20px 100px;
+    padding: 0px 0px 20px 100px;
     max-height: 600px;
 }
   .submain {

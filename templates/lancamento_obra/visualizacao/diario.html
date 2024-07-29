@@ -24,37 +24,5 @@
 {%endblock%}
 
 {% block 'main' %}
-  <table class="table table-hover table-bordered table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Obra</th>
-        <th scope="col">Data</th>
-        <th scope="col">Encarregado</th>
-        <th scope="col">Clima de Manha</th>
-        <th scope="col">Clima de Tarde</th>
-        <th scope="col">Digital</th>
-        <th scope="col">Editar</th>
-
-      </tr>
-    </thead>
-    <tbody>
-      
-      {% for i in data %}
-        <tr>
-          <th scope="row"><p>{{i.id}}</p></th>
-          <td><p>{{i.obra}}</p></td>
-          <td><p>{{i.data | date:"SHORT_DATE_FORMAT"}}</p></td>
-          <td>{%if not i.encarregado is Null%}<p>{{i.encarregado}}</p>{%endif%}</td>
-          <td>{%if not i.climamanha is Null%}<p>{{i.climamanha}}</p>{%endif%}</td>
-          <td>{%if not i.climatarde is Null%}<p>{{i.climatarde}}</p>{%endif%}</td>
-          
-          <td><a href="/midia/Lançamento_obra/diarios_digitalizado/{{i.id}}.png" target="_blank">
-            <p>Abrir Digitalização</p>
-          </a></td>
-          <td data-bs-toggle="modal" data-bs-target="#update_obra" onclick="editObra('{{i.id}}')" class="edit"><a><img src="{% static 'icons/pencil-fill.svg'%}" alt="edit"></a></td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table> 
+{%include 'lancamento_obra/tabelas/diario.html'}
 {% endblock %}

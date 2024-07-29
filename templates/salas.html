@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" href= "{% static 'css/color.css' %}">
 <link rel="stylesheet" href= "{% static 'css/sidebar.css' %}">
-<link rel="stylesheet" href= "{% static 'css/base.css' %}">
+<!-- <link rel="stylesheet" href= "{% static 'css/base.css' %}"> -->
 
 
 </head>
@@ -27,9 +27,35 @@
   .input-group-text{
       flex-direction: column;
   }
+
+
+  /* Main content */
   header{
-    padding: 20px 100px 10px 100px;
+    font-size: 20px; /* Increased text to enable scrolling */
   }
+main{
+    max-height: 600px;
+}
+  .submain {
+    margin-left: calc(var(--side-bar_width) + 50px);
+    margin-right: 50px;
+    padding: 20px 50px 0px 50px;
+    border-top: 1px solid lightgray;
+  }
+  footer{
+    background-color: azure;
+    border-radius: 5px;
+    padding: 5px;
+    position: fixed;
+    margin-right: 20px;
+    display: flex;
+    justify-content: flex-end;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  /* Some media queries for responsiveness */
+
 </style>
 
 <body>
@@ -78,17 +104,23 @@
 </div>
 </div>
 
-<header>
-  <div aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">Reserva de Salas</li>
-      <li class="breadcrumb-item active" aria-current="page">{{sala}}</li>
-    </ol>
+<div class="row align-items-center" style="margin: 50px 0px 0px 250px; padding: 20px 100px 20px 100px">
+  {%block 'icon'%} {%endblock%}
+  <div class="col">
+    <header>
+      <div aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Reserva de Salas</li>
+          <li class="breadcrumb-item active" aria-current="page">{{sala}}</li>
+        </ol>
+      </div>
+    </header>
+    {%block 'main'%}
+    {%endblock%}
   </div>
-</header>
-{%block 'main'%}
-{%endblock%}
-
+</div>
+{%block 'submain'%}
+    {%endblock%}
 <script>
   function reload(param) {
       let url = new URL(window.location.href);
