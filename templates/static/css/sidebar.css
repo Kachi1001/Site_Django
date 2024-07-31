@@ -10,15 +10,6 @@
     overflow-x: hidden;
     box-shadow:  3px 0px 15px rgb(145, 145, 145);
   }
-
-.navbar{
-    position: fixed;
-    z-index: 2;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 50px;
-  }
   
   /* Styl the sidenav links and the dropdown button */
 .sidenav a {

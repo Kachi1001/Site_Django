@@ -1,0 +1,85 @@
+{%extends 'ti.html'%}
+{%load static%}
+{% block 'caminho' %}
+<li class="breadcrumb-item" aria-current="page">Equipamentos</li>
+<li class="breadcrumb-item active" aria-current="page">Cadastrar novo</li>
+{%endblock%}
+
+{%block 'main'%}
+<h3>Informações principais</h3>
+<div class="row">
+    <div class="col-5">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Equipamento:</label>
+            <select class="form-select" id="inputGroupSelect01">
+                <option selected>Notebook</option>
+                <option value="1">Computador</option>
+                <option value="2">Impressora</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Tag</span>
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Data de aquisição:</label>
+            <input type="date" name="admissao" id="admissao" class="form-control">
+          </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Marca</span>
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Modelo</span>
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+
+{%block 'submain'%}
+<h4>Detalhes</h4>
+<div class="container text-start">
+    <div class="row">
+        <div class="col">
+            <div class="input-group mb-3">
+                <select class="form-select" id="inputGroupSelect01" placeholder="teste">
+                    <option selected>Office</option>
+                    <option value="1">Windows</option>
+                    <option value="2">Processador</option>
+                    <option value="2">Responsável</option>
+                    <option value="2">Monitor</option>
+                    <option value="2">Kit teclado / mouse</option>
+                    <option value="2">Processador</option>
+
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4"
+                    placeholder="Detalhe">
+            </div>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-danger">Remover</button>
+        </div>
+    </div>
+    <div class="row">
+        <a class="icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);" href="#">
+            + Adicionar detalhe
+        </a>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,112 @@
+<div class="modals">
+  <div class="modal fade" id="adicionar_detalhe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de detalhe</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Detalhe:</label>
+            <input type="text" name="nome" id="func_nome" class="form-control">
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Para quem:</label>
+            <select class="form-select" id="func_grupo" name="grupo">
+              <option value="1">Equipamentos</option>
+              <option value="2">Colaborador</option>
+            </select>
+          </div>
+          <div class="microlist">
+            <table class="table table-hover table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Detalhe</th>
+                  <th scope="col">De</th>
+                </tr>
+              </thead>
+              <tbody id="func_table"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="cadastrar('detalhe')">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal de edição de produto -->
+  <div class="modal fade" id="edicao_produto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de produto</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-3">
+              <div class="input-group mb-3 flex-nowrap">
+                <span class="input-group-text">ID:</span>
+                <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4"
+                  disabled>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3 flex-nowrap">
+                <span class="input-group-text">Nome:</span>
+                <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="input-group mb-3 flex-nowrap">
+                <span class="input-group-text">Marca:</span>
+                <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3 flex-nowrap">
+                <span class="input-group-text">Descrição:</span>
+                <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Para qual equipamento:</label>
+            <select class="form-select" id="inputGroupSelect01">
+              <option value="1">Computador</option>
+              <option value="2">Impressora</option>
+              <option value="2">Outros</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="col-5">
+              <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Unidade:</label>
+                <select class="form-select" id="inputGroupSelect01">
+                  <option value="1">UN</option>
+                  <option value="2">KIT</option>
+                  <option value="2">ML</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <span class="input-group-text">Estoque mínimo:</span>
+                <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" onclick="editar('produto')">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!--fim da div principal-->

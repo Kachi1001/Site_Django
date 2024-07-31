@@ -8,7 +8,7 @@ from django.contrib.auth import logout as logout_django
 from django.contrib.auth.decorators import login_required
 from rolepermissions.checkers import has_permission
 from rolepermissions.roles import assign_role
-
+from .models import *
 
 def login(request):
     if request.method == "GET":
@@ -27,5 +27,6 @@ def index(request):
     return render(request, 'index.html', {"nome": user.username})
 
 @login_required
-def secreto(request):
-    return render(request, 'secreto.html')
+def teste(request):
+    data = list(Historico.objects.values('user','action','context'))
+    return render(request, 'teste.html', {'data': data})

@@ -1,0 +1,124 @@
+{%extends 'ti.html'%}
+{%load static%}
+{% block 'caminho' %}
+<li class="breadcrumb-item" aria-current="page">Equipamentos</li>
+<li class="breadcrumb-item active" aria-current="page">Cadastrar novo</li>
+{%endblock%}
+
+{%block 'main'%}
+<h3>Tabela de computadores</h3>
+{%endblock%}
+
+
+{%block 'submain'%}
+
+<div class="accordion" id="accordionPanelsStayOpenExample">
+   <div class="accordion-item">
+      <h2 class="accordion-header">
+         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapse1" aria-expanded="false"
+            aria-controls="panelsStayOpen-collapse1">
+            Felipe kaim / Aprendiz / Administrativo
+         </button>
+      </h2>
+      <div id="panelsStayOpen-collapse1" class="accordion-collapse collapse">
+         <div class="accordion-body">
+            <table class="table">
+               <thead>
+                  <thead>
+                     <tr>
+                        <th scope="col">Detalhe</th>
+                        <th scope="col">Valor</th>
+                     </tr>
+                  </thead>
+               <tbody>
+                  <tr>
+                     <th scope="row">
+                        <p>Computador</p>
+                     </th>
+                     <th scope="row">
+                        <p>TECNIKA Nº 2784</p>
+                     </th>
+                  </tr>
+                  <tr>
+                     <th scope="row">
+                        <p>Remapeiar</p>
+                     </th>
+                     <th scope="row">
+                        <p>felipe.andreade | felipe@tecnika</p>
+                     </th>
+                  </tr>
+                  <tr>
+                     <th scope="row">
+                        <p>Acesso</p>
+                     </th>
+                     <th scope="row">
+                        <p>Total</p>
+                     </th>
+                  </tr>
+                  <tr>
+                     <th scope="row">
+                        <p>Usuário da plataforma</p>
+                     </th>
+                     <th scope="row">
+                        <p>felipe</p>
+                     </th>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+
+   <div class="accordion-item">
+      <h2 class="accordion-header">
+         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseTwo">
+            Cristiane / Estagiário / Administrativo
+         </button>
+      </h2>
+      <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+         <div class="accordion-body">
+            <table class="table">
+               <thead>
+                  <thead>
+                     <tr>
+                        <th scope="col">Detalhe</th>
+                        <th scope="col">Valor</th>
+                     </tr>
+                  </thead>
+               <tbody>
+
+
+                  <tr>
+                     <th scope="row">
+                        <p>Computador</p>
+                     </th>
+                     <th scope="row">
+                        <p>Nº 1904</p>
+                     </th>
+                  </tr>
+                  <tr>
+                     <th scope="row">
+                        <p>Email</p>
+                     </th>
+                     <th scope="row">
+                        <p>projetos1@tecnikaengenharia.com.br</p>
+                     </th>
+                  </tr>
+                  <tr>
+                     <th scope="row">
+                        <p>Usuário da plataforma</p>
+                     </th>
+                     <th scope="row">
+                        <p>cris</p>
+                     </th>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+</div>
+   {%endblock%}

@@ -93,7 +93,15 @@ DATABASES = {
         "PASSWORD": config("DB_PASSWORD"),
         "HOST": config("DB_HOST"),
         "PORT": config("DB_PORT"),
-    }
+    },
+    'secondary': {
+        'ENGINE': 'django.db.backends.postgresql',
+        "NAME": 'lancamentos',
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT"),
+    },
 }
 
 # Password validation

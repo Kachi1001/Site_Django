@@ -1,23 +1,13 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-
-<meta name="viewport" content="width=device-width, initial-scale=0.8">
-
-<link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-
-
+<html>
 {%include 'ti/imports.html'%}
 
-
-</head>
 {% block 'style' %}{% endblock %}
-{% block "script" %}{% endblock "script" %}   
-  
+{% block "script" %}{% endblock "script" %}
+
 <body>
   {%include 'navbar.html'%}
-  
+
   {%include 'ti/sidebar.html'%}
 
   <header>
@@ -44,6 +34,8 @@
   </footer>
 
   {%include 'ti/scripts.html'%}
+  {%include 'ti/modals.html'%}
 
 </body>
-</html> 
+
+</html>

@@ -3,27 +3,70 @@
   
    <div class="accordion accordion-flush" id="accordionFlushExample">
 
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-          Estoque
-        </button>
-      </h2>
-      <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-        <a href="#">| Nan</a>
+     <div class="accordion-item">
+       <h2 class="accordion-header">
+         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+           Equipamentos
+          </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <a href="{%url 'equipamentos' 'cadastro'%}">| Cadastrar novo</a>
+          <a href="{%url 'equipamentos' 'computadores'%}">| Computadores</a>
+          <a href="{%url 'equipamentos' 'impressoras'%}">| Impressoras</a>
+        </div>
       </div>
-    </div>
-    
+      
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#colaborador" aria-expanded="false" aria-controls="flush-collapse3">
+            Colaborador
+          </button>
+        </h2>
+        <div id="colaborador" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <a href="{%url 'colaborador' 'cadastro'%}">| Cadastrar</a>
+          <a href="{%url 'colaborador' 'lista'%}">| Ver lista</a>
+        </div>
+      </div>
+      
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-          Null
+          Estoques
         </button>
       </h2>
       <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-        <a href="#">| Nan</a>
+        <a href="{%url 'estoque' 'cadastrar_produto'%}">| Cadastrar</a>
+        <a href="{%url 'estoque' 'adicionar_estoque'%}">| Adicionar</a>
+        <a href="{%url 'estoque' 'visualizar_estoque'%}">| Visualizar</a>
+
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse3" aria-expanded="false" aria-controls="flush-collapse3">
+          Serviços
+        </button>
+      </h2>
+      <div id="flush-collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <a href="#">| Visualizar</a>
+        <a href="#">| Registrar</a>
       </div>
     </div>
 
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse4" aria-expanded="false" aria-controls="flush-collapse3">
+          Outros
+        </button>
+      </h2>
+      <div id="flush-collapse4" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <a data-bs-toggle="modal" data-bs-target="#adicionar_detalhe" onclick="carregarmodal('adicionar_detalhe')">| Adicionar detalhes</a>
+      </div>
+    </div>
+
+
+
+<!-- Fim da side bar -->
    </div>
 </div>
