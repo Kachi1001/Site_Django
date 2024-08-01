@@ -50,7 +50,7 @@ if exist Home\models.py (
 )
 
 rem Executa o servidor Django
-py manage.py runserver %DJ_HOS%:%DJ_POR%
+py manage.py runserver
 
 PAUSE
 endlocal

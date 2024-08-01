@@ -12,10 +12,10 @@ class AgendaSalas(models.Model):
     id = models.BigAutoField(primary_key=True)
     sala = models.CharField(max_length=100)
     data = models.DateField()
-    responsavel = models.CharField(max_length=30)
-    reservado = models.CharField(max_length=20, blank=True, null=True)
-    hora = models.CharField(max_length=6, blank=True, null=True)
-    descricao = models.CharField(max_length=50, blank=True, null=True)
+    responsavel = models.CharField()
+    reservado = models.CharField(blank=True, null=True)
+    hora = models.CharField(blank=True, null=True)
+    descricao = models.CharField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -105,7 +105,7 @@ class Colaborador(models.Model):
     admissao = models.DateField(blank=True, null=True)
     demissao = models.DateField(blank=True, null=True)
     diaria = models.TextField(blank=True, null=True)
-    observacao = models.CharField(max_length=255, blank=True, null=True)
+    observacoes = models.CharField(max_length=255, blank=True, null=True)
     funcao = models.CharField(max_length=100, blank=True, null=True)
     contrato = models.CharField(max_length=20)
     encarregado = models.BooleanField(blank=True, null=True)
@@ -197,7 +197,8 @@ class Etapa(models.Model):
 
 
 class Funcao(models.Model):
-    funcao = models.CharField(primary_key=True, max_length=100)
+    id = models.BigAutoField(primary_key=True)
+    funcao = models.CharField(max_length=100)
     grupo = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -211,7 +212,7 @@ class Historico(models.Model):
     user = models.CharField(max_length=100)
     data = models.DateTimeField()
     action = models.CharField(max_length=50)
-    context = models.CharField(max_length=255)
+    context = models.CharField()
 
     class Meta:
         managed = False
@@ -278,7 +279,7 @@ class Lancamentos(models.Model):
     colaborador = models.CharField(max_length=255)
     dia = models.DateField()
     descricao = models.CharField(max_length=600, blank=True, null=True)
-    indice = models.IntegerField()
+    digito = models.IntegerField()
     diaseguinte = models.BooleanField()
     horaini1 = models.TimeField()
     horafim1 = models.TimeField()
