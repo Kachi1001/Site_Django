@@ -20,12 +20,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', include("Home.urls")),
+    # path('', include("Home.urls")),
     path('admin/', admin.site.urls),
-    path('lançamento_obra/' , include("Lançamento_obra.urls")),
-    path('api/' , include("API.urls")),
-    path('salas/' , include("Salas.urls")),
-    path('ti/', include('TI.urls')),
+    # path('lançamento_obra/' , include("Lançamento_obra.urls")),
+    # path('api/' , include("API.urls")),
+    # path('salas/' , include("Salas.urls")),
+    # path('ti/', include('TI.urls')),
 ]
 
 
