@@ -98,7 +98,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         "NAME": 'lancamentos',
         "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
+        "PASSWORD": localhost,
         "HOST": config("DB_HOST"),
         "PORT": config("DB_PORT"),
     },
