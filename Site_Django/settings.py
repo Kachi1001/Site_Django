@@ -40,12 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'rolepermissions',
-    # 'Lançamento_obra',
-    # 'Home',
-    # 'API',
-    # 'Salas',
-    # 'TI',
+    'rolepermissions',
+    'Lançamento_obra',
+    'Home',
+    'API',
+    'Salas',
+    'TI',
 ]
 
 MIDDLEWARE = [
