@@ -81,8 +81,6 @@ def atendimento(request):
         'horarios1': reserva.gerarLista(reservados, horarios1),
         'horarios2': reserva.gerarLista(reservados, horarios2),
         'sala': 'atendimento',
-        'icon': f'/static/image/{sala}.jpg'
-        
         }
     return render(request, "salas/tabela.html", context)
 
@@ -118,8 +116,6 @@ def reuniao(request):
         'horarios1': reserva.gerarLista(reservados, horarios1),
         'horarios2': reserva.gerarLista(reservados, horarios2),
         'sala': 'reunião',
-        'icon': f'/static/image/{sala}.jpg'
-        
         }
     return render(request, "salas/tabela.html", context)
 
@@ -156,7 +152,6 @@ def apoio(request):
         'horarios1': reserva.gerarLista(reservados, horarios1),
         'horarios2': reserva.gerarLista(reservados, horarios2),
         'sala': 'apoio',
-        'icon': f'/static/image/{sala}.jpg'
         }
     return render(request, "salas/tabela.html", context)
 
