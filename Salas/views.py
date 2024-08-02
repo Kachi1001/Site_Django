@@ -157,12 +157,12 @@ def apoio(request):
 
 
 def lista(request):
-    tabela = AgendaSalas.objects.all().order_by('id')
+    tabela = AgendaSalas.objects.all().order_by('data','hora')
     today = timezone.now().date()
     context = {
         'atendimento': tabela.filter(sala='atendimento', data__gte=today),
         'apoio': tabela.filter(sala='apoio', data__gte=today),
-        'reuniao': tabela.filter(sala='reuniao', data__gte=today),
+        'reuniao': tabela.filter(sala='reunião', data__gte=today),
         'sala': 'Registros',
     }
     return render(request, "salas/lista.html", context)
