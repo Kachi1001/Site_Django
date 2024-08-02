@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from datetime import datetime
+
 from Home.models import *
 from django.utils import timezone
-date = datetime.now()
-mes = str(date.month) if date.month >9 else '0'+ str(date.month)
-hoje =  str(date.year)+ '-' + mes + '-' + str(date.day)
+from Site_Django.util import *
+hoje = timezone.now().date()
+
 class reserva:
     def gerarLista(reservados, horarios):
         resultado = []
@@ -46,14 +46,14 @@ horarios2 = [
     '17:30'
 ]
 
-    
+
 # Create your views here.
 def index(request):
     return render(request, "salas/index.html")
 def atendimento(request):
     user = request.user
     sala = 'atendimento'
-    date = request.GET.get('data') if request.GET.get('data') != None else hoje
+    date = request.GET.get('data') if request.GET.get('data') != None else tempo.formatarHTML(hoje)
     if request.method == "POST":
         for a in horarios1+horarios2:
             if request.POST.get('responsavel'+a) == "" and user.is_authenticated and (request.POST.get('check'+a) or request.POST.get('descricao'+a)):
@@ -87,7 +87,7 @@ def atendimento(request):
 def reuniao(request):
     user = request.user
     sala = 'reuniao'
-    date = request.GET.get('data') if request.GET.get('data') != None else hoje
+    date = request.GET.get('data') if request.GET.get('data') != None else tempo.formatarHTML(hoje)
     if request.method == "POST":
         for a in horarios1+horarios2:
             if request.POST.get('responsavel'+a) == "" and user.is_authenticated and (request.POST.get('check'+a) or request.POST.get('descricao'+a)):
@@ -124,7 +124,7 @@ def reuniao(request):
 def apoio(request):
     user = request.user
     sala = 'apoio'
-    date = request.GET.get('data') if request.GET.get('data') != None else hoje
+    date = request.GET.get('data') if request.GET.get('data') != None else tempo.formatarHTML(hoje)
     if request.method == "POST":
         for a in horarios1+horarios2:
             if request.POST.get('responsavel'+a) == "" and user.is_authenticated and (request.POST.get('check'+a) or request.POST.get('descricao'+a)):
