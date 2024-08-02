@@ -80,13 +80,13 @@ def atendimento(request):
         'data': date,
         'horarios1': reserva.gerarLista(reservados, horarios1),
         'horarios2': reserva.gerarLista(reservados, horarios2),
-        'sala': 'atendimento',
+        'sala': sala,
         }
     return render(request, "salas/tabela.html", context)
 
 def reuniao(request):
     user = request.user
-    sala = 'reuniao'
+    sala = 'reunião'
     date = request.GET.get('data') if request.GET.get('data') != None else tempo.formatarHTML(hoje)
     if request.method == "POST":
         for a in horarios1+horarios2:
@@ -115,7 +115,7 @@ def reuniao(request):
         'data': date,
         'horarios1': reserva.gerarLista(reservados, horarios1),
         'horarios2': reserva.gerarLista(reservados, horarios2),
-        'sala': 'reunião',
+        'sala': sala,
         }
     return render(request, "salas/tabela.html", context)
 
@@ -151,7 +151,7 @@ def apoio(request):
         'data': date,
         'horarios1': reserva.gerarLista(reservados, horarios1),
         'horarios2': reserva.gerarLista(reservados, horarios2),
-        'sala': 'apoio',
+        'sala': sala,
         }
     return render(request, "salas/tabela.html", context)
 
