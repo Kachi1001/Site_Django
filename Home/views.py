@@ -28,5 +28,4 @@ def index(request):
 
 @login_required
 def teste(request):
-    data = list(Historico.objects.values('user','action','context'))
-    return render(request, 'teste.html', {'data': data})
+    return render(request, 'teste.html')

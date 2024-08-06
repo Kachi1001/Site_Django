@@ -1,5 +1,7 @@
 {% extends 'salas.html' %}
 {%load static%}
+{% load permission_tags %}
+
 {%block 'header'%}
 <div aria-label="breadcrumb">
 	<ol class="breadcrumb">
@@ -68,12 +70,14 @@
 									placeholder="Descrição">
 							</th>
 							<th scope="row">
-								<!-- <div class="row" style="margin-left: 0px;">
+								{% if user|can:'lançamento' %}
+								<div class="row" style="margin-left: 0px;">
 									<div class="acao" style="background-color: lightgreen;" onclick="editar('{{h.id}}')"><img
 											src="{%static 'icons/check.svg'%}" alt></div>
 									<div class="acao" style="background-color: lightcoral;" onclick="deletar('{{h.id}}')"><img
 											src="{%static 'icons/trash3.svg'%}" alt></div>
-								</div> -->
+								</div>
+								{%endif%}
 							</th>
 						</tr>
 						{% endfor %}
@@ -122,12 +126,14 @@
 									placeholder="Descrição">
 							</th>
 							<th scope="row">
-								<!-- <div class="row" style="margin-left: 0px;">
+								{% if user|can:'lançamento' %}
+								<div class="row" style="margin-left: 0px;">
 									<div class="acao" style="background-color: lightgreen;" onclick="editar('{{h.id}}')"><img
 											src="{%static 'icons/check.svg'%}" alt></div>
 									<div class="acao" style="background-color: lightcoral;" onclick="deletar('{{h.id}}')"><img
 											src="{%static 'icons/trash3.svg'%}" alt></div>
-								</div> -->
+								</div>
+								{%endif%}
 							</th>
 						</tr>
 						{% endfor %}
@@ -176,12 +182,14 @@
 									placeholder="Descrição">
 							</th>
 							<th scope="row">
-								<!-- <div class="row" style="margin-left: 0px;">
+								{% if user|can:'lançamento' %}
+								<div class="row" style="margin-left: 0px;">
 									<div class="acao" style="background-color: lightgreen;" onclick="editar('{{h.id}}')"><img
 											src="{%static 'icons/check.svg'%}" alt></div>
 									<div class="acao" style="background-color: lightcoral;" onclick="deletar('{{h.id}}')"><img
 											src="{%static 'icons/trash3.svg'%}" alt></div>
-								</div> -->
+								</div>
+								{%endif%}
 							</th>
 						</tr>
 						{% endfor %}

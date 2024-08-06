@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'Lançamento_obra',
     'Home',
     'API',
-    'Salas',
+    # 'Reservas',
     'TI',
 ]
 
@@ -91,7 +91,23 @@ DATABASES = {
         "NAME": config("DB_NAME"),
         "USER": config("DB_USER"),
         "PASSWORD": config("DB_PASSWORD"),
-        "HOST": '10.0.0.139',
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT"),
+    },
+    config("APP1"): {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": config("APP1"),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT"),
+    },
+    config("APP2"): {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": config("APP2"),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
         "PORT": config("DB_PORT"),
     },
 }

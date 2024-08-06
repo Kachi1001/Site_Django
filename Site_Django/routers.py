@@ -7,23 +7,23 @@ class AppRouter:
         """
         Direciona leituras dos modelos de `app2` para o banco de dados `secondary`.
         """
-        if model._meta.app_label == 'app2':
-            return 'secondary'
+        if model._meta.app_label != 'default':
+            return model._meta.app_label
         return 'default'
 
     def db_for_write(self, model, **hints):
         """
         Direciona gravações dos modelos de `app2` para o banco de dados `secondary`.
         """
-        if model._meta.app_label == 'app2':
-            return 'secondary'
+        if model._meta.app_label != 'default':
+            return model._meta.app_label
         return 'default'
 
     def allow_relation(self, obj1, obj2, **hints):
         """
         Permitir relações se os dois objetos estiverem no banco de dados `secondary` ou `default`.
         """
-        db_list = ('default', 'secondary')
+        db_list = ('default', 'Lançamento_obra')
         if obj1._state.db in db_list and obj2._state.db in db_list:
             return True
         return None
@@ -32,6 +32,6 @@ class AppRouter:
         """
         Garantir que a aplicação `app2` apenas aparece no banco de dados `secondary`.
         """
-        if app_label == 'app2':
-            return db == 'secondary'
-        return db == 'default'
+        if app_label != 'default':
+            return db == app_label
+        return 'default'
