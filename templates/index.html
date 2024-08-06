@@ -16,13 +16,20 @@
 
     <link rel="stylesheet" href="{% static 'css/color.css' %}">
     <link rel="stylesheet" href="static/css/index.css">
-
+    {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
+    {%include 'static/imports/base.html'%}
     
 </head>
 <style>
   header{
-    display: flex;
-    justify-content: flex-end;
+    padding-top: 100px;
+    margin-left: 0;
+    text-align: center;
+    padding-right: 0;
+  }
+  main{
+    padding: 0;
+    margin: 0;
   }
   .card-footer{
     display: flex;
@@ -65,9 +72,11 @@
       </ul>
     </div>
   </nav>
+  <header>
+    <h1>Lista de ferramentas disponiveis</h1> 
+  </header>
   <main>
     <div class="container text-center">
-      <h1>Lista de ferramentas disponiveis</h1> 
         <div class="row">
           {% if user|can:'lançamento' %}
             <div class="col">
