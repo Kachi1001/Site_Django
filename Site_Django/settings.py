@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'Lançamento_obra',
     'Home',
     'API',
-    # 'Reservas',
+    'Reservas',
     'TI',
 ]
 
