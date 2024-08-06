@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from Home.models import *
+from .models import *
 from django.utils import timezone
 from Site_Django.util import *
 hoje = timezone.now().date()
@@ -75,7 +75,7 @@ def atendimento(request):
                 b.save()
         date = request.POST.get('data-picker')
         return redirect(f'/salas/{sala}?data={date}')
-    reservados = AgendaSalas.objects.all().filter(sala=sala, data=date)
+    reservados = AgendaSalas.objects.using('Reservas').all().filter(sala=sala, data=date)
     context = {
         'data': date,
         'horarios1': reserva.gerarLista(reservados, horarios1),

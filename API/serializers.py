@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from Home.models import *
+from Lancamento_obra.models import *
 
 class SerializerTipo(serializers.Serializer):
     integer_field = serializers.IntegerField()

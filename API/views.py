@@ -4,7 +4,7 @@ from rest_framework.response import Response
 import psycopg2
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from Home.models import *
+from .models import *
 import json   
 from django.http import JsonResponse
 from .mani import *

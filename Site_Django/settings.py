@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rolepermissions',
-    'Lançamento_obra',
+    'Lancamento_obra',
     'Home',
     'API',
     'Reservas',
@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'Site_Django.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-
+DATABASE_ROUTERS = ['Site_Django.routers.AppRouter']
 DATABASES = {
 
     'default': {
@@ -105,6 +105,14 @@ DATABASES = {
     config("APP2"): {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": config("APP2"),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT"),
+    },
+    config("APP3"): {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": config("APP3"),
         "USER": config("DB_USER"),
         "PASSWORD": config("DB_PASSWORD"),
         "HOST": config("DB_HOST"),

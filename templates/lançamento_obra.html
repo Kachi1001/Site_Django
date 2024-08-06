@@ -7,7 +7,15 @@
 
 <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
-{%include 'lancamento_obra/imports.html'%}
+
+{%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
+{%include 'static/imports/jquery.html'%} <!-- Jquery -->
+
+<!-- Próprios -->
+<link rel="stylesheet" href= "{% static 'css/color.css' %}">
+<link rel="stylesheet" href= "{% static 'css/base.css' %}">
+<link rel="stylesheet" href= "{% static 'css/sidebar.css' %}">
+<script src="{% static 'js/lançamento_obra.js' %}"></script>
 
 
 </head>

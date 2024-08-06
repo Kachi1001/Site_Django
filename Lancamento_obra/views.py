@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
-from Home.models import * 
+from .models import * 
 from django.contrib.auth.decorators import login_required
 from PIL import Image
 import os
@@ -133,7 +133,7 @@ def lancamento_diario(request):
     elif request.method == "POST":
         digitalizacao = request.FILES.get('arquivo')
         img = Image.open(digitalizacao)
-        path = os.path.join(settings.BASE_DIR, f'midia/Lançamento_obra/diarios_digitalizado/{digitalizacao.name}')
+        path = os.path.join(settings.BASE_DIR, f'midia/Lancamento_obra/diarios_digitalizado/{digitalizacao.name}')
         img = img.save(path)   
         
         diaria = Diarioobra(

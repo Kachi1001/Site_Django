@@ -1,6 +1,16 @@
+{%load permission_tags%}
 {% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
 
-{%include 'salas/imports.html'%}
+<meta name="viewport" content="width=device-width, initial-scale=0.8">
+<link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+{%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
+{%include 'static/imports/bootstrap_tables.html'%} <!-- Bootstrap_tables -->
+{%include 'static/imports/jquery.html'%} <!-- Jquery -->
+{%include 'static/imports/base.html'%} <!-- Base -->
+
 
 </head>
 <style>
@@ -12,10 +22,11 @@
   }
 
 </style>
-
 <body>
   <nav class="navbar">
-    <!-- <a href="/", style="color: black; text-decoration: none; padding-left: 10px;"><img src="{% static 'icons/x-circle-fill.svg'%}" alt="" style="margin-right: 5px;">Fechar app</a>   -->
+    {% if user|can:'salas' %}
+    <a href="/", style="color: black; text-decoration: none; padding-left: 10px;"><img src="{% static 'icons/x-circle-fill.svg'%}" alt="" style="margin-right: 5px;">Fechar app</a>  
+     {%endif%}
   </nav>
   
   <div class="sidenav">

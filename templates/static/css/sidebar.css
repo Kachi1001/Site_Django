@@ -48,3 +48,6 @@
     font-size: medium;
     margin: 4px, none ,none, 4px;
   }
+  .accordion-button{
+    font-weight: 500;
+  }
