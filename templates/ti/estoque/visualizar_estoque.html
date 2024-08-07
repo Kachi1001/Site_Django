@@ -12,7 +12,7 @@
 
 {%block 'submain'%}
 <h4>Estoques recentes:</h4>
-<table class="table table-hover table-bordered table-striped" id="myTable">
+<table class="table table-hover table-bordered table-striped" id="tabela_estoque">
     <thead>
         <tr>
             <th scope="col">Id</th>
@@ -69,3 +69,47 @@
     </tbody>
 </table>
 {%endblock%}
+{% block "script" %}
+<script>
+    let table = new DataTable('#tabela_estoque', {
+            fixedColumns: true,
+            paging: false,
+            language: {
+                url: '{% static "language.json"%}'
+            },
+        });
+    function format(d) {
+        // `d` is the original data object for the row
+        return (
+        '<table class="table table-hover table-bordered table-striped" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+        '<tr>' +
+            '<td>Nome Completo:</td>' +
+            '<td>' + '</td>' +
+        '</tr>' +
+        '<tr>' +
+            '<td>Número de Extensão:</td>' +
+            '<td>' + '</td>' +
+        '</tr>' +
+        '<tr>' +
+            '<td>Informações Extras:</td>' +
+            '<td>Detalhes adicionais aqui...</td>' +
+        '</tr>' +
+        '</table>'
+    );
+    }
+    table.on('dblclick', 'tr', function (e) {
+        let tr = e.target.closest('tr');
+        let row = table.row(tr);
+     
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+        }
+        else {
+            // Open this row
+            row.child(format(row.data())).show();
+            
+        }
+    });
+</script>
+{% endblock %}

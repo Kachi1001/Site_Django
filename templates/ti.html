@@ -7,10 +7,11 @@
   {%include 'static/imports/datatables.html'%} <!-- DataTables -->
   {%include 'static/imports/jquery.html'%} <!-- Jquery -->
   {%include 'static/imports/base.html'%} <!-- Base -->
+  {% block "script" %}{% endblock "script" %}
 </head>
 
 {% block 'style' %}{% endblock %}
-{% block "script" %}{% endblock "script" %}
+
 
 <body>
   {%include 'navbar.html'%}
@@ -44,5 +45,4 @@
   {%include 'ti/modals.html'%}
 
 </body>
-
 </html>

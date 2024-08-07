@@ -1,44 +1,6 @@
 {%load static%}
 <script>
-    function format(d) {
-        console.log(d)
-        // `d` is the original data object for the row
-        return (
-        '<table class="table table-hover table-bordered table-striped" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
-        '<tr>' +
-            '<td>Nome Completo:</td>' +
-            '<td>' + d.name + '</td>' +
-        '</tr>' +
-        '<tr>' +
-            '<td>Número de Extensão:</td>' +
-            '<td>' + d.extn + '</td>' +
-        '</tr>' +
-        '<tr>' +
-            '<td>Informações Extras:</td>' +
-            '<td>Detalhes adicionais aqui...</td>' +
-        '</tr>' +
-        '</table>'
-    );
+    function removeLinha(id){
+        $('#linha'.concat(id)).remove()
     }
-    let table = new DataTable('#myTable', {
-            fixedColumns: true,
-            paging: false,
-            language: {
-                url: '{% static "language.json"%}'
-            },
-        });
-    table.on('click', 'tr', function (e) {
-        let tr = e.target.closest('tr');
-        let row = table.row(tr);
-     
-        if (row.child.isShown()) {
-            // This row is already open - close it
-            row.child.hide();
-        }
-        else {
-            // Open this row
-            row.child(format(row.data())).show();
-            
-        }
-    });
 </script>

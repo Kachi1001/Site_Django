@@ -1,0 +1,56 @@
+{%load permission_tags%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
+  {%include 'static/imports/jquery.html'%} <!-- Jquery -->
+  {%include 'static/imports/base.html'%} <!-- Base -->
+
+
+</head>
+<style>
+  .btn {
+    width: 100px;
+  }
+
+  .input-group-text {
+    flex-direction: column;
+  }
+</style>
+
+<body>
+  <nav class="navbar">
+    {% if user|can:'salas' %}
+    <a href="/" , style="color: black; text-decoration: none; padding-left: 10px;"><img
+        src="{% static 'icons/x-circle-fill.svg'%}" alt="" style="margin-right: 5px;">Fechar app</a>
+    {%endif%}
+  </nav>
+  {%include 'reservas/sidebar.html'%}
+  <header>{%block 'header'%} {%endblock%}</header>
+  <main>{%block 'main'%} {%endblock%}</main>
+  <div class="submain">{%block 'submain'%}{%endblock%}</div>
+  </form>
+
+  <script>
+    function reload(param) {
+      let url = new URL(window.location.href);
+      let params = new URLSearchParams(url.search);
+      let value = document.getElementById('date').value;
+
+      // Atualizar o valor do parâmetro
+      params.set(param, value);
+
+      // Atualizar a URL no navegador e recarregar a página
+      window.location.href = `${url.pathname}?${params}`;
+    }
+  </script>
+
+
+</body>
+
+</html>

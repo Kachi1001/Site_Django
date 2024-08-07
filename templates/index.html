@@ -2,56 +2,59 @@
 {% load permission_tags %}
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-    <title>Ferramentas Tecnika</title>
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  <title>Ferramentas Tecnika</title>
 
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"> 
-    <script src="{% static 'js/bootstrap.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
-    <script src="{% static 'js/bootstrap.esm.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/color.css' %}">
+  
+  {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
+  {%include 'static/imports/base.html'%}
 
-    <link rel="stylesheet" href="{% static 'css/color.css' %}">
-    <link rel="stylesheet" href="static/css/index.css">
-    {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
-    {%include 'static/imports/base.html'%}
-    
 </head>
 <style>
-  header{
+  header {
     padding-top: 100px;
     margin-left: 0;
     text-align: center;
     padding-right: 0;
   }
-  main{
+
+  main {
     padding: 0;
     margin: 0;
   }
-  .card-footer{
+
+  .card-footer {
     display: flex;
     justify-content: end;
     padding: 2px, 5px;
   }
-  h5{
+
+  h5 {
     margin-top: 2px;
     font-weight: bold;
   }
-  h1{
+
+  h1 {
     padding-bottom: 5%;
   }
-  .user-icon{
+
+  .user-icon {
     width: 25px;
     height: 25px;
   }
-  .user-name{
+
+  .user-name {
     font-weight: 700;
     padding-inline: 5px;
   }
-  .col{
+
+  .col {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
@@ -73,80 +76,81 @@
     </div>
   </nav>
   <header>
-    <h1>Lista de ferramentas disponiveis</h1> 
+    <h1>Lista de ferramentas disponiveis</h1>
   </header>
   <main>
     <div class="container text-center">
-        <div class="row">
-          {% if user|can:'lançamento' %}
-            <div class="col">
-              <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
-                <div class="card-header">
-                  <h5 class="card-title">Lançamento obra</h5>
-                </div>
-                  <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Versão 0.1</h6>
-                    <p class="card-text">Ferramenta de controle de delegação de ações em obra</p>
-                  </div>
-                  <div class="card-footer">
-                    <a href="{%url 'lancamento_obra'%}" class="card-link">Abrir Aplicação</a>
-                  </div>
-                </div>
+      <div class="row">
+        {% if user|can:'lançamento' %}
+        <div class="col">
+          <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
+            <div class="card-header">
+              <h5 class="card-title">Lançamento obra</h5>
             </div>
-          {%endif%}
-          
-            <div class="col">
-              <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
-                <div class="card-header">
-                  <h5 class="card-title">Sala de reunião</h5>
-                </div>
-                  <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Teste 0.1</h6>
-                    <p class="card-text">Controle de reserva para as salas de reuniões</p>
-                  </div>
-                  <div class="card-footer">
-                    <a href="{%url 'salas'%}" class="card-link">Abrir Aplicação</a>
-                  </div>
-                </div>
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-body-secondary">Versão 0.1</h6>
+              <p class="card-text">Ferramenta de controle de delegação de ações em obra</p>
             </div>
-          
+            <div class="card-footer">
+              <a href="{%url 'lancamento_obra'%}" class="card-link">Abrir Aplicação</a>
+            </div>
+          </div>
+        </div>
+        {%endif%}
 
-          {% if user|can:'master' %}
-          <div class="col">
-            <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
-              <div class="card-header">
-                <h5 class="card-title">Painel admin</h5>
-              </div>
-                <div class="card-body">
-                  <h6 class="card-subtitle mb-2 text-body-secondary">Django</h6>
-                  <p class="card-text">Painel com informações de admin</p>
-                </div>
-                <div class="card-footer">
-                  <a href="/admin" class="card-link">Abrir Aplicação</a>
-                </div>
-              </div>
+        <div class="col">
+          <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
+            <div class="card-header">
+              <h5 class="card-title">Reservas</h5>
             </div>
-          {%endif%}
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-body-secondary">Teste 0.1</h6>
+              <p class="card-text">Controle de reserva para as salas de reuniões</p>
+            </div>
+            <div class="card-footer">
+              <a href="{%url 'salas'%}" class="card-link">Abrir Aplicação</a>
+            </div>
+          </div>
+        </div>
 
-          {% if user|can:'ti' %}
-          <div class="col">
-            <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
-              <div class="card-header">
-                <h5 class="card-title">TI</h5>
-              </div>
-                <div class="card-body">
-                  <h6 class="card-subtitle mb-2 text-body-secondary">Versão 0.1</h6>
-                  <p class="card-text">App de uso exclusivo da equipe de TI</p>
-                </div>
-                <div class="card-footer">
-                  <a href="{%url 'ti'%}" class="card-link">Abrir Aplicação</a>
-                </div>
-              </div>
+
+        {% if user|can:'master' %}
+        <div class="col">
+          <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
+            <div class="card-header">
+              <h5 class="card-title">Painel admin</h5>
             </div>
-          {%endif%}
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-body-secondary">Django</h6>
+              <p class="card-text">Painel com informações de admin</p>
+            </div>
+            <div class="card-footer">
+              <a href="/admin" class="card-link">Abrir Aplicação</a>
+            </div>
+          </div>
+        </div>
+        {%endif%}
+
+        {% if user|can:'ti' %}
+        <div class="col">
+          <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
+            <div class="card-header">
+              <h5 class="card-title">TI</h5>
+            </div>
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-body-secondary">Versão 0.1</h6>
+              <p class="card-text">App de uso exclusivo da equipe de TI</p>
+            </div>
+            <div class="card-footer">
+              <a href="{%url 'ti'%}" class="card-link">Abrir Aplicação</a>
+            </div>
+          </div>
+        </div>
+        {%endif%}
       </div>
     </div>
   </main>
-  
+
 </body>
+
 </html>

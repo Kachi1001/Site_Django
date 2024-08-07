@@ -14,3 +14,6 @@ def colaborador(request, subpage):
 def estoque(request, subpage):
     return render(request, f'ti/estoque/{subpage}.html')
 
+def servicos(request, subpage):
+    return render(request, f'ti/servicos/{subpage}.html')
+
