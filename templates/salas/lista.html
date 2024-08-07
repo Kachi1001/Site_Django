@@ -54,7 +54,7 @@
 					<tbody>
 
 						{% for h in atendimento %}
-						<tr>
+						<tr id="{{h.id}}">
 							<th scope="row">
 								<p>{{h.hora}}</p>
 							</th>
@@ -110,7 +110,7 @@
 					<tbody>
 
 						{% for h in apoio %}
-						<tr>
+						<tr id="{{h.id}}">
 							<th scope="row">
 								<p>{{h.hora}}</p>
 							</th>
@@ -166,7 +166,7 @@
 					<tbody>
 
 						{% for h in reuniao %}
-						<tr>
+						<tr id="{{h.id}}">
 							<th scope="row">
 								<p>{{h.hora}}</p>
 							</th>
@@ -212,7 +212,7 @@
 					'id': id,
 				},
 				success: function (Response) {
-					window.location.reload(true);
+					$('#'.concat(id)).remove()
 				},
 				error: function (xhr) {
 					alert(xhr.responseJSON.message);
