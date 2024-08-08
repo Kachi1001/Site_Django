@@ -11,8 +11,9 @@
   {%include 'static/imports/jquery.html'%} <!-- Jquery -->
   {%include 'static/imports/base.html'%} <!-- Base -->
 
-
+  {%block 'styles'%}{%endblock%}
 </head>
+
 <style>
   .btn {
     width: 100px;
@@ -21,6 +22,11 @@
   .input-group-text {
     flex-direction: column;
   }
+  .card-img-bottom {
+    height: 150px;
+    object-fit: cover;
+  }
+  
 </style>
 
 <body>
@@ -36,20 +42,10 @@
   <div class="submain">{%block 'submain'%}{%endblock%}</div>
   </form>
 
-  <script>
-    function reload(param) {
-      let url = new URL(window.location.href);
-      let params = new URLSearchParams(url.search);
-      let value = document.getElementById('date').value;
+  
+  {%include 'reservas/scripts.html'%} <!-- JS -->
 
-      // Atualizar o valor do parâmetro
-      params.set(param, value);
-
-      // Atualizar a URL no navegador e recarregar a página
-      window.location.href = `${url.pathname}?${params}`;
-    }
-  </script>
-
+  {%include 'reservas/modals.html'%} <!-- Modals -->
 
 </body>
 

@@ -1,0 +1,40 @@
+{% load static %}
+
+<style>
+    .microlist {
+        height: 200px;
+        overflow: auto;
+        border-top: 1px solid #dee2e6;
+    }
+
+    th {
+        font-size: small;
+    }
+</style>
+
+
+<!-- Modal funcao -->
+<div class="modal fade" id="reservar_carro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="card" data-bs-toggle="modal" data-bs-target="#reservar_carro" onclick="load_carro('{{d.carro}}')">
+                <div class="card-header">
+                    <p id="placa"></p> {{d.carro.placa}}  \  {{d.carro.modelo}}
+                </div>  
+                <img src="{%static 'image/reservas/carro.png'%}" class="card-img-top" alt="...">
+            </div>
+            <div class="modal-footer">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">responsavel:</label>
+                    <input type="text" name="nome" id="func_nome" class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">Destino:</label>
+                    <input type="text" name="nome" id="func_nome" class="form-control">
+                </div>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

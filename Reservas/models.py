@@ -20,5 +20,26 @@ class AgendaSalas(models.Model):
     class Meta:
         managed = False
         db_table = 'agenda_salas'
+        
+class AgendaCarros(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    carro = models.CharField(max_length=100)
+    data = models.DateField()
+    responsavel = models.CharField(max_length=20)
+    destino = models.CharField(max_length=10, blank=True, null=True)
+    reservado = models.CharField(max_length=20, blank=True, null=True)
 
+    class Meta:
+        managed = True
+        db_table = 'agenda_carros'
+        
+class Carros(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    placa = models.CharField(max_length=9)
+    modelo = models.DateField(max_length=20,blank=True,null=True)
+    marca = models.CharField(max_length=20,blank=True,null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'carros'
 

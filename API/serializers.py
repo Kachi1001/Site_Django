@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from Lancamento_obra.models import *
+from .models import *
 
 class SerializerTipo(serializers.Serializer):
     integer_field = serializers.IntegerField()
@@ -35,4 +35,9 @@ class ObraSerializer(serializers.ModelSerializer):
 class LancamentosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lancamentos
+        fields = '__all__'  # Ou liste os campos que deseja expor na API
+
+class CarrosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Carros
         fields = '__all__'  # Ou liste os campos que deseja expor na API

@@ -139,6 +139,13 @@ def get_data(request):
             return Response(serializer.data)
         except Colaborador.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+    elif metodo == 'Carro':
+        try:
+            mymodel = Carros.objects.get(id=request.GET.get('id'))
+            serializer = CarrosSerializer(mymodel)
+            return Response(serializer.data)
+        except Carros.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
     else:
         return Response({'message':'Houve algum problema'}, status=404)
 

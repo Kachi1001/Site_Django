@@ -1,4 +1,8 @@
 /* Main content */
+body{
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
 header {
   margin-left: calc(var(--side-bar_width) + 50px);
   margin-top: 50px;
@@ -57,4 +61,7 @@ footer {
   top: 0;
   width: 100%;
   height: 50px;
+}
+.card{
+  box-shadow: 3px 3px 3px lightgray;
 }

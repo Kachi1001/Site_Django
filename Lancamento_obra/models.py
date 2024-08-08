@@ -17,7 +17,7 @@ class Atividade(models.Model):
 
 class Colaborador(models.Model):
     id = models.BigAutoField(primary_key=True)
-    nome = models.CharField(max_length=255)
+    nome = models.TextField(max_length=255)
     admissao = models.DateField(blank=True, null=True)
     demissao = models.DateField(blank=True, null=True)
     diaria = models.TextField(blank=True, null=True)
