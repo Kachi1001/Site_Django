@@ -160,7 +160,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "templates/static"),)
 STATIC_ROOT = os.path.join('static')
 
-MIDIA_ROOT = os.path.join(BASE_DIR, 'MIDIA')
+MIDIA_ROOT = os.path.join(BASE_DIR, 'midia')
 MIDIA_URL = '/midia/'
 
 # Default primary key field type
