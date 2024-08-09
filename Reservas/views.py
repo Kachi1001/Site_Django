@@ -21,7 +21,7 @@ class reserva:
         self.hora = hora
         self.reservado = reservado
         self.responsavel = responsavel
-        self.descricao = descricao
+        self.descricao = descricao                                              
         
 def gerarListaCarros(reservados, listaCarros):
     resultado = []
@@ -29,7 +29,7 @@ def gerarListaCarros(reservados, listaCarros):
         a = AgendaCarros(carro=carro,reservado='Disponível',responsavel="",destino="")
         b = reservados.filter(carro=carro)
         for c in b:
-            a = AgendaCarros(carro=c.carro,data=c.data,responsavel=c.responsavel,destino=c.destino,reservado=c.reservado)
+            a = AgendaCarros(carro=carro,data=c.data,responsavel=c.responsavel,destino=c.destino,reservado=c.reservado)
         resultado.append(a)
     return(resultado)
     
@@ -65,17 +65,18 @@ def sala(request, sala):
     user = request.user
     date = request.GET.get('data') if request.GET.get('data') != None else tempo.formatarHTML(hoje)
     if request.method == "POST":
-        responsavel = autoResp(request, user, a)   
-        if responsavel:
-            b = AgendaCarros(   
-                carro=Carros.objects.get(id=request.POST.get('carro').id),
-                data=date,
-                responsavel=request.POST.get('responsavel'),
-                destino=request.POST.get('destino'),
-                reservado='Reservado',
-            )
-            AgendaCarros(carro=c.carro,data=c.data,responsavel=c.responsavel,destino=c.destino,reservado=c.reservado)
-            b.save()
+        for a in horarios1+horarios2:
+            responsavel = autoResp(request,user,a)
+            if responsavel:
+                b = AgendaSalas(
+                    data=request.POST.get('data-picker'),
+                    hora=a,
+                    sala=sala,
+                    reservado='checked disabled',
+                    responsavel=responsavel,
+                    descricao=request.POST.get('descricao'+a),
+                )
+                b.save()
         date = request.POST.get('data-picker')
         return redirect(f'/reservas/sala/{sala}?data={date}')
     reservados = AgendaSalas.objects.using('Reservas').all().filter(sala=sala, data=date)
@@ -91,18 +92,18 @@ def carros(request):
     user = request.user
     date = request.GET.get('data') if request.GET.get('data') != None else tempo.formatarHTML(hoje)
     if request.method == "POST":
-        for a in horarios1+horarios2:
-            responsavel = autoResp(request, user, a)
-            if responsavel:
-                b = AgendaCarros(
-                    data=request.POST.get('data-picker'),
-                    carro=request.POST.get('carro'),
-                    responsavel=request.POST.get('responsavel'),
-                    destino=request.POST.get('destino'),
-                )
-                b.save()
+        if not request.POST.get('responsavel') and user.is_authenticated:
+            responsavel = user.username
+        elif request.POST.get('responsavel'):
+            responsavel = request.POST.get('responsavel')
+        else:
+            responsavel = False
+            
+        if responsavel:
+            b = AgendaCarros(carro=Carros.objects.get(placa=request.POST.get('placa')),data=request.POST.get('data-picker'),responsavel=responsavel,destino=request.POST.get('destino'),reservado='Reservado')
+            b.save()
         date = request.POST.get('data-picker')
-        return redirect(f'/reservas/carros/{sala}?data={date}')
+        return redirect(f'/reservas/frota/carros?data={date}')
     reservados = AgendaCarros.objects.all().filter(data=date)
     context = {
         'data': date,   

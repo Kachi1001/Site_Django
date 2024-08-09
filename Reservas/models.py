@@ -34,9 +34,8 @@ class AgendaCarros(models.Model):
         db_table = 'agenda_carros'
         
 class Carros(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    placa = models.CharField(max_length=9)
-    modelo = models.DateField(max_length=20,blank=True,null=True)
+    placa = models.CharField(max_length=9,primary_key=True)
+    modelo = models.CharField(max_length=20,blank=True,null=True)
     marca = models.CharField(max_length=20,blank=True,null=True)
 
     class Meta:

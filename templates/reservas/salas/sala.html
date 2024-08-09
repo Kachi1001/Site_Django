@@ -1,6 +1,18 @@
 {% extends 'reservas.html' %}
 {%load static%}
-
+{%block 'style'%}
+<style>
+	.submain .col {
+		border-radius: 5px;
+		background-color: white;
+		margin-left: 10px;
+		margin-bottom: 5px;
+	}
+	.table {
+		margin: 0;
+	}
+</style>
+{%endblock%}
 {%block 'header'%}
 <form action="{{sala}}" method="POST" enctype="multipart/form-data">{% csrf_token %}
 	<div class="container text-center">
@@ -11,8 +23,9 @@
 			<div class="col-7">
 				<div aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item">Reserva de Salas</li>
-						<li class="breadcrumb-item active" aria-current="page">{{sala}}</li>
+						<li class="breadcrumb-item">Reservas</li>
+						<li class="breadcrumb-item">Sala</li>
+						<li class="breadcrumb-item active" aria-current="page">{{ sala|capfirst }}</li>
 					</ol>
 				</div>
 				<div class="input-group">
@@ -26,14 +39,12 @@
 			</div>
 		</div>
 	</div>
-{%endblock%}
-{%block 'submain'%}
+	{%endblock%}
+	{%block 'submain'%}
 	<div class="container text-start">
-		<div class="row">
-
+		<div class="row justify-content-evenly">
 			<div class="col">
 				<table class="table">
-					<!-- <h3>Manhã</h3> -->
 					<thead>
 						<thead>
 							<tr>
@@ -75,10 +86,7 @@
 				</table>
 			</div>
 			<div class="col">
-
 				<table class="table">
-
-					<!-- <h3>Tarde</h3> -->
 					<thead>
 						<tr>
 							<th scope="col"></th>
@@ -120,4 +128,5 @@
 				</table>
 			</div>
 		</div>
-	{%endblock%}
+	</div>
+		{%endblock%}

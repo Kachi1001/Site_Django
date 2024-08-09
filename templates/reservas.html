@@ -10,8 +10,9 @@
   {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
   {%include 'static/imports/jquery.html'%} <!-- Jquery -->
   {%include 'static/imports/base.html'%} <!-- Base -->
-
-  {%block 'styles'%}{%endblock%}
+  
+  <script src="{% static 'js/Reservas.js' %}"></script>
+  {%block 'style'%}{%endblock%}
 </head>
 
 <style>
@@ -43,7 +44,6 @@
   </form>
 
   
-  {%include 'reservas/scripts.html'%} <!-- JS -->
 
   {%include 'reservas/modals.html'%} <!-- Modals -->
 

@@ -1,3 +1,4 @@
+{%load permission_tags%}
 <div class="sidenav">
 
   <h1 class="nome_app">Reserva</h1>
@@ -42,6 +43,9 @@
         <a href="{%url 'carros'%}">| Carros</a>
         <a href="{%url 'munck'%}">| Munck</a>
         <a href="{%url 'frota_registros'%}">| Registros</a>
+        {% if user|can:'lançamento' %}
+        <a href="#" data-bs-toggle="modal" data-bs-target="#cadastrar_carro">| Cadastrar carro</a>
+        {%endif%}
       </div>
     </div>
     <div class="accordion accordion-flush" id="accordionFlushExample">

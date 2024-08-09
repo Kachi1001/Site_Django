@@ -7,8 +7,8 @@
 
 {%block 'main'%}
 <h2>Salas disponíveis</h2>
-<div class="row row-cols-1 row-cols-md-3 g-4">
-  <div class="col">
+<div class="row justify-content-start">
+  <div class="col-auto">
     <a href="{%url 'sala' 'atendimento'%}" style="text-decoration: none;">
       <div class="card" style="width: 18rem;">
         <div class="card-header">
@@ -18,7 +18,7 @@
       </div>
     </a>
   </div>
-  <div class="col">
+  <div class="col-auto">
     <a href="{%url 'sala' 'apoio'%}" style="text-decoration: none;">
       <div class="card" style="width: 18rem;">
         <div class="card-header">
@@ -28,7 +28,7 @@
       </div>
     </a>
   </div>
-  <div class="col">
+  <div class="col-auto">
     <a href="{%url 'sala' 'reunião'%}" style="text-decoration: none;">
       <div class="card" style="width: 18rem;">
         <div class="card-header">
@@ -44,8 +44,9 @@
 
 {%block 'submain'%}
 <h2>Frotas disponíveis</h2>
-<div class="row row-cols-1 row-cols-md-3 g-4">
-  <div class="col">
+
+<div class="row justify-content-start ">
+  <div class="col-auto">
     <a href="{%url 'carros'%}" style="text-decoration: none;">
       <div class="card" style="width: 18rem;">
         <div class="card-header">
@@ -55,7 +56,7 @@
       </div>
     </a>
   </div>
-  <div class="col">
+  <div class="col-auto">
     <a href="{%url 'munck'%}" style="text-decoration: none;">
       <div class="card" style="width: 18rem;">
         <div class="card-header">

@@ -7,14 +7,10 @@
 
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <title>Ferramentas Tecnika</title>
-
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"> 
-    <script src="{% static 'js/bootstrap.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
-    <script src="{% static 'js/bootstrap.esm.js' %}"></script>
+    {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
 
     <link rel="stylesheet" href="{% static 'css/color.css' %}">
-    <link rel="stylesheet" href="static/css/index.css">
+
 <style>
     body{
         display: flex;

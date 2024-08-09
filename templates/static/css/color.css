@@ -1,3 +1,6 @@
+body{
+    background-color: var(--cor3);
+}
 .sidenav{
     background-color: var(--cor5);
 }
@@ -22,7 +25,7 @@ nav {
 :root{
     --cor1: #85dbc5;
     --cor2: #91DBFA;
-    --cor3: #FFE7A0;
+    --cor3: #f1f0ee;
     --cor4: #FFBA6B;
     --cor5: #94A0A6;
     --cor6: #5E8077;

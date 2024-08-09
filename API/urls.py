@@ -11,5 +11,6 @@ urlpatterns = [
     path('update-supervisor-status/', views.update_supervisor_status, name='update_supervisor_status'),
     
     path('update', views.update, name='update'),
-    
+
+    path('upload/', views.upload_file, name='upload_file'),
 ]

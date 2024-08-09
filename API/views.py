@@ -9,6 +9,9 @@ import json
 from django.http import JsonResponse
 from .mani import *
 from .serializers import *
+from PIL import Image
+import os
+from pathlib import Path 
 
 # Configurações de conexão com o banco de dados PostgreSQL
 dbname = settings.DATABASES['default']['NAME']
@@ -54,6 +57,8 @@ def cadastrar(request):
         return Register.Historico("1",'teste','create','teste')
     elif metodo == 'Supervisor':
         return Register.Supervisor(owner, parametro)
+    elif metodo == "Carro":
+        return Register.Carro(owner, parametro)
 
 @api_view(['POST'])
 def update(request):
@@ -141,7 +146,7 @@ def get_data(request):
             return Response(status=status.HTTP_404_NOT_FOUND)
     elif metodo == 'Carro':
         try:
-            mymodel = Carros.objects.get(id=request.GET.get('id'))
+            mymodel = Carros.objects.get(placa=request.GET.get('id'))
             serializer = CarrosSerializer(mymodel)
             return Response(serializer.data)
         except Carros.DoesNotExist:
@@ -162,3 +167,13 @@ def update_supervisor_status(request):
         return Response({'message': 'Supervisor não encontrado'}, status=404)
     except Exception as e:
         return Response({'message': f'Erro ao atualizar status: {str(e)}'}, status=400)
+    
+@api_view(['POST'])
+def upload_file(request):
+    if request.FILES.get('file'):
+        img = Image.open(request.FILES.get('file'))
+        path = os.path.join(settings.BASE_DIR, f'midia/Reservas/carros/{request.POST.get('placa')}.jpg')
+        img = img.save(path) 
+        return JsonResponse({'message': 'Upload com sucesso'}, status=200)
+    return JsonResponse({'error': 'Nenhum arquivo enviado'}, status=400)
+    

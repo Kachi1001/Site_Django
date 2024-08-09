@@ -68,6 +68,17 @@ class Register:
         save_historico(idr=0, user=user, action='CREATE', context=f"SUPERVISOR <{sup.supervisor}> ADICIONADO")
         return Response({'message': 'Cadastrado com sucesso'})
 
+    @handle_transaction
+    def Carro(user, parametro):
+        placa = parametro.get('placa')
+        if placa:
+            c = Carros.objects.create(placa=parametro.get('placa'), modelo=parametro.get('modelo'),marca=parametro.get('marca'))
+            save_historico(idr=0, user=user, action='CREATE', context=f"CARRO <{c.placa}> ADICIONADO")
+            return Response({'message': 'Cadastrado com sucesso'})
+        else:
+            return Response({'message': f'Erro ao adicionar carro: Placa não pode ser nulo'}, status=400)
+
+
 class Edit:
 
     @handle_transaction
