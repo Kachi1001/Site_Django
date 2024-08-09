@@ -12,7 +12,7 @@ function load_carro(carro) {
             $('#modelo').val(data.modelo)
             $('#marca').val(data.marca)
 
-            document.getElementById('modal-imagem').src = '/midia/reservas/carros/' + data.placa + '.jpg'
+            document.getElementById('modal-imagem').src = '/midia/Reservas/Carros/' + data.placa + '.jpg'
 
         },
         error: function (xhr) {
