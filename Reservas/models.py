@@ -8,6 +8,19 @@
 from django.db import models
 
 
+class AgendaCarros(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    carro = models.CharField(max_length=100)
+    data = models.DateField()
+    responsavel = models.CharField(max_length=20)
+    destino = models.CharField(max_length=10, blank=True, null=True)
+    reservado = models.CharField(max_length=20, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'agenda_carros'
+
+
 class AgendaSalas(models.Model):
     id = models.BigAutoField(primary_key=True)
     sala = models.CharField(max_length=100)
@@ -20,25 +33,24 @@ class AgendaSalas(models.Model):
     class Meta:
         managed = False
         db_table = 'agenda_salas'
-        
-class AgendaCarros(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    carro = models.CharField(max_length=100)
-    data = models.DateField()
-    responsavel = models.CharField(max_length=20)
-    destino = models.CharField(max_length=10, blank=True, null=True)
-    reservado = models.CharField(max_length=20, blank=True, null=True)
 
-    class Meta:
-        managed = True
-        db_table = 'agenda_carros'
-        
+
 class Carros(models.Model):
-    placa = models.CharField(max_length=9,primary_key=True)
-    modelo = models.CharField(max_length=20,blank=True,null=True)
-    marca = models.CharField(max_length=20,blank=True,null=True)
+    placa = models.CharField(primary_key=True, max_length=9)
+    marca = models.CharField(max_length=20, blank=True, null=True)
+    modelo = models.CharField(max_length=30, blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'carros'
 
+
+class DjangoMigrations(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    app = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    applied = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_migrations'

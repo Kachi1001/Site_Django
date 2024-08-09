@@ -82,7 +82,6 @@ function uploadFoto(){
                 'X-CSRFToken': csrftoken
             },
             success: function(data) {
-                alert('Arquivo carregado com sucesso!');
                 location.reload()
             },
             error: function(error) {

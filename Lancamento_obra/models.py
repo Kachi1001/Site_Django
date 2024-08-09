@@ -3,21 +3,22 @@
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = True` lines if you wish to allow Django to create, modify, and delete the table
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+
 
 class Atividade(models.Model):
     tipo = models.CharField(primary_key=True, max_length=30)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'atividade'
 
 
 class Colaborador(models.Model):
     id = models.BigAutoField(primary_key=True)
-    nome = models.TextField(max_length=255)
+    nome = models.CharField(max_length=255)
     admissao = models.DateField(blank=True, null=True)
     demissao = models.DateField(blank=True, null=True)
     diaria = models.TextField(blank=True, null=True)
@@ -27,7 +28,7 @@ class Colaborador(models.Model):
     encarregado = models.BooleanField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'colaborador'
 
 
@@ -38,7 +39,7 @@ class Dia(models.Model):
     programacao = models.DateField()
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'dia'
 
 
@@ -52,10 +53,19 @@ class Diarioobra(models.Model):
     imagem = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'diarioobra'
 
 
+class DjangoMigrations(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    app = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    applied = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_migrations'
 
 
 class Etapa(models.Model):
@@ -64,7 +74,7 @@ class Etapa(models.Model):
     descricao = models.CharField(max_length=50)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'etapa'
         unique_together = (('cr', 'etapa'),)
 
@@ -75,7 +85,7 @@ class Funcao(models.Model):
     grupo = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'funcao'
 
 
@@ -83,7 +93,7 @@ class Indiceobra(models.Model):
     indice = models.CharField(primary_key=True, max_length=50)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'indiceobra'
 
 
@@ -119,7 +129,7 @@ class JuntaPorDia(models.Model):
     iddcid = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'junta_por_dia'
 
 
@@ -130,7 +140,7 @@ class LancIncompletos(models.Model):
     total_horas = models.DurationField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'lanc_incompletos'
 
 
@@ -157,7 +167,7 @@ class Lancamentos(models.Model):
     obra = models.ForeignKey('Obra', models.DO_NOTHING, db_column='obra')
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'lancamentos'
 
 
@@ -169,7 +179,7 @@ class Localizacaoprogramada(models.Model):
     obra = models.ForeignKey('Obra', models.DO_NOTHING, db_column='obra')
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'localizacaoprogramada'
         unique_together = (('colaborador', 'iniciosemana', 'obra'),)
 
@@ -186,7 +196,7 @@ class Obra(models.Model):
     supervisor = models.ForeignKey('Supervisor', models.DO_NOTHING, db_column='supervisor', blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'obra'
 
 
@@ -201,7 +211,7 @@ class ResumoJunta(models.Model):
     total_he100 = models.DurationField(blank=True, null=True)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'resumo_junta'
 
 
@@ -210,5 +220,5 @@ class Supervisor(models.Model):
     ativo = models.BooleanField()
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'supervisor'

@@ -1,27 +1,29 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+  <title>Lançamento de obra</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=0.8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
 
-<link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
 
-{%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
-{%include 'static/imports/jquery.html'%} <!-- Jquery -->
-{%include 'static/imports/base.html'%} <!-- Base -->
+  {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
+  {%include 'static/imports/jquery.html'%} <!-- Jquery -->
+  {%include 'static/imports/base.html'%} <!-- Base -->
 
-<script src="{% static 'js/lançamento_obra.js' %}"></script>
+  <script src="{% static 'js/lançamento_obra.js' %}"></script>
 
 
 </head>
 {% block 'style' %}{% endblock %}
-{% block "script" %}{% endblock "script" %}   
-  
+{% block "script" %}{% endblock "script" %}
+
 <body>
   {%include 'navbar.html'%}
-  
+
   {%include 'lancamento_obra/sidebar.html'%}
 
   <header>
@@ -51,4 +53,5 @@
   {%include 'lancamento_obra/scripts.html'%}
 
 </body>
-</html> 
+
+</html>
