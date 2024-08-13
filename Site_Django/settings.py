@@ -94,32 +94,19 @@ DATABASES = {
         "HOST": config("DB_HOST"),
         "PORT": config("DB_PORT"),
     },
-    config("APP1"): {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("APP1"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT"),
-    },
-    config("APP2"): {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("APP2"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT"),
-    },
-    config("APP3"): {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("APP3"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT"),
-    },
 }
-
+app = 1
+while config('APP'+str(app), default=False):
+    a = config('APP'+str(app))
+    DATABASES[a] = {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": a,
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT"),
+    }
+    app = app + 1
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
