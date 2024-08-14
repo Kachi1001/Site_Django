@@ -9,7 +9,6 @@ from django.db import models
 
 
 class Adicionais(models.Model):
-    id = models.BigAutoField(primary_key=True)
     servico = models.CharField()
     nome = models.CharField()
     valor = models.CharField()

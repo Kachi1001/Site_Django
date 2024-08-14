@@ -46,9 +46,11 @@ INSTALLED_APPS = [
     'API',
     'Reservas',
     'TI',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Deve ser uma das primeiras entradas
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -59,6 +61,26 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Site_Django.urls'
+
+CORS_ALLOWED_ORIGINS = [
+    "http://"+config('API_HOST')+":"+config('API_PORT'),
+    'http://127.0.0.1:8000'
+]
+# Para permitir cabeçalhos específicos
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization',
+]
+
+# Para permitir métodos específicos
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'DELETE',
+    'OPTIONS',
+]
+
 
 TEMPLATES = [
     {

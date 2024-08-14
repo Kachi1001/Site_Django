@@ -12,7 +12,7 @@ function load_carro(carro) {
             $('#modelo').val(data.modelo)
             $('#marca').val(data.marca)
 
-            document.getElementById('modal-imagem').src = '/midia/Reservas/Carros/' + data.placa + '.jpg'
+            document.getElementById('modal-imagem').src = getAPI() + '/media/reservas/carros/' + data.placa + '.jpg'
 
         },
         error: function (xhr) {
@@ -42,7 +42,7 @@ function cadastra() {
     }
 
     $.ajax({
-        url: "/api/cadastrar",  // URL da sua API no Django
+        url: getAPI()+"/api/cadastrar",  // URL da sua API no Django
         type: 'POST',
         data: {
             'csrfmiddlewaretoken': csrftoken,
@@ -73,7 +73,7 @@ function uploadFoto(){
     formData.append('placa', $('#cadastro_placa').val());
 
         $.ajax({
-            url: '/api/upload/',
+            url: getAPI()+'/api/upload/',
             type: 'POST',
             data: formData,
             processData: false,

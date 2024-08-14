@@ -28,47 +28,44 @@
     <!-- Modal reservar carro -->
 
     <div class="modal fade" id="reservar_carro">
-        <form action="{% url 'carros' %}" method="POST">{% csrf_token %}
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="row justify-content-center">
-                            <div class="col">
-                                <input type="text" name="placa" id="placa" class="form-control" readonly>
-                            </div>
-                            <div class="col">
-                                <input type="text" name="modelo" id="modelo" class="form-control" readonly>
-                            </div>
-                            <div class="col">
-                                <input type="text" name="marca" id="marca" class="form-control" readonly>
-                            </div>
+        <form action="{% url 'carros' %}" method="POST" class="modal-dialog modal-dialog-centered">{% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <input type="text" name="placa" id="placa" class="form-control" readonly>
                         </div>
-                    </div>
-                    <div class="text-center">
-                        <img id='modal-imagem' src="{%static 'image/reservas/carro.png'%}" class="modal-img" alt="...">
-                    </div>
-
-                    <div class="modal-footer">
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="date">Data:</label>
-                            <input type="date" name="data-picker" id='date' class="form-control" value="{{data}}"
-                                readonly>
+                        <div class="col">
+                            <input type="text" name="modelo" id="modelo" class="form-control" readonly>
                         </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="responsavel">Responsável:</label>
-                            <input type="text" name="responsavel" id="responsavel" class="form-control">
+                        <div class="col">
+                            <input type="text" name="marca" id="marca" class="form-control" readonly>
                         </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="destino">Destino:</label>
-                            <input type="text" name="destino" id="destino" class="form-control">
-                        </div>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Reservar</button>
                     </div>
                 </div>
+                <div class="text-center">
+                    <img id='modal-imagem' src="{%static 'image/reservas/carro.png'%}" class="modal-img" alt="...">
+                </div>
+
+                <div class="modal-footer">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="date">Data:</label>
+                        <input type="date" name="data-picker" id='date' class="form-control" value="{{data}}" readonly>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="responsavel">Responsável:</label>
+                        <input type="text" name="responsavel" id="responsavel" class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="destino">Destino:</label>
+                        <input type="text" name="destino" id="destino" class="form-control">
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Reservar</button>
+                </div>
             </div>
+        </form>
     </div>
-    </form>
 
 
     <!-- Cadastro de carro -->
@@ -192,25 +189,25 @@
 
 
 
-    <script>
-        let photo = document.getElementById('foto');
-        let file = document.getElementById('arquivo');
-        photo.addEventListener('click', () => {
-            file.click();
-        });
+<script>
+    let photo = document.getElementById('foto');
+    let file = document.getElementById('arquivo');
+    photo.addEventListener('click', () => {
+        file.click();
+    });
 
-        file.addEventListener('change', () => {
+    file.addEventListener('change', () => {
 
-            if (file.files.length <= 0) {
-                return;
-            }
+        if (file.files.length <= 0) {
+            return;
+        }
 
-            let reader = new FileReader();
+        let reader = new FileReader();
 
-            reader.onload = () => {
-                photo.src = reader.result;
-            }
+        reader.onload = () => {
+            photo.src = reader.result;
+        }
 
-            reader.readAsDataURL(file.files[0]);
-        });
-    </script>
+        reader.readAsDataURL(file.files[0]);
+    });
+</script>
