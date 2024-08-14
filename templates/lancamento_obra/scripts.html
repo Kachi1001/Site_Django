@@ -1,5 +1,7 @@
 {% load static %}
 <script>
+    $('#tabela_colaborador').DataTable();
+    
   function salvarData(metodo, parametro, callback){
     $.ajax({
       url: getAPI()+"/cadastrar",  // URL da sua API no Django

@@ -19,7 +19,7 @@ def index(request):
 def cadastro_colab(request):
     return render(request, "lancamento_obra/cadastro/colaborador.html", {
         'func_list': Funcao.objects.all(),
-        'data': Colaborador.objects.all().order_by('-id')[:10],
+        'data': Colaborador.objects.all(),
         'nome': request.user.username,
         }
     ) 
@@ -38,7 +38,7 @@ def cadastro_obra(request):
     if request.method == "GET":
         return render(request, "lancamento_obra/cadastro/obra.html", {
             "super_list": Supervisor.objects.all(),
-            'data': Obra.objects.all().order_by('-cr')[:7]
+            'data': Obra.objects.all(),
             })
     elif request.method == "POST":
         obra = Obra(
@@ -61,7 +61,7 @@ def visu_tabela(request, data, html):
     page_num = request.GET.get('page')
     data_page = data_paginator.get_page(page_num)
     
-    return render(request, f"lancamento_obra/visualizacao/{html}.html", {'data': data_page})
+    return render(request, f"lancamento_obra/visualizacao/{html}.html", {'data': data})
 
 @login_required
 def visualizacao_colab(request):
@@ -132,7 +132,6 @@ def lancamento_diario(request):
     elif request.method == "POST":
         digitalizacao = request.FILES.get('arquivo')
         img = Image.open(digitalizacao)
-        path = os.path.join(settings.BASE_DIR, f'media/Lancamento_obra/diarios_digitalizado/{digitalizacao.name}')
         img = img.save(path)   
         
         diaria = Diarioobra(

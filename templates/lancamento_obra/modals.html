@@ -1,353 +1,370 @@
 <style>
-  .microlist {
-    height: 200px;
-    overflow: auto;
-    border-top: 1px solid #dee2e6;
-}
-  th{
-    font-size: small;
-  }
-  
+    .microlist {
+        height: 200px;
+        overflow: auto;
+        border-top: 1px solid #dee2e6;
+    }
+
+    th {
+        font-size: small;
+    }
 </style>
 
 
-<!-- Modal funcao -->
-
-<div class="modal fade" id="cadastro_func" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de função</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
-            <input type="text" name="nome" id="func_nome" class="form-control">
-          </div>
-          <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">Grupo:</label>
-            <select class="form-select" id="func_grupo" name="grupo">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-          </div>
-          <div class="microlist">
-            <table class="table table-hover table-bordered table-striped" >
-              <thead>
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Grupo</th>
-                </tr>
-              </thead>
-              <tbody id="func_table"></tbody>
-            </table> 
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" onclick="salvar('funcao')">Salvar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Modal supervisor-->
-  <div class="modal fade" id="cadastro_super" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de supervisor</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
-            <input type="text" name="super_nome" id='super_nome' class="form-control">
-          </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text">Ativo</span>
-            <div class="input-group-text">
-              <input class="form-check-input mt-0" type="checkbox" aria-label="Checkbox for following text input" id="super_ativo" checked>
-            </div>
-          </div>
-          <div class="microlist">
-            <table class="table table-hover table-bordered table-striped" >
-              <thead>
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Ativo?</th>
-                </tr>
-              </thead>
-              <tbody id="super_table"></tbody>
-            </table> 
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" onclick="salvar('super')">Salvar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Modal upadate colaborador-->
-  <div class="modal fade" id="update_colab" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de colaborador</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col">
-              <div class="input-group input-group-sm mb-3">
-                <label class="input-group-text" for="inputGroupSelect01">ID:</label>
-                <input type="text" name="update_id" id="update_id" class="form-control" disabled>
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group input-group-sm mb-3">
-                <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
-                <input type="text" name="update_nome" id="update_nome" class="form-control">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="input-group input-group-sm mb-3">
-                <label class="input-group-text" for="inputGroupSelect01">Data de admissão:</label>
-                <input type="date" name="update_admissao" id="update_admissao" class="form-control">
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group input-group-sm mb-3">
-                <label class="input-group-text" for="inputGroupSelect01">Função:</label>
-                <select class="form-select" name="update_funcao" id="update_funcao">
-                </select>
-              </div>
-            </div>
-            
-          </div>
-          
-          <div class="row">
-            <div class="col">
-              <div class="input-group input-group-sm mb-3">
-                <label class="input-group-text" for="inputGroupSelect01">Data de demissao:</label>
-                <input type="date" name="uptade_demissao" id="update_demissao" class="form-control">
-              </div>
-            </div>
-            
-            <div class="col">
-              <div class="input-group input-group-sm mb-3">
-                <div class="input-group-text">
-                  <input class="form-check-input mt-0" type="checkbox" value="True" aria-label="Checkbox for following text input" name="update_encarregado" id="update_encarregado">
+<div class="modals">
+    <div class="modal fade" id="cadastro_func" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de função</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <span class="input-group-text">Encarregado</span>
-              </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
+                        <input type="text" name="nome" id="func_nome" class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Grupo:</label>
+                        <select class="form-select" id="func_grupo" name="grupo">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="microlist">
+                        <table class="table table-hover table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Grupo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="func_table"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="salvar('funcao')">Salvar</button>
+                </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="input-group input-group-sm mb-3">
-                <label class="input-group-text" for="inputGroupSelect01">Tipo de contrato:</label>
-                <select class="form-select" id="update_contrato" name="update_contrato" onchange="exibir_diaria(document.getElementById('update_contrato'))">
-                  <option value="CLT">CLT</option>
-                  <option value="Terceiro">Terceiro</option>
-                </select>
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group input-group-sm mb-3" id="div_diaria" style="display: none">
-                <span class="input-group-text">Valor da Diaria</span>
-                <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" name="update_diaria" id="update_diaria">
-                <span class="input-group-text">R$</span>
-              </div>
-            </div>
-        
-          </div>
-          
-          <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text">Observações</span>
-            <textarea class="form-control" aria-label="With textarea" name="update_observacao" id="update_observacao"></textarea>
-          </div>
-          
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" onclick="deletar('Colaborador')">Deletar</button>
-          <button type="button" class="btn btn-success" onclick="update('colab')">Salvar</button>
-        </div>
-      </div>
     </div>
-  </div>
-<!-- Modal update obra-->
-<div class="modal fade" id="update_obra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de obra</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col">
-            <div class="input-group input-group-sm mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">CR:</label>
-              <input type="text" name="update_obra_cr" id="update_obra_cr" class="form-control" disabled>
-            </div>
-          </div>
-          <div class="col">
-            <div class="input-group input-group-sm mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">Orçamento:</label>
-              <input type="text" name="update_obra_orcamento" id="update_obra_orcamento" class="form-control">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="input-group input-group-sm mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">Empresa:</label>
-              <input type="text" name="update_obra_empresa" id="update_obra_empresa" class="form-control">
-            </div>
-          </div>
-          <div class="col">
-            <div class="input-group input-group-sm mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">Cidade:</label>
-              <input type="text" name="update_obra_cidade" id="update_obra_cidade" class="form-control">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="input-group input-group-sm mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">Descrição:</label>
-              <input type="text" name="update_obra_descricao" id="update_obra_descricao" class="form-control">
-            </div>
-          </div>
-          <div class="col">
-            <div class="input-group input-group-sm mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">Índice:</label>
-              <input type="text" name="update_obra_indice" id="update_obra_indice" class="form-control">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="input-group input-group-sm mb-3">
-              <div class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" value="True" aria-label="Checkbox for following text input" name="update_obra_finalizada" id="update_obra_finalizada">
-              </div>
-              <span class="input-group-text">Finalizada</span>
-            </div>
-          </div>
-          <div class="col">
-            <div class="input-group input-group-sm mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">Supervisor:</label>
-              <select class="form-select" id="update_obra_supervisor" name="update_obra_supervisor">
-                <!-- Options serão preenchidas dinamicamente -->
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="input-group input-group-sm mb-3">
-          <span class="input-group-text">Retrabalho</span>
-          <textarea class="form-control" aria-label="With textarea" name="update_obra_retrabalho" id="update_obra_retrabalho"></textarea>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" onclick="deletarObra()">Deletar</button>
-        <button type="button" class="btn btn-success" onclick="updateObra()">Salvar</button>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- Modal update att-->
-<div class="modal fade" id="update_lanc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de atividade</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-          <div class="input-group input-group-sm mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">ID:</label>
-            <input type="text" name="update_att_id" id="update_att_id" class="form-control" disabled>
-          </div>
-            <div class="input-group mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">Colaborador:</label>
-              <select class="form-select" id="update_att_colaborador" name="colaborador">
-                <!-- <option value="{{colab.nome}}">{{colab.nome}} | {{colab.funcao.funcao}}</option>  -->
-              </select>
+    <!-- Modal supervisor-->
+    <div class="modal fade" id="cadastro_super" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de supervisor</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
+                        <input type="text" name="super_nome" id='super_nome' class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Ativo</span>
+                        <div class="input-group-text">
+                            <input class="form-check-input mt-0" type="checkbox"
+                                aria-label="Checkbox for following text input" id="super_ativo" checked>
+                        </div>
+                    </div>
+                    <div class="microlist">
+                        <table class="table table-hover table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Ativo?</th>
+                                </tr>
+                            </thead>
+                            <tbody id="super_table"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="salvar('super')">Salvar</button>
+                </div>
             </div>
-          
-            
-              <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelect01">Obra:</label>
-                <select class="form-select" id="update_att_obra" name="obra">
-                  <!-- <option value="{{obra.cr}}">{{obra.cr}} - {{obra.empresa}} - {{obra.cidade}}</option> -->
-                </select>
-              </div>
-          
-          
-          
-        <div class="row align-items-start">
-          <div class="col">
-              <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelect01">Atividade:</label>
-                <select class="form-select" id="update_att_atividade" name="atividade">
-                  <!-- <option value="{{att.tipo}}">{{att.tipo}}</option> -->
-                </select>
-            </div>
-          </div>
-    
-          
-          <div class="col">
-            <div class="input-group mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">Indice do diario:</label>
-              <select class="form-select" id="update_att_indice" name="indice">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-    
-              </select>
-            </div>
-          </div>
         </div>
-        <div class="input-group mb-3">
-          <label class="input-group-text" for="inputGroupSelect01">Data de realização:</label>
-          <input type="date" name="dia" id="update_att_dia" class="form-control">
-  
-        </div>
-        <div class="input-group mb-3">
-          <span class="input-group-text">Descrição:</span>
-          <textarea class="form-control" aria-label="With textarea" name="descricao" id="update_att_descricao"></textarea>
-        </div>
-            <div class="input-group mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">Hora Manhã</label>
-              <input type="time" name="horaini1" id="update_att_horaini1" class="form-control">
-              <input type="time" name="horafim1" id="update_att_horafim1" class="form-control">
-            </div>
-    
-            <div class="input-group mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">Hora Tarde</label>
-              <input type="time" name="horaini2" id="update_att_horaini2" class="form-control">
-              <input type="time" name="horafim2" id="update_att_horafim2" class="form-control">
-            </div>
-            <div class="input-group mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">Hora Noite</label>
-              <input type="time" name="horaini3" id="update_att_horaini3" class="form-control">
-              <input type="time" name="horafim3" id="update_att_horafim3" class="form-control">
-            </div>
-          
-        </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" onclick="deletarLanc()">Deletar</button>
-        <button type="button" class="btn btn-success" onclick="updateLanc()">Salvar</button>
-      </div>
     </div>
-  </div>
+
+    <!-- Modal upadate colaborador-->
+    <div class="modal fade" id="update_colab" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de colaborador</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">ID:</label>
+                                <input type="text" name="update_id" id="update_id" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
+                                <input type="text" name="update_nome" id="update_nome" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Data de admissão:</label>
+                                <input type="date" name="update_admissao" id="update_admissao" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Função:</label>
+                                <select class="form-select" name="update_funcao" id="update_funcao">
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Data de demissao:</label>
+                                <input type="date" name="uptade_demissao" id="update_demissao" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" value="True"
+                                        aria-label="Checkbox for following text input" name="update_encarregado"
+                                        id="update_encarregado">
+                                </div>
+                                <span class="input-group-text">Encarregado</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Tipo de contrato:</label>
+                                <select class="form-select" id="update_contrato" name="update_contrato"
+                                    onchange="exibir_diaria(document.getElementById('update_contrato'))">
+                                    <option value="CLT">CLT</option>
+                                    <option value="Terceiro">Terceiro</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3" id="div_diaria" style="display: none">
+                                <span class="input-group-text">Valor da Diaria</span>
+                                <input type="text" class="form-control"
+                                    aria-label="Dollar amount (with dot and two decimal places)" name="update_diaria"
+                                    id="update_diaria">
+                                <span class="input-group-text">R$</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Observações</span>
+                        <textarea class="form-control" aria-label="With textarea" name="update_observacao"
+                            id="update_observacao"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="deletar('Colaborador')">Deletar</button>
+                    <button type="button" class="btn btn-success" onclick="update('colab')">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal update obra-->
+    <div class="modal fade" id="update_obra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de obra</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">CR:</label>
+                                <input type="text" name="update_obra_cr" id="update_obra_cr" class="form-control"
+                                    disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Orçamento:</label>
+                                <input type="text" name="update_obra_orcamento" id="update_obra_orcamento"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Empresa:</label>
+                                <input type="text" name="update_obra_empresa" id="update_obra_empresa"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Cidade:</label>
+                                <input type="text" name="update_obra_cidade" id="update_obra_cidade"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Descrição:</label>
+                                <input type="text" name="update_obra_descricao" id="update_obra_descricao"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Índice:</label>
+                                <input type="text" name="update_obra_indice" id="update_obra_indice"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" value="True"
+                                        aria-label="Checkbox for following text input" name="update_obra_finalizada"
+                                        id="update_obra_finalizada">
+                                </div>
+                                <span class="input-group-text">Finalizada</span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Supervisor:</label>
+                                <select class="form-select" id="update_obra_supervisor" name="update_obra_supervisor">
+                                    <!-- Options serão preenchidas dinamicamente -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Retrabalho</span>
+                        <textarea class="form-control" aria-label="With textarea" name="update_obra_retrabalho"
+                            id="update_obra_retrabalho"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="deletarObra()">Deletar</button>
+                    <button type="button" class="btn btn-success" onclick="updateObra()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal update att-->
+    <div class="modal fade" id="update_lanc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de atividade</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-sm mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">ID:</label>
+                        <input type="text" name="update_att_id" id="update_att_id" class="form-control" disabled>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Colaborador:</label>
+                        <select class="form-select" id="update_att_colaborador" name="colaborador">
+                            <!-- <option value="{{colab.nome}}">{{colab.nome}} | {{colab.funcao.funcao}}</option>  -->
+                        </select>
+                    </div>
+
+
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Obra:</label>
+                        <select class="form-select" id="update_att_obra" name="obra">
+                            <!-- <option value="{{obra.cr}}">{{obra.cr}} - {{obra.empresa}} - {{obra.cidade}}</option> -->
+                        </select>
+                    </div>
+
+
+
+                    <div class="row align-items-start">
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Atividade:</label>
+                                <select class="form-select" id="update_att_atividade" name="atividade">
+                                    <!-- <option value="{{att.tipo}}">{{att.tipo}}</option> -->
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Indice do diario:</label>
+                                <select class="form-select" id="update_att_indice" name="indice">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Data de realização:</label>
+                        <input type="date" name="dia" id="update_att_dia" class="form-control">
+
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Descrição:</span>
+                        <textarea class="form-control" aria-label="With textarea" name="descricao"
+                            id="update_att_descricao"></textarea>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Hora Manhã</label>
+                        <input type="time" name="horaini1" id="update_att_horaini1" class="form-control">
+                        <input type="time" name="horafim1" id="update_att_horafim1" class="form-control">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Hora Tarde</label>
+                        <input type="time" name="horaini2" id="update_att_horaini2" class="form-control">
+                        <input type="time" name="horafim2" id="update_att_horafim2" class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Hora Noite</label>
+                        <input type="time" name="horaini3" id="update_att_horaini3" class="form-control">
+                        <input type="time" name="horafim3" id="update_att_horafim3" class="form-control">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="deletarLanc()">Deletar</button>
+                    <button type="button" class="btn btn-success" onclick="updateLanc()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
