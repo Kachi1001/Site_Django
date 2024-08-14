@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'rolepermissions',
     'Lancamento_obra',
     'Home',
-    'API',
     'Reservas',
     'TI',
     'corsheaders',

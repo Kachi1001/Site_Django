@@ -10,10 +10,11 @@
           </button>
         </h2>
         <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <a href="{%url 'cadastro_colab'%}">| Colaborador</a>
-          <a href="{%url 'cadastro_obra'%}">| Obra</a>
-          <a href="#" data-bs-toggle="modal" data-bs-target="#cadastro_func" onclick="loadTable('funcao', 'func_table')" >| Função</a>
-          <a href="#" data-bs-toggle="modal" data-bs-target="#cadastro_super" onclick="loadTable('supervisor', 'super_table')">| Supervisor</a>    
+          <a href="{%url 'cadastro_colab'%}"><i class="bi bi-box-arrow-in-right"></i> Colaborador</a>
+          <a href="{%url 'cadastro_obra'%}"><i class="bi bi-box-arrow-in-right"></i> Obra</a>
+        
+          <a href="#" data-bs-toggle="modal" data-bs-target="#cadastro_func" onclick="loadTable('funcao', 'func_table')" ><i class="bi bi-file-earmark-text"></i> Função</a>
+          <a href="#" data-bs-toggle="modal" data-bs-target="#cadastro_super" onclick="loadTable('supervisor', 'super_table')"><i class="bi bi-file-earmark-text"></i> Supervisor</a>    
         </div>
       </div>
   
@@ -25,12 +26,12 @@
           </button>
         </h2>
         <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <a href="{%url 'visualizacao_colab'%}">| Colaboradores</a>
-          <a href="{%url 'visualizacao_obra'%}">| Obras</a>
-          <a href="{%url 'visualizacao_atividade'%}">| Atividade</a>
-          <a href="{%url 'visualizacao_diario'%}">| Diario</a>
-          <a href="#">| Revisões</a>
-          <a href="{%url 'visualizacao_hora_horaextra'%}">| Horas / Horas Extras</a>
+          <a href="{%url 'visualizacao_colab'%}"><i class="bi bi-box-arrow-in-right"></i>  Colaboradores</a>
+          <a href="{%url 'visualizacao_obra'%}"><i class="bi bi-box-arrow-in-right"></i>  Obras</a>
+          <a href="{%url 'visualizacao_atividade'%}"><i class="bi bi-box-arrow-in-right"></i>  Atividade</a>
+          <a href="{%url 'visualizacao_diario'%}"><i class="bi bi-box-arrow-in-right"></i>  Diario</a>
+          <a href="#"><i class="bi bi-box-arrow-in-right"></i>  Revisões</a>
+          <a href="{%url 'visualizacao_hora_horaextra'%}"><i class="bi bi-box-arrow-in-right"></i>  Horas / Horas Extras</a>
         </div>
       </div>
       
@@ -41,8 +42,8 @@
           </button>
         </h2>
         <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <a href="{%url 'lancamento_atividade'%}">| Atividade</a>
-          <a href="{%url 'lancamento_diario'%}">| Diário</a>
+          <a href="{%url 'lancamento_atividade'%}"><i class="bi bi-box-arrow-in-right"></i>  Atividade</a>
+          <a href="{%url 'lancamento_diario'%}"><i class="bi bi-box-arrow-in-right"></i>  Diário</a>
         </div>
       </div>
   
@@ -54,15 +55,13 @@
           </button>
         </h2>
         <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <a href="#">| Resumo mensal</a>
+          <a href="#"><i class="bi bi-box-arrow-in-right"></i>  Resumo mensal</a>
           
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            | Pesquisa Avançada
-          </a>
+          <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-caret-down"></i> Pesquisa Avançada</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{%url 'pesquisa_historico_colab' %}">Atividade por Colaborador</a></li>
-            <li><a class="dropdown-item" href="{%url 'pesquisa_historico_obra' %}">Atividade por Obra</a></li>
-            <li><a class="dropdown-item" href="{%url 'pesquisa_atividade_diario' %}">Atividade por Diario</a></li>
+            <li><a class="dropdown-item" href="{%url 'pesquisa_historico_colab' %}"><i class="bi bi-file-earmark-text"></i>  Atividade por Colaborador</a></li>
+            <li><a class="dropdown-item" href="{%url 'pesquisa_historico_obra' %}"><i class="bi bi-file-earmark-text"></i>  Atividade por Obra</a></li>
+            <li><a class="dropdown-item" href="{%url 'pesquisa_atividade_diario' %}"><i class="bi bi-file-earmark-text"></i>  Atividade por Diario</a></li>
             <!-- <li><hr class="dropdown-divider"></li >
               <li><a class="dropdown-item" href="#">Something else here</a></li> -->
             </ul>

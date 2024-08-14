@@ -108,7 +108,7 @@ def lancamento_atividade(request):
                 colaborador=request.POST.get("colaborador"),
                 dia=request.POST.get("dia"),
                 descricao=request.POST.get("descricao"),
-                horaini1=hora[0],
+                horaini1=hora[0],   
                 horafim1=hora[1],
                 horaini2=hora[2],
                 horafim2=hora[3],
@@ -117,7 +117,6 @@ def lancamento_atividade(request):
                 atividade=Atividade(request.POST.get("atividade")),
                 diaseguinte=True,
                 indice=request.POST.get("indice"),
-                diario=diario
             )
         att.save() 
         return redirect(lancamento_atividade)
@@ -133,7 +132,7 @@ def lancamento_diario(request):
     elif request.method == "POST":
         digitalizacao = request.FILES.get('arquivo')
         img = Image.open(digitalizacao)
-        path = os.path.join(settings.BASE_DIR, f'midia/Lancamento_obra/diarios_digitalizado/{digitalizacao.name}')
+        path = os.path.join(settings.BASE_DIR, f'media/Lancamento_obra/diarios_digitalizado/{digitalizacao.name}')
         img = img.save(path)   
         
         diaria = Diarioobra(

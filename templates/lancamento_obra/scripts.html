@@ -2,7 +2,7 @@
 <script>
   function salvarData(metodo, parametro, callback){
     $.ajax({
-      url: "{% url 'cadastrar' %}",  // URL da sua API no Django
+      url: getAPI()+"/cadastrar",  // URL da sua API no Django
       type: 'POST',
       data: {
         'csrfmiddlewaretoken': "{{ csrf_token }}",
@@ -45,7 +45,7 @@
 
   function updateData(metodo, parametro, callback){
     $.ajax({
-      url: "{% url 'update' %}",  // URL da sua API no Django
+      url: getAPI()+"/update",  // URL da sua API no Django
       type: 'POST',
       data: {
         'csrfmiddlewaretoken': "{{ csrf_token }}",
@@ -101,7 +101,7 @@
 
   function deletarData(metodo, id, callback){
     $.ajax({
-      url: "{% url 'deletar' %}",  // URL da sua API no Django
+      url: getAPI()+'/deletar',  // URL da sua API no Django
       type: 'POST',
       data: {
         'csrfmiddlewaretoken': "{{ csrf_token }}",
@@ -123,7 +123,7 @@
 
   function loadUpdate(metodo, id){
     $.ajax({
-      url: `{% url 'get_data' %}`, // URL da view Django que retorna os dados
+      url: getAPI()+'/get_data', // URL da view Django que retorna os dados
       method: 'GET',
       data: {
         'csrfmiddlewaretoken': "{{ csrf_token }}",
@@ -152,7 +152,7 @@
 
   function loadTable(tableDB, tableHTML) {
     $.ajax({
-      url: '{% url "get_table" %}', // URL da view Django que retorna os dados
+      url: getAPI()+'/get_table', // URL da view Django que retorna os dados
       method: 'GET',
       data: {
         'csrfmiddlewaretoken': "{{ csrf_token }}",
@@ -251,7 +251,7 @@
 
 function toggleAtivo(supervisor, isActive) {
   $.ajax({
-    url: "{% url 'update_supervisor_status' %}", // URL da sua API no Django para atualizar o status
+    url:  getAPI()+'/update_supervisor_status', // URL da sua API no Django para atualizar o status
     type: 'POST',
     data: {
       'csrfmiddlewaretoken': "{{ csrf_token }}",
@@ -269,7 +269,7 @@ function toggleAtivo(supervisor, isActive) {
 }
 function editObra(cr) {
   $.ajax({
-    url: '{% url "get_data" %}', // URL da view Django que retorna os dados de uma obra
+    url:  getAPI()+'/get_data', // URL da view Django que retorna os dados de uma obra
     method: 'GET',
     data: {
       'csrfmiddlewaretoken': "{{ csrf_token }}",
@@ -325,7 +325,7 @@ function updateObra() {
   };
 
   $.ajax({
-    url: '{% url "update" %}', // URL da view Django que atualiza a obra
+    url:  getAPI()+'/update', // URL da view Django que atualiza a obra
     method: 'POST',
     data: {
       'csrfmiddlewaretoken': "{{ csrf_token }}",
@@ -349,7 +349,7 @@ function deletarObra() {
   var cr = $('#update_obra_cr').val();
 
   $.ajax({
-    url: '{% url "deletar" %}', // URL da view Django que deleta a obra
+    url:  getAPI()+'/deletar', // URL da view Django que deleta a obra
     method: 'POST',
     data: {
       'csrfmiddlewaretoken': "{{ csrf_token }}",
@@ -370,7 +370,7 @@ function deletarObra() {
 // Edit Atividade
 function editLanc(id) {
   $.ajax({
-    url: '{% url "get_data" %}', // URL da view Django que retorna os dados de uma obra
+    url:  getAPI()+'/get_data', // URL da view Django que retorna os dados de uma obra
     method: 'GET',
     data: {
       'csrfmiddlewaretoken': "{{ csrf_token }}",
@@ -438,7 +438,7 @@ function updateLanc() {
     };
 
   $.ajax({
-    url: '{% url "update" %}', // URL da view Django que atualiza a obra
+    url:  getAPI()+'/update', // URL da view Django que atualiza a obra
     method: 'POST',
     data: {
       'csrfmiddlewaretoken': "{{ csrf_token }}",
@@ -462,7 +462,7 @@ function deletarLanc( ) {
   var id = $('#update_att_id').val();
 
   $.ajax({
-    url: '{% url "deletar" %}', // URL da view Django que deleta a obra
+    url: getAPI()+'/deletar', // URL da view Django que deleta a obra
     method: 'POST',
     data: {
       'csrfmiddlewaretoken': "{{ csrf_token }}",
