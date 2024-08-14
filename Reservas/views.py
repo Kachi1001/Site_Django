@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
-
+import json
+import os
 from .models import *
 from django.utils import timezone
 from Site_Django.util import *
+from Site_Django.settings import BASE_DIR 
 hoje = timezone.now().date()
 
 class reserva:
@@ -40,9 +42,11 @@ def autoResp(request, user, a):
         return request.POST.get('responsavel'+a)
     else:
         return False
+
+horarios1= ["07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30"]
+horarios2= ["13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30"]
     
-horarios1 = ['07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30']
-horarios2 = ['13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30']
+
 
 
 

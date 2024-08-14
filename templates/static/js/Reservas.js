@@ -1,6 +1,6 @@
 function load_carro(carro) {
     $.ajax({
-        url: "/api/get_data",  // URL da sua API no Django
+        url: getAPI()+"/api/get_data",  // URL da sua API no Django
         type: 'GET',
         data: {
             'csrfmiddlewaretoken': csrftoken,
