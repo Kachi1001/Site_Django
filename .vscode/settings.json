@@ -1,5 +1,7 @@
 {
     "cSpell.words": [
+        "csrftoken",
         "psycopg"
-    ]
+    ],
+    "editor.detectIndentation": false
 }

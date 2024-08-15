@@ -1,54 +1,57 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+    <title>Lançamento de obra</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
 
-<link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
 
-{%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
-{%include 'static/imports/jquery.html'%} <!-- Jquery -->
-{%include 'static/imports/base.html'%} <!-- Base -->
+    {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
+    {%include 'static/imports/jquery.html'%} <!-- Jquery -->
+    {%include 'static/imports/datatables.html'%} <!-- datatables -->
+    {%include 'static/imports/base.html'%} <!-- Base -->
 
-<script src="{% static 'js/lançamento_obra.js' %}"></script>
+    <script src="{% static 'js/lançamento_obra.js' %}"></script>
 
 
 </head>
 {% block 'style' %}{% endblock %}
-{% block "script" %}{% endblock "script" %}   
-  
+
 <body>
-  {%include 'navbar.html'%}
-  
-  {%include 'lancamento_obra/sidebar.html'%}
+    {%include 'navbar.html'%}
 
-  <header>
-    <div aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item" aria-current="page">Lançamento de obra</li>
-        {%block 'caminho'%}{%endblock%}
-      </ol>
+    {%include 'lancamento_obra/sidebar.html'%}
+
+    <header>
+        <div aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item" aria-current="page">Lançamento de obra</li>
+                {%block 'caminho'%}{%endblock%}
+            </ol>
+        </div>
+        {%block 'header'%}{%endblock%}
+    </header>
+
+    <main>
+        {% block 'main' %}{% endblock %}
+    </main>
+
+    <div class="submain">
+        {%block 'submain'%}{%endblock%}
     </div>
-    {%block 'header'%}{%endblock%}
-  </header>
 
-  <main>
-    {% block 'main' %}{% endblock %}
-  </main>
+    <footer>
+        {%block 'footer'%}{%endblock%}
+    </footer>
 
-  <div class="submain">
-    {%block 'submain'%}{%endblock%}
-  </div>
-
-  <footer>
-    {%block 'footer'%}{%endblock%}
-    {%include 'pagination.html'%}
-  </footer>
-
-  {%include 'lancamento_obra/modals.html'%}
-  {%include 'lancamento_obra/scripts.html'%}
+    {%include 'lancamento_obra/modals.html'%}
+    {% block "script" %}{% endblock %}
+    {%include 'lancamento_obra/scripts.html'%}
 
 </body>
-</html> 
+
+</html>

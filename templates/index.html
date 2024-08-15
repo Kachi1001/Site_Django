@@ -1,19 +1,18 @@
 {% load static %}
 {% load permission_tags %}
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=0.8">
+
+<link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
   <title>Ferramentas Tecnika</title>
 
-  <link rel="stylesheet" href="{% static 'css/color.css' %}">
   
   {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
   {%include 'static/imports/base.html'%}
+  <link rel="stylesheet" href="{% static 'css/color.css' %}">
 
 </head>
 <style>
@@ -83,7 +82,7 @@
       <div class="row">
         {% if user|can:'lançamento' %}
         <div class="col">
-          <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
+          <div class="card">
             <div class="card-header">
               <h5 class="card-title">Lançamento obra</h5>
             </div>
@@ -99,41 +98,25 @@
         {%endif%}
 
         <div class="col">
-          <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
+          <div class="card">
             <div class="card-header">
               <h5 class="card-title">Reservas</h5>
             </div>
             <div class="card-body">
-              <h6 class="card-subtitle mb-2 text-body-secondary">Teste 0.1</h6>
+              <h6 class="card-subtitle mb-2 text-body-secondary">Versão 0.2</h6>
               <p class="card-text">Controle de reserva para as salas de reuniões</p>
             </div>
             <div class="card-footer">
-              <a href="{%url 'salas'%}" class="card-link">Abrir Aplicação</a>
+              <a href="{%url 'reservas'%}" class="card-link">Abrir Aplicação</a>
             </div>
           </div>
         </div>
 
 
-        {% if user|can:'master' %}
-        <div class="col">
-          <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
-            <div class="card-header">
-              <h5 class="card-title">Painel admin</h5>
-            </div>
-            <div class="card-body">
-              <h6 class="card-subtitle mb-2 text-body-secondary">Django</h6>
-              <p class="card-text">Painel com informações de admin</p>
-            </div>
-            <div class="card-footer">
-              <a href="/admin" class="card-link">Abrir Aplicação</a>
-            </div>
-          </div>
-        </div>
-        {%endif%}
-
+        
         {% if user|can:'ti' %}
         <div class="col">
-          <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
+          <div class="card">
             <div class="card-header">
               <h5 class="card-title">TI</h5>
             </div>
@@ -143,6 +126,22 @@
             </div>
             <div class="card-footer">
               <a href="{%url 'ti'%}" class="card-link">Abrir Aplicação</a>
+            </div>
+          </div>
+        </div>
+        {%endif%}
+        {% if user|can:'master' %}
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title">Painel admin</h5>
+            </div>
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-body-secondary">Django</h6>
+              <p class="card-text">Painel com informações de admin</p>
+            </div>
+            <div class="card-footer">
+              <a href="/admin" class="card-link">Abrir Aplicação</a>
             </div>
           </div>
         </div>

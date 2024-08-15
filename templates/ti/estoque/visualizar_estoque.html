@@ -71,13 +71,6 @@
 {%endblock%}
 {% block "script" %}
 <script>
-    let table = new DataTable('#tabela_estoque', {
-            fixedColumns: true,
-            paging: false,
-            language: {
-                url: '{% static "language.json"%}'
-            },
-        });
     function format(d) {
         // `d` is the original data object for the row
         return (
@@ -96,7 +89,14 @@
         '</tr>' +
         '</table>'
     );
-    }
+}
+    let table = new DataTable('#tabela_estoque', {
+            fixedColumns: true,
+            paging: false,
+            language: {
+                url: '{% static "language.json"%}'
+            },
+        });
     table.on('dblclick', 'tr', function (e) {
         let tr = e.target.closest('tr');
         let row = table.row(tr);

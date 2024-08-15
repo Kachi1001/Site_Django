@@ -4,15 +4,17 @@
 <html lang="pt-br">
 
 <head>
-
+  <title>Reservas</title>
   <meta name="viewport" content="width=device-width, initial-scale=0.8">
   <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
   {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
   {%include 'static/imports/jquery.html'%} <!-- Jquery -->
   {%include 'static/imports/base.html'%} <!-- Base -->
-
-
+  
+  <script src="{% static 'js/Reservas.js' %}"></script>
+  {%block 'style'%}{%endblock%}
 </head>
+
 <style>
   .btn {
     width: 100px;
@@ -21,6 +23,11 @@
   .input-group-text {
     flex-direction: column;
   }
+  .card-img-bottom {
+    height: 150px;
+    object-fit: cover;
+  }
+  
 </style>
 
 <body>
@@ -36,21 +43,10 @@
   <div class="submain">{%block 'submain'%}{%endblock%}</div>
   </form>
 
-  <script>
-    function reload(param) {
-      let url = new URL(window.location.href);
-      let params = new URLSearchParams(url.search);
-      let value = document.getElementById('date').value;
+  
 
-      // Atualizar o valor do parâmetro
-      params.set(param, value);
-
-      // Atualizar a URL no navegador e recarregar a página
-      window.location.href = `${url.pathname}?${params}`;
-    }
-  </script>
-
-
+  {%include 'reservas/modals.html'%}
+  {%include 'router.html'%}
 </body>
 
 </html>

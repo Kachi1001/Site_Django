@@ -1,7 +1,6 @@
 {% extends 'lançamento_obra.html' %}
 {% load static %}
 {% block 'style' %}
-<link rel="stylesheet" href="{% static 'css/table.css' %}">
 {% endblock %}
 
 {%block 'caminho'%}
@@ -21,7 +20,7 @@
           <label class="input-group-text" for="inputGroupSelect01">Colaborador:</label>
           <select class="form-select" id="inputGroupSelect01" name="colaborador">
             {% for colab in colab_list %}
-            <option value="{{colab.nome}}">{{colab.nome}} | {{colab.funcao.funcao}}</option>
+            <option value="{{colab.nome}}">{{colab.nome}}</option>
             {%endfor%}
           </select>
         </div>

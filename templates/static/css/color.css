@@ -1,19 +1,10 @@
 body{
-    margin: 0;
-    font-family: "Lato", sans-serif;
+    background-color: var(--cor3);
 }
-
-.banner{
-    background-color: var(--cor1);
-}
-
 .sidenav{
     background-color: var(--cor5);
 }
 .sidenav .nome_app{
-    background-color: var(--cor6);
-}
-.accordion accordion-flush{
     background-color: var(--cor6);
 }
 .card-header{
@@ -32,9 +23,9 @@ nav {
     --cor6: #678076;
 } */
 :root{
-    --cor1: #ABFFEA;
+    --cor1: #85dbc5;
     --cor2: #91DBFA;
-    --cor3: #FFE7A0;
+    --cor3: #f1f0ee;
     --cor4: #FFBA6B;
     --cor5: #94A0A6;
     --cor6: #5E8077;

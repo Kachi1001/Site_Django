@@ -34,16 +34,15 @@ ALLOWED_HOSTS = [config("DJ_HOST"), '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rolepermissions',
+    'django.contrib.admin', #1
+    'django.contrib.auth', #2
+    'django.contrib.contenttypes', #2
+    'django.contrib.sessions', #3
+    'django.contrib.messages', #4
+    'django.contrib.staticfiles', #5
+    'rolepermissions', #6
+    'Home', #7
     'Lancamento_obra',
-    'Home',
-    'API',
     'Reservas',
     'TI',
 ]
@@ -60,6 +59,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Site_Django.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -71,7 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'Site_Django.context_processors.user'
+                'Site_Django.context_processors.base'
             ],
         },
     },
@@ -94,32 +94,29 @@ DATABASES = {
         "HOST": config("DB_HOST"),
         "PORT": config("DB_PORT"),
     },
-    config("APP1"): {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("APP1"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT"),
-    },
-    config("APP2"): {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("APP2"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT"),
-    },
-    config("APP3"): {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("APP3"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT"),
-    },
 }
-
+x = 1
+# while config('APP'+str(app), default=False):
+#     a = config('APP'+str(app))
+#     DATABASES[a] = {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": a,
+#         "USER": config("DB_USER"),
+#         "PASSWORD": config("DB_PASSWORD"),
+#         "HOST": config("DB_HOST"),
+#         "PORT": config("DB_PORT"),
+#     }
+#     app = app + 1
+for app in INSTALLED_APPS[7:]:
+    DATABASES[app] = {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": app,
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT"),
+    }
+    x = x + 1
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -160,7 +157,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "templates/static"),)
 STATIC_ROOT = os.path.join('static')
 
-MIDIA_ROOT = os.path.join(BASE_DIR, 'MIDIA')
+MIDIA_ROOT = os.path.join(BASE_DIR, 'midia')
 MIDIA_URL = '/midia/'
 
 # Default primary key field type

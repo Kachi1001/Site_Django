@@ -1,0 +1,213 @@
+{% load static %}
+
+<style>
+    .microlist {
+        height: 200px;
+        overflow: auto;
+        border-top: 1px solid #dee2e6;
+    }
+
+    th {
+        font-size: small;
+    }
+
+    .modal-img {
+        width: 300px;
+        object-fit: scale-down;
+    }
+
+    #placa,
+    #modelo,
+    #marca {
+        text-align: center;
+    }
+</style>
+
+<div class="modals">
+
+    <!-- Modal reservar carro -->
+
+    <div class="modal fade" id="reservar_carro">
+        <form action="{% url 'carros' %}" method="POST" class="modal-dialog modal-dialog-centered">{% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <input type="text" name="placa" id="placa" class="form-control" readonly>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="modelo" id="modelo" class="form-control" readonly>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="marca" id="marca" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <img id='modal-imagem' src="{%static 'image/reservas/carro.png'%}" class="modal-img" alt="...">
+                </div>
+
+                <div class="modal-footer">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="date">Data:</label>
+                        <input type="date" name="data-picker" id='date' class="form-control" value="{{data}}" readonly>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="responsavel">Responsável:</label>
+                        <input type="text" name="responsavel" id="responsavel" class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="destino">Destino:</label>
+                        <input type="text" name="destino" id="destino" class="form-control">
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Reservar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- Cadastro de carro -->
+    <div class="modal fade" id="cadastrar_carro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <input type="text" name="placa" id="cadastro_placa" class="form-control"
+                                placeholder="Placa">
+                        </div>
+                        <div class="col">
+                            <input type="text" name="modelo" id="cadastro_modelo" class="form-control"
+                                placeholder="Modelo">
+                        </div>
+                        <div class="col">
+                            <input type="text" name="marca" id="cadastro_marca" class="form-control"
+                                placeholder="Marca">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="text-center">
+                    <img id='foto' src="{%static 'image/reservas/carro.png'%}" class="modal-img" alt="...">
+                </div>
+                <div class="modal-footer">
+                    <input type="file" class="form-control" id="arquivo" name="arquivo" accept=".jpg">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="cadastra()">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Reservar rapido -->
+    <div class="modal fade" id="reserva_rapido" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Reserva rápida</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="row align-items-center mb-3">
+                        <div class="col-4">
+                            <img src="{%static 'image/atendimento.jpg'%}" class="img-thumbnail" alt="..."
+                                style="max-width: 150px;">
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Sala:</label>
+                                <select class="form-select" id="func_grupo" name="grupo">
+                                    <option value="atendimento">Atendimento</option>
+                                    <option value="apoio">Apoio</option>
+                                    <option value="reunião">Reunião</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Data:</label>
+                                <input type="date" name="update_admissao" id="update_admissao" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Inicio:</label>
+                                <select class="form-select" id="func_grupo" name="grupo">
+                                    <option value="1">07:30</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Fim:</label>
+                                <select class="form-select" id="func_grupo" name="grupo">
+                                    <option value="1">08:00</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group input-group mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Responsável:</label>
+                            <input type="text" name="update_obra_descricao" id="update_obra_descricao"
+                                class="form-control">
+                        </div>
+                        <div class="input-group input-group mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Descrição:</label>
+                            <input type="text" name="update_obra_descricao" id="update_obra_descricao"
+                                class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="cadastra()">Reservar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    let photo = document.getElementById('foto');
+    let file = document.getElementById('arquivo');
+    photo.addEventListener('click', () => {
+        file.click();
+    });
+
+    file.addEventListener('change', () => {
+
+        if (file.files.length <= 0) {
+            return;
+        }
+
+        let reader = new FileReader();
+
+        reader.onload = () => {
+            photo.src = reader.result;
+        }
+
+        reader.readAsDataURL(file.files[0]);
+    });
+</script>
