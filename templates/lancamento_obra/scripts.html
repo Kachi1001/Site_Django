@@ -1,6 +1,20 @@
 {% load static %}
 <script>
-    $('#tabela_colaborador').DataTable();
+    $(document).ready(function () {
+        $('#tabela_atividade').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{{api}}/api/teste',
+                type: 'GET'
+            },
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'colaborador', name: 'colaborador' },
+                { data: 'obra', name:'obra' }
+            ]
+        });
+    });
     
   function salvarData(metodo, parametro, callback){
     $.ajax({

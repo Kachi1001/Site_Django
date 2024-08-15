@@ -5,58 +5,9 @@
             <th>Id</th>
             <th>Obra</th>
             <th>Colaborador</th>
-            <th>Dia</th>
-            <th>Descrição</th>
-            <th>Ini1</th>
-            <th>Fim1</th>
-            <th>Ini2</th>
-            <th>Fim2</th>
-            <th>Ini3</th>
-            <th>Fim3</th>
-            <th>Diario</th>
-            <th>Atividade</th>
-            <th>Editar</th>
         </tr>
     </thead>
-    <tbody>
 
-        {% for i in data %}
-        <tr>
-            <td>
-                <p>{{i.id}}</p>
-            </th>
-            <td>
-                <p>{{i.obra.cr}}</p>
-            </td>
-            <td>
-                <p>{{i.colaborador}}</p>
-            </td>
-            <td>
-                <p>{{i.dia | date:"SHORT_DATE_FORMAT"}}</p>
-            </td>
-            <td class="desc">
-                <p>{{i.descricao}}</p>
-            </td>
-            <td>{%if not i.horaini1 is Null%}<p>{{i.horaini1}}</p>{%endif%}</td>
-            <td>{%if not i.horafim1 is Null%}<p>{{i.horafim1}}</p>{%endif%}</td>
-
-            <td>{%if not i.horaini2 is Null%}<p>{{i.horaini2}}</p>{%endif%}</td>
-            <td>{%if not i.horafim2 is Null%}<p>{{i.horafim2}}</p>{%endif%}</td>
-            <td>{%if not i.horaini3 is Null%}<p>{{i.horaini3}}</p>{%endif%}</td>
-            <td>{%if not i.horafim3 is Null%}<p>{{i.horafim3}}</p>{%endif%}</td>
-            <td><a href="{{api}}/media/Lancamento_obra/diarios_digitalizado/{{i.diario}}.png" target="_blank">
-                    <p>{{i.diario}}</p>
-                </a></td>
-            <td>
-                <p>{{i.atividade.tipo}}</p>
-            </td>
-            <td class="editar" data-bs-toggle="modal" data-bs-target="#update_lanc" onclick="editLanc('{{i.id}}')">
-                <div class="btn-icon" style="background-color: skyblue;"><img src="{% static 'icons/pencil.svg'%}"
-                        alt="edit"></div>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
 </table>
 
 

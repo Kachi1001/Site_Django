@@ -34,22 +34,20 @@ ALLOWED_HOSTS = [config("DJ_HOST"), '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rolepermissions',
+    'django.contrib.admin', #1
+    'django.contrib.auth', #2
+    'django.contrib.contenttypes', #2
+    'django.contrib.sessions', #3
+    'django.contrib.messages', #4
+    'django.contrib.staticfiles', #5
+    'rolepermissions', #6
+    'Home', #7
     'Lancamento_obra',
-    'Home',
     'Reservas',
     'TI',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # Deve ser uma das primeiras entradas
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,25 +58,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Site_Django.urls'
-
-CORS_ALLOWED_ORIGINS = [
-    "http://"+config('API_HOST')+":"+config('API_PORT'),
-    'http://127.0.0.1:8000'
-]
-# Para permitir cabeçalhos específicos
-CORS_ALLOW_HEADERS = [
-    'content-type',
-    'authorization',
-]
-
-# Para permitir métodos específicos
-CORS_ALLOW_METHODS = [
-    'GET',
-    'POST',
-    'PUT',
-    'DELETE',
-    'OPTIONS',
-]
 
 
 TEMPLATES = [
@@ -116,18 +95,28 @@ DATABASES = {
         "PORT": config("DB_PORT"),
     },
 }
-app = 1
-while config('APP'+str(app), default=False):
-    a = config('APP'+str(app))
-    DATABASES[a] = {
+x = 1
+# while config('APP'+str(app), default=False):
+#     a = config('APP'+str(app))
+#     DATABASES[a] = {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": a,
+#         "USER": config("DB_USER"),
+#         "PASSWORD": config("DB_PASSWORD"),
+#         "HOST": config("DB_HOST"),
+#         "PORT": config("DB_PORT"),
+#     }
+#     app = app + 1
+for app in INSTALLED_APPS[7:]:
+    DATABASES[app] = {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": a,
+        "NAME": app,
         "USER": config("DB_USER"),
         "PASSWORD": config("DB_PASSWORD"),
         "HOST": config("DB_HOST"),
         "PORT": config("DB_PORT"),
     }
-    app = app + 1
+    x = x + 1
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
