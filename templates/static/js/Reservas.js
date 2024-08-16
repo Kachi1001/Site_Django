@@ -1,6 +1,7 @@
+
 function load_carro(carro) {
     $.ajax({
-        url: getAPI()+"/api/get_data",  // URL da sua API no Django
+        url: getAPI()+"/get_data",  // URL da sua API no Django
         type: 'GET',
         data: {
             'csrfmiddlewaretoken': csrftoken,
@@ -42,7 +43,7 @@ function cadastra() {
     }
 
     $.ajax({
-        url: getAPI()+"/api/cadastrar",  // URL da sua API no Django
+        url: getAPI()+"/cadastrar",  // URL da sua API no Django
         type: 'POST',
         data: {
             'csrfmiddlewaretoken': csrftoken,
@@ -73,7 +74,7 @@ function uploadFoto(){
     formData.append('placa', $('#cadastro_placa').val());
 
         $.ajax({
-            url: getAPI()+'/api/upload/',
+            url: getAPI()+'/upload/',
             type: 'POST',
             data: formData,
             processData: false,
@@ -90,3 +91,66 @@ function uploadFoto(){
             }
         });
 }
+function Reserva_rapida() {
+    const horarios = {'1':'07:30','2':'08:00','3':'08:30','4':'09:00','5':'09:30','6':'10:00','7':'10:30','8':'11:00','9':'11:30','10':'13:30','11':'14:00','12':'14:30','13':'15:00','14':'15:30','15':'16:00','16':'16:30','17':'17:00','18':'17:30','19':'18:00'}
+    for (let i = 1; i < 19; i++) {
+        let opt = document.createElement('option');        
+        opt.value = i;
+        opt.text = horarios[i];
+        $("#reserva_rapida-sel1").append(opt);
+    }
+    for (let i = 2; i < 20; i++) {
+        let opt = document.createElement('option');        
+        opt.value = i;
+        opt.text = horarios[i];
+        $("#reserva_rapida-sel2").append(opt);
+    
+    }
+    $("#reserva_rapida-sel1").change(function () {
+        $("#reserva_rapida-sel2").empty();
+        let inicio = $("#reserva_rapida-sel1").val()
+        inicio++
+        for (let i = inicio; i < 19; i++) {
+              let opt = document.createElement('option');        
+              opt.value = i;
+              opt.text = horarios[i];
+              $("#reserva_rapida-sel2").append(opt);
+          }
+    });
+    $("#reserva_rapida-sala").change(function () {
+        document.getElementById('reserva_rapida-img').src =`/static/image/${$("#reserva_rapida-sala").val()}.jpg`;
+    });
+    $("#reserva_rapida-submit").click(function () {
+        let horas = []
+        let inicio = parseInt($("#reserva_rapida-sel1").val())
+        let fim = parseInt($("#reserva_rapida-sel2").val())
+        for (i = inicio; i < fim ;i++){
+            horas.push(horarios[i])
+        }
+        parametro = {
+            'horarios': JSON.stringify(horas),
+            'responsavel': $("#reserva_rapida-responsavel").val(),
+            'data': $("#reserva_rapida-data").val(),
+            'descricao': $("#reserva_rapida-descricao").val(),
+            'sala': $("#reserva_rapida-sala").val(),
+        }
+        $.ajax({
+            url: getAPI()+'/salas',
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': csrftoken,
+                'parametro': JSON.stringify(parametro),
+                'metodo': 'reservar_multi',
+                'user': user,
+            },
+            success: function (response) {
+                alert(response.message + '\nClique em <OK> para recarregar a página.');
+                location.reload()
+            },
+            error: function (xhr) {
+                alert(xhr.responseJSON.message);
+            }
+        });
+    })
+  };
+

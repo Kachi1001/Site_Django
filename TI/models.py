@@ -56,11 +56,11 @@ class DjangoMigrations(models.Model):
 
 class Equipamentos(models.Model):
     id = models.BigAutoField(primary_key=True)
-    tipo = models.CharField(max_length=255)
+    tipo = models.CharField(max_length=50)
     tag = models.CharField(blank=True, null=True)
     aquisicao = models.DateField(blank=True, null=True)
-    marca = models.CharField(blank=True, null=True)
-    modelo = models.CharField(max_length=255, blank=True, null=True)
+    marca = models.CharField(max_length=50, blank=True, null=True)
+    modelo = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False

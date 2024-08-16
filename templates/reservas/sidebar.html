@@ -20,11 +20,11 @@
                 </button>
             </h2>
             <div id="flush-collapse1" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#reserva_rapido">* Reserva rápida</a>
-                <a href="{%url 'sala' 'atendimento'%}">| Atendimento</a>
-                <a href="{%url 'sala' 'apoio'%}">| Apoio</a>
-                <a href="{%url 'sala' 'reunião'%}">| Reunião</a>
-                <a href="{%url 'sala' 'registros'%}">| Lista de registros</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#reserva_rapido" onclick="Reserva_rapida()"><i class="bi bi-calendar2-minus"></i> Reserva rápida</a>
+                <a href="{%url 'sala' 'atendimento'%}"><i class="bi bi-box-arrow-in-right"></i> Atendimento</a>
+                <a href="{%url 'sala' 'apoio'%}"><i class="bi bi-box-arrow-in-right"></i> Apoio</a>
+                <a href="{%url 'sala' 'reunião'%}"><i class="bi bi-box-arrow-in-right"></i> Reunião</a>
+                <a href="{%url 'sala' 'registros'%}"><i class="bi bi-box-arrow-in-right"></i> Lista de registros</a>
             </div>
         </div>
 
@@ -36,11 +36,11 @@
                 </button>
             </h2>
             <div id="flush-collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                <a href="{%url 'carros'%}">| Carros</a>
-                <a href="{%url 'munck'%}">| Munck</a>
-                <a href="{%url 'frota_registros'%}">| Registros</a>
+                <a href="{%url 'carros'%}"><i class="bi bi-box-arrow-in-right"></i> Carros</a>
+                <a href="{%url 'munck'%}"><i class="bi bi-box-arrow-in-right"></i> Munck</a>
+                <a href="{%url 'frota_registros'%}"><i class="bi bi-box-arrow-in-right"></i> Registros</a>
                 {% if user|can:'lançamento' %}
-                <a href="#" data-bs-toggle="modal" data-bs-target="#cadastrar_carro">| Cadastrar carro</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#cadastrar_carro"><i class="bi bi-calendar2-minus"></i> Cadastrar carro</a>
                 {%endif%}
             </div>
         </div>
