@@ -162,7 +162,7 @@ function reserva_simples(sala){
         hora = horarios[i].replace(':', '\\:')
         if ($('#check' + hora).is(':checked') && !$('#check' + hora).is(':disabled')){
             if (resp == null && $('#responsavel'+ hora).val() == ''){
-                alert('O primeiro registro necessita de um responsavel')
+                alert('O primeiro registro necessita de um responsável')
                 return
             } else if ($('#responsavel' + hora).val() != '') {
                 resp = $('#responsavel'+ hora).val() 
