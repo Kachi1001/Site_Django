@@ -109,6 +109,7 @@ def lancamento_diario(request):
     elif request.method == "POST":
         digitalizacao = request.FILES.get('arquivo')
         img = Image.open(digitalizacao)
+        path = os.path.join(settings.BASE_DIR, f'media/Lançamento_obra/diario/{digitalizacao.name}')
         img = img.save(path)   
         
         diaria = Diarioobra(
