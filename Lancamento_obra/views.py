@@ -58,7 +58,7 @@ def cadastro_obra(request):
 
 @login_required
 def visualizacao_tabela(request, table):
-    return render(request, f"lancamento_obra/visualizacao/{table}.html", {'table_height': '700',}) 
+    return render(request, f"lancamento_obra/visualizacao/{table}.html", {'table_height': '600',}) 
 
 @login_required
 def lancamento_atividade(request):

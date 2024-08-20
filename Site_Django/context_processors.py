@@ -2,7 +2,7 @@
 from decouple import config
 ip = 'http://'+config("API_HOST")+':'+config("API_PORT")
 api = ip + '/api'
-media = '/media'
+media = ip + '/media'
 def base(request):
     return {
         'nome': request.user.username,
