@@ -1,32 +1,16 @@
 {%load static%}
-<table class="table table-hover table-bordered table-striped" id="tabela_colaborador">
+{%include 'lancamento_obra/tabela.html'%}
+    data-url="{{api}}/tabela/colaborador">
     <thead>
-      <tr>
-        <th scope="col">Nome</th>
-        <th scope="col">Função</th>
-        <th scope="col">Admissão</th>
-        <th scope="col">Demissão</th>
-        <th scope="col">Tipo</th>
-        <th scope="col">Diaria</th>
-        <th scope="col">Oberservação</th>
-        <th scope="col">Editar</th>
-        
-      </tr>
-    </thead>
-    <tbody>
-      
-      {% for colaborador in data %}
         <tr>
-          <td><p style="font-weight: bold;">{{colaborador.nome}}</p></td>
-          <td><p>{{colaborador.funcao}}</p></td>
-          <td><p>{{colaborador.admissao | date:"SHORT_DATE_FORMAT"}}</p></td>
-          <td>{%if not colaborador.demissao is None%}<p>{{colaborador.demissao | date:"SHORT_DATE_FORMAT"}}</p>{%endif%}</td>
-          <td><p>{{colaborador.contrato}}</p></td>
-          <td>{%if not colaborador.diaria is None%}<p>{{colaborador.diaria}}</p>{%endif%}</td>
-          <td>{%if not colaborador.observacao is None%}<p>{{colaborador.observacao}}</p>{%endif%}</td>
-          <td class="editar" data-bs-toggle="modal" data-bs-target="#update_colab" onclick="loadUpdate('colab','{{colaborador.id}}')"><div class="btn-icon" style="background-color: skyblue;"><img src="{% static 'icons/pencil.svg'%}" alt="edit"></div></td>
-
+            <th data-field="nome" data-sortable="true">Nome</th>
+            <th data-field="funcao" data-sortable="true">Detalhes</th>
+            <th data-field="admissao">Admissão</th>
+            <th data-field="demissao">Demissão</th>
+            <th data-field="tipo">Tipo</th>
+            <th data-field="diaria">Diaria</th>
+            <th data-field="observacao">Oberservação</th>
+            <th scope="col">Editar</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table> 
+    </thead>
+</table>

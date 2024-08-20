@@ -1,16 +1,31 @@
 {%load static%}
-<table id="tabela_atividade" class="table table-hover table-bordered table-striped ">
+    {%include 'lancamento_obra/tabela.html'%}
+    data-url="{{api}}/tabela/lancamentos">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Obra</th>
-            <th>Colaborador</th>
+            <th data-field="id" data-sortable="true">Id</th>
+            <th data-field="colaborador" data-sortable="true">Colaborador</th>
+            <th data-field="dia" data-sortable="true">Data</th>
+            <th data-field="descricao" data-sortable="true">Descrição</th>
+            <th data-field="horaini1">horaini1</th>
+            <th data-field="horafim1">horafim1</th>
+            <th data-field="horaini2">horaini2</th>
+            <th data-field="horafim2">horafim2</th>
+            <th data-field="horaini3">horaini3</th>
+            <th data-field="horafim3">horafim3</th>
         </tr>
     </thead>
-
 </table>
-
-
-<script>
-    
+<!-- teste -->
+<script>  
+    function operateFormatter(value, row, index) {
+        return [
+          '<a class="like" href="javascript:void(0)" title="Like">',
+          '<i class="fa fa-heart"></i>',
+          '</a>  ',
+          '<a class="remove" href="javascript:void(0)" title="Remove">',
+          '<i class="fa fa-trash"></i>',
+          '</a>'
+        ].join('')
+      }
 </script>

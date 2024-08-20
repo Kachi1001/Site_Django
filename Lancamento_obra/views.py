@@ -56,32 +56,9 @@ def cadastro_obra(request):
         return redirect(cadastro_obra)
 
 
-def visu_tabela(request, data, html):
-    data_paginator = Paginator(data, 10)
-    page_num = request.GET.get('page')
-    data_page = data_paginator.get_page(page_num)
-    
-    return render(request, f"lancamento_obra/visualizacao/{html}.html", {'data': data})
-
 @login_required
-def visualizacao_colab(request):
-    return visu_tabela(request, Colaborador.objects.all().order_by('-id'), 'colaborador')
-
-@login_required
-def visualizacao_obra(request):
-    return visu_tabela(request, Obra.objects.all().order_by('-cr'), 'obra')
-    
-@login_required
-def visualizacao_atividade(request):
-    return visu_tabela(request, Lancamentos.objects.all().order_by('-id'), 'atividade')
-    
-@login_required
-def visualizacao_diario(request):
-    return visu_tabela(request, Diarioobra.objects.all().order_by('-id'), 'diario')
-
-@login_required
-def visualizacao_hora_horaextra(request):
-    return visu_tabela(request, ResumoJunta.objects.all(), 'hora_horaextra')
+def visualizacao_tabela(request, table):
+    return render(request, f"lancamento_obra/visualizacao/{table}.html", {'table_height': '600',}) 
 
 @login_required
 def lancamento_atividade(request):
@@ -132,6 +109,7 @@ def lancamento_diario(request):
     elif request.method == "POST":
         digitalizacao = request.FILES.get('arquivo')
         img = Image.open(digitalizacao)
+        path = os.path.join(settings.BASE_DIR, f'media/Lançamento_obra/diario/{digitalizacao.name}')
         img = img.save(path)   
         
         diaria = Diarioobra(

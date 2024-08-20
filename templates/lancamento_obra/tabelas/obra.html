@@ -1,44 +1,20 @@
 {%load static%}
-<table class="table table-hover table-bordered table-striped">
+{%include 'lancamento_obra/tabela.html'%}
+    data-url="{{api}}/tabela/obra">
   <thead>
     <tr>
-      <th scope="col">Cr</th>
-      <th scope="col">Orçamento</th>
-      <th scope="col">Retrabalho</th>
-      <th scope="col">Empresa</th>
-      <th scope="col">Cidade</th>
-      <th scope="col">Descrição</th>
-      <th scope="col">Supervisor</th>
-      <th scope="col">Finalizada</th>
-      <th scope="col">Indice</th>
-      <th scope="col">Etapas</th>
+      <th data-field="cr">Cr</th>
+      <th data-field="orcamento">Orçamento</th>
+      <th data-field="retrabalho">Retrabalho</th>
+      <th data-field="empresa">Empresa</th>
+      <th data-field="cidade">Cidade</th>
+      <th data-field="descricao">Descrição</th>
+      <th data-field="supervisor.supervisor">Supervisor</th>
+      <th data-checkbox="finalizada">Finalizada</th>
+      <th data-field="indice">Indice</th>
+      <th data-field="etapas">Etapas</th>
       <th scope="col">Editar</th>
 
     </tr>
   </thead>
-  <tbody>
-    
-    {% for obra in data %}
-      <tr>
-        <th scope="row"><p>{{obra.cr}}</p></th>
-        <td><p>{{obra.orcamento}}</p></td>
-        <td>{%if not obra.retrabalho is Null%}<p>{{obra.retrabalho}}</p>{%endif%}</td>
-        <td><p>{{obra.empresa}}</p></td>
-        <td><p>{{obra.cidade}}</p></td>
-        <td><p>{{obra.descricao}}</p></td>
-        <td><p>{{obra.supervisor.supervisor}}</p></td>
-        <td>{%if obra.finalizada %}
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked disabled>
-          {%else%}
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" disabled>
-          {%endif%}
-        </td>
-        <td><p>{{obra.indice}}</p></td>
-        <td><p>{{obra.etapas}}</p></td>
-        <td class="editar" data-bs-toggle="modal" data-bs-target="#update_obra" onclick="editObra('{{obra.cr}}')"><div class="btn-icon" style="background-color: skyblue;"><img src="{% static 'icons/pencil.svg'%}" alt="edit"></div></td>
-
-
-      </tr>
-    {% endfor %}
-  </tbody>
 </table> 

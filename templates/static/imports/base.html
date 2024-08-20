@@ -5,8 +5,16 @@
 
 
 <script>
-    function getUser() {
-        return '{{nome}}';
+    function getAPI(){
+        return '{{api}}'
+    }
+    function getUser(){
+        return '{{user}}'
+    }
+    function getMedia(arquivo){
+        if (arquivo == 'diarios'){
+            return '{{media_diarios}}'
+        }
     }
 </script> <!--Routers de Tag -->
 <script src="{%static 'js/base.js'%}"></script>

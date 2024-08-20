@@ -111,13 +111,12 @@
                 <div class="modal-body text-center">
                     <div class="row align-items-center mb-3">
                         <div class="col-4">
-                            <img src="{%static 'image/atendimento.jpg'%}" class="img-thumbnail" alt="..."
-                                style="max-width: 150px;">
+                            <img src="{%static 'image/atendimento.jpg'%}" class="img-thumbnail" alt="..." style="max-width: 150px;" id='reserva_rapida-img'>
                         </div>
                         <div class="col">
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupSelect01">Sala:</label>
-                                <select class="form-select" id="func_grupo" name="grupo">
+                                <select class="form-select" id="reserva_rapida-sala" name="grupo">
                                     <option value="atendimento">Atendimento</option>
                                     <option value="apoio">Apoio</option>
                                     <option value="reunião">Reunião</option>
@@ -130,44 +129,36 @@
                         <div class="col">
                             <div class="input-group input-group mb-3">
                                 <label class="input-group-text" for="inputGroupSelect01">Data:</label>
-                                <input type="date" name="update_admissao" id="update_admissao" class="form-control">
+                                <input type="date" name="update_admissao" id="reserva_rapida-data" class="form-control">
                             </div>
                         </div>
 
                         <div class="col">
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupSelect01">Inicio:</label>
-                                <select class="form-select" id="func_grupo" name="grupo">
-                                    <option value="1">07:30</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                </select>
+                                <select class="form-select" id="reserva_rapida-sel1" name="grupo"></select>
                             </div>
 
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupSelect01">Fim:</label>
-                                <select class="form-select" id="func_grupo" name="grupo">
-                                    <option value="1">08:00</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                </select>
+                                <select class="form-select" id="reserva_rapida-sel2" name="grupo"></select>
                             </div>
                         </div>
                         <div class="input-group input-group mb-3">
                             <label class="input-group-text" for="inputGroupSelect01">Responsável:</label>
-                            <input type="text" name="update_obra_descricao" id="update_obra_descricao"
+                            <input type="text" name="update_obra_descricao" id="reserva_rapida-responsavel"
                                 class="form-control">
                         </div>
                         <div class="input-group input-group mb-3">
                             <label class="input-group-text" for="inputGroupSelect01">Descrição:</label>
-                            <input type="text" name="update_obra_descricao" id="update_obra_descricao"
+                            <input type="text" name="update_obra_descricao" id="reserva_rapida-descricao"
                                 class="form-control">
                         </div>
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" onclick="cadastra()">Reservar</button>
+                        <button type="button" class="btn btn-primary" id="reserva_rapida-submit">Reservar</button>
                     </div>
                 </div>
             </div>
@@ -210,4 +201,6 @@
 
         reader.readAsDataURL(file.files[0]);
     });
+
+    
 </script>

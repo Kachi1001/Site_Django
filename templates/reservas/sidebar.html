@@ -20,15 +20,15 @@
                 </button>
             </h2>
             <div id="flush-collapse1" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#reserva_rapido">* Reserva rápida</a>
-                <a href="{%url 'sala' 'atendimento'%}">| Atendimento</a>
-                <a href="{%url 'sala' 'apoio'%}">| Apoio</a>
-                <a href="{%url 'sala' 'reunião'%}">| Reunião</a>
-                <a href="{%url 'sala' 'registros'%}">| Lista de registros</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#reserva_rapido" onclick="Reserva_rapida()"><i {{icon_modal}}></i> Reserva rápida</a>
+                <a href="{%url 'sala' 'atendimento'%}"><i {{icon_form}}></i> Atendimento</a>
+                <a href="{%url 'sala' 'apoio'%}"><i {{icon_form}}></i> Apoio</a>
+                <a href="{%url 'sala' 'reunião'%}"><i {{icon_form}}></i> Reunião</a>
+                <a href="{%url 'sala' 'registros'%}"><i {{icon_table}}></i> Lista de registros</a>
             </div>
         </div>
 
-        <div class="accordion-item">
+        <!-- <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#flush-collapse2" aria-expanded="false" aria-controls="flush-collapseTwo">
@@ -36,13 +36,13 @@
                 </button>
             </h2>
             <div id="flush-collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                <a href="{%url 'carros'%}">| Carros</a>
-                <a href="{%url 'munck'%}">| Munck</a>
-                <a href="{%url 'frota_registros'%}">| Registros</a>
+                <a href="{%url 'carros'%}"><i {{icon_form}}></i> Carros</a>
+                <a href="{%url 'munck'%}"><i {{icon_form}}></i> Munck</a>
+                <a href="{%url 'frota_registros'%}"><i {{icon_table}}></i> Registros</a>
                 {% if user|can:'lançamento' %}
-                <a href="#" data-bs-toggle="modal" data-bs-target="#cadastrar_carro">| Cadastrar carro</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#cadastrar_carro"><i {{icon_modal}}></i> Cadastrar carro</a>
                 {%endif%}
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

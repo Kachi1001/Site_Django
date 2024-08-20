@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
+from .teste import *
 
 urlpatterns = [
     path('', include("Home.urls")),
@@ -25,6 +26,7 @@ urlpatterns = [
     path('lancamento_obra/' , include("Lancamento_obra.urls")),
      path('reservas/' , include("Reservas.urls")),
     path('ti/', include('TI.urls')),
+    path("teste", teste)
 ]
 
 

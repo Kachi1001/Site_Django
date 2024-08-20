@@ -1,13 +1,14 @@
 {%load static%}
-<table class="table table-hover table-bordered table-striped">
+{%include 'lancamento_obra/tabela.html'%}
+    data-url="{{api}}/tabela/diario">
   <thead>
     <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Obra</th>
-      <th scope="col">Data</th>
-      <th scope="col">Encarregado</th>
-      <th scope="col">Clima de Manha</th>
-      <th scope="col">Clima de Tarde</th>
+      <th data-field="id">Id</th>
+      <th data-field="obra">Obra</th>
+      <th data-field="data">Data</th>
+      <th data-field="encarregado">Encarregado</th>
+      <th data-field="climamanha">Clima de Manha</th>
+      <th data-field="climatarde">Clima de Tarde</th>
       <th scope="col">Digital</th>
       <th scope="col">Editar</th>
 
