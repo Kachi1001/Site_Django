@@ -27,6 +27,7 @@
                 <a href="{%url 'sala' 'registros'%}"><i {{icon_table}}></i> Lista de registros</a>
             </div>
         </div>
+        {% if user|can:'frota' %}
 
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -39,10 +40,12 @@
                 <a href="{%url 'carros'%}"><i {{icon_form}}></i> Carros</a>
                 <a href="{%url 'munck'%}"><i {{icon_form}}></i> Munck</a>
                 <a href="{%url 'frota_registros'%}"><i {{icon_table}}></i> Registros</a>
-                {% if user|can:'lançamento' %}
+                {% if user|can:'frota' %}
                 <a href="#" data-bs-toggle="modal" data-bs-target="#cadastrar_carro"><i {{icon_modal}}></i> Cadastrar carro</a>
                 {%endif%}
             </div>
         </div>
+        {%endif%}
+
     </div>
 </div>
