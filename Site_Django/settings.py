@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-hss4fba%6y**i6$hkin&j@gp3h^^7r5*duji$-f1&(_#m6*gx#
 
 DEBUG = True
 
-ALLOWED_HOSTS = [config("DJ_HOST"), '127.0.0.1']
+ALLOWED_HOSTS = [config("DJ_HOST", '127.0.0.1')]
 
 
 # Application definition
@@ -88,11 +88,11 @@ x = 1
 for app in INSTALLED_APPS[2:]:
     DATABASES[app if app != 'Home' else 'default']  = {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": app if app != 'Home' else config("DB_NAME"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT"),
+        "NAME": app if app != 'Home' else config("DB_NAME", "Site_Django"),
+        "USER": config("DB_USER", "django"),
+        "PASSWORD": config("DB_PASSWORD", 'django@site_django'),
+        "HOST": config("DB_HOST", '25.50.212.191'),
+        "PORT": config("DB_PORT", '5432'),
     }
     x = x + 1   
 
