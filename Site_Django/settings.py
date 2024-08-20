@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from decouple import config
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -84,39 +83,19 @@ WSGI_APPLICATION = 'Site_Django.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASE_ROUTERS = ['Site_Django.routers.AppRouter']
-DATABASES = {
-
-    'default': {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("DB_NAME"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT"),
-    },
-}
+DATABASES = {}
 x = 1
-# while config('APP'+str(app), default=False):
-#     a = config('APP'+str(app))
-#     DATABASES[a] = {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": a,
-#         "USER": config("DB_USER"),
-#         "PASSWORD": config("DB_PASSWORD"),
-#         "HOST": config("DB_HOST"),
-#         "PORT": config("DB_PORT"),
-#     }
-#     app = app + 1
-for app in INSTALLED_APPS[7:]:
-    DATABASES[app] = {
+for app in INSTALLED_APPS[2:]:
+    DATABASES[app if app != 'Home' else 'default']  = {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": app,
+        "NAME": app if app != 'Home' else config("DB_NAME"),
         "USER": config("DB_USER"),
         "PASSWORD": config("DB_PASSWORD"),
         "HOST": config("DB_HOST"),
         "PORT": config("DB_PORT"),
     }
-    x = x + 1
+    x = x + 1   
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 

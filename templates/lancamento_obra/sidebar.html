@@ -10,11 +10,11 @@
           </button>
         </h2>
         <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <a href="{%url 'cadastro_colab'%}"><i class="bi bi-box-arrow-in-right"></i> Colaborador</a>
-          <a href="{%url 'cadastro_obra'%}"><i class="bi bi-box-arrow-in-right"></i> Obra</a>
+          <a href="{%url 'cadastro_colab'%}"><i {{icon_form}}></i> Colaborador</a>
+          <a href="{%url 'cadastro_obra'%}"><i {{icon_form}}></i> Obra</a>
         
-          <a href="#" data-bs-toggle="modal" data-bs-target="#cadastro_func" onclick="loadTable('funcao', 'func_table')" ><i class="bi bi-calendar2-minus"></i> Função</a>
-          <a href="#" data-bs-toggle="modal" data-bs-target="#cadastro_super" onclick="loadTable('supervisor', 'super_table')"><i class="bi bi-calendar2-minus"></i> Supervisor</a>    
+          <a href="#" data-bs-toggle="modal" data-bs-target="#cadastro_func" onclick="loadTable('funcao', 'func_table')" ><i {{icon_modal}}></i> Função</a>
+          <a href="#" data-bs-toggle="modal" data-bs-target="#cadastro_super" onclick="loadTable('supervisor', 'super_table')"><i {{icon_modal}}></i> Supervisor</a>    
         </div>
       </div>
   
@@ -26,12 +26,12 @@
           </button>
         </h2>
         <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <a href="{%url 'visualizacao_colab'%}"><i class="bi bi-box-arrow-in-right"></i>  Colaboradores</a>
-          <a href="{%url 'visualizacao_obra'%}"><i class="bi bi-box-arrow-in-right"></i>  Obras</a>
-          <a href="{%url 'visualizacao_atividade'%}"><i class="bi bi-box-arrow-in-right"></i>  Atividade</a>
-          <a href="{%url 'visualizacao_diario'%}"><i class="bi bi-box-arrow-in-right"></i>  Diario</a>
-          <a href="#"><i class="bi bi-box-arrow-in-right"></i>  Revisões</a>
-          <a href="{%url 'visualizacao_hora_horaextra'%}"><i class="bi bi-box-arrow-in-right"></i>  Horas / Horas Extras</a>
+          <a href="{%url 'visualizacao_tabela' ''%}"><i {{icon_table}}></i>  Colaboradores</a>
+          <a href="{%url 'visualizacao_obra'%}"><i {{icon_table}}></i>  Obras</a>
+          <a href="{%url 'visualizacao_atividade'%}"><i {{icon_table}}></i>  Atividade</a>
+          <a href="{%url 'visualizacao_diario'%}"><i {{icon_table}}></i>  Diario</a>
+          <a href="#"><i {{icon_table}}></i>  Revisões</a>
+          <a href="{%url 'visualizacao_hora_horaextra'%}"><i {{icon_table}}></i>  Horas / Horas Extras</a>
         </div>
       </div>
       
@@ -42,8 +42,8 @@
           </button>
         </h2>
         <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <a href="{%url 'lancamento_atividade'%}"><i class="bi bi-box-arrow-in-right"></i>  Atividade</a>
-          <a href="{%url 'lancamento_diario'%}"><i class="bi bi-box-arrow-in-right"></i>  Diário</a>
+          <a href="{%url 'lancamento_atividade'%}"><i {{icon_form}}></i>  Atividade</a>
+          <a href="{%url 'lancamento_diario'%}"><i {{icon_form}}></i>  Diário</a>
         </div>
       </div>
   
@@ -55,7 +55,7 @@
           </button>
         </h2>
         <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <a href="#"><i class="bi bi-box-arrow-in-right"></i>  Resumo mensal</a>
+          <a href="#"><i {{icon_form}}></i>  Resumo mensal</a>
           
           <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-caret-down"></i> Pesquisa Avançada</a>
           <ul class="dropdown-menu">

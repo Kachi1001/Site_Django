@@ -62,12 +62,19 @@
 								<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
 							</th>
 							<th scope="row">
-								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}" disabled
-									placeholder="Responsável">
+								{% if user|can:'lançamento' %}
+								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}">
+                                {%else%}
+								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}" disabled>
+								{%endif%}
+
 							</th>
 							<th scope="row">
-								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}" disabled
-									placeholder="Descrição">
+                                {% if user|can:'lançamento' %}
+								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}">
+                                {%else%}
+								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}" disabled>
+								{%endif%}
 							</th>
 							<th scope="row">
 								{% if user|can:'lançamento' %}
@@ -118,12 +125,18 @@
 								<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
 							</th>
 							<th scope="row">
-								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}" disabled
-									placeholder="Responsável">
+								{% if user|can:'lançamento' %}
+								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}">
+                                {%else%}
+								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}" disabled>
+								{%endif%}
 							</th>
 							<th scope="row">
-								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}" disabled
-									placeholder="Descrição">
+								{% if user|can:'lançamento' %}
+								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}">
+                                {%else%}
+								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}" disabled>
+								{%endif%}
 							</th>
 							<th scope="row">
 								{% if user|can:'lançamento' %}
@@ -174,12 +187,18 @@
 								<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
 							</th>
 							<th scope="row">
-								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}" disabled
-									placeholder="Responsável">
+								{% if user|can:'lançamento' %}
+								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}">
+                                {%else%}
+								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}" disabled>
+								{%endif%}
 							</th>
 							<th scope="row">
-								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}" disabled
-									placeholder="Descrição">
+								{% if user|can:'lançamento' %}
+								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}">
+                                {%else%}
+								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}" disabled>
+								{%endif%}
 							</th>
 							<th scope="row">
 								{% if user|can:'lançamento' %}
@@ -204,12 +223,12 @@
 	function deletar(id) {
 		if (confirm('Deseja deletar esse agendamento?')) {
 			$.ajax({
-				url: getAPI() + '/api/salas',  // URL da sua API no Django
+				url: getAPI() + '/salas',  // URL da sua API no Django
 				type: 'POST',
 				data: {
 					'csrfmiddlewaretoken': "{{ csrf_token }}",
 					'metodo': 'deletar',
-					'parametro': {'id':id},
+					'parametro': JSON.stringify({'id':id}),
 				},
 				success: function (Response) {
 					$('#'.concat(id)).remove()
@@ -223,19 +242,18 @@
 	function editar(id) {
 		if (confirm('Deseja editar esse agendamento?')) {
 			$.ajax({
-				url: getAPI() + '/api/salas',  // URL da sua API no Django
+				url: getAPI() + '/salas',  // URL da sua API no Django
 				type: 'POST',
 				data: {
 					'csrfmiddlewaretoken': "{{ csrf_token }}",
 					'metodo': 'editar',
-					'parametro': {
+					'parametro': JSON.stringify({
                         'id':id,
                         'responsavel': document.getElementById('responsavel'.concat(id))?.value,
                         'descricao': document.getElementById('descricao'.concat(id))?.value,
-                    },
+                    }),
 				},
 				success: function (Response) {
-					window.location.reload(true);
 				},
 				error: function (xhr) {
 					alert(xhr.responseJSON.message);

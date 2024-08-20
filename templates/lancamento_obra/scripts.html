@@ -1,21 +1,6 @@
 {% load static %}
 <script>
-    $(document).ready(function () {
-        $('#tabela_atividade').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: '{{api}}/api/teste',
-                type: 'GET'
-            },
-            columns: [
-                { data: 'id', name: 'id' },
-                { data: 'colaborador', name: 'colaborador' },
-                { data: 'obra', name:'obra' }
-            ]
-        });
-    });
-    
+
   function salvarData(metodo, parametro, callback){
     $.ajax({
       url: getAPI()+"/cadastrar",  // URL da sua API no Django

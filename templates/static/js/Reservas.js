@@ -92,14 +92,14 @@ function uploadFoto(){
         });
 }
 function Reserva_rapida() {
-    const horarios = {'1':'07:30','2':'08:00','3':'08:30','4':'09:00','5':'09:30','6':'10:00','7':'10:30','8':'11:00','9':'11:30','10':'13:30','11':'14:00','12':'14:30','13':'15:00','14':'15:30','15':'16:00','16':'16:30','17':'17:00','18':'17:30','19':'18:00'}
-    for (let i = 1; i < 19; i++) {
+    const horarios = ['07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00']
+    for (let i = 0; i < horarios.length - 1; i++) {
         let opt = document.createElement('option');        
         opt.value = i;
         opt.text = horarios[i];
         $("#reserva_rapida-sel1").append(opt);
     }
-    for (let i = 2; i < 20; i++) {
+    for (let i = 1; i < horarios.length; i++) {
         let opt = document.createElement('option');        
         opt.value = i;
         opt.text = horarios[i];
@@ -110,7 +110,7 @@ function Reserva_rapida() {
         $("#reserva_rapida-sel2").empty();
         let inicio = $("#reserva_rapida-sel1").val()
         inicio++
-        for (let i = inicio; i < 19; i++) {
+        for (let i = inicio; i < horarios.length; i++) {
               let opt = document.createElement('option');        
               opt.value = i;
               opt.text = horarios[i];
@@ -144,11 +144,11 @@ function Reserva_rapida() {
                 'user': user,
             },
             success: function (response) {
-                alert(response.message + '\nClique em <OK> para recarregar a página.');
+                alert(response.message);
                 location.reload()
             },
-            error: function (xhr) {
-                alert(xhr.responseJSON.message);
+            error: function (error) {
+                alert(error.responseJSON.message);
             }
         });
     })
