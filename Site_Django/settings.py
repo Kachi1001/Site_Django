@@ -90,8 +90,8 @@ for app in INSTALLED_APPS[2:]:
         "ENGINE": "django.db.backends.postgresql",
         "NAME": app if app != 'Home' else config("DB_NAME", "Site_Django"),
         "USER": config("DB_USER", "django"),
-        "PASSWORD": config("DB_PASSWORD", 'django@site_django'),
-        "HOST": config("DB_HOST", '25.50.212.191'),
+        "PASSWORD": config("DB_PASSWORD", 'django@senha'),
+        "HOST": config("DB_HOST", '127.0.0.1'),
         "PORT": config("DB_PORT", '5432'),
     }
     x = x + 1   
