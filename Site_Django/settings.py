@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-hss4fba%6y**i6$hkin&j@gp3h^^7r5*duji$-f1&(_#m6*gx#
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = config('DJ_DEBUG', True)
 
 ALLOWED_HOSTS = [config("DJ_HOST", '127.0.0.1')]
 
@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Site_Django.urls'
@@ -133,8 +134,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "templates/static"),)
 STATIC_ROOT = os.path.join('static')
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "templates/static"),)
+    
 
 MIDIA_ROOT = os.path.join(BASE_DIR, 'midia')
 MIDIA_URL = '/midia/'
