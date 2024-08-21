@@ -2,131 +2,130 @@
 {%load static%}
 {%block 'style'%}
 <style>
-	.submain .col {
-		border-radius: 5px;
-		background-color: white;
-		margin-left: 10px;
-		margin-bottom: 5px;
-	}
-	.table {
-		margin: 0;
-	}
+    .submain .col {
+        border-radius: 5px;
+        background-color: white;
+        margin-left: 10px;
+        margin-bottom: 5px;
+    }
+
+    .table {
+        margin: 0;
+    }
 </style>
 {%endblock%}
 {%block 'header'%}
-<form action="{{sala}}" method="POST" enctype="multipart/form-data">{% csrf_token %}
-	<div class="container text-center">
-		<div class="row">
-			<div class="col-2">
-				<img src="/static/image/{{sala}}.jpg" alt="" class="img-thumbnail">
-			</div>
-			<div class="col-7">
-				<div aria-label="breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item">Reservas</li>
-						<li class="breadcrumb-item">Sala</li>
-						<li class="breadcrumb-item active" aria-current="page">{{ sala|capfirst }}</li>
-					</ol>
-				</div>
-				<div class="input-group">
-					<label class="input-group-text" for="inputGroupSelect01">Data:</label>
-					<input type="date" name="data-picker" id='date' onchange="reload('data')" class="form-control"
-						value="{{data}}">
-				</div>
-			</div>
-			<div class="col align-self-end">
-				<input type="submit" class="btn btn-outline-success" value="Registrar" id="liveAlertBtn">
-			</div>
-		</div>
-	</div>
-	{%endblock%}
-	{%block 'submain'%}
-	<div class="container text-start">
-		<div class="row justify-content-evenly">
-			<div class="col">
-				<table class="table">
-					<thead>
-						<thead>
-							<tr>
-								<th scope="col"></th>
-								<th scope="col">Horário</th>
-								<th scope="col">Responsável</th>
-								<th scope="col">Descrição</th>
-							</tr>
-						</thead>
-					<tbody>
+<div class="container text-center">
+    <div class="row">
+        <div class="col-2">
+            <img src="/static/image/{{sala}}.jpg" alt="" class="img-thumbnail">
+        </div>
+        <div class="col-7">
+            <div aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">Reservas</li>
+                    <li class="breadcrumb-item">Sala</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ sala|capfirst }}</li>
+                </ol>
+            </div>
+            <div class="input-group">
+                <label class="input-group-text" for="inputGroupSelect01">Data:</label>
+                <input type="date" name="data-picker" id='data-picker' onchange="reload('data')" class="form-control"
+                    value="{{data}}">
+            </div>
+        </div>
+        <div class="col align-self-end">
+            <input type="button" class="btn btn-outline-success" value="Registrar" id="registrar" onclick="reserva_simples('{{sala}}')">
+        </div>
+    </div>
+</div>
+{%endblock%}
+{%block 'submain'%}
+<div class="container text-start">
+    <div class="row justify-content-evenly">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Horário</th>
+                            <th scope="col">Responsável</th>
+                            <th scope="col">Descrição</th>
+                        </tr>
+                    </thead>
+                <tbody>
 
-						{% for h in horarios1 %}
-						<tr>
-							<th scope="row">
-								<input class="form-check-input" type="checkbox" value="True"
-									id="flexCheckCheckedDisabled" {{h.reservado}} name="check{{h.hora}}">
-							</th>
-							<th scope="row">
-								<p class="mb-0">{{h.hora}}</p>
-							</th>
-							<th scope="row">
-								<div class="input-group input-group-sm">
-									<input type="text" class="form-control" aria-label="Sizing example input"
-										aria-describedby="inputGroup-sizing-sm" id="nome" name="responsavel{{h.hora}}"
-										value="{{h.responsavel}}" placeholder="Responsável" {{h.reservado}}>
-								</div>
-							</th>
-							<th scope="row">
-								<div class="input-group input-group-sm">
-									<input type="text" class="form-control" aria-label="Sizing example input"
-										aria-describedby="inputGroup-sizing-sm" id="descricao"
-										name="descricao{{h.hora}}" value="{{h.descricao}}" placeholder="Descrição"
-										{{h.reservado}}>
-								</div>
-							</th>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
-			<div class="col">
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col"></th>
-							<th scope="col">Horário</th>
-							<th scope="col">Responsável</th>
-							<th scope="col">Descrição</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for h in horarios2 %}
-						<tr>
-							<th scope="row">
-								<input class="form-check-input" type="checkbox" value="True"
-									id="flexCheckCheckedDisabled" {{h.reservado}} name="check{{h.hora}}">
-							</th>
-							<th scope="row">
-								<p class="mb-0">{{h.hora}}</p>
-							</th>
-							<th scope="row">
-								<div class="input-group input-group-sm">
-									<input type="text" class="form-control" aria-label="Sizing example input"
-										aria-describedby="inputGroup-sizing-sm" id="nome" name="responsavel{{h.hora}}"
-										value="{{h.responsavel}}" placeholder="Responsável" {{h.reservado}}>
-								</div>
-							</th>
-							<th scope="row">
-								<div class="input-group input-group-sm">
-									<input type="text" class="form-control" aria-label="Sizing example input"
-										aria-describedby="inputGroup-sizing-sm" id="descricao"
-										name="descricao{{h.hora}}" value="{{h.descricao}}" placeholder="Descrição"
-										{{h.reservado}}>
-								</div>
-							</th>
-						</tr>
-						{% endfor %}
+                    {% for h in horarios1 %}
+                    <tr>
+                        <th scope="row">
+                            <input class="form-check-input" type="checkbox" value="True" id="check{{h.hora}}"
+                                {{h.reservado}} name="check{{h.hora}}">
+                        </th>
+                        <th scope="row">
+                            <p class="mb-0">{{h.hora}}</p>
+                        </th>
+                        <th scope="row">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-sm" id="responsavel{{h.hora}}" name="responsavel{{h.hora}}"
+                                    value="{{h.responsavel}}" placeholder="Responsável" {{h.reservado}}>
+                            </div>
+                        </th>
+                        <th scope="row">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-sm" id="descricao{{h.hora}}" name="descricao{{h.hora}}"
+                                    value="{{h.descricao}}" placeholder="Descrição" {{h.reservado}}>
+                            </div>
+                        </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Horário</th>
+                        <th scope="col">Responsável</th>
+                        <th scope="col">Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for h in horarios2 %}
+                    <tr>
+                        <th scope="row">
+                            <input class="form-check-input" type="checkbox" id="check{{h.hora}}"
+                                {{h.reservado}} name="check{{h.hora}}">
+                        </th>
+                        <th scope="row">
+                            <p class="mb-0">{{h.hora}}</p>
+                        </th>
+                        <th scope="row">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-sm" id="responsavel{{h.hora}}" name="responsavel{{h.hora}}"
+                                    value="{{h.responsavel}}" placeholder="Responsável" {{h.reservado}}>
+                            </div>
+                        </th>
+                        <th scope="row">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-sm" id="descricao{{h.hora}}" name="descricao{{h.hora}}"
+                                    value="{{h.descricao}}" placeholder="Descrição" {{h.reservado}}>
+                            </div>
+                        </th>
+                    </tr>
+                    {% endfor %}
 
 
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-		{%endblock%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{%endblock%}
+

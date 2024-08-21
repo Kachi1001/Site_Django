@@ -26,7 +26,7 @@ function load_carro(carro) {
 function reload(param) {
     let url = new URL(window.location.href);
     let params = new URLSearchParams(url.search);
-    let value = document.getElementById('date').value;
+    let value = document.getElementById('data-picker').value;
 
     // Atualizar o valor do parâmetro
     params.set(param, value);
@@ -91,8 +91,8 @@ function uploadFoto(){
             }
         });
 }
+const horarios = ['07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00']
 function Reserva_rapida() {
-    const horarios = ['07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00']
     for (let i = 0; i < horarios.length - 1; i++) {
         let opt = document.createElement('option');        
         opt.value = i;
@@ -154,3 +154,53 @@ function Reserva_rapida() {
     })
   };
 
+function reserva_simples(sala){
+    let reservas = []
+    let resp = null
+    let desc = ''
+    for (i = 0; i < horarios.length; i++){
+        hora = horarios[i].replace(':', '\\:')
+        if ($('#check' + hora).is(':checked') && !$('#check' + hora).is(':disabled')){
+            if (resp == null && $('#responsavel'+ hora).val() == ''){
+                alert('O primeiro registro necessita de um responsável')
+                return
+            } else if ($('#responsavel' + hora).val() != '') {
+                resp = $('#responsavel'+ hora).val() 
+            }
+            if (i != 0 && $('#descricao' + hora).val() != '') {
+                desc = $('#descricao'+ hora).val() 
+            }
+        
+            reservas.push({
+                'hora': hora.replace('\\:', ':'),
+                'responsavel': resp,
+                'descricao': desc,
+            })
+        } 
+    }
+    parametro = {
+        'sala': sala,
+        'data': $("#data-picker").val(),
+        'reservas': JSON.stringify(reservas),
+    }
+    $.ajax({
+        url: getAPI()+'/salas',
+        type: 'POST',
+        data: {
+            'csrfmiddlewaretoken': csrftoken,
+            'user': user,
+            'parametro': JSON.stringify(parametro),
+            'metodo': 'reservar_simples',
+        },
+        success: function (response) {
+            alert(response.message);
+            location.reload()
+        },
+        error: function (error) {
+            alert(error.responseJSON.message);
+        }
+    });
+  }
+function ajax(url, type, parametro, metodo, functiosucess){
+
+}

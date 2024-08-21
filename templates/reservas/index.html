@@ -1,5 +1,6 @@
 {% extends 'reservas.html' %}
-{% load static %}
+{%load permission_tags%}
+{%load static%}
 
 {%block 'style'%}
 <style>
@@ -48,7 +49,9 @@
 {%endblock%}
 
 {%block 'submain'%}
-<!-- <h2>Frotas disponíveis</h2>
+
+{% if user|can:'frota' %}
+<h2>Frotas disponíveis</h2>
 
 <div class="row justify-content-start ">
   <div class="col-auto">
@@ -71,6 +74,6 @@
       </div>
     </a>
   </div>
-</div> -->
-
+</div>
+{%endif%}
 {%endblock%}
