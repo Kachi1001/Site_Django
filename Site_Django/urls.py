@@ -26,7 +26,7 @@ urlpatterns = [
     path('lancamento_obra/' , include("Lancamento_obra.urls")),
      path('reservas/' , include("Reservas.urls")),
     path('ti/', include('TI.urls')),
-    path("teste", teste)
+    path("teste/", teste)
 ]
 
 
