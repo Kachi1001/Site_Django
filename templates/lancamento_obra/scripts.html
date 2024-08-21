@@ -1,5 +1,14 @@
 {% load static %}
 <script>
+    function exibir_diaria(a) {
+        let div = document.getElementById('div_diaria');
+        console.log(a)
+        if (a.options[a.selectedIndex].value == "Terceiro" || a == 'Terceiro') {
+            div.style.display = "flex";
+        } else {
+            div.style.display = "none";
+        }
+    }
 
     function salvarData(metodo, parametro, callback) {
         $.ajax({
@@ -133,16 +142,23 @@
             },
             success: function (data) {
                 if (metodo == 'colab') {
+                    loadTable('funcao', 'func_list');
                     document.getElementById('update_id').value = data.id;
                     document.getElementById('update_nome').value = data.nome;
-                    loadTable('funcao', 'func_list');
-                    document.getElementById('update_funcao').value = data.funcao;
                     document.getElementById('update_admissao').value = data.admissao;
                     document.getElementById('update_demissao').value = data.demissao;
                     document.getElementById('update_contrato').value = data.contrato;
+                    if (data.contrato == 'Terceiro') {
+                        document.getElementById('div_diaria').style.display = "flex";
+                    } else {
+                        document.getElementById('div_diaria').style.display = "none";
+                    }
                     document.getElementById('update_diaria').value = data.diaria;
                     document.getElementById('update_observacao').value = data.observacao;
                     document.getElementById('update_encarregado').checked = data.encarregado;
+                    setTimeout(function () {
+                        document.getElementById('update_funcao').value = data.funcao;
+                    }, 100);
                 } else if (metodo == 'Lancamentos') {
                     loadTable('atividade', 'update_att_atividade')
                     loadTable('colaborador', 'update_att_colaborador')
@@ -266,14 +282,7 @@
         }
     }
 
-    function exibir_diaria(a) {
-        let div = document.getElementById('div_diaria');
-        if (a.options[a.selectedIndex].value == "Terceiro") {
-            div.style.display = "flex";
-        } else {
-            div.style.display = "none";
-        }
-    }
+    
 
     function toggleAtivo(supervisor, isActive) {
         $.ajax({
