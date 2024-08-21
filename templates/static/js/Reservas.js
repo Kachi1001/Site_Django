@@ -167,21 +167,24 @@ function reserva_simples(sala){
             } else if ($('#responsavel' + hora).val() != '') {
                 resp = $('#responsavel'+ hora).val() 
             }
-            if (i != 0 && $('#descricao' + hora).val() != '') {
+            if ($('#descricao' + hora).val() != '') {
                 desc = $('#descricao'+ hora).val() 
             }
-        
             reservas.push({
                 'hora': hora.replace('\\:', ':'),
                 'responsavel': resp,
                 'descricao': desc,
             })
-        } 
+        }
     }
     parametro = {
         'sala': sala,
         'data': $("#data-picker").val(),
         'reservas': JSON.stringify(reservas),
+    }
+    if (reservas.length == 0){
+        alert('Nenhum registro salvo')
+        return
     }
     $.ajax({
         url: getAPI()+'/salas',

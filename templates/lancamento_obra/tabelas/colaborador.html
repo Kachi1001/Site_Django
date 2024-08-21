@@ -4,13 +4,24 @@
     <thead>
         <tr>
             <th data-field="nome" data-sortable="true">Nome</th>
-            <th data-field="funcao" data-sortable="true">Detalhes</th>
-            <th data-field="admissao">Admissão</th>
-            <th data-field="demissao">Demissão</th>
-            <th data-field="tipo">Tipo</th>
-            <th data-field="diaria">Diaria</th>
-            <th data-field="observacao">Oberservação</th>
-            <th scope="col">Editar</th>
+            <th data-field="funcao" data-sortable="true">Função</th>
+            <th data-field="admissao"data-sortable="true" data-formatter="Formatter">Admissão</th>
+            <th data-field="demissao" data-sortable="true" data-formatter="Formatter">Demissão</th>
+            <th data-field="contrato" data-sortable="true" data-formatter="Formatter">Contrato</th>
+            <th data-field="diaria" data-sortable="true" data-formatter="Formatter">Diaria</th>
+            <th data-field="observacao" data-sortable="true" data-formatter="Formatter">Oberservação</th>
+            <th data-field="editar" data-formatter="editarFormatter" data-events="editarEvents">Editar</th>
+
         </tr>
     </thead>
 </table>
+<script>
+    function editarFormatter(value) {
+        return '<a class="editarBtn" href="javascript:void(0)" title="Like"> <div class="btn-icon" data-bs-toggle="modal" data-bs-target="#update_colab" style="background-color: skyblue;"><img src="{% static "icons/pencil.svg"%}" alt="edit"></div></div>'
+    }
+    window.editarEvents = {
+        'click .editarBtn': function (e, value, row, index) {
+            edit('colab', row['id'])
+        },
+    }
+</script>
