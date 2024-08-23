@@ -14,6 +14,8 @@ def base(request):
         'icon_table': "class=bi-table",
         'icon_modal': "class=bi-window-stack",
         'icon_form': 'class=bi-box-arrow-in-right' ,
+        'icon_pencil': 'class=bi-pencil' ,
+        'icon_file': 'class=bi-file-earmark',
         
         'table_height': '350'
         }

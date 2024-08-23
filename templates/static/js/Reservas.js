@@ -1,4 +1,4 @@
-
+var loaded
 function load_carro(carro) {
     $.ajax({
         url: getAPI()+"/get_data",  // URL da sua API no Django
@@ -93,18 +93,20 @@ function uploadFoto(){
 }
 const horarios = ['07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00']
 function Reserva_rapida() {
-    for (let i = 0; i < horarios.length - 1; i++) {
-        let opt = document.createElement('option');        
-        opt.value = i;
-        opt.text = horarios[i];
-        $("#reserva_rapida-sel1").append(opt);
-    }
-    for (let i = 1; i < horarios.length; i++) {
-        let opt = document.createElement('option');        
-        opt.value = i;
-        opt.text = horarios[i];
-        $("#reserva_rapida-sel2").append(opt);
-    
+    if (loaded != 'reserva_rapida'){
+        loaded = 'reserva_rapida';
+        for (let i = 0; i < horarios.length - 1; i++) {
+            let opt = document.createElement('option');        
+            opt.value = i;
+            opt.text = horarios[i];
+            $("#reserva_rapida-sel1").append(opt);
+        }
+        for (let i = 1; i < horarios.length; i++) {
+            let opt = document.createElement('option');        
+            opt.value = i;
+            opt.text = horarios[i];
+            $("#reserva_rapida-sel2").append(opt);
+        }
     }
     $("#reserva_rapida-sel1").change(function () {
         $("#reserva_rapida-sel2").empty();
@@ -162,26 +164,29 @@ function reserva_simples(sala){
         hora = horarios[i].replace(':', '\\:')
         if ($('#check' + hora).is(':checked') && !$('#check' + hora).is(':disabled')){
             if (resp == null && $('#responsavel'+ hora).val() == ''){
-                alert('O primeiro registro necessita de um responsável')
+                alert('O registro necessita de um responsável')
                 return
             } else if ($('#responsavel' + hora).val() != '') {
                 resp = $('#responsavel'+ hora).val() 
             }
-            if (i != 0 && $('#descricao' + hora).val() != '') {
+            if ($('#descricao' + hora).val() != '') {
                 desc = $('#descricao'+ hora).val() 
             }
-        
             reservas.push({
                 'hora': hora.replace('\\:', ':'),
                 'responsavel': resp,
                 'descricao': desc,
             })
-        } 
+        }
     }
     parametro = {
         'sala': sala,
         'data': $("#data-picker").val(),
         'reservas': JSON.stringify(reservas),
+    }
+    if (reservas.length == 0){
+        alert('Nenhum registro salvo')
+        return
     }
     $.ajax({
         url: getAPI()+'/salas',

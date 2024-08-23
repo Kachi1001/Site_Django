@@ -1,1 +1,209 @@
-{% extends '404.html' %}
+{%include 'static/imports/base.html'%}
+{%include 'static/imports/jquery.html'%}
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de colaborador</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">ID:</label>
+                        <input type="text" name="update_id" id="update_colaborador_id" class="form-control" disabled>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
+                        <input type="text" name="update_nome" id="update_colaborador_nome" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Data de admissão:</label>
+                        <input type="date" name="update_admissao" id="update_colaborador_admissao" class="form-control">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Função:</label>
+                        <select class="form-select" name="selectFuncao" id="update_colaborador_funcao">
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Data de demissao:</label>
+                        <input type="date" name="uptade_demissao" id="update_colaborador_demissao" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-text">
+                            <input class="form-check-input mt-0" type="checkbox" value="True"
+                                aria-label="Checkbox for following text input" name="update_encarregado"
+                                id="update_colaborador_encarregado">
+                        </div>
+                        <span class="input-group-text">Encarregado</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Tipo de contrato:</label>
+                        <select class="form-select" id="update_colaborador_contrato" name="update_colaborador_contrato"
+                            onchange="exibir_diaria(document.getElementById('update_contrato'))">
+                            <option value="CLT">CLT</option>
+                            <option value="Terceiro">Terceiro</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3" id="div_diaria" style="display: none">
+                        <span class="input-group-text">Valor da Diaria</span>
+                        <input type="text" class="form-control"
+                            aria-label="Dollar amount (with dot and two decimal places)" name="update_diaria"
+                            id="update_colaborador_diaria">
+                        <span class="input-group-text">R$</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Observações</span>
+                <textarea class="form-control" aria-label="With textarea" name="update_colaborador_observacao"
+                    id="update_colaborador_observacao"></textarea>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" onclick="deletar('Colaborador')">Deletar</button>
+            <button type="button" class="btn btn-success" onclick="update('colab')">Salvar</button>
+            <button type="button" class="btn btn-success"
+                onclick="loadModal('114','update_colaborador')">Carregar</button>
+        </div>
+    </div>
+</div>
+<script>
+    var loaded
+    function loadModal(modal, id) {
+        $.ajax({
+            url: getAPI() + '/get_modal',  // URL da sua API no Django
+            type: "GET",
+            data: {
+                'csrfmiddlewaretoken': csrftoken,
+                'metodo': modal,
+                'parametro': id
+            },
+            success: function (data) {
+
+                if (modal == 'update_colaborador') {
+                    if (loaded != modal) {
+                        loadSelect('selectFuncao');
+                        loaded = modal;
+                    };
+                    let div = document.getElementById('div_diaria')
+                    if (data.contrato == 'Terceiro') {
+                        div.style.display = "flex";
+                    } else {
+                        div.style.display = "none";
+                    }
+                    document.getElementById(modal+'_encarregado').checked = data.encarregado;
+                    setTimeout(function () {
+                        inputs = ['id', 'nome', 'admissao', 'demissao', 'contrato', 'diaria', 'observacao', 'funcao']
+                        loadInput(modal, data, inputs);
+                    }, 100);
+                }
+
+            },
+            error: function (xhr) {
+                alert(xhr.responseJSON.message);
+            }
+        });
+    }
+    function loadSelect(selectHTML) {
+        let select = $('.'.concat(selectHTML));
+        select.empty()
+        $.ajax({
+            url: getAPI() + '/get_table',  // URL da sua API no Django
+            type: "GET",
+            data: {
+                'csrfmiddlewaretoken': csrftoken,
+                'metodo': 'select',
+                'parametro': selectHTML
+            },
+            success: function (data) {
+                for (let i = 0; i < data.length; i++) {
+                    let value; let text
+                    if (selectHTML == 'selectFuncao') {
+                        value = data[i].funcao;
+                        text = value;
+                    } else if (selectHTML == 'selectObra') {
+                        value = data[i].id;
+                        text = value + '||' + data[i].empresa + '|' + data[i].cidade;
+                    } else if (selectHTML == 'selectSupervisor') {
+                        value = data[i].supervisor;
+                        text = value;
+                    } else if (selectHTML == 'selectAtividade') {
+                        value = data[i].tipo;
+                        text = value;
+                    } else if (selectHTML == 'selectColaborador') {
+                        value = data[i].nome;
+                        text = value;
+                    } else { return }
+
+                    let opt = document.createElement('option');
+                    opt.value = value;
+                    opt.text = text;
+                    select.append(opt);
+                }
+            },
+            error: function (xhr) {
+                alert(xhr.responseJSON.message);
+            }
+        });
+
+
+
+    }
+    function loadInput(metodo, data, inputs) {
+        for (let i = 0; i < inputs.length; i++) {
+            let input = inputs[i]
+            $('#' + metodo + '_' + input).val(data[input]);
+            console.log('#' + metodo + '_' + input)
+        }
+    }
+    function postgresGET(url, metodo, parametro) {
+        $.ajax({
+            url: url,  // URL da sua API no Django
+            type: "GET",
+            data: {
+                'csrfmiddlewaretoken': csrftoken,
+                'metodo': metodo,
+                'parametro': parametro
+            },
+            success: function (data) {
+                return data;
+            },
+            error: function (xhr) {
+                alert(xhr.responseJSON.message);
+                return NaN;
+            }
+        });
+    }
+
+    function alerts(type) {
+
+    }
+</script>

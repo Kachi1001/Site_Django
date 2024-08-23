@@ -1,10 +1,7 @@
 {% extends 'lançamento_obra.html' %}
 {% load static %}
 
-{% block 'style' %}
-<link rel="stylesheet" href="{% static 'css/table.css' %}">
 
-{% endblock %}
 
 {%block 'caminho'%}
   <li class="breadcrumb-item" aria-current="page">Visualização</li>
@@ -17,5 +14,5 @@
 
 
 {% block 'main' %}
-  {%include 'lancamento_obra/tabelas/atividade.html'%}
+  {%include 'lancamento_obra/tabelas/lancamento.html'%}
 {% endblock %}

@@ -1,20 +1,42 @@
 {%load static%}
 {%include 'lancamento_obra/tabela.html'%}
-    data-url="{{api}}/tabela/obra">
-  <thead>
+data-url="{{api}}/tabela/obra"
+data-cookie-id-table="obra"
+>
+<thead>
     <tr>
-      <th data-field="cr">Cr</th>
-      <th data-field="orcamento">Orçamento</th>
-      <th data-field="retrabalho">Retrabalho</th>
-      <th data-field="empresa">Empresa</th>
-      <th data-field="cidade">Cidade</th>
-      <th data-field="descricao">Descrição</th>
-      <th data-field="supervisor.supervisor">Supervisor</th>
-      <th data-checkbox="finalizada">Finalizada</th>
-      <th data-field="indice">Indice</th>
-      <th data-field="etapas">Etapas</th>
-      <th scope="col">Editar</th>
+        <th data-field="id" data-sortable="true">Cr</th>
+        <th data-field="orcamento" data-sortable="true" data-formatter="Formatter">Orçamento</th>
+        <th data-field="retrabalho" data-sortable="true" data-formatter="Formatter">Retrabalho</th>
+        <th data-field="empresa" data-sortable="true">Empresa</th>
+        <th data-field="cidade" data-sortable="true">Cidade</th>
+        <th data-field="descricao" data-sortable="true" data-formatter="Formatter">Descrição</th>
+        <th data-field="supervisor_id" data-sortable="true">Supervisor</th>
+        <th data-field="finalizada" data-sortable="true" data-formatter="finalizadaFormatter">Finalizada</th>
+        <th data-field="indice" data-sortable="true">Indice</th>
+        <th data-field="etapas" data-formatter="Formatter">Etapas</th>
+        <th data-field="editar" data-formatter="editarFormatter" data-events="editarEvents">Editar</th>
 
     </tr>
-  </thead>
-</table> 
+</thead>
+</table>
+{% block "script" %}
+<script>
+
+    function finalizadaFormatter(value) {
+        if (value) {
+            return '<input class="form-check-input mt-0" type="checkbox" checked disabled>'
+        } else {
+            return '<input class="form-check-input mt-0" type="checkbox" disabled>'
+        }
+    }
+    function editarFormatter(value) {
+        return '<a class="editarBtn" href="javascript:void(0)" title="Like"> <div class="btn-icon" data-bs-toggle="modal" data-bs-target="#update_obra" style="background-color: skyblue;"><img src="{% static "icons/pencil.svg"%}" alt="edit"></div></div>'
+    }
+    window.editarEvents = {
+        'click .editarBtn': function (e, value, row, index) {
+            loadModal('update_obra', row['id'])
+        },
+    }
+</script>
+{% endblock %}

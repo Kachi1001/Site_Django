@@ -12,6 +12,33 @@
     .table {
         margin: 0;
     }
+    .form-check-input{
+        height: 15px;
+        width: 15px;
+        box-shadow: 2px 2px 3px lightgray;
+        margin-top: 0px;
+    }
+    .div_legenda{
+        padding-top: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .legenda{
+        font-size: medium;
+        font-style: italic;
+        color: gray;
+        text-decoration: wavy;
+        margin-bottom: 0px;
+        padding-left: 3px;
+    }
+    
+    th{
+        align-content: center;
+    }
+    p{
+        padding-right: 16px;
+    }
 </style>
 {%endblock%}
 {%block 'header'%}
@@ -33,9 +60,11 @@
                 <input type="date" name="data-picker" id='data-picker' onchange="reload('data')" class="form-control"
                     value="{{data}}">
             </div>
+            <div class="div_legenda"><i class="bi bi-exclamation-circle"></i><p class="legenda">Para cancelamento de reserva, contatar com Felipe, Cristiane ou Rafael S.</p></div>
         </div>
         <div class="col align-self-end">
-            <input type="button" class="btn btn-outline-success" value="Registrar" id="registrar" onclick="reserva_simples('{{sala}}')">
+            <input type="button" class="btn btn-outline-success" value="Registrar" id="registrar"
+                onclick="reserva_simples('{{sala}}')">
         </div>
     </div>
 </div>
@@ -68,15 +97,17 @@
                         <th scope="row">
                             <div class="input-group input-group-sm">
                                 <input type="text" class="form-control" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-sm" id="responsavel{{h.hora}}" name="responsavel{{h.hora}}"
-                                    value="{{h.responsavel}}" placeholder="Responsável" {{h.reservado}}>
+                                    aria-describedby="inputGroup-sizing-sm" id="responsavel{{h.hora}}"
+                                    name="responsavel{{h.hora}}" value="{{h.responsavel}}" placeholder="Responsável"
+                                    {{h.reservado}}>
                             </div>
                         </th>
                         <th scope="row">
                             <div class="input-group input-group-sm">
                                 <input type="text" class="form-control" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-sm" id="descricao{{h.hora}}" name="descricao{{h.hora}}"
-                                    value="{{h.descricao}}" placeholder="Descrição" {{h.reservado}}>
+                                    aria-describedby="inputGroup-sizing-sm" id="descricao{{h.hora}}"
+                                    name="descricao{{h.hora}}" value="{{h.descricao}}" placeholder="Descrição"
+                                    {{h.reservado}}>
                             </div>
                         </th>
                     </tr>
@@ -98,8 +129,8 @@
                     {% for h in horarios2 %}
                     <tr>
                         <th scope="row">
-                            <input class="form-check-input" type="checkbox" id="check{{h.hora}}"
-                                {{h.reservado}} name="check{{h.hora}}">
+                                <input class="form-check-input" type="checkbox" id="check{{h.hora}}" {{h.reservado}}
+                                    name="check{{h.hora}}">
                         </th>
                         <th scope="row">
                             <p class="mb-0">{{h.hora}}</p>
@@ -107,15 +138,17 @@
                         <th scope="row">
                             <div class="input-group input-group-sm">
                                 <input type="text" class="form-control" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-sm" id="responsavel{{h.hora}}" name="responsavel{{h.hora}}"
-                                    value="{{h.responsavel}}" placeholder="Responsável" {{h.reservado}}>
+                                    aria-describedby="inputGroup-sizing-sm" id="responsavel{{h.hora}}"
+                                    name="responsavel{{h.hora}}" value="{{h.responsavel}}" placeholder="Responsável"
+                                    {{h.reservado}}>
                             </div>
                         </th>
                         <th scope="row">
                             <div class="input-group input-group-sm">
                                 <input type="text" class="form-control" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-sm" id="descricao{{h.hora}}" name="descricao{{h.hora}}"
-                                    value="{{h.descricao}}" placeholder="Descrição" {{h.reservado}}>
+                                    aria-describedby="inputGroup-sizing-sm" id="descricao{{h.hora}}"
+                                    name="descricao{{h.hora}}" value="{{h.descricao}}" placeholder="Descrição"
+                                    {{h.reservado}}>
                             </div>
                         </th>
                     </tr>
@@ -127,5 +160,5 @@
         </div>
     </div>
 </div>
-{%endblock%}
 
+{%endblock%}

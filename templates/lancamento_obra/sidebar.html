@@ -13,8 +13,8 @@
           <a href="{%url 'cadastro_colab'%}"><i {{icon_form}}></i> Colaborador</a>
           <a href="{%url 'cadastro_obra'%}"><i {{icon_form}}></i> Obra</a>
         
-          <a href="#" data-bs-toggle="modal" data-bs-target="#cadastro_func" onclick="loadTable('funcao', 'func_table')" ><i {{icon_modal}}></i> Função</a>
-          <a href="#" data-bs-toggle="modal" data-bs-target="#cadastro_super" onclick="loadTable('supervisor', 'super_table')"><i {{icon_modal}}></i> Supervisor</a>    
+          <a href="#" data-bs-toggle="modal" data-bs-target="#register_funcao" onclick="loadModal('register_funcao', 'tableFuncao')" ><i {{icon_modal}}></i> Função</a>
+          <a href="#" data-bs-toggle="modal" data-bs-target="#register_supervisor" onclick="loadModal('register_supervisor', 'tableSupervisor')"><i {{icon_modal}}></i> Supervisor</a>    
         </div>
       </div>
   
@@ -28,7 +28,7 @@
         <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
           <a href="{%url 'visualizacao_tabela' 'colaborador'%}"><i {{icon_table}}></i>  Colaboradores</a>
           <a href="{%url 'visualizacao_tabela' 'obra'%}" ><i {{icon_table}}></i>  Obras</a>
-          <a href="{%url 'visualizacao_tabela' 'atividade'%}"><i {{icon_table}}></i>  Atividade</a>
+          <a href="{%url 'visualizacao_tabela' 'lancamento'%}"><i {{icon_table}}></i>  Lancamento</a>
           <a href="{%url 'visualizacao_tabela' 'diario'%}"><i {{icon_table}}></i>  Diario</a>
           <a href="#"><i {{icon_table}}></i>  Revisões</a>
           <a href="{%url 'visualizacao_tabela' 'hora'%}"><i {{icon_table}}></i>  Horas / Horas Extras</a>

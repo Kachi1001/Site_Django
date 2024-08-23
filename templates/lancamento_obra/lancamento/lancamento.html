@@ -30,7 +30,7 @@
             <label class="input-group-text" for="inputGroupSelect01">Obra:</label>
             <select class="form-select" id="inputGroupSelect01" name="obra">
               {% for obra in obras_list %}
-              <option value="{{obra.cr}}">{{obra.cr}} - {{obra.empresa}} - {{obra.cidade}}</option>
+              <option value="{{obra.id}}">{{obra.id}} - {{obra.empresa}} - {{obra.cidade}}</option>
               {%endfor%}
             </select>
           </div>
@@ -102,5 +102,5 @@
   </form>
 {%endblock%}
 {%block 'submain'%}
-  {%include 'lancamento_obra/tabelas/atividade.html'%}
+  {%include 'lancamento_obra/tabelas/lancamento.html'%}
 {% endblock %}

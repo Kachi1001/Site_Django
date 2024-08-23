@@ -4,16 +4,16 @@
     // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
         {
             "name": "Depurador do Python: Django",
             "type": "debugpy",
             "request": "launch",
             "args": [
                 "runserver",
-                "25.20.67.172:8000"
+                "10.0.0.211:8000"
             ],
             "django": true,
-            "autoStartBrowser": true,
             "program": "${workspaceFolder}\\manage.py"
         }
     ]

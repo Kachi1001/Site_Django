@@ -23,34 +23,7 @@
         border-bottom: none;
     }
 </style>
-<script>
-    $(document).ready(function () {
-        $('#enviar').click(function () {
-            let encarregado = document.getElementById('update_encarregado').checked ? true : false;
-            let parametro = {
-                'nome': document.getElementById('nome')?.value,
-                'funcao': document.getElementById('funcao')?.value,
-                'admissao': document.getElementById('admissao')?.value,
-                'contrato': document.getElementById('contrato')?.value,
-                'diaria': document.getElementById('diaria')?.value,
-                'observacao': document.getElementById('observacao')?.value,
-                'encarregado': encarregado,
-            }
-            if (parametro.admissao == "") {
-                if (confirm('Tem certeza que deseja salvar sem uma data de admissão?')) {
-                    salvarData('Colaborador', parametro, function () {
-                        location.reload();
-                    })
 
-                }
-            } else {
-                salvarData('Colaborador', parametro)
-
-            }
-        })
-    })
-
-</script>
 <div class="row">
     <div class="col">
         <div class="input-group mb-3">
@@ -82,7 +55,7 @@
         <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect01">Tipo de contrato:</label>
             <select class="form-select" id="contrato" name="contrato"
-                onchange="exibir_diaria(document.getElementById('contrato'))">
+                onchange="exibir_diaria(document.getElementById('contrato'), document.getElementById('div_diaria'))">
                 <option value="CLT">CLT</option>
                 <option value="Terceiro">Terceiro</option>
             </select>
@@ -111,8 +84,28 @@
     <textarea class="form-control" aria-label="With textarea" name="observacao" id="observacao"></textarea>
 </div>
 
-<button id="enviar" class="btn btn-outline-success">Cadastrar</button>
+<button id="enviar" class="btn btn-outline-success" onclick="save()">Cadastrar</button>
+<script>
+    function save() {
+        let parametro = {
+            'nome': $('#nome').val(),
+            'funcao': $('#funcao').val(),
+            'admissao': $('#admissao').val(),
+            'contrato': $('#contrato').val(),
+            'diaria': $('#diaria').val(),
+            'observacao': $('#observacao').val(),
+            'encarregado': $('#encarregado').is(':checked'),
+        }
+        if (parametro.admissao == "") {
+            if (confirm('Tem certeza que deseja salvar sem uma data de admissão?')) {
+                registerData('colaborador', parametro)
 
+            }
+        } else {
+            registerData('colaborador', parametro)
+        }
+    }
+</script>
 {% endblock %}
 
 {%block 'submain'%}
