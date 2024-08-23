@@ -1,5 +1,6 @@
 {% load static %}
 <script>
+    var loaded
     function exibir_diaria(a) {
         let div = document.getElementById('div_diaria');
         console.log(a)
@@ -142,7 +143,10 @@
             },
             success: function (data) {
                 if (metodo == 'colab') {
-                    loadTable('funcao', 'func_list');
+                    if (loaded != metodo) {
+                        loadTable('funcao', 'func_list');
+                        loaded = metodo
+                    }
                     document.getElementById('update_id').value = data.id;
                     document.getElementById('update_nome').value = data.nome;
                     document.getElementById('update_admissao').value = data.admissao;
@@ -160,9 +164,12 @@
                         document.getElementById('update_funcao').value = data.funcao;
                     }, 100);
                 } else if (metodo == 'Lancamentos') {
-                    loadTable('atividade', 'update_att_atividade')
-                    loadTable('colaborador', 'update_att_colaborador')
-                    loadTable('obra', 'update_att_obra')
+                    if (loaded != metodo){
+                        loadTable('atividade', 'update_att_atividade');
+                        loadTable('colaborador', 'update_att_colaborador');
+                        loadTable('obra', 'update_att_obra');
+                        loaded = metodo;
+                    }
                     $('#update_att_id').val(data.id);
                     $('#update_att_dia').val(data.dia);
                     $('#update_att_descricao').val(data.descricao);
@@ -176,12 +183,11 @@
 
                     // Preencher o select de supervisores
                     setTimeout(function () {
-                        $('#update_att_atividade').val(data.atividade);
-                        $('#update_att_obra').val(data.obra);
                         $('#update_att_colaborador').val(data.colaborador);
+                        $('#update_att_obra').val(data.obra);
+                        $('#update_att_atividade').val(data.atividade);
 
                     }, 100);
-
                 }
             },
 

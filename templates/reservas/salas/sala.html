@@ -12,6 +12,10 @@
     .table {
         margin: 0;
     }
+    .form-check-input{
+        height: 20px;
+        width: 20px;
+    }
 </style>
 {%endblock%}
 {%block 'header'%}
@@ -35,7 +39,8 @@
             </div>
         </div>
         <div class="col align-self-end">
-            <input type="button" class="btn btn-outline-success" value="Registrar" id="registrar" onclick="reserva_simples('{{sala}}')">
+            <input type="button" class="btn btn-outline-success" value="Registrar" id="registrar"
+                onclick="reserva_simples('{{sala}}')">
         </div>
     </div>
 </div>
@@ -68,15 +73,17 @@
                         <th scope="row">
                             <div class="input-group input-group-sm">
                                 <input type="text" class="form-control" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-sm" id="responsavel{{h.hora}}" name="responsavel{{h.hora}}"
-                                    value="{{h.responsavel}}" placeholder="Responsável" {{h.reservado}}>
+                                    aria-describedby="inputGroup-sizing-sm" id="responsavel{{h.hora}}"
+                                    name="responsavel{{h.hora}}" value="{{h.responsavel}}" placeholder="Responsável"
+                                    {{h.reservado}}>
                             </div>
                         </th>
                         <th scope="row">
                             <div class="input-group input-group-sm">
                                 <input type="text" class="form-control" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-sm" id="descricao{{h.hora}}" name="descricao{{h.hora}}"
-                                    value="{{h.descricao}}" placeholder="Descrição" {{h.reservado}}>
+                                    aria-describedby="inputGroup-sizing-sm" id="descricao{{h.hora}}"
+                                    name="descricao{{h.hora}}" value="{{h.descricao}}" placeholder="Descrição"
+                                    {{h.reservado}}>
                             </div>
                         </th>
                     </tr>
@@ -98,8 +105,8 @@
                     {% for h in horarios2 %}
                     <tr>
                         <th scope="row">
-                            <input class="form-check-input" type="checkbox" id="check{{h.hora}}"
-                                {{h.reservado}} name="check{{h.hora}}">
+                                <input class="form-check-input" type="checkbox" id="check{{h.hora}}" {{h.reservado}}
+                                    name="check{{h.hora}}">
                         </th>
                         <th scope="row">
                             <p class="mb-0">{{h.hora}}</p>
@@ -107,15 +114,17 @@
                         <th scope="row">
                             <div class="input-group input-group-sm">
                                 <input type="text" class="form-control" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-sm" id="responsavel{{h.hora}}" name="responsavel{{h.hora}}"
-                                    value="{{h.responsavel}}" placeholder="Responsável" {{h.reservado}}>
+                                    aria-describedby="inputGroup-sizing-sm" id="responsavel{{h.hora}}"
+                                    name="responsavel{{h.hora}}" value="{{h.responsavel}}" placeholder="Responsável"
+                                    {{h.reservado}}>
                             </div>
                         </th>
                         <th scope="row">
                             <div class="input-group input-group-sm">
                                 <input type="text" class="form-control" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-sm" id="descricao{{h.hora}}" name="descricao{{h.hora}}"
-                                    value="{{h.descricao}}" placeholder="Descrição" {{h.reservado}}>
+                                    aria-describedby="inputGroup-sizing-sm" id="descricao{{h.hora}}"
+                                    name="descricao{{h.hora}}" value="{{h.descricao}}" placeholder="Descrição"
+                                    {{h.reservado}}>
                             </div>
                         </th>
                     </tr>
@@ -129,4 +138,3 @@
 </div>
 
 {%endblock%}
-

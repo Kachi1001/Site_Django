@@ -6,7 +6,6 @@ urlpatterns = [
     path("", views.index, name= "lancamento_obra"),
     
     path("cadastro/colaborador/", views.cadastro_colab, name= "cadastro_colab"),
-    path("cadastro/outros/", views.cadastro_outros, name= "cadastro_outros"),
     path("cadastro/obra/", views.cadastro_obra, name= "cadastro_obra"),
     
     path("visualizacao/<str:table>", views.visualizacao_tabela, name= "visualizacao_tabela"),

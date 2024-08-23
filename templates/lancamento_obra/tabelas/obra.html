@@ -1,6 +1,8 @@
 {%load static%}
 {%include 'lancamento_obra/tabela.html'%}
-data-url="{{api}}/tabela/obra">
+data-url="{{api}}/tabela/obra"
+data-cookie-id-table="obra"
+>
 <thead>
     <tr>
         <th data-field="id" data-sortable="true">Cr</th>
@@ -33,7 +35,7 @@ data-url="{{api}}/tabela/obra">
     }
     window.editarEvents = {
         'click .editarBtn': function (e, value, row, index) {
-            editObra(row['id'])
+            loadModal('update_obra', row['id'])
         },
     }
 </script>

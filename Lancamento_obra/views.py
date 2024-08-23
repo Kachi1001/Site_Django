@@ -19,26 +19,14 @@ def index(request):
 def cadastro_colab(request):
     return render(request, "lancamento_obra/cadastro/colaborador.html", {
         'func_list': Funcao.objects.all(),
-        'data': Colaborador.objects.all(),
-        'nome': request.user.username,
         }
     ) 
-
-@login_required
-def cadastro_outros(request):
-    return render(request, "lancamento_obra/cadastro/outros.html", {
-        "nome": request.user.username,
-        'funcao': Funcao.objects.all(),
-        'supervisor': Supervisor.objects.all(),
-        })
-        
 
 @login_required
 def cadastro_obra(request):
     if request.method == "GET":
         return render(request, "lancamento_obra/cadastro/obra.html", {
             "super_list": Supervisor.objects.all(),
-            'data': Obra.objects.all(),
             })
     elif request.method == "POST":
         obra = Obra(
@@ -67,7 +55,6 @@ def lancamento_atividade(request):
             'obras_list': Obra.objects.all(), 
             'colab_list': Colaborador.objects.all(),
             'att_list': Atividade.objects.all(),
-            'data': Lancamentos.objects.all().order_by('-id')[:7],
             }
         )
     elif request.method == "POST":
@@ -104,7 +91,6 @@ def lancamento_diario(request):
         return render(request, "lancamento_obra/lancamento/diario.html", {
             'obras_list': Obra.objects.all(), 
             "colab_list": Colaborador.objects.all(),
-            'data': Diarioobra.objects.all().order_by('-id')[:5],
             })
     elif request.method == "POST":
         digitalizacao = request.FILES.get('arquivo')
