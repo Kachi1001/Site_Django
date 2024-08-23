@@ -5,7 +5,6 @@ from .models import *
 from django.utils import timezone
 from Site_Django.util import *
 from Site_Django.settings import BASE_DIR 
-hoje = timezone.now().date()
 
 class reserva:
     def gerarLista(reservados, horarios):
@@ -67,6 +66,7 @@ def sala_registros(request):
 
 def sala(request, sala):
     user = request.user
+    hoje = timezone.now().date()
     date = request.GET.get('data') if request.GET.get('data') != None else tempo.formatarHTML(hoje)
     if request.method == "POST":
         for a in horarios1+horarios2:
@@ -94,6 +94,7 @@ def sala(request, sala):
 
 def carros(request):
     user = request.user
+    hoje = timezone.now().date()
     date = request.GET.get('data') if request.GET.get('data') != None else tempo.formatarHTML(hoje)
     if request.method == "POST":
         if not request.POST.get('responsavel') and user.is_authenticated:

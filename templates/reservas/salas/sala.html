@@ -13,8 +13,31 @@
         margin: 0;
     }
     .form-check-input{
-        height: 20px;
-        width: 20px;
+        height: 15px;
+        width: 15px;
+        box-shadow: 2px 2px 3px lightgray;
+        margin-top: 0px;
+    }
+    .div_legenda{
+        padding-top: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .legenda{
+        font-size: medium;
+        font-style: italic;
+        color: gray;
+        text-decoration: wavy;
+        margin-bottom: 0px;
+        padding-left: 3px;
+    }
+    
+    th{
+        align-content: center;
+    }
+    p{
+        padding-right: 16px;
     }
 </style>
 {%endblock%}
@@ -37,6 +60,7 @@
                 <input type="date" name="data-picker" id='data-picker' onchange="reload('data')" class="form-control"
                     value="{{data}}">
             </div>
+            <div class="div_legenda"><i class="bi bi-exclamation-circle"></i><p class="legenda">Para cancelamento de reserva, contatar com Felipe, Cristiane ou Rafael S.</p></div>
         </div>
         <div class="col align-self-end">
             <input type="button" class="btn btn-outline-success" value="Registrar" id="registrar"
