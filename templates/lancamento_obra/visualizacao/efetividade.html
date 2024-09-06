@@ -2,8 +2,34 @@
 
 
 {%block 'header'%}
-<h2>Tabela de Horas por mês</h2>
-<button type="button" class="btn btn-success" id="btn">Registrar</button>
+<h2>Consulta de efetividade</h2>
+<div class="row mt-2">
+    <div class="col">
+        <div class="input-group input-group mb-2">
+            <label class="input-group-text" for="inputGroupSelect01">Colaborador:</label>
+            <input type="text" name="update_att_id" id="visualizacao_efetividade_colaborador" class="form-control">
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group input-group mb-2">
+            <label class="input-group-text" for="inputGroupSelect01">Obra:</label>
+            <input type="text" name="update_att_id" id="visualizacao_efetividade_obra" class="form-control">
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group mb-2">
+            <label class="input-group-text" for="inputGroupSelect01">Data inicial:</label>
+            <input type="date" name="dia" id="visualizacao_efetividade_dataini" class="form-control">
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group mb-2">
+            <label class="input-group-text" for="inputGroupSelect01">Data final:</label>
+            <input type="date" name="dia" id="visualizacao_efetividade_datafim" class="form-control">
+        </div>
+    </div>
+</div>
+<button type="button" class="btn btn-success" id="btn">Filtrar</button>
 
 {%include 'lancamento_obra/tabela_view.html'%}
 <thead>
@@ -15,18 +41,25 @@
         <th colspan="6">Horas</th>
     </tr>
     <tr>
-        <th data-field="horarini1" data-sortable="true">Início 1</th>
-        <th data-field="horarfim1" data-sortable="true">Fim 1</th>
-        <th data-field="horarini2" data-sortable="true">Início 2</th>
-        <th data-field="horarfim2" data-sortable="true">Fim 2</th>
-        <th data-field="horarini3" data-sortable="true">Início 3</th>
-        <th data-field="horarfim3" data-sortable="true">Fim 3</th>
+        <th data-field="horaini1" data-sortable="true">Início 1</th>
+        <th data-field="horafim1" data-sortable="true">Fim 1</th>
+        <th data-field="horaini2" data-sortable="true">Início 2</th>
+        <th data-field="horafim2" data-sortable="true">Fim 2</th>
+        <th data-field="horaini3" data-sortable="true">Início 3</th>
+        <th data-field="horafim3" data-sortable="true">Fim 3</th>
     </tr>
 </thead>
 </table>
 <script>
     $('#btn').click(function () {
         parametro = {}
+        parametros = ['colaborador', 'obra', 'dataini', 'datafim']
+        for (let i = 0; i < parametros.length; i++) {
+            val = $('#visualizacao_efetividade_' + parametros[i]).val()
+            if (val != '') {
+                parametro[parametros[i]] = val
+            }
+        }
         $.ajax({
             url: API + 'funcao', // URL da sua API no Django
             type: "GET",
