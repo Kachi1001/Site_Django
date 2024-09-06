@@ -1,0 +1,36 @@
+{% extends 'lançamento_obra.html' %}
+
+
+{%block 'header'%}
+<script>
+    if (confirm('Deseja atualizar as tabelas antes?')){
+        $.ajax({
+            url: API + 'funcao', // URL da sua API no Django
+            type: "GET",
+            data: {
+                'metodo' : 'atualizar_tabelas' 
+            },
+            success: function (data) {
+                toasts('Success')
+            },
+            error: function (xhr) {
+                toasts('Error')
+                console.error(xhr)
+            },
+        });
+    }
+</script>
+<h2>Tabela de Horas por mês</h2>
+{%include 'lancamento_obra/tabela_view.html'%}
+<thead>
+    <th data-field="competencia" data-sortable="true">Competência</th>
+    <th data-field="colaborador" data-sortable="true">Nome</th>
+    <th data-field="folgas" data-sortable="true" data-formatter="intervalFormatter">Folgas</th>
+    <th data-field="faltas" data-sortable="true" data-formatter="intervalFormatter">Faltas</th>
+    <th data-field="dispensas" data-sortable="true" data-formatter="intervalFormatter">Dispensas</th>
+    <th data-field="he50" data-sortable="true" data-formatter="intervalFormatter">Horas +50%</th>
+    <th data-field="he100" data-sortable="true" data-formatter="intervalFormatter">Horas +100%</th>
+    </tr>
+</thead>
+</table>
+{%endblock%}

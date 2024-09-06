@@ -36,32 +36,34 @@
 </div>
 {%endblock%}
 {%block 'main'%}
-<h3>Livres</h3>
-<div class="row justify-content-start">
-    {% for d in dados %}
-    {% if not d.responsavel %}
-    <div class="col-auto">
-        <div class="card" onclick="load_carro('{{d.carro.placa}}')" data-bs-toggle="modal"
-            data-bs-target="#reservar_carro" style="width: 12rem;">
-            <div class="card-header">
-                <div class="row align-items-start">
-                    <div class="col">
-                        <p>{{d.carro.placa}}</p>
-                    </div>
-                    <div class="col">
-                        <p>{{d.carro.modelo}}</p>
+<main>
+    <h3>Livres</h3>
+    <div class="row justify-content-start">
+        {% for d in dados %}
+        {% if not d.responsavel %}
+        <div class="col-auto">
+            <div class="card" onclick="loadModal('reservar_carro','{{d.carro.placa}}')" data-bs-toggle="modal"
+                data-bs-target="#reservar_carro" style="width: 12rem;">
+                <div class="card-header">
+                    <div class="row align-items-start">
+                        <div class="col">
+                            <p>{{d.carro.placa}}</p>
+                        </div>
+                        <div class="col">
+                            <p>{{d.carro.modelo}}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <img src='{{media_carros}}/{{d.carro.placa}}.jpg' class="card-img-carro" alt="Imagem ausente">
-            <div class="card-footer">
-                <h5 class="card-title">{{d.reservado}}</h5>
+                <img src='{{media_carros}}{{d.carro.imagem}}' class="card-img-carro" alt="Imagem ausente">
+                <div class="card-footer">
+                    <h5 class="card-title">{{d.reservado}}</h5>
+                </div>
             </div>
         </div>
+        {%endif%}
+        {%endfor%}
     </div>
-    {%endif%}
-    {%endfor%}
-</div>
+</main>
 {%endblock%}
 
 {%block 'submain'%}
@@ -81,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <img src='{{media_carros}}/{{d.carro.placa}}.jpg' class="card-img-carro" alt="Imagem ausente">
+            <img src='{{media_carros}}{{d.carro.imagem}}' class="card-img-carro" alt="Imagem ausente">
             <div class="card-footer">
                 <h5 class="card-title">{{d.reservado}}</h5>
                 {% if d.responsavel %}

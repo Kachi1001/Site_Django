@@ -2,7 +2,11 @@
     "cSpell.words": [
         "csrftoken",
         "lancamento",
+        "Loadedinputs",
         "psycopg"
     ],
-    "editor.detectIndentation": false
+    "editor.detectIndentation": false,
+    "commentTranslate.hover.enabled": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoImportCompletions": true
 }

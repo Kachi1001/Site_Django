@@ -16,3 +16,33 @@ function getCookie(name) {
 const csrftoken = getCookie('csrftoken');
 const user = getUser();
 const icon = '/static/icons'
+
+function uploadImage(fileInput, parametro, metodo, url){
+    let file = fileInput.files[0];
+    
+    if (!file) {
+        alert("Por favor, selecione um arquivo primeiro.");
+        return;
+    }
+    
+    let formData = new FormData();
+    formData.append('file', file);
+    formData.append('parametro', parametro);
+    formData.append('metodo', metodo);
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            success: function() {
+                return true
+            },
+            error: function(error) {
+                console.error('Erro:', error);
+                alert('Erro ao carregar o arquivo.');
+            }
+        });
+}

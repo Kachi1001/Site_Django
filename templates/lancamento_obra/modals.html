@@ -20,11 +20,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-2">
                         <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
-                        <input type="text" name="nome" id="register_funcao_nome" class="form-control">
+                        <input type="text" name="nome" id="register_funcao_funcao" class="form-control">
                     </div>
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-2">
                         <label class="input-group-text" for="inputGroupSelect01">Grupo:</label>
                         <select class="form-select" id="register_funcao_grupo" name="grupo">
                             <option value="1">1</option>
@@ -37,7 +37,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Nome</th>
-                                    <th scope="col">Grupo</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody id="register_funcao_table"></tbody>
@@ -46,14 +46,16 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="registerModal('register_funcao')">Salvar</button>
+                    <button type="button" class="btn btn-primary"
+                        onclick="registerModal('register_funcao')">Cadastrar</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Modal supervisor-->
-    <div class="modal fade" id="register_supervisor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="register_supervisor" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -61,11 +63,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-2">
                         <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
-                        <input type="text" name="super_nome" id='register_supervisor_nome' class="form-control">
+                        <input type="text" name="super_nome" id='register_supervisor_supervisor' class="form-control">
                     </div>
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-2">
                         <span class="input-group-text">Ativo</span>
                         <div class="input-group-text">
                             <input class="form-check-input mt-0" type="checkbox"
@@ -86,34 +88,19 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="registerModal('register_supervisor')">Salvar</button>
+                    <button type="button" class="btn btn-primary"
+                        onclick="registerModal('register_supervisor')">Salvar</button>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        function toggleAtivo(supervisor, isActive) {
-            $.ajax({
-                url: getAPI() + '/update_supervisor_status', // URL da sua API no Django para atualizar o status
-                type: 'POST',
-                data: {
-                    'csrfmiddlewaretoken': csrftoken,
-                    'supervisor': supervisor,
-                    'ativo': isActive
-                },
-                success: function (response) {
-                    alert(response.message);
-                    loadTable('register_supervisor', 'supervisor');
-                },
-                error: function (xhr) {
-                    alert(xhr.responseJSON.message);
-                }
-            });
-        }
+
     </script>
     <!-- Modal upadate colaborador-->
-    <div class="modal fade" id="update_colaborador" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+    <div class="modal fade" id="update_colaborador" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de colaborador</h1>
@@ -121,14 +108,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col">
-                            <div class="input-group input-group-sm mb-3">
+                        <div class="col-3">
+                            <div class="input-group input-group mb-2">
                                 <label class="input-group-text" for="inputGroupSelect01">ID:</label>
-                                <input type="text" name="update_id" id="update_colaborador_id" class="form-control" disabled>
+                                <input type="text" name="update_id" id="update_colaborador_id" class="form-control"
+                                    disabled>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="input-group input-group-sm mb-3">
+                            <div class="input-group input-group mb-2">
                                 <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
                                 <input type="text" name="update_nome" id="update_colaborador_nome" class="form-control">
                             </div>
@@ -136,34 +124,35 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="input-group input-group-sm mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01">Data de admissão:</label>
-                                <input type="date" name="update_admissao" id="update_colaborador_admissao" class="form-control">
+                            <div class="input-group input-group mb-2">
+                                <label class="input-group-text" for="inputGroupSelect01">Admissão:</label>
+                                <input type="date" name="update_admissao" id="update_colaborador_admissao"
+                                    class="form-control">
                             </div>
                         </div>
                         <div class="col">
-                            <div class="input-group input-group-sm mb-3">
+                            <div class="input-group input-group mb-2">
                                 <label class="input-group-text" for="inputGroupSelect01">Função:</label>
                                 <select class="form-select" name="selectFuncao" id="update_colaborador_funcao">
                                 </select>
                             </div>
                         </div>
-        
+
                     </div>
-        
+
                     <div class="row">
                         <div class="col">
-                            <div class="input-group input-group-sm mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01">Data de demissao:</label>
-                                <input type="date" name="uptade_demissao" id="update_colaborador_demissao" class="form-control">
+                            <div class="input-group input-group mb-2">
+                                <label class="input-group-text" for="inputGroupSelect01">Demissao:</label>
+                                <input type="date" name="uptade_demissao" id="update_colaborador_demissao"
+                                    class="form-control">
                             </div>
                         </div>
-        
+
                         <div class="col">
-                            <div class="input-group input-group-sm mb-3">
+                            <div class="input-group input-group mb-2">
                                 <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="checkbox" value="True"
-                                        aria-label="Checkbox for following text input" name="update_encarregado"
+                                    <input class="form-check-input mt-0" type="checkbox"
                                         id="update_colaborador_encarregado">
                                 </div>
                                 <span class="input-group-text">Encarregado</span>
@@ -172,17 +161,17 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="input-group input-group-sm mb-3">
+                            <div class="input-group input-group mb-2">
                                 <label class="input-group-text" for="inputGroupSelect01">Tipo de contrato:</label>
-                                <select class="form-select" id="update_colaborador_contrato" name="update_colaborador_contrato"
-                                    onchange="exibir_diaria(document.getElementById('update_colaborador_contrato'), document.getElementById('update_colaborador_div_diaria'))">
+                                <select class="form-select" id="update_colaborador_contrato"
+                                    name="update_colaborador_contrato" onchange="toggleDiaria()">
                                     <option value="CLT">CLT</option>
                                     <option value="Terceiro">Terceiro</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="input-group input-group-sm mb-3" id="update_colaborador_div_diaria" style="display: none">
+                            <div class="input-group input-group mb-2" id="update_colaborador_div_diaria">
                                 <span class="input-group-text">Valor da Diaria</span>
                                 <input type="text" class="form-control"
                                     aria-label="Dollar amount (with dot and two decimal places)" name="update_diaria"
@@ -190,26 +179,26 @@
                                 <span class="input-group-text">R$</span>
                             </div>
                         </div>
-        
+
                     </div>
-        
-                    <div class="input-group input-group-sm mb-3">
+
+                    <div class="input-group input-group mb-2">
                         <span class="input-group-text">Observações</span>
                         <textarea class="form-control" aria-label="With textarea" name="update_colaborador_observacao"
                             id="update_colaborador_observacao"></textarea>
                     </div>
-        
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="deleteModal('update_colaborador')">Deletar</button>
-                    <button type="button" class="btn btn-success" onclick="saveModal('update_colaborador')">Salvar</button>
+                    <button type="button" class="btn btn-danger" id='update_colaborador_del'
+                        data-bs-dismiss="modal">Deletar</button>
+                    <button type="button" class="btn btn-success" id='update_colaborador_btn'>Salvar</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal update obra-->
     <div class="modal fade" id="update_obra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de obra</h1>
@@ -218,172 +207,299 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <div class="input-group input-group-sm mb-3">
+                            <div class="input-group input-group mb-2">
                                 <label class="input-group-text" for="inputGroupSelect01">CR:</label>
                                 <input type="text" name="update_obra_cr" id="update_obra_id" class="form-control"
                                     disabled>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="input-group input-group-sm mb-3">
+                            <div class="input-group input-group mb-2">
                                 <label class="input-group-text" for="inputGroupSelect01">Orçamento:</label>
                                 <input type="text" name="update_obra_orcamento" id="update_obra_orcamento"
                                     class="form-control">
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="input-group input-group-sm mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01">Empresa:</label>
-                                <input type="text" name="update_obra_empresa" id="update_obra_empresa"
-                                    class="form-control">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="input-group input-group-sm mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01">Cidade:</label>
-                                <input type="text" name="update_obra_cidade" id="update_obra_cidade"
-                                    class="form-control">
-                            </div>
-                        </div>
+
+                    <div class="input-group input-group mb-2">
+                        <label class="input-group-text" for="inputGroupSelect01">Empresa:</label>
+                        <input type="text" name="update_obra_empresa" id="update_obra_empresa" class="form-control">
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="input-group input-group-sm mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01">Descrição:</label>
-                                <input type="text" name="update_obra_descricao" id="update_obra_descricao"
-                                    class="form-control">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="input-group input-group-sm mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01">Índice:</label>
-                                <input type="text" name="update_obra_indice" id="update_obra_indice"
-                                    class="form-control">
-                            </div>
-                        </div>
+
+
+                    <div class="input-group input-group mb-2">
+                        <label class="input-group-text" for="inputGroupSelect01">Cidade:</label>
+                        <input type="text" name="update_obra_cidade" id="update_obra_cidade" class="form-control">
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="input-group input-group-sm mb-3">
-                                <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="checkbox" value="True"
-                                        aria-label="Checkbox for following text input" name="update_obra_finalizada"
-                                        id="update_obra_finalizada">
+
+
+                    <div class="input-group input-group mb-2">
+                        <label class="input-group-text" for="inputGroupSelect01">Descrição:</label>
+                        <input type="text" name="update_obra_descricao" id="update_obra_descricao" class="form-control">
+                    </div>
+
+                        <div class="input-group mb-2">
+                            <label class="input-group-text" for="update_obra_indice">Índice:</label>
+                            <select class="form-select" id="update_obra_indice">
+                                <option value="OBRAS ENGENHARIA">OBRAS ENGENHARIA</option>
+                                <option value="RETRABALHO">RETRABALHO</option>
+                                <option value="SERVIÇOS PARA O GRUPO">SERVIÇOS PARA O GRUPO</option>
+                            </select>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="input-group input-group mb-2">
+                                    <div class="input-group-text">
+                                        <input class="form-check-input mt-0" type="checkbox" value="True"
+                                            aria-label="Checkbox for following text input" name="update_obra_finalizada"
+                                            id="update_obra_finalizada">
+                                    </div>
+                                    <span class="input-group-text">Finalizada</span>
                                 </div>
-                                <span class="input-group-text">Finalizada</span>
+                            </div>
+                            <div class="col">
+                                <div class="input-group input-group mb-2">
+                                    <label class="input-group-text" for="inputGroupSelect01">Supervisor:</label>
+                                    <select class="form-select" id="update_obra_supervisor"
+                                        name="update_obra_supervisor">
+                                        <!-- Options serão preenchidas dinamicamente -->
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="input-group input-group-sm mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01">Supervisor:</label>
-                                <select class="form-select" id="update_obra_supervisor" name="update_obra_supervisor">
-                                    <!-- Options serão preenchidas dinamicamente -->
-                                </select>
-                            </div>
+                        <div class="input-group input-group mb-2">
+                            <span class="input-group-text">Retrabalho</span>
+                            <textarea class="form-control" aria-label="With textarea" name="update_obra_retrabalho"
+                                id="update_obra_retrabalho"></textarea>
                         </div>
                     </div>
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Retrabalho</span>
-                        <textarea class="form-control" aria-label="With textarea" name="update_obra_retrabalho"
-                            id="update_obra_retrabalho"></textarea>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                            id='update_obra_del'>Deletar</button>
+                        <button type="button" class="btn btn-success" id='update_obra_btn'>Salvar</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="deleteModal('update_obra')">Deletar</button>
-                    <button type="button" class="btn btn-success" onclick="saveModal('update_obra')">Salvar</button>
+            </div>
+        </div>
+
+        <!-- Modal update att-->
+        <div class="modal fade" id="update_atividade" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de atividade</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group input-group mb-2">
+                            <label class="input-group-text" for="inputGroupSelect01">ID:</label>
+                            <input type="text" name="update_att_id" id="update_atividade_id" class="form-control"
+                                disabled>
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text" for="inputGroupSelect01">Colaborador:</label>
+                            <select class="form-select" id="update_atividade_colaborador" name="colaborador">
+                            </select>
+                        </div>
+
+
+                        <div class="input-group mb-2">
+                            <label class="input-group-text" for="inputGroupSelect01">Obra:</label>
+                            <select class="form-select" id="update_atividade_obra" name="obra">
+
+                            </select>
+                        </div>
+
+
+
+                        <div class="row align-items-start">
+                            <div class="col">
+                                <div class="input-group mb-2">
+                                    <label class="input-group-text" for="inputGroupSelect01">Atividade:</label>
+                                    <select class="form-select" id="update_atividade_atividade" name="atividade">
+
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col">
+                                <div class="input-group mb-2">
+                                    <label class="input-group-text" for="inputGroupSelect01">Indice do diario:</label>
+                                    <select class="form-select" id="update_atividade_indice" name="indice">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-start">
+                            <div class="col">
+                                <div class="input-group mb-2">
+                                    <label class="input-group-text" for="inputGroupSelect01">Data de realização:</label>
+                                    <input type="date" name="dia" id="update_atividade_dia" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-text">
+                                        <input class="form-check-input" type="checkbox"
+                                            id="update_atividade_diaseguinte">
+                                    </div>
+                                    <span class="input-group-text">Plantão</span>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-text">
+                                        <input class="form-check-input" type="checkbox"
+                                            id="update_atividade_meiadiaria">
+                                    </div>
+                                    <span class="input-group-text">Meia diaria</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Descrição:</span>
+                            <textarea class="form-control" aria-label="With textarea" name="descricao"
+                                id="update_atividade_descricao"></textarea>
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text" for="inputGroupSelect01">Hora Manhã</label>
+                            <input type="time" name="horaini1" id="update_atividade_horaini1" class="form-control">
+                            <input type="time" name="horafim1" id="update_atividade_horafim1" class="form-control">
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <label class="input-group-text" for="inputGroupSelect01">Hora Tarde</label>
+                            <input type="time" name="horaini2" id="update_atividade_horaini2" class="form-control">
+                            <input type="time" name="horafim2" id="update_atividade_horafim2" class="form-control">
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text" for="inputGroupSelect01">Hora Noite</label>
+                            <input type="time" name="horaini3" id="update_atividade_horaini3" class="form-control">
+                            <input type="time" name="horafim3" id="update_atividade_horafim3" class="form-control">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id='update_atividade_del'
+                            data-bs-dismiss="modal">Deletar</button>
+                        <button type="button" class="btn btn-success" id='update_atividade_btn'>Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal diario-->
+        <div class="modal" id="view_diario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Diário digital</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img alt="imagem ausente" class="img-thumbnail" id="modalDigitalizado">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="#" class="btn btn-primary" id="modalLink" target="_blank">Abrir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Update diário -->
+        <div class="modal fade" id="update_diario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de Diário</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-4">
+                            <div class="input-group mb-2">
+                                <label class="input-group-text" for="update_diario_id">ID:</label>
+                                <input type="number" class="form-control" id="update_diario_id" disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col">
+                                <div class="input-group mb-2">
+                                    <label class="input-group-text" for="update_diario_obra">Obra:</label>
+                                    <select class="form-select" id="update_diario_obra" name="obra" disabled>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group mb-2">
+                                    <label class="input-group-text" for="update_diario_indice">Indice:</label>
+                                    <input type="number" name="indice" id="update_diario_indice" class="form-control"
+                                        disabled>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="input-group mb-2">
+                            <label class="input-group-text" for="update_diario_encarregado">Encarregado:</label>
+                            <select class="form-select" id="update_diario_encarregado" name="encarregado">
+                                <option value=""></option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <label class="input-group-text" for="update_diario_data">Data:</label>
+                            <input type="date" name="data" id="update_diario_data" class="form-control" disabled>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Descrição:</span>
+                            <textarea class="form-control" id="update_diario_descricao"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group mb-2">
+                                    <label class="input-group-text" for="update_diario_climamanha">Manhã</label>
+                                    <select class="form-select" id="update_diario_climamanha" name="climamanha">
+                                        <option>Sol</option>
+                                        <option>Chuva</option>
+                                        <option>Nublado</option>
+                                        <option selected>Não informado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-2">
+                                    <label class="input-group-text" for="update_diario_climatarde">Tarde</label>
+                                    <select class="form-select" id="update_diario_climatarde" name="climatarde">
+                                        <option selected>Sol</option>
+                                        <option>Chuva</option>
+                                        <option>Nublado</option>
+                                        <option selected>Não informado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id='update_diario_del'
+                            data-bs-dismiss="modal">Deletar</button>
+                        <button type="button" class="btn btn-success" id='update_diario_btn'>Salvar</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Modal update att-->
-    <div class="modal fade" id="update_lancamento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de atividade</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group input-group-sm mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">ID:</label>
-                        <input type="text" name="update_att_id" id="update_lancamento_id" class="form-control" disabled>
-                    </div>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Colaborador:</label>
-                        <select class="form-select" id="update_lancamento_colaborador" name="colaborador">
-                            <!-- <option value="{{colab.nome}}">{{colab.nome}} | {{colab.funcao.funcao}}</option>  -->
-                        </select>
-                    </div>
-
-
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Obra:</label>
-                        <select class="form-select" id="update_lancamento_obra" name="obra">
-                            <!-- <option value="{{obra.cr}}">{{obra.cr}} - {{obra.empresa}} - {{obra.cidade}}</option> -->
-                        </select>
-                    </div>
-
-
-
-                    <div class="row align-items-start">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01">Atividade:</label>
-                                <select class="form-select" id="update_lancamento_atividade" name="atividade">
-                                    <!-- <option value="{{att.tipo}}">{{att.tipo}}</option> -->
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01">Indice do diario:</label>
-                                <select class="form-select" id="update_lancamento_indice" name="indice">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Data de realização:</label>
-                        <input type="date" name="dia" id="update_lancamento_dia" class="form-control">
-
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">Descrição:</span>
-                        <textarea class="form-control" aria-label="With textarea" name="descricao"
-                            id="update_lancamento_descricao"></textarea>
-                    </div>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Hora Manhã</label>
-                        <input type="time" name="horaini1" id="update_lancamento_horaini1" class="form-control">
-                        <input type="time" name="horafim1" id="update_lancamento_horafim1" class="form-control">
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Hora Tarde</label>
-                        <input type="time" name="horaini2" id="update_lancamento_horaini2" class="form-control">
-                        <input type="time" name="horafim2" id="update_lancamento_horafim2" class="form-control">
-                    </div>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Hora Noite</label>
-                        <input type="time" name="horaini3" id="update_lancamento_horaini3" class="form-control">
-                        <input type="time" name="horafim3" id="update_lancamento_horafim3" class="form-control">
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="deleteModal('update_lancamento')">Deletar</button>
-                    <button type="button" class="btn btn-success" onclick="saveModal('update_lancamento')">Salvar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

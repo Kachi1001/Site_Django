@@ -5,6 +5,9 @@
 
 
 <script>
+    function getCsrf(){
+        return '{{csrf_token}}'
+    }
     function getAPI(){
         return '{{api}}'
     }
@@ -14,6 +17,9 @@
     function getMedia(arquivo){
         if (arquivo == 'diarios'){
             return '{{media_diarios}}'
+        } else if (arquivo == 'carros') {
+            return '{{media_carros}}'
+
         }
     }
 </script> <!--Routers de Tag -->
