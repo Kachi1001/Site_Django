@@ -1,0 +1,19 @@
+{% extends 'lançamento_obra.html' %}
+
+
+{%block 'header'%}
+<h2>Tabela de Incompletos</h2>
+{%include 'lancamento_obra/tabela_view.html'%}
+
+    <thead>
+            <th data-field="dia" data-sortable="true" data-formatter="dataFormatter">Data</th>
+            <th data-field="nome" data-sortable="true" >Nome</th>
+            <th data-field="total_horas" data-sortable="true" data-formatter="intervalFormatter">Total de horas</th>
+            <th data-field="encarregado" data-sortable="true">Encarregado</th>
+            <th data-field="obra" data-sortable="true">Obra CR</th>
+
+        </tr>
+    </thead>
+</table>
+{%endblock%}
+

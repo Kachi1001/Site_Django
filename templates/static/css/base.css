@@ -2,7 +2,7 @@
 body{
   margin: 0;
   font-family: "Lato", sans-serif;
-  user-select: none;
+  /* user-select: none; */
 }
 header {
   margin-left: calc(var(--side-bar_width) + 50px);
@@ -40,7 +40,7 @@ footer {
 
 .btn-icon {
   border-radius: 10px;
-  padding: 5px;
+  padding: 4px;
   background-color: gray;
   width: 25px;
   display: flex;
@@ -65,4 +65,14 @@ footer {
 }
 .card{
   box-shadow: 3px 3px 3px lightgray;
+}
+h2{
+    margin: 0px;
+}
+td{
+    font-size: 13px;
+}
+.exibir-ocultar{
+    text-align: end;
+    font-size: smaller;
 }

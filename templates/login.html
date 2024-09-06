@@ -33,7 +33,7 @@
         <div class="card-body">
             <form action="{% url 'login'%}" method="post"> {%csrf_token%}
                 <div class="form-floating mb-3">
-                    <input type="name" class="form-control" id="floatingInput" placeholder="Nome" name="nome" value="{{nome}}">
+                    <input type="name" class="form-control" id="floatingInput" placeholder="Nome" name="nome" value="{{login}}">
                     <label for="floatingInput">Nome</label>
                 </div>
                 <div class="form-floating" style="margin-bottom: 30px;">
@@ -41,7 +41,7 @@
                     <label for="floatingPassword">Senha</label>
                 </div>
                 <input type="submit" class="btn btn-outline-success" value="Logar" id="liveAlertBtn">
-                <p>{%if nome != Null%}Nome ou senha incorreto{%endif%}</p>
+                <p>{%if login != Null%}Nome ou senha incorreto{%endif%}</p>
             </form>   
         </div>
         <div class="card-footer text-body-secondary">

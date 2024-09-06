@@ -61,7 +61,7 @@
                         <input type="text" name="destino" id="destino" class="form-control">
                     </div>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Reservar</button>
+                    <button type="submit" class="btn btn-primary" id='reservar_carro_btn'>Reservar</button>
                 </div>
             </div>
         </form>
@@ -93,9 +93,9 @@
                     <img id='foto' src="{%static 'image/reservas/carro.png'%}" class="modal-img" alt="...">
                 </div>
                 <div class="modal-footer">
-                    <input type="file" class="form-control" id="arquivo" name="arquivo" accept=".jpg">
+                    <input type="file" class="form-control" id="arquivo" name="arquivo" accept="image/*">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="cadastra()">Cadastrar</button>
+                    <button type="button" class="btn btn-primary" id='cadastrar_carro_btn'>Cadastrar</button>
                 </div>
             </div>
         </div>

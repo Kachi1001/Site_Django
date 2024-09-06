@@ -223,11 +223,11 @@
 	function deletar(id) {
 		if (confirm('Deseja deletar esse agendamento?')) {
 			$.ajax({
-				url: getAPI() + '/salas',  // URL da sua API no Django
+				url: API + 'delete',  // URL da sua API no Django
 				type: 'POST',
 				data: {
 					'csrfmiddlewaretoken': "{{ csrf_token }}",
-					'metodo': 'deletar',
+					'metodo': 'sala',
 					'parametro': JSON.stringify({'id':id}),
 				},
 				success: function (Response) {
@@ -242,11 +242,11 @@
 	function editar(id) {
 		if (confirm('Deseja editar esse agendamento?')) {
 			$.ajax({
-				url: getAPI() + '/salas',  // URL da sua API no Django
+				url: API + 'edit',  // URL da sua API no Django
 				type: 'POST',
 				data: {
 					'csrfmiddlewaretoken': "{{ csrf_token }}",
-					'metodo': 'editar',
+					'metodo': 'sala',
 					'parametro': JSON.stringify({
                         'id':id,
                         'responsavel': document.getElementById('responsavel'.concat(id))?.value,

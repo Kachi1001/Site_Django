@@ -39,9 +39,7 @@
                 <a href="{%url 'carros'%}"><i {{icon_form}}></i> Carros</a>
                 <a href="{%url 'munck'%}"><i {{icon_form}}></i> Munck</a>
                 <a href="{%url 'frota_registros'%}"><i {{icon_table}}></i> Registros</a>
-                {% if user|can:'frota' %}
-                <a href="#" data-bs-toggle="modal" data-bs-target="#cadastrar_carro"><i {{icon_modal}}></i> Cadastrar carro</a>
-                {%endif%}
+                <a href="#" data-bs-toggle="modal" data-bs-target="#cadastrar_carro" onclick="loadModal('cadastrar_carro')"><i {{icon_modal}}></i> Cadastrar carro</a>
             </div>
         </div>
         {%endif%}

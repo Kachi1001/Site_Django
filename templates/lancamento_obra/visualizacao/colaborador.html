@@ -1,17 +1,7 @@
 {% extends 'lançamento_obra.html' %}
-{% load static %}
 
-
-
-{%block 'caminho'%}
-  <li class="breadcrumb-item" aria-current="page">Visualização</li>
-  <li class="breadcrumb-item active" aria-current="page">Colaborador</li>
-{%endblock%}
 
 {%block 'header'%}
   <h2>Tabela de Colaborador</h2>
+  {%include 'lancamento_obra/tabelas/colaborador.html'%}
 {%endblock%}
-
-{% block 'main' %}
-{%include 'lancamento_obra/tabelas/colaborador.html'%}
-{% endblock %}

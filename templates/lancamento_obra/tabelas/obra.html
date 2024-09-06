@@ -1,8 +1,6 @@
 {%load static%}
 {%include 'lancamento_obra/tabela.html'%}
-data-url="{{api}}/tabela/obra"
-data-cookie-id-table="obra"
->
+
 <thead>
     <tr>
         <th data-field="id" data-sortable="true">Cr</th>
@@ -12,7 +10,7 @@ data-cookie-id-table="obra"
         <th data-field="cidade" data-sortable="true">Cidade</th>
         <th data-field="descricao" data-sortable="true" data-formatter="Formatter">Descrição</th>
         <th data-field="supervisor_id" data-sortable="true">Supervisor</th>
-        <th data-field="finalizada" data-sortable="true" data-formatter="finalizadaFormatter">Finalizada</th>
+        <th data-field="finalizada" data-sortable="true" data-formatter="checkFormatter">Finalizada</th>
         <th data-field="indice" data-sortable="true">Indice</th>
         <th data-field="etapas" data-formatter="Formatter">Etapas</th>
         <th data-field="editar" data-formatter="editarFormatter" data-events="editarEvents">Editar</th>
@@ -22,14 +20,6 @@ data-cookie-id-table="obra"
 </table>
 {% block "script" %}
 <script>
-
-    function finalizadaFormatter(value) {
-        if (value) {
-            return '<input class="form-check-input mt-0" type="checkbox" checked disabled>'
-        } else {
-            return '<input class="form-check-input mt-0" type="checkbox" disabled>'
-        }
-    }
     function editarFormatter(value) {
         return '<a class="editarBtn" href="javascript:void(0)" title="Like"> <div class="btn-icon" data-bs-toggle="modal" data-bs-target="#update_obra" style="background-color: skyblue;"><img src="{% static "icons/pencil.svg"%}" alt="edit"></div></div>'
     }
