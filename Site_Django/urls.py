@@ -19,10 +19,14 @@ from django.contrib import admin
 from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
-from .status import *
 
 def status(request):
     return HttpResponse("Estamos online")
+
+from django.shortcuts import render
+def teste(request):
+    return render(request, teste.html)
+
 
 urlpatterns = [
     path('', include("Home.urls")),
@@ -30,7 +34,8 @@ urlpatterns = [
     path('lancamento_obra/' , include("Lancamento_obra.urls")),
     path('reservas/' , include("Reservas.urls")),
     path('ti/', include('TI.urls')),
-    path("status/", status)
+    path("status/", status),
+    path("teste/", teste)
 ]
 
 

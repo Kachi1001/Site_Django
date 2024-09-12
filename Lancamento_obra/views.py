@@ -28,3 +28,7 @@ def consultas(request, table):
 @has_permission_decorator('lancamento_obra-lancamentos')
 def lancamentos(request, type):
     return render(request, f"lancamento_obra/lancamentos/{type}.html", {'table': type})
+
+@login_required
+def graficos(request, type):
+    return render(request, f"lancamento_obra/grafico/{type}.html", {'table': type})
