@@ -13,26 +13,33 @@
         <th data-field="folgas" data-sortable="true" data-formatter="intervalFormatter">Folgas</th>
         <th data-field="faltas" data-sortable="true" data-formatter="intervalFormatter">Faltas</th>
         <th data-field="dispensas" data-sortable="true" data-formatter="intervalFormatter">Dispensas</th>
+        <th data-field="diario" data-sortable="true">Diário</th>
         <th data-field="editar" data-formatter="editarFormatter" data-events="editarEvents">Editar</th>
     </tr>
 </thead>
 </table>
 <script>
-function editarFormatter(value) {
-    
-    return (
-        '<div style="margin-left: 0px; display: inline-flex;">'
-        + '<div class="btn-icon" id="editarBtn" href="javascript:void(0)" title="Editar" style="background-color: skyblue;">'
-        + '<img src="{% static "icons/pencil.svg"%}" alt="edit">'
-        + '</div>'
-        + '</div>'
-    )
-}
-window.editarEvents = {
-    'click #editarBtn': function (e, value, row, index) {
-        loadModal('update_atividade', row['id'])
+    function editarFormatter(value) {
 
-    },
-}
+        return (
+            '<div style="margin-left: 0px; display: inline-flex;">'
+            + '<div class="btn-icon" id="editarBtn" href="javascript:void(0)" title="Editar" style="background-color: skyblue;">'
+            + '<img src="{% static "icons/pencil.svg"%}" alt="edit">'
+            + '</div>'
+            + '<div class="btn-icon" id="viewBtn" href="javascript:void(0)" title="Diário" style="background-color: lightgreen;">'
+            + '<img src="{% static "icons/file-earmark-text.svg"%}" alt="edit">'
+            + '</div>'
+            + '</div>'
+        )
+    }
+    window.editarEvents = {
+        'click #editarBtn': function (e, value, row, index) {
+            loadModal('update_atividade', row['id'])
+
+        },
+        'click #viewBtn': function (e, value, row, index) {
+            loadModal('view_diario', row['diario'])
+        },
+    }
 </script>
 {%endblock%}
