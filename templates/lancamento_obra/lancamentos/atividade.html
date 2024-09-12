@@ -13,16 +13,18 @@
                 <label class="input-group-text">Colaborador:</label>
                 <select class="form-select" id="form_atividade_colaborador"></select>
             </div>
-            <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_demitidos" onclick="toggleOculto('colaborador')">exibir demitidos</a>
+            <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_demitidos"
+                onclick="toggleOculto('colaborador')">exibir demitidos</a>
         </div>
     </div>
     <div class="col">
         <div class="row justify-content-end">
             <div class="input-group">
                 <label class="input-group-text">Obra:</label>
-                <select class="form-select" id="form_atividade_obra"></select>
+                <select class="form-select" id="form_atividade_obra" onchange="changeObra()"></select>
             </div>
-            <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_finalizadas" onclick="toggleOculto('obra')">exibir finalizadas</a>
+            <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_finalizadas"
+                onclick="toggleOculto('obra')">exibir finalizadas</a>
         </div>
     </div>
 </div>
@@ -53,12 +55,7 @@
         </div>
         <div class="input-group mb-2">
             <label class="input-group-text">Indice do diario:</label>
-            <select class="form-select" id="form_atividade_indice">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-
-            </select>
+            <input type="number" class="form-control" id="form_atividade_indice" value="1">
         </div>
         <div class="row">
             <div class="col">
@@ -84,59 +81,58 @@
             <label class="input-group-text">Atividade:</label>
             <select class="form-select" id="form_atividade_atividade"></select>
         </div>
-        <div class="row justify-content-end">
-            <div class="input-group">
-                <span class="input-group-text">Descrição:</span>
-                <textarea class="form-control" id="form_atividade_descricao"></textarea>
-            </div>
-            <a href="#" class="exibir-ocultar mb-2" onclick="get_desc()">puxar do diario</a>
+        <div class="input-group mb-2">
+            <label class="input-group-text">Responsável:</label>
+            <select class="form-select" id="form_atividade_supervisor" disabled></select>
         </div>
-        <div class="mt-3" style="justify-content: flex-end; display: flex;">
-            <button type="button" class="btn btn-success" id="form_atividade_btn">Registrar</button>
+        <div class="input-group mb-2">
+            <label class="input-group-text">Motivo:</label>
+            <input type="text" class="form-control" id="form_atividade_motivo" disabled>
         </div>
+    </div>
+    
+        <div class="input-group">
+            <span class="input-group-text">Descrição:</span>
+            <textarea class="form-control" id="form_atividade_descricao"></textarea>
+        </div>
+        <a href="#" class="exibir-ocultar mb-2" onclick="get_desc()">puxar do diario</a>
+    
+    <div class="mt-3" style="justify-content: flex-end; display: flex;">
+        <button type="button" class="btn btn-success" id="form_atividade_btn">Lançar</button>
     </div>
 </div>
 </div>
 <script>
-    function get_desc(){
-        if ($('#form_atividade_dia').val() == ''){
+    function get_desc() {
+        if ($('#form_atividade_dia').val() == '') {
             alert('Informe uma data antes!!')
             return
         }
         data = $('#form_atividade_dia').val().split('-')
-        data = data[2].concat('-',data[1],'-',data[0])
+        data = data[2].concat('-', data[1], '-', data[0])
         $.ajax({
             url: API + "get_data", // URL da sua API no Django
             type: "GET",
             data: {
                 csrfmiddlewaretoken: csrftoken,
                 metodo: 'diario',
-                parametro: $('#form_atividade_obra').val().concat('_',data,'_',$('#form_atividade_indice').val()),
+                parametro: $('#form_atividade_obra').val().concat('_', data, '_', $('#form_atividade_indice').val()),
             },
             success: function (data) {
                 $('#form_atividade_descricao').val(data.descricao)
             },
             error: function (error) {
                 console.error("Erro ao buscar dados:", error);
-                alert(error.responseJSON.message);
+                toasts('Alert', error.responseJSON)
             },
         });
     };
     $(document).ready(function () {
         loadForm('atividade')
-        att = ['ATESTADO', 'DISPENSA', 'FALTA', 'FOLGA', 'FÉRIAS', 'TREINAMENTO', 'ATIVIDADE OBRA']
-        $('#form_atividade_obra').change(function () {
-            let obra = $('#form_atividade_obra').val()
-            if (obra >= 7) {
-                $('#form_atividade_atividade').val(att[6])
-            } else {
-                $('#form_atividade_atividade').val(att[obra - 1])
-
-            }
-        });
+        
     })
 </script>
 {%endblock%}
 {%block 'submain'%}
-<div class="submain">{%include 'lancamento_obra/tabelas/atividade.html'%}</div>
+<div class="submain">{%include 'lancamento_obra/table/atividade.html'%}</div>
 {% endblock %}

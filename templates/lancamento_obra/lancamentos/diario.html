@@ -7,13 +7,12 @@
 {% block 'main' %}
 
 <div class="row">
-    <div class="col">
-        
-                <div class="input-group mb-2">
-                    <label class="input-group-text">Digitalizado</label>
-                    <input type="file" class="form-control" id="form_diario_arquivo" accept="image/*">
-                </div>
-        
+    <div class="col-5">
+        <div class="input-group mb-2">
+            <label class="input-group-text">Digitalizado</label>
+            <input type="file" class="form-control" id="form_diario_arquivo" accept="image/*">
+        </div>
+
         <div class="row">
             <div class="col">
                 <div class="row justify-content-end">
@@ -21,7 +20,8 @@
                         <label class="input-group-text">Obra:</label>
                         <select class="form-select" id="form_diario_obra"></select>
                     </div>
-                    <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_finalizadas" onclick="toggleOculto('obra')">exibir finalizadas</a>
+                    <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_finalizadas"
+                        onclick="toggleOculto('obra')">exibir finalizadas</a>
                 </div>
             </div>
             <div class="col-4">
@@ -77,14 +77,17 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-end"><div class="col-auto"><button type="button" class="btn btn-success mt-2 mb-2" id="register">Registrar</button></div></div>
-        <div div='row mb-2' style="border-top: 1px solid lightgray;">{%include 'lancamento_obra/tabelas/diario.html'%}
+        <div class="row justify-content-end">
+            <div class="col-auto"><button type="button" class="btn btn-success mt-2 mb-2"
+                    id="register">Lançar</button></div>
         </div>
+        <div div='row mb-2' style="border-top: 1px solid lightgray;">{%include 'lancamento_obra/table/diario.html'%}</div>
     </div>
-    <div class="col">
+    <div class="col-auto">
         <div class="text-center">
             <img src="https://cdn-icons-png.flaticon.com/512/104/104090.png" class="img-thumbnail" alt="Digitalização"
-                style="width: 400px; height: 650px; object-fit: contain; " id="form_diario_digitalização">
+                style="width: 600px;height: 750px; object-fit: contain; " id="form_diario_digitalização"
+                data-bs-toggle="modal" data-bs-target="#view_diario">
         </div>
     </div>
 </div>
@@ -92,8 +95,6 @@
 <div id="liveAlertPlaceholder"></div>
 <script>
     loadForm('diario')
-    toggleOculto('obra')
-    $('#datafinal').hide()
     let photo = document.getElementById('form_diario_digitalização');
     let file = document.getElementById('form_diario_arquivo');
     let filename
@@ -104,10 +105,6 @@
             return numero;
     }
 
-    $('#form_diario_digitalização').click(function () {
-        const myModalAlternative = new bootstrap.Modal('#view_diario')
-        myModalAlternative.show()
-    });
     $('#form_diario_arquivo').change(function () {
         filename = $('#form_diario_arquivo').val().replace("C:\\fakepath\\", "").split(".")
         let reader = new FileReader();
@@ -159,7 +156,7 @@
             },
             error: function (error) {
                 console.error('Erro ao cadastrar', error)
-                alert(error.responseJSON.message);
+                toasts('Error',error.responseJSON);
             }
         });
     }

@@ -4,7 +4,8 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name= "lancamento_obra"),
-    path("cadastro/<str:type>", views.cadastro, name= "cadastro"),
-    path("visualizacao/<str:table>", views.visualizacao, name= "visualizacao"),
-    path("lancamento/<str:type>", views.lancamento, name= "lancamento"), # type: ignore
+    path("cadastros/<str:type>", views.cadastros, name= "cadastros"),
+    path("tabelas/<str:table>", views.tabelas, name= "tabelas"),
+    path("consultas/<str:table>", views.consultas, name= "consultas"),
+    path("lancamentos/<str:type>", views.lancamentos, name= "lancamentos"),
 ]

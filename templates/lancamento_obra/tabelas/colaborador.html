@@ -1,34 +1,7 @@
-{%load static%}
-{%include 'lancamento_obra/tabela.html'%}
+{% extends 'lançamento_obra.html' %}
 
-    <thead>
-        <tr>
-            <th colspan="3">Descrições</th>
-            <th colspan="2">Cargos</th>
-            <th colspan="4">Contrato</th>
-            <th data-field="editar" data-formatter="editarFormatter" data-events="editarEvents" rowspan="2">Editar</th>
-        </tr>
-        <tr>
-            <th data-field="id" data-sortable="true" data-searchable="1">Id</th>
-            <th data-field="nome" data-sortable="true" data-searchable="1">Nome</th>
-            <th data-field="observacao" data-sortable="true" data-formatter="Formatter">Oberservação</th>
-            <th data-field="funcao" data-sortable="true">Função</th>
-            <th data-field="encarregado" data-sortable="true" data-formatter="checkFormatter">Encarregado</th>
-            <th data-field="admissao"data-sortable="true" data-formatter="dataFormatter">Admissão</th>
-            <th data-field="demissao" data-sortable="true" data-formatter="dataFormatter">Demissão</th>
-            <th data-field="contrato" data-sortable="true" data-formatter="Formatter">Tipo</th>
-            <th data-field="diaria" data-sortable="true" data-formatter="Formatter">Diária</th>
-            
-        </tr>
-    </thead>
-</table>
-<script>
-    function editarFormatter(value) {
-        return '<a class="editarBtn" href="javascript:void(0)" title="Like"> <div class="btn-icon" data-bs-toggle="modal" data-bs-target="#update_colaborador" style="background-color: skyblue;"><img src="{% static "icons/pencil.svg"%}" alt="edit"></div></div>'
-    }
-    window.editarEvents = {
-        'click .editarBtn': function (e, value, row, index) {
-            loadModal('update_colaborador', row['id'])
-        },
-    }
-</script>
+
+{%block 'header'%}
+  <h2>Tabela de Colaborador</h2>
+  {%include 'lancamento_obra/table/colaborador.html'%}
+{%endblock%}

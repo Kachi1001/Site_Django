@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-hss4fba%6y**i6$hkin&j@gp3h^^7r5*duji$-f1&(_#m6*gx#
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True if config('DJ_DEBUG', 1) == 1 else False
+DEBUG = True if config('DJ_DEBUG', 'false') == 'true' else False
 
 ALLOWED_HOSTS = [config("DJ_HOST"),'127.0.0.1', 'tecnikaengenharia.ddns.net', 'enjoyed-sheepdog-intense.ngrok-free.app']
 
