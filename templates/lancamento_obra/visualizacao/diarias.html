@@ -1,0 +1,38 @@
+{% extends 'lançamento_obra.html' %}
+
+
+{%block 'header'%}
+<h2>Consulta de Diária</h2>
+{%include 'lancamento_obra/tabela_view.html'%}
+<thead>
+    <tr>
+        <th data-field="colaborador" data-sortable="true">Colaborador</th>
+        <th data-field="competencia" data-sortable="true">Competência</th>
+        <th data-field="diaria" data-sortable="true" >Diárias</th>
+        <th data-field="horas" data-sortable="true" data-formatter="horaFormatter">Horas</th>
+        <th data-field="valor_diarias" data-sortable="true" data-formatter="realFormatter">Valor da diária</th>
+        <th data-field="valor_horas" data-sortable="true" data-formatter="realFormatter">Valor da hora</th>
+        <th data-field="total" data-sortable="true" data-formatter="realFormatter">Total</th>
+    </tr>
+</thead>
+</table>
+<script>
+    if (confirm('Deseja atualizar as tabelas antes?')){
+        $.ajax({
+            url: API + 'funcao', // URL da sua API no Django
+            type: "GET",
+            data: {
+                'metodo' : 'atualizar_tabelas' 
+            },
+            success: function (response) {
+                toasts('Success',response)
+                $("#table").bootstrapTable("refresh");
+            },
+            error: function (error) {
+                toasts('Error',error.responseJSON)
+                console.error(error)
+            },
+        });
+    }
+</script>
+{%endblock%}

@@ -1,5 +1,5 @@
 {% extends 'lançamento_obra.html' %}
-
+{%load static%}
 
 {%block 'header'%}
 <h2>Consulta de efetividade</h2>
@@ -35,22 +35,42 @@
 <thead>
     <tr>
         <th data-field="colaborador" data-sortable="true" rowspan="2">Nome</th>
-        <th data-field="dia" data-sortable="true" rowspan="2">Dia</th>
+        <th data-field="dia" data-sortable="true" rowspan="2" data-Formatter="dataFormatter">Dia</th>
         <th data-field="obra" data-sortable="true" rowspan="2">Obra</th>
         <th data-field="descricao" data-sortable="true" rowspan="2">Descrição</th>
         <th colspan="6">Horas</th>
+        <th data-field="editar" data-formatter="editarFormatter" data-events="editarEvents" rowspan="2">Editar</th>
     </tr>
     <tr>
-        <th data-field="horaini1" data-sortable="true">Início 1</th>
-        <th data-field="horafim1" data-sortable="true">Fim 1</th>
-        <th data-field="horaini2" data-sortable="true">Início 2</th>
-        <th data-field="horafim2" data-sortable="true">Fim 2</th>
-        <th data-field="horaini3" data-sortable="true">Início 3</th>
-        <th data-field="horafim3" data-sortable="true">Fim 3</th>
+        <th data-field="horaini1" data-sortable="true" data-Formatter="Formatter">Início 1</th>
+        <th data-field="horafim1" data-sortable="true" data-Formatter="Formatter">Fim 1</th>
+        <th data-field="horaini2" data-sortable="true"data-Formatter="Formatter">Início 2</th>
+        <th data-field="horafim2" data-sortable="true"data-Formatter="Formatter">Fim 2</th>
+        <th data-field="horaini3" data-sortable="true"data-Formatter="Formatter">Início 3</th>
+        <th data-field="horafim3" data-sortable="true"data-Formatter="Formatter">Fim 3</th>
     </tr>
 </thead>
 </table>
 <script>
+    function editarFormatter(value) {
+
+        return (
+            '<div style="margin-left: 0px; display: inline-flex;">'
+            + '<div class="btn-icon" id="editarBtn" href="javascript:void(0)" title="Editar" style="background-color: skyblue;">'
+            + '<img src="{% static "icons/pencil.svg"%}" alt="edit">'
+            + '</div>'
+            + '</div>'
+        )
+    }
+    window.editarEvents = {
+        'click #editarBtn': function (e, value, row, index) {
+            loadModal('update_atividade', row['id'])
+
+        },
+        'click #viewBtn': function (e, value, row, index) {
+            loadModal('view_diario', row['diario'])
+        },
+    }
     $('#btn').click(function () {
         parametro = {}
         parametros = ['colaborador', 'obra', 'dataini', 'datafim']
@@ -68,11 +88,11 @@
                 'parametro': JSON.stringify(parametro)
             },
             success: function (data) {
-                toasts('Success')
+                toasts('Success', data)
                 $("#table").bootstrapTable("refresh");
             },
             error: function (xhr) {
-                toasts('Error')
+                toasts('Error', xhr.responseJSON)
                 console.error(xhr)
             },
         });

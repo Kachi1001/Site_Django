@@ -21,7 +21,7 @@
 {% block "script" %}
 <script>
     function editarFormatter(value) {
-        return '<a class="editarBtn" href="javascript:void(0)" title="Like"> <div class="btn-icon" data-bs-toggle="modal" data-bs-target="#update_obra" style="background-color: skyblue;"><img src="{% static "icons/pencil.svg"%}" alt="edit"></div></div>'
+        return '<a class="editarBtn" href="javascript:void(0)" title="Like"> <div class="btn-icon" style="background-color: skyblue;"><img src="{% static "icons/pencil.svg"%}" alt="edit"></div></div>'
     }
     window.editarEvents = {
         'click .editarBtn': function (e, value, row, index) {

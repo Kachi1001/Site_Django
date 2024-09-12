@@ -1,0 +1,38 @@
+{% extends 'lançamento_obra.html' %}
+{%load static%}
+
+{%block 'header'%}
+<h2>Consulta de Descontos</h2>
+{%include 'lancamento_obra/tabela_view.html'%}
+<thead>
+    <tr>
+        <th data-field="id" data-sortable="true">ID</th>
+        <th data-field="responsavel" data-sortable="true">Responsável</th>
+        <th data-field="dia" data-sortable="true" data-formatter="dataFormatter">Data</th>
+        <th data-field="colaborador" data-sortable="true">Colaborador</th>
+        <th data-field="folgas" data-sortable="true" data-formatter="intervalFormatter">Folgas</th>
+        <th data-field="faltas" data-sortable="true" data-formatter="intervalFormatter">Faltas</th>
+        <th data-field="dispensas" data-sortable="true" data-formatter="intervalFormatter">Dispensas</th>
+        <th data-field="editar" data-formatter="editarFormatter" data-events="editarEvents">Editar</th>
+    </tr>
+</thead>
+</table>
+<script>
+function editarFormatter(value) {
+    
+    return (
+        '<div style="margin-left: 0px; display: inline-flex;">'
+        + '<div class="btn-icon" id="editarBtn" href="javascript:void(0)" title="Editar" style="background-color: skyblue;">'
+        + '<img src="{% static "icons/pencil.svg"%}" alt="edit">'
+        + '</div>'
+        + '</div>'
+    )
+}
+window.editarEvents = {
+    'click #editarBtn': function (e, value, row, index) {
+        loadModal('update_atividade', row['id'])
+
+    },
+}
+</script>
+{%endblock%}

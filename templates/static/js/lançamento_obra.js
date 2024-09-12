@@ -22,6 +22,16 @@ function dataFormatter(value) {
         return "";
     }
 }
+function realFormatter(value) {
+    if (value != null) {
+        return "R$ ".concat(value);
+    }
+}
+function horaFormatter(value) {
+    if (value != null) {
+        return value.concat(" H");
+    }
+}
 function intervalFormatter(value) {
     if (value != null) {
         let horatotal =
@@ -34,19 +44,21 @@ function intervalFormatter(value) {
         );
         return tempo;
     } else {
-        return "00:00:00";4
+        return "00:00:00";
+        4;
     }
 }
 
 function toggleDiaria() {
-    diaria = $("#".concat(objLoaded.prefix, "_diaria"));
-    if ($("#".concat(objLoaded.prefix, "_contrato")).val() == "Terceiro") {
+    diaria = $("#".concat(objLoaded.prefix, "diaria"));
+    if ($("#".concat(objLoaded.prefix, "contrato")).val() == "Terceiro") {
         diaria.attr("disabled", false);
     } else {
         diaria.attr("disabled", true);
         diaria.val("");
     }
 }
+
 function registerData(metodo, parametro) {
     $.ajax({
         url: API + "register",
@@ -59,7 +71,10 @@ function registerData(metodo, parametro) {
         },
         success: function (Response) {
             loadModal("register_" + metodo, metodo);
-            toasts("Success");
+            toasts("Success", {
+                method: "Registro",
+                message: `${metodo} criado com sucesso!`,
+            });
         },
         error: function (error) {
             alert(error.responseJSON.message);
@@ -67,7 +82,7 @@ function registerData(metodo, parametro) {
     });
 }
 
-function deleteData(modal, id) {
+function deleteData(id) {
     if (confirm("Tens certeza que deseja apagar essa linha")) {
         $.ajax({
             url: API + "deletar", // URL da view Django que deleta a obra
@@ -75,15 +90,16 @@ function deleteData(modal, id) {
             data: {
                 csrfmiddlewaretoken: csrftoken,
                 user: user,
-                metodo: modal.split("_")[1],
+                metodo: objLoaded.name,
                 parametro: id,
             },
-            success: function () {
-                toasts("Success");
+            success: function (response) {
+                toasts("Success", response);
                 $("#table").bootstrapTable("refresh");
             },
             error: function (error) {
                 console.error("Erro ao deletar dados:", error);
+                toasts("Error", error.responseJSON);
             },
         });
     }
@@ -104,8 +120,49 @@ var columns = {
     select: undefined,
 };
 var modalLoad;
+function changeAtividade() {
+    let obra = $("#" + objLoaded.prefix + "obra").val();
+    const campos1 = [
+        "horaini3",
+        "horafim3",
+        "diaseguinte",
+        "meiadiaria",
+        "atividade",
+    ];
+    const campos2 = ["supervisor", "motivo"];
+    if (obra > 1 && obra < 5) {
+        desativado = true;
+    } else {
+        desativado = false;
+    }
+    for (let X in campos1) {
+        $("#" + objLoaded.prefix + campos1[X]).attr("disabled", desativado);
+    }
+    for (let X in campos2) {
+        $("#" + objLoaded.prefix + campos2[X]).attr("disabled", !desativado);
+    }
+}
+function changeObra() {
+    const att = ['ATESTADO', 'DISPENSA', 'FALTA', 'FOLGA', 'FÉRIAS', 'TREINAMENTO', 'ATIVIDADE OBRA']
 
-function loadColumns() {
+    let obra = $("#" + objLoaded.prefix + "obra").val();
+    if (obra >= 7) {
+        $("#" + objLoaded.prefix + "atividade").val(att[6]);
+    } else {
+        $("#" + objLoaded.prefix + "atividade").val(att[obra - 1]);
+    }
+    changeAtividade();
+}
+function removeColumns(value) {
+    if (value in columns.inputs) {
+        columns.inputs.slice(columns.inputs.indexOf(value), 1);
+    } else if (value in columns.checks) {
+        columns.checks.slice(columns.checks.indexOf(value), 1);
+    } else if (value in columns.select) {
+        columns.select.slice(columns.select.indexOf(value), 1);
+    }
+}
+function loadColumns(oculto) {
     if (objLoaded != columns.obj) {
         let inputs = [];
         let checks = [];
@@ -121,9 +178,10 @@ function loadColumns() {
                 "horafim2",
                 "horaini3",
                 "horafim3",
+                "motivo",
             ];
             checks = ["diaseguinte", "meiadiaria"];
-            select = ["obra", "atividade", "colaborador"];
+            select = ["obra", "atividade", "colaborador", "supervisor"];
         } else if (objLoaded.name === "colaborador") {
             inputs = [
                 "nome",
@@ -161,6 +219,9 @@ function loadColumns() {
             checks = ["ativo"];
         } else if (objLoaded.name === "funcao") {
             inputs = ["funcao", "grupo"];
+        } else if (objLoaded.name === "programacao") {
+            inputs = ["observacao", "iniciosemana"];
+            select = ["colaborador", "encarregado", "obra"];
         }
         columns = {
             inputs: inputs,
@@ -168,6 +229,9 @@ function loadColumns() {
             select: select,
             obj: objLoaded,
         };
+        for (i = 0; i < columns.select.length; i++) {
+            loadSelect(columns.select[i], oculto);
+        }
     }
 }
 // Faz um post na API para registrar oque estiver nos inputs, normalmente referente a um formulário
@@ -175,12 +239,11 @@ function submit(type) {
     data = {};
     values = columns.inputs.concat(columns.select);
     for (let i = 0; i < values.length; i++) {
-        data[values[i]] =
-            $("#" + objLoaded.prefix + "_" + values[i]).val() || NaN;
+        data[values[i]] = $("#" + objLoaded.prefix + values[i]).val() || NaN;
     }
     for (let i = 0; i < columns.checks.length; i++) {
         data[columns.checks[i]] = $(
-            "#" + objLoaded.prefix + "_" + columns.checks[i]
+            "#" + objLoaded.prefix + columns.checks[i]
         ).prop("checked");
     }
     $.ajax({
@@ -192,24 +255,20 @@ function submit(type) {
             metodo: objLoaded.name,
             parametro: JSON.stringify(data),
         },
-        success: function () {
-            toasts("Success");
+        success: function (response) {
+            toasts("Success", response);
             $("#table").bootstrapTable("refresh");
         },
         error: function (error) {
-            let msg = error.responseJSON.message.split("\n")[0];
-            alert(msg);
+            toasts("Error", error.responseJSON);
             console.error(error);
         },
     });
 }
 function loadForm(name) {
-    objLoaded = { method: "form", name: name, prefix: "form_" + name };
-    loadColumns();
-    for (i = 0; i < columns.select.length; i++) {
-        loadSelect(columns.select[i], "oculto");
-    }
-    $("#" + objLoaded.prefix + "_btn").click(function () {
+    objLoaded = { method: "form", name: name, prefix: "form_" + name + "_" };
+    loadColumns('oculto');
+    $("#" + objLoaded.prefix + "btn").click(function () {
         submit("register");
     });
 }
@@ -238,16 +297,16 @@ function toggleOculto(campo) {
 //Preencher os campos de cada modal
 function loadModal(modal, parametro) {
     let a = modal.split("_");
-    objLoaded = { method: a[0], name: a[1], prefix: modal };
+    let old_objLoaded = objLoaded;
+
+    objLoaded = { method: a[0], name: a[1], prefix: modal + "_" };
+    loadColumns('exibir');
     if (objLoaded.prefix != modalLoad) {
-        $("#" + objLoaded.prefix + "_btn").click(function () {
+        $("#" + objLoaded.prefix + "btn").click(function () {
             submit(objLoaded.method);
         });
-        $("#" + objLoaded.prefix + "_del").click(function () {
-            deleteData(
-                objLoaded.prefix,
-                $("#" + objLoaded.prefix + "_id").val()
-            );
+        $("#" + objLoaded.prefix + "del").click(function () {
+            deleteData($("#" + objLoaded.prefix + "id").val());
         });
         modalLoad = objLoaded.prefix;
     }
@@ -261,36 +320,35 @@ function loadModal(modal, parametro) {
                 parametro: parametro,
             },
             success: function (data) {
-                loadColumns();
-                for (i = 0; i < columns.select.length; i++) {
-                    loadSelect(columns.select[i], "exibir");
-                }
                 columns.inputs.push("id");
-                setTimeout(function () {
-                    values = columns.inputs.concat(columns.select);
-                    if (values !== undefined) {
-                        for (let i = 0; i < values.length; i++) {
-                            let input = values[i];
-                            $("#" + modal + "_" + input).val(data[input]);
-                        }
+                values = columns.inputs.concat(columns.select);
+                if (values !== undefined) {
+                    for (let i = 0; i < values.length; i++) {
+                        let input = values[i];
+                        $("#" + modal + "_" + input).val(data[input]);
                     }
-                    if (a[1] == "colaborador") {
-                        toggleDiaria();
+                }
+                if (columns.checks !== undefined) {
+                    for (let i = 0; i < columns.checks.length; i++) {
+                        let check = columns.checks[i];
+                        $("#" + modal + "_" + check).prop(
+                            "checked",
+                            data[check]
+                        );
                     }
-                    if (columns.checks !== undefined) {
-                        for (let i = 0; i < columns.checks.length; i++) {
-                            let check = columns.checks[i];
-                            $("#" + modal + "_" + check).prop(
-                                "checked",
-                                data[check]
-                            );
-                        }
-                    }
-                }, 100);
+                }
+
+                if (a[1] == "colaborador") {
+                    toggleDiaria();
+                }
+                if (a[1] == "atividade") {
+                    changeObra();
+                }
             },
             error: function (error) {
                 console.error("Erro ao buscar dados:", error);
                 alert(error.responseJSON.message);
+                toasts("Error", error.responseJSON);
             },
         });
     } else if (objLoaded.method == "register") {
@@ -309,14 +367,34 @@ function loadModal(modal, parametro) {
             success: function (data) {
                 if (objLoaded.name == "diario") {
                     previewModal_img(getMedia("diarios") + data.imagem);
+                } else if (objLoaded.name == "programacao") {
+                    previewModal_img(
+                        getMedia(objLoaded.name) + data.iniciosemana + ".jpg"
+                    );
                 }
             },
             error: function (error) {
                 console.error("Erro ao buscar dados:", error);
-                alert(error.responseJSON.message);
+                toasts("Alert", error.responseJSON);
             },
         });
     }
+    showModal(old_objLoaded);
+
+}
+function showModal(old_objLoaded) {
+    let myModal = new bootstrap.Modal(
+        document.getElementById(objLoaded.method + "_" + objLoaded.name)
+    );
+    myModal.show();
+
+    let myModalEvent = document.getElementById(
+        objLoaded.method + "_" + objLoaded.name
+    );
+    myModalEvent.addEventListener("hidden.bs.modal", (event) => {
+        objLoaded = old_objLoaded;
+        loadColumns();
+    });
 }
 function toggleAtivo(supervisor, isActive) {
     $.ajax({
@@ -331,55 +409,58 @@ function toggleAtivo(supervisor, isActive) {
             }),
         },
         success: function () {
-            toasts("Success");
+            toasts("Success", {
+                method: "Edição",
+                message: "Supervisor ativo com sucesso",
+            });
         },
-        error: function (xhr) {
-            alert(xhr.responseJSON.message);
+        error: function (error) {
+            toasts("Alert", error.responseJSON.message);
         },
     });
 }
-function loadTable(modal, table) {
-    $("#".concat(modal + "_table")).empty();
+function loadTable() {
+    $("#".concat(objLoaded.prefix + "table")).empty();
     $.ajax({
         url: API + "get_table", // URL da view Django que retorna os dados
         method: "GET",
         data: {
             csrfmiddlewaretoken: csrftoken,
             metodo: "table",
-            parametro: table,
+            parametro: objLoaded.name,
         },
         success: function (data) {
             for (let i = 0; i < data.length; i++) {
                 let row = "<tr>";
-                if (table == "funcao") {
+                if (objLoaded.name == "funcao") {
                     row += `<td>${data[i].funcao}</td>`;
                     if (data[i].grupo != null) {
                         row += `<td>${data[i].grupo}</td>`;
                     }
-                    row += `<td><img src="${icon}/trash.svg" class="btn-icon" onclick='deleteData("${modal}","${data[i].id}"); setTimeout(function() {loadTable("register_funcao", "funcao");},200)' style='background:lightcoral;'></td>`;
-                } else if (table == "supervisor") {
+                    row += `<td><img src="${icon}/trash.svg" class="btn-icon" onclick='deleteData("${data[i].id}"); setTimeout(function() {loadTable();},200)' style='background:lightcoral;'></td>`;
+                } else if (objLoaded.name == "supervisor") {
                     let checked;
                     row += `<td>${data[i].supervisor}</td>`;
                     checked = data[i].ativo ? "checked" : "";
                     row += `<td><input class="form-check-input" type="checkbox" ${checked} onclick="toggleAtivo('${
                         data[i].supervisor
                     }', ${!data[i].ativo})"></td>`;
-                    row += `<td><img src="${icon}/trash.svg" class="btn-icon" onclick='deleteData("${modal}","${data[i].supervisor}"); setTimeout(function() {loadTable("register_supervisor", "supervisor");},200)' style='background:lightcoral;'></td>`;
+                    row += `<td><img src="${icon}/trash.svg" class="btn-icon" onclick='deleteData("${data[i].supervisor}"); setTimeout(function() {loadTable();},200)' style='background:lightcoral;'></td>`;
                 } else {
                     return alert("Nenhuma table encontrado");
                 }
                 row += "</tr>";
-                $("#".concat(modal + "_table")).append(row);
+                $("#".concat(objLoaded.prefix + "table")).append(row);
             }
         },
         error: function (error) {
             console.error("Erro ao buscar dados:", error);
-            alert(error.responseJSON.message);
+            toasts("Error", error.responseJSON);
         },
     });
 }
 function loadSelect(select, filter) {
-    let selectHTML = objLoaded.prefix + "_" + select;
+    let selectHTML = objLoaded.prefix + select;
     $("#".concat(selectHTML)).empty();
     $.ajax({
         url: API + "get_table", // URL da sua API no Django
@@ -431,7 +512,7 @@ function loadSelect(select, filter) {
         },
         error: function (error) {
             console.error("Erro ao buscar dados:", error);
-            alert(error.responseJSON.message);
+            toasts("Error", error.responseJSON);
         },
     });
 }
@@ -449,24 +530,25 @@ function postgresGET(url, metodo, parametro) {
             return data;
         },
         error: function (xhr) {
-            alert(xhr.responseJSON.message);
+            toasts("Error", xhr.responseJSON);
             return NaN;
         },
     });
 }
 
-function toasts(type, message) {
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(
+function toasts(type, response) {
+    let toastBootstrap = bootstrap.Toast.getOrCreateInstance(
         document.getElementById("toast" + type)
     );
+    if (response != undefined) {
+        $("#toast" + type + "_method").text(response.method);
+        $("#toast" + type + "_message").text(response.message);
+    }
     toastBootstrap.show();
-}
-function deleteModal(modal) {
-    deleteData(modal, $("#" + modal + "_id").val());
 }
 
 function previewModal_img(img) {
-    image = document.getElementById("modalDigitalizado");
+    image = document.getElementById("view_" + objLoaded.name + "_digitalizado");
     image.src = img;
-    $("#modalLink").prop("href", img);
+    $("#" + objLoaded.prefix + "btn").prop("href", image.src);
 }

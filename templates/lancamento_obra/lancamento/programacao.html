@@ -10,111 +10,162 @@
     <div class="col">
         <div class="input-group mb-2">
             <label class="input-group-text">Digitalizado</label>
-            <input type="file" class="form-control" id="form_diario_arquivo" accept="image/*">
+            <input type="file" class="form-control" id="form_programacao_arquivo" accept=".jpg"
+                onchange="previewImg()">
         </div>
 
         <div class="input-group mb-2">
-            <label class="input-group-text" for="form_diario_data">Data:</label>
-            <input type="date" id="form_diario_data" class="form-control">
+            <label class="input-group-text" for="form_programacao_data">Data:</label>
+            <input type="date" id="form_programacao_data" class="form-control">
         </div>
 
-        <h5>Detalhes</h5>
 
-        <div div='container text-start mb-2' id="linhas" style="border-top: 1px solid lightgray; padding-top: 10px;">
-        </div>
 
-        <a onclick="addLinha()" class="icon-link icon-link-hover"
-            style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);" href="#">
-            + Adicionar detalhe
-        </a>
 
-        <div class="row justify-content-end">
+        <div class="row justify-content-between">
+            <div class="col align-self-end"></div>
+            <div class="col-auto"><button type="button" class="btn btn-primary mt-2 mb-2" onclick="addLinha()">Adicionar
+                    detalhe</button></div>
             <div class="col-auto"><button type="button" class="btn btn-success mt-2 mb-2"
                     id="register">Registrar</button></div>
         </div>
+        <div div='container text-start mb-2' style="border-top: 1px solid lightgray; padding-top: 10px;">
+            <h5>Detalhes</h5>
+            <div id="linhas"></div>
+        </div>
+
     </div>
 
-    <div class="col">
+    <div class="col-auto">
         <div class="text-center">
             <img src="https://cdn-icons-png.flaticon.com/512/104/104090.png" class="img-thumbnail" alt="Digitalização"
-                style="width: 400px; height: 650px; object-fit: contain; " id="form_diario_digitalização">
+            style="width: 800px; height: 600px; object-fit: contain; " id="form_programacao_digitalização" data-bs-toggle="modal" data-bs-target="#view_programacao">
         </div>
     </div>
 </div>
 
-<div id="liveAlertPlaceholder"></div>
+{% endblock %}
+{% block "script"%}
 <script>
+    loadForm('programacao')
+
+    const prefix = 'form_programacao_';
+    var linhas = []
     let filename
     function adicionaZero(numero) {
         if (numero <= 9)
-        return "0" + numero;
+            return "0" + numero;
         else
-        return numero;
+            return numero;
     }
-    
-    $('#form_diario_digitalização').click(function () {
-        const myModalAlternative = new bootstrap.Modal('#view_diario')
-        myModalAlternative.show()
-    });
-    function previewImg(){
-        let photo = $('#form_programacao_digitalização');
-        let file = $('#form_diario_arquivo');
+
+    arquivo = $('#form_programacao_arquivo');
+    function previewImg() {
         let reader = new FileReader();
-        
         reader.onload = () => {
-            photo.src = reader.result;
+            $('#form_programacao_digitalização').attr('src', reader.result);
             previewModal_img(reader.result)
         }
-        reader.readAsDataURL(file.files[0]);
+        reader.readAsDataURL(arquivo[0].files[0]);
     }
-    $('#form_diario_arquivo').change(function () {
-        previewImg()
-        filename = $('#form_diario_arquivo').val().replace("C:\\fakepath\\", "").split(".")
-    });
+    
     $('#register').click(function () {
-        let file = $('#form_diario_arquivo')[0].files[0];
+        let filename = arquivo.val().replace("C:\\fakepath\\", "").split(".")
+        let file = arquivo[0].files[0];
+        let formData = new FormData();
+    
         if (!file) {
             alert("Por favor, selecione um arquivo primeiro.");
             return;
         }
-        let parametro = {
-            'data': $('#form_diario_data').val(),
-            'obra': $('#form_diario_obra').val(),
-            'indice': $('#form_diario_indice').val(),
-            'encarregado': $('#form_diario_encarregado').val(),
-            'climamanha': $('#form_diario_climamanha').val(),
-            'climatarde': $('#form_diario_climatarde').val(),
-            'descricao': $('#form_diario_descricao').val(),
-        }
-        parametro['imagem'] = parametro.obra + '_' + parametro.data + '_' + parametro.indice + '.' + filename[(filename.length - 1)]
-        let formData = new FormData();
-        formData.append('file', file);
-        formData.append('parametro', JSON.stringify(parametro));
-        formData.append('metodo', 'diario');
-
-
-        $.ajax({
-            url: API + 'register',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-
-            success: function () {
-                toasts("Success");
-                $("#table").bootstrapTable("refresh");
-            },
-            error: function (error) {
-                console.error('Erro ao cadastrar', error)
-                alert(error.responseJSON.message);
+        let segunda = $('#form_programacao_data').val()
+        let lanc = [];
+        let obra = $('#' + prefix + 'obra_' + linhas[0]).val();
+        let encarregado = $('#' + prefix + 'colaborador_' + linhas[0]).val();
+        for (i = 0; $('#' + prefix + 'obra_' + linhas[i]).val() != undefined; i++) {
+            colaborador = $('#' + prefix + 'colaborador_' + linhas[i]).val()
+            if ($('#' + prefix + 'obra_' + linhas[i]).val() != obra) {
+                obra = $('#' + prefix + 'obra_' + linhas[i]).val()
+                encarregado = colaborador
             }
-        });
+            if ($('#' + prefix + 'semencarregado_' + linhas[i]).prop('checked')){
+                encarregado = NaN
+            }
+            lanc.push({
+                'colaborador': colaborador,
+                'obra': obra,
+                'encarregado': encarregado
+            })
+        }
+    let parametro = {
+        'lanc': JSON.stringify(lanc),
+        'iniciosemana': segunda,
+        'imagem': segunda + '.' + filename[(filename.length - 1)]
+    }
+    formData.append('file', file);
+    formData.append('parametro', JSON.stringify(parametro));
+    formData.append('metodo', 'programacao');
+    
+    $.ajax({
+        url: API + 'register',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+    
+        success: function (response) {
+            toasts("Success", response);
+        },
+        error: function (error) {
+            console.error('Erro ao cadastrar', error)
+            alert(error.responseJSON.message);
+        }
+    });
     }
     )
-</script>
-{% endblock %}
-{% block "script"%}
-<script>
+    function addLinha() {
+        $('#linhas').prepend(
+            `<div class="row mb-2" id="linha${linha}">` +
+            '<div class="col-auto justify-content-center align-content-center">' +
+                `<input class="form-check-input" type="checkbox" id="${prefix}semencarregado_${linha}">` +
+                '</div>' +
+
+            '<div class="col">' +
+            '<div class="input-group">' +
+
+            `<select class="form-select" id="${prefix}obra_${linha}">` +
+            obras +
+            '</select>' +
+
+            '</div>' +
+            '</div>' +
+            '<div class="col">' +
+            '<div class="input-group">' +
+            `<select class="form-select" id="${prefix}colaborador_${linha}">` +
+            colaboradores +
+            '</select>' +
+
+            '</div>' +
+            '</div>' +
+
+            '<div class="col-auto">' +
+            `<button type="button" class="btn btn-danger" onclick="removeLinha(${linha})"><img src="${icon}/trash.svg"></button>` +
+            '</div>'
+        )
+        
+        if (linhas.length != 0) {
+            let ant = linhas.indexOf(linha - 1)
+            $(`#${prefix}obra_${linha}`).val($(`#${prefix}obra_${linhas[ant]}`).val())
+            $('#' + prefix + 'semencarregado_' + linha).attr('checked', $('#' + prefix + 'semencarregado_' + linhas[ant]).prop('checked'))
+        }
+        linhas.push(linha)
+        linha++
+
+    }
+    function removeLinha(id) {
+        $('#linha'.concat(id)).remove()
+        linhas.splice(linhas.indexOf(id),1)
+    }
     var obras;
     var colaboradores;
     function loadVar(select) {
@@ -132,9 +183,10 @@
                         obras += `<option value=${data[i].id}>${data[i].id} || ${data[i].empresa} | ${data[i].cidade}</option>`
                     }
                     else if (select == 'colaborador' && data[i].demissao == null) {
-                        colaboradores += `<option value=${data[i].nome}>${data[i].nome}</option>`
+                        colaboradores += `<option>${data[i].nome}</option>`
                     }
                 }
+
             },
             error: function () {
                 toasts('error')
@@ -144,40 +196,9 @@
     var linha = 0
     loadVar('obra')
     loadVar('colaborador')
-    addLinha()
-    function addLinha() {
-        $('#linhas').append(
-            `<div class="row" id="linha${linha}">` +
-            '<div class="col">' +
-            '<div class="input-group mb-2">' +
-
-            `<select class="form-select" id="form_programacao_obra_${linha}">` +
-            obras +
-            '</select>' +
-
-            '</div>' +
-            '</div>' +
-            '<div class="col">' +
-            '<div class="input-group mb-2">' +
-            `<select class="form-select" id="form_programacao_colaborador_${linha}">` +
-            colaboradores +
-            '</select>' +
-
-            '</div>' +
-            '</div>' +
-
-            '<div class="col-auto">' +
-            `<button type="button" class="btn btn-danger" onclick="removeLinha(${linha})"><img src="${icon}/trash.svg"></button>` +
-            '</div>'
-        )
-        if (linha != 0) {
-            $(`#form_programacao_obra_${linha}`).val($(`#form_programacao_obra_${linha - 1}`).val())
-        }
-        linha++
-    }
-    function removeLinha(id) {
-        $('#linha'.concat(id)).remove()
-    }
+    setTimeout(function () {
+        addLinha()
+    }, 400)
 </script>
 
 {% endblock "script" %}
