@@ -17,6 +17,7 @@
 </thead>
 </table>
 <script>
+    $(document).ready(function(){
     if (confirm('Deseja atualizar as tabelas antes?')){
         $.ajax({
             url: API + 'funcao', // URL da sua API no Django
@@ -34,5 +35,6 @@
             },
         });
     }
+});
 </script>
 {%endblock%}
