@@ -1,7 +1,10 @@
+{% load permission_tags %}
+
 <div class="sidenav">
     <h1 class="nome_app">Lançamento obra</h1>
 
     <div class="accordion accordion-flush" id="accordion">
+        {% if user|can:'lancamento_obra-cadastros' %}
 
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -11,8 +14,8 @@
                 </button>
             </h2>
             <div id="menu-cadastro" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url 'cadastro' 'colaborador'%}"><i {{icon_form}}></i> Colaborador</a>
-                <a href="{%url 'cadastro' 'obra'%}"><i {{icon_form}}></i> Obra</a>
+                <a href="{%url 'cadastros' 'colaborador'%}"><i {{icon_form}}></i> Colaborador</a>
+                <a href="{%url 'cadastros' 'obra'%}"><i {{icon_form}}></i> Obra</a>
 
                 <a href="#" onclick="loadModal('register_funcao', 'funcao')"><i {{icon_modal}}></i> Função</a>
                 <a href="#" onclick="loadModal('register_supervisor', 'supervisor')"><i {{icon_modal}}></i>
@@ -20,6 +23,9 @@
 
             </div>
         </div>
+    {%endif%}
+        {% if user|can:'lancamento_obra-lancamentos' %}
+
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -28,13 +34,13 @@
                 </button>
             </h2>
             <div id="menu-lancamento" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url 'lancamento' 'atividade'%}"><i {{icon_form}}></i> Atividade</a>
-                <a href="{%url 'lancamento' 'diario'%}"><i {{icon_form}}></i> Diário</a>
-                <a href="{%url 'lancamento' 'programacao'%}"><i {{icon_form}}></i> Programação</a>
+                <a href="{%url 'lancamentos' 'atividade'%}"><i {{icon_form}}></i> Atividade</a>
+                <a href="{%url 'lancamentos' 'diario'%}"><i {{icon_form}}></i> Diário</a>
+                <a href="{%url 'lancamentos' 'programacao'%}"><i {{icon_form}}></i> Programação</a>
             </div>
         </div>
-
-
+{%endif%}
+        {% if user|can:'lancamento_obra-tabelas' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -43,15 +49,15 @@
                 </button>
             </h2>
             <div id="menu-tabelas" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url 'visualizacao' 'colaborador'%}"><i {{icon_table}}></i> Colaboradores</a>
-                <a href="{%url 'visualizacao' 'obra'%}"><i {{icon_table}}></i> Obras</a>
-                <a href="{%url 'visualizacao' 'atividade'%}"><i {{icon_table}}></i> Atividade</a>
-                <a href="{%url 'visualizacao' 'diario'%}"><i {{icon_table}}></i> Diário</a>
-                <a href="{%url 'visualizacao' 'programacao'%}"><i {{icon_table}}></i> Programação</a>
+                <a href="{%url 'tabelas' 'colaborador'%}"><i {{icon_table}}></i> Colaboradores</a>
+                <a href="{%url 'tabelas' 'obra'%}"><i {{icon_table}}></i> Obras</a>
+                <a href="{%url 'tabelas' 'atividade'%}"><i {{icon_table}}></i> Atividade</a>
+                <a href="{%url 'tabelas' 'diario'%}"><i {{icon_table}}></i> Diário</a>
+                <a href="{%url 'tabelas' 'programacao'%}"><i {{icon_table}}></i> Programação</a>
             </div>
         </div>
-
-
+        {%endif%}
+        {% if user|can:'lancamento_obra-consultas' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -60,14 +66,14 @@
                 </button>
             </h2>
             <div id="menu-consultas" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url 'visualizacao' 'incompletos'%}"><i {{icon_table}}></i> Incompletos</a>
-                <a href="{%url 'visualizacao' 'hora_mes'%}"><i {{icon_table}}></i> Horas por mês</a>
-                <a href="{%url 'visualizacao' 'efetividade'%}"><i {{icon_table}}></i> Efetividade</a>
-                <a href="{%url 'visualizacao' 'descontos_resumo'%}"><i {{icon_table}}></i> Descontos</a>
-                <a href="{%url 'visualizacao' 'diarias'%}"><i {{icon_table}}></i> Diárias</a>
+                <a href="{%url 'consultas' 'incompletos'%}"><i {{icon_table}}></i> Incompletos</a>
+                <a href="{%url 'consultas' 'hora_mes'%}"><i {{icon_table}}></i> Horas por mês</a>
+                <a href="{%url 'consultas' 'efetividade'%}"><i {{icon_table}}></i> Efetividade</a>
+                <a href="{%url 'consultas' 'descontos_resumo'%}"><i {{icon_table}}></i> Descontos</a>
+                <a href="{%url 'consultas' 'diarias'%}"><i {{icon_table}}></i> Diárias</a>
             </div>
         </div>
-
+        {%endif%}
         <!-- <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
