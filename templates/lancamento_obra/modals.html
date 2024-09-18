@@ -222,24 +222,39 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="input-group input-group mb-2">
-                        <label class="input-group-text" for="inputGroupSelect01">Empresa:</label>
-                        <input type="text" name="update_obra_empresa" id="update_obra_empresa" class="form-control">
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group input-group mb-2">
+                                <label class="input-group-text" for="update_obra_retrabalho">Retrabalho</label>
+                                <input type="text" class="form-control" name="update_obra_retrabalho"
+                                    id="update_obra_retrabalho">
+                            </div>
+                        </div>
+                            <div class="col">
+                                <div class="input-group mb-2">
+                                    <label class="input-group-text" for="form_obra_cidade">Tecnicon:</label>
+                                    <input type="text" id="form_obra_tecnicon" class="form-control">
+                                </div>
+                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group input-group mb-2">
+                                <label class="input-group-text" for="inputGroupSelect01">Empresa:</label>
+                                <input type="text" id="update_obra_empresa" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group mb-2">
+                                <label class="input-group-text" for="inputGroupSelect01">Cidade:</label>
+                                <input type="text" id="update_obra_cidade" class="form-control">
+                            </div>
+                        </div>
                     </div>
 
 
-                    <div class="input-group input-group mb-2">
-                        <label class="input-group-text" for="inputGroupSelect01">Cidade:</label>
-                        <input type="text" name="update_obra_cidade" id="update_obra_cidade" class="form-control">
-                    </div>
-
-
-                    <div class="input-group input-group mb-2">
-                        <label class="input-group-text" for="inputGroupSelect01">Descrição:</label>
-                        <input type="text" name="update_obra_descricao" id="update_obra_descricao" class="form-control">
-                    </div>
-
+                    
+                    
                     <div class="input-group mb-2">
                         <label class="input-group-text" for="update_obra_indice">Índice:</label>
                         <select class="form-select" id="update_obra_indice">
@@ -250,7 +265,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-5">
+                        <div class="col-auto">
                             <div class="input-group input-group mb-2">
                                 <div class="input-group-text">
                                     <input class="form-check-input mt-0" type="checkbox" value="True"
@@ -268,12 +283,12 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="input-group input-group mb-2">
+                            <label class="input-group-text" for="update_obra_descricao">Descrição:</label>
+                            <textarea type="text" id="update_obra_descricao" class="form-control"></textarea>
+                        </div>
                     </div>
-                    <div class="input-group input-group mb-2">
-                        <span class="input-group-text">Retrabalho</span>
-                        <textarea class="form-control" aria-label="With textarea" name="update_obra_retrabalho"
-                            id="update_obra_retrabalho"></textarea>
-                    </div>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
@@ -417,8 +432,7 @@
                     <img alt="imagem ausente" class="img-thumbnail" id="view_diario_digitalizado">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="#" class="btn btn-primary" target="_blank">Abrir</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
@@ -519,8 +533,7 @@
                     <img alt="imagem ausente" class="img-thumbnail" id="view_programacao_digitalizado">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="#" class="btn btn-primary" id="view_programacao_btn" target="_blank">Abrir</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>

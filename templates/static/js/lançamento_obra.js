@@ -202,6 +202,7 @@ function loadColumns(oculto) {
                 "descricao",
                 "indice",
                 "retrabalho",
+                'tecnicon',
             ];
             checks = ["finalizada"];
             select = ["supervisor"];
@@ -356,28 +357,8 @@ function loadModal(modal, parametro) {
         loadColumns();
         modalLoad = objLoaded.prefix;
     } else if (objLoaded.method == "view") {
-        $.ajax({
-            url: API + "get_data", // URL da sua API no Django
-            type: "GET",
-            data: {
-                csrfmiddlewaretoken: csrftoken,
-                metodo: objLoaded.name,
-                parametro: parametro,
-            },
-            success: function (data) {
-                if (objLoaded.name == "diario") {
-                    previewModal_img(getMedia("diarios") + data.imagem);
-                } else if (objLoaded.name == "programacao") {
-                    previewModal_img(
-                        getMedia(objLoaded.name) + data.iniciosemana + ".jpg"
-                    );
-                }
-            },
-            error: function (error) {
-                console.error("Erro ao buscar dados:", error);
-                toasts("Alert", error.responseJSON);
-            },
-        });
+        previewModal_img(getMedia(objLoaded.name) + parametro + ".jpg");
+        
     }
     showModal(old_objLoaded);
 
@@ -550,5 +531,4 @@ function toasts(type, response) {
 function previewModal_img(img) {
     image = document.getElementById("view_" + objLoaded.name + "_digitalizado");
     image.src = img;
-    $("#" + objLoaded.prefix + "btn").prop("href", image.src);
 }
