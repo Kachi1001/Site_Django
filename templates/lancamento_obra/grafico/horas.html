@@ -1,0 +1,55 @@
+{% extends 'lançamento_obra.html' %}
+
+
+{%block 'header'%}
+<h2>Grafico de Horas extras</h2>
+<canvas id="myChart"></canvas>
+
+<script>
+    function pegar_grafico(linha){
+        $.ajax({
+            url: API + 'grafico',
+        type: 'GET',
+        data: {
+            metodo: 'grafico1',
+            parametro: linha
+        },
+        success: function(a) {
+            const ctx = document.getElementById('myChart');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Hora_50', 
+                        data: a,
+                        parsing: {
+                            yAxisKey: 'hora_50'
+                        },
+                      },{
+                        label: 'Hora_100', 
+                        data: a,
+                        parsing: {
+                            yAxisKey: 'hora_100'
+                        },
+                      }]
+                  },
+                options: {
+                    parsing: {
+                        xAxisKey: 'mes',
+                    }
+                    
+                }
+        
+            });
+        },
+        error: function(error) {
+            console.error('Erro:', error);
+            alert('Erro ao carregar o grafico.');
+        }
+    });
+}
+h50 = pegar_grafico('hora_50')
+    
+    console.log(h50)
+</script>
+{%endblock%}
