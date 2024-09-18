@@ -5,14 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-    
-env:
-  DB_NAME: Site_Django
-  DB_USER: django
-  DB_PASSWORD: django@site_django
-  DB_HOST: 25.50.212.191
-  DB_PORT: 5432
-  
+
 jobs:
   build:
 
