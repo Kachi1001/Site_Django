@@ -5,23 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-env:
-  DB_NAME: Site_Django
-  DB_USER: django
-  DB_PASSWORD: django@site_django
-  DB_HOST: 10.0.0.139
-  DB_PORT: 5432
 
-  DJ_NAME: DJANGO
-  DJ_HOST: 10.0.0.211
-  DJ_PORT: 8001
-  DJ_DEBUG: true
-
-
-  API_HOST: 10.0.0.211
-  API_PORT: 8003
-
-  WP_KEY: tecnika.com.br
 jobs:
   build:
 
