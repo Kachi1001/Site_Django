@@ -76,3 +76,24 @@ td{
     text-align: end;
     font-size: smaller;
 }
+:root{
+    --cor1: #73beab;
+    --cor2: #91DBFA;
+    --cor3: #f1f0ee;
+    --cor4: #FFBA6B;
+    --cor5: #bcc8ce;
+    --cor6: #5E8077;
+}
+body{
+    background-color: var(--cor3);
+}
+.sidenav .nome_app{
+    background-color: var(--cor6);
+}
+.card-header{
+    background-color: var(--cor6);
+    color: white;
+}
+nav {
+  background-color: var(--cor1);
+}

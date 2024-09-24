@@ -17,8 +17,7 @@ def login(request):
             return redirect('/')
         else:
             return render(request, 'login.html', {"login": request.POST.get('nome')})
-        
-        
+
 @login_required
 def index(request):
     user = request.user

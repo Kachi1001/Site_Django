@@ -9,6 +9,7 @@
     left: 0;
     overflow-x: hidden;
     box-shadow:  3px 0px 15px rgb(145, 145, 145);
+    background-color: var(--cor5);
   }
   
   /* Styl the sidenav links and the dropdown button */
@@ -17,7 +18,7 @@
     text-decoration: none;
     font-size: 15px;
     color: black;
-    display: block;
+    display: block; 
     border: none;
     background: none;
     width: 100%;

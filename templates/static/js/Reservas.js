@@ -179,7 +179,6 @@ function registarAJAX(parametro, metodo) {
         success: function (response) {
             alert(response.message);
             location.reload()
-            return true
         },
         error: function (error) {
             alert(error.responseJSON.message);

@@ -181,7 +181,7 @@ function loadColumns(oculto) {
                 "motivo",
             ];
             checks = ["diaseguinte", "meiadiaria"];
-            select = ["obra", "atividade", "colaborador", "supervisor"];
+            select = ["obra_id", "atividade_id", "colaborador", "supervisor"];
         } else if (objLoaded.name === "colaborador") {
             inputs = [
                 "nome",
@@ -321,6 +321,7 @@ function loadModal(modal, parametro) {
                 parametro: parametro,
             },
             success: function (data) {
+                data = data[0]
                 columns.inputs.push("id");
                 values = columns.inputs.concat(columns.select);
                 if (values !== undefined) {
@@ -457,7 +458,7 @@ function loadSelect(select, filter) {
                 let text;
                 if (select == "funcao") {
                     value = data[i].funcao;
-                } else if (select == "obra") {
+                } else if (select == "obra_id") {
                     if (filter == "oculto" && data[i].finalizada) {
                     } else {
                         value = data[i].id;
@@ -470,7 +471,7 @@ function loadSelect(select, filter) {
                     }
                 } else if (select == "supervisor") {
                     value = data[i].supervisor;
-                } else if (select == "atividade") {
+                } else if (select == "atividade_id") {
                     value = data[i].tipo;
                     // text = data[i].tipo;
                 } else if (select == "colaborador") {

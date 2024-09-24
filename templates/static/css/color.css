@@ -1,19 +1,4 @@
-body{
-    background-color: var(--cor3);
-}
-.sidenav{
-    background-color: var(--cor5);
-}
-.sidenav .nome_app{
-    background-color: var(--cor6);
-}
-.card-header{
-    background-color: var(--cor6);
-    color: white;
-}
-nav {
-  background-color: var(--cor1);
-}
+
 /* :root{
     --cor1: #7DFFCA;
     --cor2: #7FE7FA;
@@ -22,11 +7,3 @@ nav {
     --cor5: #8BA1A5;
     --cor6: #678076;
 } */
-:root{
-    --cor1: #73beab;
-    --cor2: #91DBFA;
-    --cor3: #f1f0ee;
-    --cor4: #FFBA6B;
-    --cor5: #94A0A6;
-    --cor6: #5E8077;
-}
