@@ -12,9 +12,9 @@
 
 
 <div class="modals">
-    <div class="modal fade" id="register_funcao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="register_funcao" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content" id="register_funcao">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastro de função</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -230,12 +230,12 @@
                                     id="update_obra_retrabalho">
                             </div>
                         </div>
-                            <div class="col">
-                                <div class="input-group mb-2">
-                                    <label class="input-group-text" for="form_obra_cidade">Tecnicon:</label>
-                                    <input type="text" id="form_obra_tecnicon" class="form-control">
-                                </div>
+                        <div class="col">
+                            <div class="input-group mb-2">
+                                <label class="input-group-text" for="form_obra_cidade">Tecnicon:</label>
+                                <input type="text" id="form_obra_tecnicon" class="form-control">
                             </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col">
@@ -251,10 +251,6 @@
                             </div>
                         </div>
                     </div>
-
-
-                    
-                    
                     <div class="input-group mb-2">
                         <label class="input-group-text" for="update_obra_indice">Índice:</label>
                         <select class="form-select" id="update_obra_indice">
@@ -278,9 +274,7 @@
                         <div class="col">
                             <div class="input-group input-group mb-2">
                                 <label class="input-group-text" for="inputGroupSelect01">Supervisor:</label>
-                                <select class="form-select" id="update_obra_supervisor" name="update_obra_supervisor">
-                                    <!-- Options serão preenchidas dinamicamente -->
-                                </select>
+                                <select class="form-select" id="update_obra_supervisor_id"></select>
                             </div>
                         </div>
                         <div class="input-group input-group mb-2">
@@ -288,7 +282,7 @@
                             <textarea type="text" id="update_obra_descricao" class="form-control"></textarea>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
@@ -312,7 +306,8 @@
                         <div class="col-4">
                             <div class="input-group input-group mb-2">
                                 <label class="input-group-text" for="inputGroupSelect01">ID:</label>
-                                <input type="text" name="update_att_id" id="update_atividade_id" class="form-control" disabled>
+                                <input type="text" name="update_att_id" id="update_atividade_id" class="form-control"
+                                    disabled>
                             </div>
                         </div>
                         <div class="col">
@@ -330,7 +325,7 @@
 
 
                     <div class="input-group mb-2">
-                        <label class="input-group-text" for="update_atividade_obra" >Obra:</label>
+                        <label class="input-group-text" for="update_atividade_obra">Obra:</label>
                         <select class="form-select" id="update_atividade_obra_id" name="obra" onchange="changeObra()">
 
                         </select>
@@ -361,10 +356,10 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="input-group mb-2">
                         <label class="input-group-text">Responsável:</label>
-                        <select class="form-select" id="update_atividade_supervisor"></select>
+                        <select class="form-select" id="update_atividade_supervisor_id"></select>
                     </div>
                     <div class="input-group mb-2">
                         <label class="input-group-text">Motivo:</label>
@@ -604,3 +599,108 @@
         </div>
     </div>
 </div>
+
+<script>
+    //Preencher os campos de cada modal
+    function loadModal(modal, parametro) {
+        let a = modal.split("_");
+        let old_objLoaded = objLoaded;
+
+        objLoaded = { method: a[0], name: a[1], prefix: modal + "_" };
+        loadColumns('exibir');
+        if (objLoaded.prefix != modalLoad) {
+            $("#" + objLoaded.prefix + "btn").click(function () {
+                submit(objLoaded.method);
+            });
+            $("#" + objLoaded.prefix + "del").click(function () {
+                deleteData($("#" + objLoaded.prefix + "id").val());
+            });
+            modalLoad = objLoaded.prefix;
+        }
+        if (objLoaded.method == "update") {
+            $.ajax({
+                url: API + "get_data", // URL da sua API no Django
+                type: "GET",
+                data: {
+                    csrfmiddlewaretoken: csrftoken,
+                    metodo: a[1],
+                    parametro: parametro,
+                },
+                success: function (data) {
+                    data = data[0]
+                    columns.inputs.push("id");
+                    values = columns.inputs.concat(columns.select);
+                    if (values !== undefined) {
+                        for (let i = 0; i < values.length; i++) {
+                            let input = values[i];
+                            $("#" + modal + "_" + input).val(data[input]);
+                        }
+                    }
+                    if (columns.checks !== undefined) {
+                        for (let i = 0; i < columns.checks.length; i++) {
+                            let check = columns.checks[i];
+                            $("#" + modal + "_" + check).prop(
+                                "checked",
+                                data[check]
+                            );
+                        }
+                    }
+
+                    if (a[1] == "colaborador") {
+                        toggleDiaria();
+                    }
+                    if (a[1] == "atividade") {
+                        changeObra();
+                    }
+                },
+                error: function (error) {
+                    alert(error.responseJSON.message);
+                    toasts("danger", error.responseJSON);
+                },
+            });
+        } else if (objLoaded.method == "register") {
+            loadTable(objLoaded.prefix, objLoaded.name);
+            loadColumns();
+            modalLoad = objLoaded.prefix;
+        } else if (objLoaded.method == "view") {
+            previewModal_img(getMedia(objLoaded.name) + parametro + ".jpg");
+
+        }
+        showModal(old_objLoaded);
+
+    }
+    function showModal(old_objLoaded) {
+        let myModal = new bootstrap.Modal(
+            document.getElementById(objLoaded.method + "_" + objLoaded.name)
+        );
+        myModal.show();
+
+        let myModalEvent = document.getElementById(
+            objLoaded.method + "_" + objLoaded.name
+        );
+        myModalEvent.addEventListener("hidden.bs.modal", (event) => {
+            objLoaded = old_objLoaded;
+            loadColumns();
+        });
+    }
+    function toggleAtivo(supervisor, isActive) {
+        $.ajax({
+            url: API + "update", // URL da sua API no Django para atualizar o status
+            type: "POST",
+            data: {
+                csrfmiddlewaretoken: csrftoken,
+                metodo: "supervisor",
+                parametro: JSON.stringify({
+                    ativo: isActive,
+                    supervisor: supervisor,
+                }),
+            },
+            success: function (response) {
+                toasts("success", response);
+            },
+            error: function (error) {
+                toasts("warning", error.responseJSON.message);
+            },
+        });
+    }
+</script>

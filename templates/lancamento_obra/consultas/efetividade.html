@@ -92,7 +92,7 @@
                 'parametro': JSON.stringify(parametro)
             },
             success: function (data) {
-                toasts('Success', data)
+                toasts('success', data)
                 $("#table").bootstrapTable("refresh");
             },
             error: function (xhr) {

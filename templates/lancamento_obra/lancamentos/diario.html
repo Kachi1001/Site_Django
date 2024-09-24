@@ -18,10 +18,10 @@
                 <div class="row justify-content-end">
                     <div class="input-group">
                         <label class="input-group-text">Obra:</label>
-                        <select class="form-select" id="form_diario_obra"></select>
+                        <select class="form-select" id="form_diario_obra_id"></select>
                     </div>
                     <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_finalizadas"
-                        onclick="toggleOculto('obra')">exibir finalizadas</a>
+                        onclick="toggleOculto('obra_id')">exibir finalizadas</a>
                 </div>
             </div>
             <div class="col-4">
@@ -113,7 +113,7 @@
             photo.src = reader.result;
             previewModal_img(reader.result)
             info = filename[0].split("_")
-            $('#form_diario_obra').val(info[0])
+            $('#form_diario_obra_id').val(info[0])
             d = info[1].split("-")
             d = d[2] + "-" + adicionaZero(parseInt(d[1])) + "-" + adicionaZero(parseInt(d[0]));
             $('#form_diario_data').val(d)
@@ -124,12 +124,12 @@
     $('#register').click(function () {
         let file = $('#form_diario_arquivo')[0].files[0];
         if (!file) {
-            alert("Por favor, selecione um arquivo primeiro.");
+            toasts('warning',{'method':'Registro','message':"Por favor, selecione um arquivo primeiro."})
             return;
         }
         let parametro = {
             'data': $('#form_diario_data').val(),
-            'obra': $('#form_diario_obra').val(),
+            'obra_id': $('#form_diario_obra_id').val(),
             'indice': $('#form_diario_indice').val(),
             'encarregado': $('#form_diario_encarregado').val(),
             'climamanha': $('#form_diario_climamanha').val(),

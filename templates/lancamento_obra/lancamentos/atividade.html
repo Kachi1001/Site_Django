@@ -116,14 +116,13 @@
             data: {
                 csrfmiddlewaretoken: csrftoken,
                 metodo: 'diario',
-                parametro: $('#form_atividade_obra').val().concat('_', data, '_', $('#form_atividade_indice').val()),
+                parametro: $('#form_atividade_obra_id').val().concat('_', data, '_', $('#form_atividade_indice').val()),
             },
             success: function (data) {
                 $('#form_atividade_descricao').val(data.descricao)
             },
             error: function (error) {
-                console.error("Erro ao buscar dados:", error);
-                toasts('Alert', error.responseJSON)
+                toasts('danger', error.responseJSON)
             },
         });
     };
