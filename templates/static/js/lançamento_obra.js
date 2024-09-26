@@ -1,5 +1,5 @@
 const API = getAPI() + "/lancamento_obra/";
-
+apiRequest.app = 'lancamento_obra/';
 function toggleDiaria() {
     diaria = $("#".concat(objLoaded.prefix, "diaria"));
     if ($("#".concat(objLoaded.prefix, "contrato")).val() == "Terceiro") {
@@ -175,7 +175,7 @@ function loadColumns(oculto) {
             inputs = ["funcao", "grupo"];
         } else if (objLoaded.name === "programacao") {
             inputs = ["observacao", "iniciosemana"];
-            select = ["colaborador", "encarregado", "obra"];
+            select = ["colaborador", "encarregado", "obra_id"];
         }
         columns = {
             inputs: inputs,
@@ -231,7 +231,7 @@ function toggleOculto(campo) {
     let filtrar;
     if (campo == "colaborador") {
         element = $("#mostrar_demitidos");
-    } else if (campo == "obra_idww") {
+    } else if (campo == "obra_id") {
         element = $("#mostrar_finalizadas");
     }
     let text = element.text().split(" ");

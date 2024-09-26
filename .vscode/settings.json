@@ -5,7 +5,7 @@
         "Loadedinputs",
         "psycopg"
     ],
-    "editor.detectIndentation": false,
+    "editor.detectIndentation": true,
     "commentTranslate.hover.enabled": true,
     "python.analysis.typeCheckingMode": "basic",
     "python.analysis.autoImportCompletions": true

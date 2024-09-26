@@ -12,7 +12,6 @@
             <label class="input-group-text">Digitalizado</label>
             <input type="file" class="form-control" id="form_diario_arquivo" accept="image/*">
         </div>
-
         <div class="row">
             <div class="col">
                 <div class="row justify-content-end">
@@ -78,6 +77,7 @@
             </div>
         </div>
         <div class="row justify-content-end">
+            <div class="col-auto"><button type="button" class="btn btn-primary mt-2 mb-2" onclick="register_redirect()">Lançar e Abrir atividade</button></div>
             <div class="col-auto"><button type="button" class="btn btn-success mt-2 mb-2"
                     id="register">Lançar</button></div>
         </div>
@@ -121,7 +121,8 @@
         }
         reader.readAsDataURL(file.files[0]);
     });
-    $('#register').click(function () {
+    
+    function registrar(redirect){
         let file = $('#form_diario_arquivo')[0].files[0];
         if (!file) {
             toasts('warning',{'method':'Registro','message':"Por favor, selecione um arquivo primeiro."})
@@ -136,30 +137,33 @@
             'climatarde': $('#form_diario_climatarde').val(),
             'descricao': $('#form_diario_descricao').val(),
         }
-        parametro['imagem'] = parametro.obra + '_' + parametro.data + '_' + parametro.indice + '.' + filename[(filename.length - 1)]
+        parametro['imagem'] = parametro.obra_id + '_' + parametro.data + '_' + parametro.indice + '.' + filename[(filename.length - 1)]
         let formData = new FormData();
         formData.append('file', file);
         formData.append('parametro', JSON.stringify(parametro));
         formData.append('metodo', 'diario');
-
-
-        $.ajax({
-            url: API + 'register',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-
-            success: function () {
-                toasts("Success");
+        apiRequest.upload(
+            'register',
+            formData,
+            function(){
                 $("#table").bootstrapTable("refresh");
-            },
-            error: function (error) {
-                console.error('Erro ao cadastrar', error)
-                toasts('Error',error.responseJSON);
+                if (redirect){
+                    let obra = $('#form_diario_obra_id').val()
+                    let data = $('#form_diario_data').val()
+                    let indice = $('#form_diario_indice').val()
+                    let desc = $('#form_diario_descricao').val()
+                    window.location.href = `http://10.0.0.211:8001/lancamento_obra/lancamentos/atividade?obra=${obra}&data=${data}&indice=${indice}&desc=${desc}`;
+                }
             }
-        });
+        )
+        
     }
-    )
+    
+    $('#register').click(function (){
+        registrar()
+    })
+    function register_redirect(){
+        registrar(true)
+    }
 </script>
 {% endblock %}
