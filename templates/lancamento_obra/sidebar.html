@@ -1,11 +1,9 @@
 {% load permission_tags %}
-
+{%load static%}
 <div class="sidenav">
     <h1 class="nome_app">Lançamento obra</h1>
-
     <div class="accordion accordion-flush" id="accordion">
         {% if user|can:'lancamento_obra-cadastros' %}
-
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -16,16 +14,13 @@
             <div id="menu-cadastro" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <a href="{%url 'cadastros' 'colaborador'%}"><i {{icon_form}}></i> Colaborador</a>
                 <a href="{%url 'cadastros' 'obra'%}"><i {{icon_form}}></i> Obra</a>
-
                 <a href="#" onclick="loadModal('register_funcao', 'funcao')"><i {{icon_modal}}></i> Função</a>
                 <a href="#" onclick="loadModal('register_supervisor', 'supervisor')"><i {{icon_modal}}></i>
                     Supervisor</a>
-
             </div>
         </div>
-    {%endif%}
+        {%endif%}
         {% if user|can:'lancamento_obra-lancamentos' %}
-
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -39,7 +34,7 @@
                 <a href="{%url 'lancamentos' 'programacao'%}"><i {{icon_form}}></i> Programação</a>
             </div>
         </div>
-{%endif%}
+        {%endif%}
         {% if user|can:'lancamento_obra-tabelas' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -82,10 +77,9 @@
                 </button>
             </h2>
             <div id="menu-graficos" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url 'graficos' 'horas_extras'%}"><i class="bi-file-earmark-bar-graph"></i> Horas extras</a>
+                <a href="{%url 'graficos' 'horas_extras'%}"><i class="bi-file-earmark-bar-graph"></i> Horas
+                    extras</a>
             </div>
         </div>
     </div>
-
-
 </div>

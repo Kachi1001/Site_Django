@@ -1,3 +1,53 @@
+<script>
+function Formatter(value) {
+    if (value != null) {
+        return value;
+    } else {
+        return "";
+    }
+}
+function checkFormatter(value) {
+    if (value) {
+        return '<input class="form-check-input mt-0" type="checkbox" checked disabled>';
+    } else {
+        return '<input class="form-check-input mt-0" type="checkbox" disabled>';
+    }
+}
+function dataFormatter(value) {
+    if (value != null) {
+        data = value.split("-");
+        return data[2].concat("/", data[1], "/", data[0]);
+    } else {
+        return "";
+    }
+}
+function realFormatter(value) {
+    if (value != null) {
+        return "R$ ".concat(value);
+    }
+}
+function horaFormatter(value) {
+    if (value != null) {
+        return value.concat(" H");
+    }
+}
+function intervalFormatter(value) {
+    if (value != null) {
+        let horatotal =
+            parseInt(value.slice(4, 6)) + parseInt(value.charAt(1)) * 24 + "";
+        let tempo = horatotal.concat(
+            ":",
+            value.slice(7, 9),
+            ":",
+            value.slice(10, 12)
+        );
+        return tempo;
+    } else {
+        return "00:00:00";
+        4;
+    }
+}
+</script>
 <table id="table" class="table table-hover table-bordered table-striped" data-locale="pt-BR" data-toggle="table"
     data-pagination="true" data-search="true" data-side-pagination="server" data-sortable="true"
     data-page-list="[25, 50, 100, 200]" data-height='{{table_height}}' data-virtual-scroll="true"

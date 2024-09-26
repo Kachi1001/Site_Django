@@ -7,21 +7,20 @@
 {% block 'main' %}
 
 <div class="row">
-    <div class="col-5">
+    <div class="col-7">
         <div class="input-group mb-2">
             <label class="input-group-text">Digitalizado</label>
             <input type="file" class="form-control" id="form_diario_arquivo" accept="image/*">
         </div>
-
         <div class="row">
             <div class="col">
                 <div class="row justify-content-end">
                     <div class="input-group">
                         <label class="input-group-text">Obra:</label>
-                        <select class="form-select" id="form_diario_obra"></select>
+                        <select class="form-select" id="form_diario_obra_id"></select>
                     </div>
                     <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_finalizadas"
-                        onclick="toggleOculto('obra')">exibir finalizadas</a>
+                        onclick="toggleOculto('obra_id')">exibir finalizadas</a>
                 </div>
             </div>
             <div class="col-4">
@@ -78,12 +77,13 @@
             </div>
         </div>
         <div class="row justify-content-end">
+            <div class="col-auto"><button type="button" class="btn btn-primary mt-2 mb-2" onclick="register_redirect()">Lançar e Abrir atividade</button></div>
             <div class="col-auto"><button type="button" class="btn btn-success mt-2 mb-2"
                     id="register">Lançar</button></div>
         </div>
         <div div='row mb-2' style="border-top: 1px solid lightgray;">{%include 'lancamento_obra/table/diario.html'%}</div>
     </div>
-    <div class="col-auto">
+    <div class="col">
         <div class="text-center">
             <img src="https://cdn-icons-png.flaticon.com/512/104/104090.png" class="img-thumbnail" alt="Digitalização"
                 style="width: 600px;height: 750px; object-fit: contain; " id="form_diario_digitalização"
@@ -113,7 +113,7 @@
             photo.src = reader.result;
             previewModal_img(reader.result)
             info = filename[0].split("_")
-            $('#form_diario_obra').val(info[0])
+            $('#form_diario_obra_id').val(info[0])
             d = info[1].split("-")
             d = d[2] + "-" + adicionaZero(parseInt(d[1])) + "-" + adicionaZero(parseInt(d[0]));
             $('#form_diario_data').val(d)
@@ -121,45 +121,49 @@
         }
         reader.readAsDataURL(file.files[0]);
     });
-    $('#register').click(function () {
+    
+    function registrar(redirect){
         let file = $('#form_diario_arquivo')[0].files[0];
         if (!file) {
-            alert("Por favor, selecione um arquivo primeiro.");
+            toasts('warning',{'method':'Registro','message':"Por favor, selecione um arquivo primeiro."})
             return;
         }
         let parametro = {
             'data': $('#form_diario_data').val(),
-            'obra': $('#form_diario_obra').val(),
+            'obra_id': $('#form_diario_obra_id').val(),
             'indice': $('#form_diario_indice').val(),
             'encarregado': $('#form_diario_encarregado').val(),
             'climamanha': $('#form_diario_climamanha').val(),
             'climatarde': $('#form_diario_climatarde').val(),
             'descricao': $('#form_diario_descricao').val(),
         }
-        parametro['imagem'] = parametro.obra + '_' + parametro.data + '_' + parametro.indice + '.' + filename[(filename.length - 1)]
+        parametro['imagem'] = parametro.obra_id + '_' + parametro.data + '_' + parametro.indice + '.' + filename[(filename.length - 1)]
         let formData = new FormData();
         formData.append('file', file);
         formData.append('parametro', JSON.stringify(parametro));
         formData.append('metodo', 'diario');
-
-
-        $.ajax({
-            url: API + 'register',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-
-            success: function () {
-                toasts("Success");
+        apiRequest.upload(
+            'register',
+            formData,
+            function(){
                 $("#table").bootstrapTable("refresh");
-            },
-            error: function (error) {
-                console.error('Erro ao cadastrar', error)
-                toasts('Error',error.responseJSON);
+                if (redirect){
+                    let obra = $('#form_diario_obra_id').val()
+                    let data = $('#form_diario_data').val()
+                    let indice = $('#form_diario_indice').val()
+                    let desc = $('#form_diario_descricao').val()
+                    window.location.href = `http://10.0.0.211:8001/lancamento_obra/lancamentos/atividade?obra=${obra}&data=${data}&indice=${indice}&desc=${desc}`;
+                }
             }
-        });
+        )
+        
     }
-    )
+    
+    $('#register').click(function (){
+        registrar()
+    })
+    function register_redirect(){
+        registrar(true)
+    }
 </script>
 {% endblock %}

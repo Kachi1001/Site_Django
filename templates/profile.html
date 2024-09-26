@@ -1,0 +1,11 @@
+{%load static%}
+<div class="dropdown-center me-1">
+    <button class="navbar-toggler" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <img src="{% static 'icons/person-circle.svg'%}" alt="" class="user-icon">
+      <span><strong>{{nome}}</strong></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item" href="/login">Desconectar</a></li>
+      <li><a class="dropdown-item" href="https://wa.me/555596238751" target="_blank">Ajuda</a></li>
+    </ul>
+  </div>

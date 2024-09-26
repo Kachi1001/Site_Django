@@ -21,10 +21,10 @@
         <div class="row justify-content-end">
             <div class="input-group">
                 <label class="input-group-text">Obra:</label>
-                <select class="form-select" id="form_atividade_obra" onchange="changeObra()"></select>
+                <select class="form-select" id="form_atividade_obra_id" onchange="changeObra()"></select>
             </div>
             <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_finalizadas"
-                onclick="toggleOculto('obra')">exibir finalizadas</a>
+                onclick="toggleOculto('obra_id')">exibir finalizadas</a>
         </div>
     </div>
 </div>
@@ -69,7 +69,7 @@
             <div class="col">
                 <div class="input-group mb-2">
                     <div class="input-group-text">
-                        <input class="form-check-input" type="checkbox" id="form_atividade_meiadiaria">
+                        <input class="form-check-input" type="checkbox" id="form_atividade_meiadiaria" onclick="confirmMeiaDiaria()">
                     </div>
                     <span class="input-group-text">Meia diaria</span>
                 </div>
@@ -79,11 +79,11 @@
     <div class="col">
         <div class="input-group mb-2">
             <label class="input-group-text">Atividade:</label>
-            <select class="form-select" id="form_atividade_atividade"></select>
+            <select class="form-select" id="form_atividade_atividade_id"></select>
         </div>
         <div class="input-group mb-2">
             <label class="input-group-text">Responsável:</label>
-            <select class="form-select" id="form_atividade_supervisor" disabled></select>
+            <select class="form-select" id="form_atividade_supervisor_id" disabled></select>
         </div>
         <div class="input-group mb-2">
             <label class="input-group-text">Motivo:</label>
@@ -103,6 +103,13 @@
 </div>
 </div>
 <script>
+    function confirmMeiaDiaria(){
+        if ($("#form_atividade_meiadiaria").prop("checked")){
+            if (!confirm('Tens certeza que deseja selecionar Meia Diária')){
+                $('#form_atividade_meiadiaria').prop('checked', false);
+            }
+        }
+    }
     function get_desc() {
         if ($('#form_atividade_dia').val() == '') {
             alert('Informe uma data antes!!')
@@ -116,20 +123,28 @@
             data: {
                 csrfmiddlewaretoken: csrftoken,
                 metodo: 'diario',
-                parametro: $('#form_atividade_obra').val().concat('_', data, '_', $('#form_atividade_indice').val()),
+                parametro: $('#form_atividade_obra_id').val().concat('_', data, '_', $('#form_atividade_indice').val()),
             },
             success: function (data) {
-                $('#form_atividade_descricao').val(data.descricao)
+                $('#form_atividade_descricao').val(data[0].descricao)
             },
             error: function (error) {
-                console.error("Erro ao buscar dados:", error);
-                toasts('Alert', error.responseJSON)
+                toasts('danger', error.responseJSON)
             },
         });
     };
+    loadForm('atividade')
     $(document).ready(function () {
-        loadForm('atividade')
-        
+        setTimeout( function(){
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('obra')){
+                $("#form_atividade_dia").val(urlParams.get("data"))
+                $("#form_atividade_obra_id").val(urlParams.get("obra"))
+                $("#form_atividade_indice").val(urlParams.get("indice"))
+                $("#form_atividade_descricao").val(urlParams.get("desc"))
+                changeObra()
+            }
+        },200)
     })
 </script>
 {%endblock%}

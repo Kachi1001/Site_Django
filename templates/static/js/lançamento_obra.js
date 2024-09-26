@@ -1,54 +1,5 @@
 const API = getAPI() + "/lancamento_obra/";
-
-function Formatter(value) {
-    if (value != null) {
-        return value;
-    } else {
-        return "";
-    }
-}
-function checkFormatter(value) {
-    if (value) {
-        return '<input class="form-check-input mt-0" type="checkbox" checked disabled>';
-    } else {
-        return '<input class="form-check-input mt-0" type="checkbox" disabled>';
-    }
-}
-function dataFormatter(value) {
-    if (value != null) {
-        data = value.split("-");
-        return data[2].concat("/", data[1], "/", data[0]);
-    } else {
-        return "";
-    }
-}
-function realFormatter(value) {
-    if (value != null) {
-        return "R$ ".concat(value);
-    }
-}
-function horaFormatter(value) {
-    if (value != null) {
-        return value.concat(" H");
-    }
-}
-function intervalFormatter(value) {
-    if (value != null) {
-        let horatotal =
-            parseInt(value.slice(4, 6)) + parseInt(value.charAt(1)) * 24 + "";
-        let tempo = horatotal.concat(
-            ":",
-            value.slice(7, 9),
-            ":",
-            value.slice(10, 12)
-        );
-        return tempo;
-    } else {
-        return "00:00:00";
-        4;
-    }
-}
-
+apiRequest.app = 'lancamento_obra/';
 function toggleDiaria() {
     diaria = $("#".concat(objLoaded.prefix, "diaria"));
     if ($("#".concat(objLoaded.prefix, "contrato")).val() == "Terceiro") {
@@ -69,15 +20,13 @@ function registerData(metodo, parametro) {
             metodo: metodo,
             parametro: JSON.stringify(parametro),
         },
-        success: function (Response) {
+        success: function (response) {
             loadModal("register_" + metodo, metodo);
-            toasts("Success", {
-                method: "Registro",
-                message: `${metodo} criado com sucesso!`,
-            });
+            toasts("success", response);
         },
-        error: function (error) {
-            alert(error.responseJSON.message);
+        error: function (response) {
+            toasts("danger", response.responseJSON);
+
         },
     });
 }
@@ -94,12 +43,11 @@ function deleteData(id) {
                 parametro: id,
             },
             success: function (response) {
-                toasts("Success", response);
+                toasts("success", response);
                 $("#table").bootstrapTable("refresh");
             },
             error: function (error) {
-                console.error("Erro ao deletar dados:", error);
-                toasts("Error", error.responseJSON);
+                toasts("danger", error.responseJSON);
             },
         });
     }
@@ -112,24 +60,29 @@ function registerModal(modal) {
     }, 100);
 }
 // Preenche as variaveis de dados de objetos do banco de dados
-var objLoaded = { method: undefined, name: undefined, prefix: undefined };
+var objLoaded = { method: undefined, name: undefined, prefix: undefined,
+    field: function(id){
+        return $(`#${prefix}_${id}`);
+    }
+,};
 var columns = {
     inputs: undefined,
     checks: undefined,
     obj: undefined,
     select: undefined,
+    
 };
 var modalLoad;
 function changeAtividade() {
-    let obra = $("#" + objLoaded.prefix + "obra").val();
+    let obra = $("#" + objLoaded.prefix + "obra_id").val();
     const campos1 = [
         "horaini3",
         "horafim3",
         "diaseguinte",
         "meiadiaria",
-        "atividade",
+        "atividade_id",
     ];
-    const campos2 = ["supervisor", "motivo"];
+    const campos2 = ["supervisor_id", "motivo"];
     if (obra > 1 && obra < 5) {
         desativado = true;
     } else {
@@ -145,11 +98,11 @@ function changeAtividade() {
 function changeObra() {
     const att = ['ATESTADO', 'DISPENSA', 'FALTA', 'FOLGA', 'FÉRIAS', 'TREINAMENTO', 'ATIVIDADE OBRA']
 
-    let obra = $("#" + objLoaded.prefix + "obra").val();
+    let obra = $("#" + objLoaded.prefix + "obra_id").val();
     if (obra >= 7) {
-        $("#" + objLoaded.prefix + "atividade").val(att[6]);
+        $("#" + objLoaded.prefix + "atividade_id").val(att[6]);
     } else {
-        $("#" + objLoaded.prefix + "atividade").val(att[obra - 1]);
+        $("#" + objLoaded.prefix + "atividade_id").val(att[obra - 1]);
     }
     changeAtividade();
 }
@@ -181,7 +134,7 @@ function loadColumns(oculto) {
                 "motivo",
             ];
             checks = ["diaseguinte", "meiadiaria"];
-            select = ["obra", "atividade", "colaborador", "supervisor"];
+            select = ["obra_id", "atividade_id", "colaborador", "supervisor_id"];
         } else if (objLoaded.name === "colaborador") {
             inputs = [
                 "nome",
@@ -202,9 +155,10 @@ function loadColumns(oculto) {
                 "descricao",
                 "indice",
                 "retrabalho",
+                'tecnicon',
             ];
             checks = ["finalizada"];
-            select = ["supervisor"];
+            select = ["supervisor_id"];
         } else if (objLoaded.name === "diario") {
             inputs = [
                 "indice",
@@ -213,7 +167,7 @@ function loadColumns(oculto) {
                 "climatarde",
                 "descricao",
             ];
-            select = ["encarregado", "obra"];
+            select = ["encarregado", "obra_id"];
         } else if (objLoaded.name === "supervisor") {
             inputs = ["supervisor"];
             checks = ["ativo"];
@@ -221,7 +175,7 @@ function loadColumns(oculto) {
             inputs = ["funcao", "grupo"];
         } else if (objLoaded.name === "programacao") {
             inputs = ["observacao", "iniciosemana"];
-            select = ["colaborador", "encarregado", "obra"];
+            select = ["colaborador", "encarregado", "obra_id"];
         }
         columns = {
             inputs: inputs,
@@ -232,6 +186,7 @@ function loadColumns(oculto) {
         for (i = 0; i < columns.select.length; i++) {
             loadSelect(columns.select[i], oculto);
         }
+
     }
 }
 // Faz um post na API para registrar oque estiver nos inputs, normalmente referente a um formulário
@@ -256,12 +211,11 @@ function submit(type) {
             parametro: JSON.stringify(data),
         },
         success: function (response) {
-            toasts("Success", response);
+            toasts("success", response);
             $("#table").bootstrapTable("refresh");
         },
         error: function (error) {
-            toasts("Error", error.responseJSON);
-            console.error(error);
+            toasts("danger", error.responseJSON);
         },
     });
 }
@@ -277,7 +231,7 @@ function toggleOculto(campo) {
     let filtrar;
     if (campo == "colaborador") {
         element = $("#mostrar_demitidos");
-    } else if (campo == "obra") {
+    } else if (campo == "obra_id") {
         element = $("#mostrar_finalizadas");
     }
     let text = element.text().split(" ");
@@ -294,131 +248,7 @@ function toggleOculto(campo) {
         loadSelect(campo, "oculto");
     }
 }
-//Preencher os campos de cada modal
-function loadModal(modal, parametro) {
-    let a = modal.split("_");
-    let old_objLoaded = objLoaded;
 
-    objLoaded = { method: a[0], name: a[1], prefix: modal + "_" };
-    loadColumns('exibir');
-    if (objLoaded.prefix != modalLoad) {
-        $("#" + objLoaded.prefix + "btn").click(function () {
-            submit(objLoaded.method);
-        });
-        $("#" + objLoaded.prefix + "del").click(function () {
-            deleteData($("#" + objLoaded.prefix + "id").val());
-        });
-        modalLoad = objLoaded.prefix;
-    }
-    if (objLoaded.method == "update") {
-        $.ajax({
-            url: API + "get_data", // URL da sua API no Django
-            type: "GET",
-            data: {
-                csrfmiddlewaretoken: csrftoken,
-                metodo: a[1],
-                parametro: parametro,
-            },
-            success: function (data) {
-                columns.inputs.push("id");
-                values = columns.inputs.concat(columns.select);
-                if (values !== undefined) {
-                    for (let i = 0; i < values.length; i++) {
-                        let input = values[i];
-                        $("#" + modal + "_" + input).val(data[input]);
-                    }
-                }
-                if (columns.checks !== undefined) {
-                    for (let i = 0; i < columns.checks.length; i++) {
-                        let check = columns.checks[i];
-                        $("#" + modal + "_" + check).prop(
-                            "checked",
-                            data[check]
-                        );
-                    }
-                }
-
-                if (a[1] == "colaborador") {
-                    toggleDiaria();
-                }
-                if (a[1] == "atividade") {
-                    changeObra();
-                }
-            },
-            error: function (error) {
-                console.error("Erro ao buscar dados:", error);
-                alert(error.responseJSON.message);
-                toasts("Error", error.responseJSON);
-            },
-        });
-    } else if (objLoaded.method == "register") {
-        loadTable(objLoaded.prefix, objLoaded.name);
-        loadColumns();
-        modalLoad = objLoaded.prefix;
-    } else if (objLoaded.method == "view") {
-        $.ajax({
-            url: API + "get_data", // URL da sua API no Django
-            type: "GET",
-            data: {
-                csrfmiddlewaretoken: csrftoken,
-                metodo: objLoaded.name,
-                parametro: parametro,
-            },
-            success: function (data) {
-                if (objLoaded.name == "diario") {
-                    previewModal_img(getMedia("diarios") + data.imagem);
-                } else if (objLoaded.name == "programacao") {
-                    previewModal_img(
-                        getMedia(objLoaded.name) + data.iniciosemana + ".jpg"
-                    );
-                }
-            },
-            error: function (error) {
-                console.error("Erro ao buscar dados:", error);
-                toasts("Alert", error.responseJSON);
-            },
-        });
-    }
-    showModal(old_objLoaded);
-
-}
-function showModal(old_objLoaded) {
-    let myModal = new bootstrap.Modal(
-        document.getElementById(objLoaded.method + "_" + objLoaded.name)
-    );
-    myModal.show();
-
-    let myModalEvent = document.getElementById(
-        objLoaded.method + "_" + objLoaded.name
-    );
-    myModalEvent.addEventListener("hidden.bs.modal", (event) => {
-        objLoaded = old_objLoaded;
-        loadColumns();
-    });
-}
-function toggleAtivo(supervisor, isActive) {
-    $.ajax({
-        url: API + "update", // URL da sua API no Django para atualizar o status
-        type: "POST",
-        data: {
-            csrfmiddlewaretoken: csrftoken,
-            metodo: "supervisor",
-            parametro: JSON.stringify({
-                ativo: isActive,
-                supervisor: supervisor,
-            }),
-        },
-        success: function () {
-            toasts("Success", {
-                method: "Edição",
-                message: "Supervisor ativo com sucesso",
-            });
-        },
-        error: function (error) {
-            toasts("Alert", error.responseJSON.message);
-        },
-    });
-}
 function loadTable() {
     $("#".concat(objLoaded.prefix + "table")).empty();
     $.ajax({
@@ -454,8 +284,7 @@ function loadTable() {
             }
         },
         error: function (error) {
-            console.error("Erro ao buscar dados:", error);
-            toasts("Error", error.responseJSON);
+            toasts("danger", error.responseJSON);
         },
     });
 }
@@ -476,7 +305,7 @@ function loadSelect(select, filter) {
                 let text;
                 if (select == "funcao") {
                     value = data[i].funcao;
-                } else if (select == "obra") {
+                } else if (select == "obra_id") {
                     if (filter == "oculto" && data[i].finalizada) {
                     } else {
                         value = data[i].id;
@@ -487,9 +316,9 @@ function loadSelect(select, filter) {
                             " | " +
                             data[i].cidade;
                     }
-                } else if (select == "supervisor") {
+                } else if (select == "supervisor_id") {
                     value = data[i].supervisor;
-                } else if (select == "atividade") {
+                } else if (select == "atividade_id") {
                     value = data[i].tipo;
                     // text = data[i].tipo;
                 } else if (select == "colaborador") {
@@ -511,44 +340,13 @@ function loadSelect(select, filter) {
             }
         },
         error: function (error) {
-            console.error("Erro ao buscar dados:", error);
-            toasts("Error", error.responseJSON);
+            toasts("danger", error.responseJSON);
         },
     });
 }
 
-function postgresGET(url, metodo, parametro) {
-    $.ajax({
-        url: API + url, // URL da sua API no Django
-        type: "GET",
-        data: {
-            csrfmiddlewaretoken: csrftoken,
-            metodo: metodo,
-            parametro: parametro,
-        },
-        success: function (data) {
-            return data;
-        },
-        error: function (xhr) {
-            toasts("Error", xhr.responseJSON);
-            return NaN;
-        },
-    });
-}
-
-function toasts(type, response) {
-    let toastBootstrap = bootstrap.Toast.getOrCreateInstance(
-        document.getElementById("toast" + type)
-    );
-    if (response != undefined) {
-        $("#toast" + type + "_method").text(response.method);
-        $("#toast" + type + "_message").text(response.message);
-    }
-    toastBootstrap.show();
-}
 
 function previewModal_img(img) {
     image = document.getElementById("view_" + objLoaded.name + "_digitalizado");
     image.src = img;
-    $("#" + objLoaded.prefix + "btn").prop("href", image.src);
 }

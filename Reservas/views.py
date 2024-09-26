@@ -1,23 +1,16 @@
 from django.shortcuts import render, redirect
 from .models import *
 from Site_Django import util
-from Site_Django.settings import BASE_DIR 
-class reserva:
-    
-    def __init__(self, hora, reservado, responsavel, descricao):
-        self.hora = hora
-        self.reservado = reservado
-        self.responsavel = responsavel
-        self.descricao = descricao                                              
+from Site_Django.settings import BASE_DIR                                          
 
 def gerarLista(reservados, horarios):
     resultado = []
     for horario in horarios:
-        a = reserva(horario, '', '','') #cria um vazio
+        a = AgendaSalas(hora=horario,responsavel='',descricao='') #cria um vazio
         b = reservados.filter(hora=horario) #filtro em cima do outro filtro de data para sobra uma linha
         for c in b: #aqui é para evitar erro de ter mais de uma linha, não deveria ter
             if c.reservado == 'checked disabled':
-                a = reserva(c.hora,c.reservado,c.responsavel,c.descricao)
+                a = AgendaSalas(hora=c.hora,reservado=c.reservado,responsavel=c.responsavel,descricao=c.descricao)
         resultado.append(a)
     return(resultado)
         
@@ -30,14 +23,7 @@ def gerarListaCarros(reservados, listaCarros):
             a = AgendaCarros(carro=carro,data=c.data,responsavel=c.responsavel,destino=c.destino,reservado=c.reservado)
         resultado.append(a)
     return(resultado)
-    
-def autoResp(request, user, a):
-    if request.POST.get('responsavel'+a) == "" and user.is_authenticated and (request.POST.get('check'+a) or request.POST.get('descricao'+a)):
-        return user.username
-    elif request.POST.get('responsavel'+a):
-        return request.POST.get('responsavel'+a)
-    else:
-        return False
+
 
 horarios1= ["07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30"]
 horarios2= ["13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30"]
