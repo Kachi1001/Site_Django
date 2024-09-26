@@ -1,3 +1,4 @@
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -17,32 +18,79 @@ const csrftoken = getCookie('csrftoken');
 const user = getUser();
 const icon = '/static/icons'
 
-function uploadImage(fileInput, parametro, metodo, url){
-    let file = fileInput.files[0];
-    
-    if (!file) {
-        alert("Por favor, selecione um arquivo primeiro.");
-        return;
-    }
-    
-    let formData = new FormData();
-    formData.append('file', file);
-    formData.append('parametro', parametro);
-    formData.append('metodo', metodo);
+const apiRequest = {
+    baseUrl: getAPI(),
+    app: null,
 
+    get: function (endpoint, metodo, parametro, successCallback, errorCallback) {
+        return $.ajax({
+            url: this.baseUrl + this.app + endpoint,
+            method: 'GET',
+            data: {
+                metodo: metodo,
+                parametro: parametro,
+                user: user,
+                csrfmiddlewaretoken: csrftoken,
+            },
+            success: function (response) {
+                if (typeof successCallback === 'function') {
+                    successCallback(response);
+                }
+            },
+            error: function(error) {
+                if (typeof errorCallback === 'function') {
+                    errorCallback(error);
+                }
+                toasts('danger',error.responseJSON)
+            }
+        });
+    },
+
+    post: function (endpoint, metodo, parametro, successCallback, errorCallback) {
+        return $.ajax({
+            url: this.baseUrl + this.app + endpoint,
+            method: 'POST',
+            data: {
+                user: user,
+                csrfmiddlewaretoken: csrftoken,
+                metodo: metodo,
+                parametro: JSON.stringify(parametro),
+            },
+            success: function (response) {
+                if (typeof successCallback === 'function') {
+                    successCallback(response);
+                }
+                toasts("success", response)
+            },
+            error: function(error) {
+                if (typeof errorCallback === 'function') {
+                    errorCallback(error);
+                }
+                toasts('danger',error.responseJSON)
+            }
+        });
+    },
+
+    upload: function(endpoint, formData, successCallback, errorCallback){
         $.ajax({
-            url: url,
+            url: this.baseUrl + this.app + endpoint,
             type: 'POST',
             data: formData,
             processData: false,
             contentType: false,
 
-            success: function() {
-                return true
+            success: function (response) {
+                if (typeof successCallback === 'function') {
+                    successCallback(response);
+                }
+                toasts("success", response)
             },
             error: function(error) {
-                console.error('Erro:', error);
-                alert('Erro ao carregar o arquivo.');
+                if (typeof errorCallback === 'function') {
+                    errorCallback(error);
+                }
+                toasts('danger',error.responseJSON)
             }
         });
-}
+    }
+};

@@ -3,13 +3,13 @@
 <link rel="stylesheet" href= "{% static 'css/base.css' %}">
 <link rel="stylesheet" href= "{% static 'css/sidebar.css' %}">
 
-
+{%include 'toasts.html'%}
 <script>
     function getCsrf(){
         return '{{csrf_token}}'
     }
     function getAPI(){
-        return '{{api}}'
+        return '{{api}}/'
     }
     function getUser(){
         return '{{user}}'
