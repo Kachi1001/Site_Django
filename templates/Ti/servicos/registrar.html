@@ -1,0 +1,107 @@
+{%extends 'ti.html'%}
+{%load static%}
+{% block 'caminho' %}
+<li class="breadcrumb-item" aria-current="page">Estoque</li>
+<li class="breadcrumb-item active" aria-current="page">Cadastrar produto</li>
+{%endblock%}
+
+{%block 'main'%}
+<h3>Informações principais</h3>
+<div class="row">
+    <div class="col">
+        <div class="input-group mb-3 flex-nowrap">
+            <span class="input-group-text">Servico:</span>
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group mb-3 flex-nowrap">
+            <label class="input-group-text" for="inputGroupSelect01">Responsavel:</label>
+            <select class="form-select" id="inputGroupSelect01">
+                <option value="1">Rafael</option>
+                <option value="2">Felipe</option>
+            </select>
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group mb-3 flex-nowrap">
+            <label class="input-group-text" for="inputGroupSelect01">Data de realização:</label>
+            <input type="date" name="admissao" id="admissao" class="form-control">
+          </div>
+    </div>
+    <div class="col">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Data de pedido:</label>
+            <input type="date" name="admissao" id="admissao" class="form-control">
+          </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Tag relacionada:</label>
+            <select class="form-select" id="inputGroupSelect01">
+                <option value="1">2280</option>
+                <option value="2">2784</option>
+                <option value="2">1421</option>
+            </select>
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Descrição:</span>
+            <textarea class="form-control" aria-label="With textarea" name="descricao"></textarea>
+          </div>
+    </div>
+</div>
+{%endblock%}
+
+
+
+{%block 'submain'%}
+<h4>Adicionais</h4>
+<div class="container text-start" id="linhas">
+        <div class="row">
+            <a onclick="addLinha()" class="icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);" href="#">
+                + Adicionar detalhe
+            </a>
+        </div>
+</div>
+{%endblock%}
+
+{% block "script" %}
+    <script>
+        var linha = 0
+        function addLinha(){
+            $('#linhas').prepend(
+                `<div class="row" id="linha${linha}">`+
+                    '<div class="col-1">' +
+                        `<p>${linha}</p>`+
+                        '</div>' +
+                    '<div class="col">' +
+                        '<div class="input-group mb-3">' +
+                            '<select class="form-select" id="inputGroupSelect01">'+
+                                '<option selected>Consumo</option>' +
+                                '<option selected>Tinta</option>' +
+
+                            '</select>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="col">' +
+                        '<div class="input-group mb-3">' +
+                            '<select class="form-select" id="inputGroupSelect01">' +
+                                '<option selected>Tinta</option>' +
+                                '<option selected>Nada</option>' +
+
+                            '</select>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="col-auto">'+
+                        `<button type="button" class="btn btn-danger" onclick="removeLinha(${linha})">Remover</button>`+
+                    '</div>'
+            )
+            linha ++
+        }
+    </script>
+
+    {% endblock "script" %}

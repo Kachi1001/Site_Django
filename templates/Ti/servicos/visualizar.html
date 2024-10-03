@@ -1,0 +1,95 @@
+{%extends 'ti.html'%}
+{%load static%}
+{% block 'caminho' %}
+<li class="breadcrumb-item" aria-current="page">Serviços</li>
+<li class="breadcrumb-item active" aria-current="page">Visualizar</li>
+{%endblock%}
+
+{%block 'main'%}
+<h3>Tabela de Serviços realizados</h3>
+{%endblock%}
+
+{%block 'submain'%}
+<h4>Servicos recentes:</h4>
+<table class="table table-hover table-bordered table-striped" id="tabela_servicos">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Serviços</th>
+            <th scope="col">Responsavel</th>
+            <th scope="col">Data da realização</th>
+            <th scope="col">Data de abertura</th>
+            <th scope="col">Tag relacionada</th>
+            <th scope="col">Descrição</th>
+            <th>Edição</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">
+                001
+            </th>
+            <td>
+                Substituição
+            </td>
+            <td>
+                <p>Felipe</p>
+            </td>
+            <td>
+                <p>2/08/2024</p>
+            </td>
+            <td>
+                <p>30/07/2024</p>
+            </td>
+            <td>
+                <p>2280</p>
+            </td>
+            <td>
+                <p>Substituido por um temporario 2465 </p>
+            </td>
+            <td class="editar" data-bs-toggle="modal" data-bs-target="#edicao_produto" onclick="editLanc('{{i.id}}')">
+                <div class="btn-icon" style="background-color: skyblue;"><img src="{% static 'icons/pencil.svg'%}"
+                        alt="edit"></div>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                002
+            </th>
+            <td>
+                Recarga Tinta
+            </td>
+            <td>
+                <p>Rafael</p>
+            </td>
+            <td>
+                <p>10/07/2024</p>
+            </td>
+            <td>
+                <p>10/07/2024</p>
+            </td>
+            <td>
+                <p>Imp 001</p>
+            </td>
+            <td>
+                <p>Recarga completa de todas cores</p>
+            </td>
+            <td class="editar" data-bs-toggle="modal" data-bs-target="#edicao_produto" onclick="editLanc('{{i.id}}')">
+                <div class="btn-icon" style="background-color: skyblue;"><img src="{% static 'icons/pencil.svg'%}"
+                        alt="edit"></div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{%endblock%}
+{% block "script" %}
+<script>
+    let table = new DataTable('#tabela_servicos', {
+        fixedColumns: true,
+        paging: false,
+        language: {
+            url: '{% static "language.json"%}'
+        },
+    });
+</script>
+{% endblock  %}

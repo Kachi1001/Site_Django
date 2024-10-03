@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{%load permission_tags%}
+{%load static%}
+
+{%block 'style'%}
+<style>
+    .col-auto {
+        margin-bottom: 12px;
+    }
+    .card-img-bottom {
+        height: 150px;
+        object-fit: cover;
+      }
+</style>
+
+{%endblock%}
+
+{%block 'main'%}
+    <h2>Salas disponíveis</h2>
+    <div class="row justify-content-start">
+        <div class="col-auto">
+            <a href="{%url 'sala' 'atendimento'%}" style="text-decoration: none;">
+                <div class="card" style="width: 15rem;">
+                    <div class="card-header">
+                        <h5 class="card-title">Atendimento</h5>
+                    </div>
+                    <img src="{% static 'image/atendimento.jpg' %}" class="card-img-bottom" alt="...">
+                </div>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a href="{%url 'sala' 'apoio'%}" style="text-decoration: none;">
+                <div class="card" style="width: 15rem;">
+                    <div class="card-header">
+                        <h5 class="card-title">Apoio</h5>
+                    </div>
+                    <img src="{% static 'image/apoio.jpg' %}" class="card-img-bottom" alt="...">
+                </div>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a href="{%url 'sala' 'reunião'%}" style="text-decoration: none;">
+                <div class="card" style="width: 15rem;">
+                    <div class="card-header">
+                        <h5 class="card-title">Reunião</h5>
+                    </div>
+                    <img src="{% static 'image/reunião.jpg' %}" class="card-img-bottom" alt="...">
+                </div>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a href="{%url 'sala' 'auxiliar'%}" style="text-decoration: none;">
+                <div class="card" style="width: 15rem;">
+                    <div class="card-header">
+                        <h5 class="card-title">Auxiliar (almoxarifado)</h5>
+                    </div> 
+                    <img src="{% static 'image/auxiliar.jpg' %}" class="card-img-bottom" alt="...">
+                </div>
+            </a>
+        </div>
+    </div>
+
+{%endblock%}
+
+{%block 'submain'%}
+
+{% if user|can:'frota' %}
+<div class="submain">
+    <h2>Frotas disponíveis</h2>
+    
+    <div class="row justify-content-start ">
+      <div class="col-auto">
+        <a href="{%url 'carros'%}" style="text-decoration: none;">
+          <div class="card" style="width: 18rem;">
+            <div class="card-header">
+              <h5 class="card-title" >Carros</h5>
+            </div>
+            <img src="{% static 'image/reservas/carro.png' %}" class="card-img-bottom" alt="...">
+          </div>
+        </a>
+      </div>
+    </div>
+</div>
+{%endif%}
+{%endblock%}

@@ -1,0 +1,327 @@
+{% extends 'base.html' %}
+{%load static%}
+{% load permission_tags %}
+
+{%block 'header'%}
+<div aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">Reserva de Salas</li>
+		<li class="breadcrumb-item active" aria-current="page">{{sala}}</li>
+	</ol>
+</div>
+{%endblock%}
+
+{%block 'submain'%}
+<style>
+	.acao {
+		border-radius: 10px;
+		padding: 3px;
+		background-color: gray;
+		width: 25px;
+		display: flex;
+		height: 25px;
+		margin: 2px;
+		margin-top: 5px;
+	}
+
+	.acao:hover {
+		cursor: pointer;
+	}
+
+	.accordion-body {
+		height: 420px;
+		overflow-y: auto;
+	}
+</style>
+<div class="submain">
+	<div class="accordion" id="accordionExample">
+		<div class="accordion-item">
+			<h2 class="accordion-header">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+					data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+					Atendimento
+				</button>
+			</h2>
+			<div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Horário</th>
+								<th scope="col">Data</th>
+								<th scope="col">Responsável</th>
+								<th scope="col">Descrição</th>
+								<th scope="col">Ações</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							{% for h in atendimento %}
+							<tr id="{{h.id}}">
+								<th scope="row">
+									<p>{{h.hora}}</p>
+								</th>
+								<th scope="row">
+									<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}">
+									{%else%}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}" disabled>
+									{%endif%}
+
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}">
+									{%else%}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<div class="row" style="margin-left: 0px;">
+										<div class="acao" style="background-color: lightgreen;"
+											onclick="editar('{{h.id}}')"><img src="{%static 'icons/check.svg'%}" alt>
+										</div>
+										<div class="acao" style="background-color: lightcoral;"
+											onclick="deletar('{{h.id}}')"><img src="{%static 'icons/trash3.svg'%}" alt>
+										</div>
+									</div>
+									{%endif%}
+								</th>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="accordion-item">
+			<h2 class="accordion-header">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+					data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+					Apoio
+				</button>
+			</h2>
+			<div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+					<table class="table">
+						<thead>
+							<thead>
+								<tr>
+									<th scope="col">Horário</th>
+									<th scope="col">Data</th>
+									<th scope="col">Responsável</th>
+									<th scope="col">Descrição</th>
+									<th scope="col">Ações</th>
+								</tr>
+							</thead>
+						<tbody>
+
+							{% for h in apoio %}
+							<tr id="{{h.id}}">
+								<th scope="row">
+									<p>{{h.hora}}</p>
+								</th>
+								<th scope="row">
+									<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}">
+									{%else%}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}">
+									{%else%}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<div class="row" style="margin-left: 0px;">
+										<div class="acao" style="background-color: lightgreen;"
+											onclick="editar('{{h.id}}')"><img src="{%static 'icons/check.svg'%}" alt>
+										</div>
+										<div class="acao" style="background-color: lightcoral;"
+											onclick="deletar('{{h.id}}')"><img src="{%static 'icons/trash3.svg'%}" alt>
+										</div>
+									</div>
+									{%endif%}
+								</th>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="accordion-item">
+			<h2 class="accordion-header">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+					data-bs-target="#panelsStayOpen-collapse3" aria-expanded="false"
+					aria-controls="panelsStayOpen-collapse3">
+					Reunião
+				</button>
+			</h2>
+			<div id="panelsStayOpen-collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+					<table class="table">
+						<thead>
+							<thead>
+								<tr>
+									<th scope="col">Horário</th>
+									<th scope="col">Data</th>
+									<th scope="col">Responsável</th>
+									<th scope="col">Descrição</th>
+									<th scope="col">Ações</th>
+								</tr>
+							</thead>
+						<tbody>
+
+							{% for h in reuniao %}
+							<tr id="{{h.id}}">
+								<th scope="row">
+									<p>{{h.hora}}</p>
+								</th>
+								<th scope="row">
+									<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}">
+									{%else%}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}">
+									{%else%}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<div class="row" style="margin-left: 0px;">
+										<div class="acao" style="background-color: lightgreen;"
+											onclick="editar('{{h.id}}')"><img src="{%static 'icons/check.svg'%}" alt>
+										</div>
+										<div class="acao" style="background-color: lightcoral;"
+											onclick="deletar('{{h.id}}')"><img src="{%static 'icons/trash3.svg'%}" alt>
+										</div>
+									</div>
+									{%endif%}
+								</th>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="accordion-item">
+			<h2 class="accordion-header">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+					data-bs-target="#panelsStayOpen-Auxiliar" aria-expanded="false"
+					aria-controls="panelsStayOpen-Auxiliar">
+					Auxiliar (almoxarifado)
+				</button>
+			</h2>
+			<div id="panelsStayOpen-Auxiliar" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+					<table class="table">
+						<thead>
+							<thead>
+								<tr>
+									<th scope="col">Horário</th>
+									<th scope="col">Data</th>
+									<th scope="col">Responsável</th>
+									<th scope="col">Descrição</th>
+									<th scope="col">Ações</th>
+								</tr>
+							</thead>
+						<tbody>
+
+							{% for h in auxiliar %}
+							<tr id="{{h.id}}">
+								<th scope="row">
+									<p>{{h.hora}}</p>
+								</th>
+								<th scope="row">
+									<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}">
+									{%else%}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}">
+									{%else%}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<div class="row" style="margin-left: 0px;">
+										<div class="acao" style="background-color: lightgreen;"
+											onclick="editar('{{h.id}}')"><img src="{%static 'icons/check.svg'%}" alt>
+										</div>
+										<div class="acao" style="background-color: lightcoral;"
+											onclick="deletar('{{h.id}}')"><img src="{%static 'icons/trash3.svg'%}" alt>
+										</div>
+									</div>
+									{%endif%}
+								</th>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	function deletar(id) {
+		apiRequest.delete('delete','sala',JSON.stringify({'id':id}),function(){
+			$('#'.concat(id)).remove()
+		})
+	}
+	function editar(id) {
+		if (confirm('Deseja editar esse agendamento?')) {
+			parametro = {
+						'id': id,
+						'responsavel': document.getElementById('responsavel'.concat(id))?.value,
+						'descricao': document.getElementById('descricao'.concat(id))?.value,
+					}
+			apiRequest.update('edit','sala',parametro)
+		}
+	}
+</script>
+{%endblock%}

@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{%load static%}
+{%block 'style'%}
+<style>
+    .submain .col {
+        border-radius: 5px;
+        background-color: white;
+        margin-left: 10px;
+        margin-bottom: 5px;
+    }
+
+    .table {
+        margin: 0;
+    }
+
+    .form-check-input {
+        height: 15px;
+        width: 15px;
+        box-shadow: 2px 2px 3px lightgray;
+        margin-top: 0px;
+    }
+
+    .div_legenda {
+        padding-top: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .legenda {
+        font-size: medium;
+        font-style: italic;
+        color: gray;
+        text-decoration: wavy;
+        margin-bottom: 0px;
+        padding-left: 3px;
+    }
+
+    th {
+        align-content: center;
+    }
+
+    p {
+        padding-right: 16px;
+    }
+</style>
+{%endblock%}
+{%block 'header'%}
+<div class="container text-center">
+    <div class="row">
+        <div class="col-2">
+            <img src="/static/image/{{sala}}.jpg" alt="" class="img-thumbnail">
+        </div>
+        <div class="col-7">
+            <div aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">Reservas</li>
+                    <li class="breadcrumb-item">Sala</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ sala|capfirst }}</li>
+                </ol>
+            </div>
+            <div class="input-group">
+                <label class="input-group-text" for="inputGroupSelect01">Data:</label>
+                <input type="date" name="data-picker" id='data-picker' onchange="load(true)" class="form-control">
+            </div>
+            <div class="div_legenda"><i class="bi bi-exclamation-circle"></i>
+                <p class="legenda">Para cancelamento de reserva, contatar Felipe, Cristiane ou Rafael S.</p>
+            </div>
+        </div>
+        <div class="col align-self-end">
+            <input type="button" class="btn btn-outline-success" value="Registrar" id="registrar"
+                onclick="reserva_simples('{{sala}}')">
+        </div>
+    </div>
+</div>
+{%endblock%}
+{%block 'submain'%}
+<div class="submain">
+    <div class="row justify-content-evenly">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Horário</th>
+                            <th scope="col">Responsável</th>
+                            <th scope="col">Descrição</th>
+                        </tr>
+                    </thead>
+                <tbody id="tabela_manha"></tbody>
+            </table>
+        </div>
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Horário</th>
+                        <th scope="col">Responsável</th>
+                        <th scope="col">Descrição</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela_tarde"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    var lastestTick = null;
+
+    $(document).ready(function () {
+        let today = new Date()
+        $("#data-picker").val(today.toISOString().split('T')[0])
+        load()
+        setInterval(load, 5000)
+    })
+    function isDate(value) {
+        let date = new Date(value);        
+        return !isNaN(date.getTime());
+    }
+    function load(force) {
+            apiRequest.get("get", "latestTick", "reservasala", function (response) {
+                if (response != lastestTick || force) {
+                    if (isDate($("#data-picker").val())) {
+                        loadReservas('{{sala}}', $("#data-picker").val())
+                        lastestTick = response;
+                    }
+
+                }
+            }
+            )
+    }
+</script>
+{%endblock%}
