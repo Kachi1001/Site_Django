@@ -1,5 +1,3 @@
-const API = getAPI() + "/lancamento_obra/";
-apiRequest.app = 'lancamento_obra/';
 function toggleDiaria() {
     diaria = $("#".concat(objLoaded.prefix, "diaria"));
     if ($("#".concat(objLoaded.prefix, "contrato")).val() == "Terceiro") {
@@ -10,46 +8,9 @@ function toggleDiaria() {
     }
 }
 
-function registerData(metodo, parametro) {
-    $.ajax({
-        url: API + "register",
-        type: "POST",
-        data: {
-            csrfmiddlewaretoken: csrftoken,
-            user: user,
-            metodo: metodo,
-            parametro: JSON.stringify(parametro),
-        },
-        success: function (response) {
-            loadModal("register_" + metodo, metodo);
-            toasts("success", response);
-        },
-        error: function (response) {
-            toasts("danger", response.responseJSON);
-
-        },
-    });
-}
-
 function deleteData(id) {
     if (confirm("Tens certeza que deseja apagar essa linha")) {
-        $.ajax({
-            url: API + "deletar", // URL da view Django que deleta a obra
-            method: "POST",
-            data: {
-                csrfmiddlewaretoken: csrftoken,
-                user: user,
-                metodo: objLoaded.name,
-                parametro: id,
-            },
-            success: function (response) {
-                toasts("success", response);
-                $("#table").bootstrapTable("refresh");
-            },
-            error: function (error) {
-                toasts("danger", error.responseJSON);
-            },
-        });
+        apiRequest.delete('deletar',objLoaded.name,id,function(){$("#table").bootstrapTable('refresh')})
     }
 }
 //Registro que é realizado via modal
@@ -79,7 +40,6 @@ function changeAtividade() {
         "horaini3",
         "horafim3",
         "diaseguinte",
-        "meiadiaria",
         "atividade_id",
     ];
     const campos2 = ["supervisor_id", "motivo"];
@@ -189,10 +149,9 @@ function loadColumns(oculto) {
 
     }
 }
-// Faz um post na API para registrar oque estiver nos inputs, normalmente referente a um formulário
-function submit(type) {
-    data = {};
-    values = columns.inputs.concat(columns.select);
+function getData(){
+    data = {}
+    values = columns.inputs.concat(columns.select)
     for (let i = 0; i < values.length; i++) {
         data[values[i]] = $("#" + objLoaded.prefix + values[i]).val() || NaN;
     }
@@ -201,29 +160,22 @@ function submit(type) {
             "#" + objLoaded.prefix + columns.checks[i]
         ).prop("checked");
     }
-    $.ajax({
-        url: API + type,
-        method: "POST",
-        data: {
-            csrfmiddlewaretoken: csrftoken,
-            user: user,
-            metodo: objLoaded.name,
-            parametro: JSON.stringify(data),
-        },
-        success: function (response) {
-            toasts("success", response);
-            $("#table").bootstrapTable("refresh");
-        },
-        error: function (error) {
-            toasts("danger", error.responseJSON);
-        },
-    });
+    return data
+}
+// Faz um post na API para registrar oque estiver nos inputs, normalmente referente a um formulário
+submit = {
+    post: function(type){
+        apiRequest.post(type,objLoaded.name,getData(),function(){$("#table").bootstrapTable("refresh");})
+    },
+    update: function(type){
+        apiRequest.update(type,objLoaded.name,getData(),function(){$("#table").bootstrapTable("refresh");})
+    },
 }
 function loadForm(name) {
     objLoaded = { method: "form", name: name, prefix: "form_" + name + "_" };
     loadColumns('oculto');
     $("#" + objLoaded.prefix + "btn").click(function () {
-        submit("register");
+        submit.post("register");
     });
 }
 function toggleOculto(campo) {
@@ -250,99 +202,75 @@ function toggleOculto(campo) {
 }
 
 function loadTable() {
-    $("#".concat(objLoaded.prefix + "table")).empty();
-    $.ajax({
-        url: API + "get_table", // URL da view Django que retorna os dados
-        method: "GET",
-        data: {
-            csrfmiddlewaretoken: csrftoken,
-            metodo: "table",
-            parametro: objLoaded.name,
-        },
-        success: function (data) {
-            for (let i = 0; i < data.length; i++) {
-                let row = "<tr>";
-                if (objLoaded.name == "funcao") {
-                    row += `<td>${data[i].funcao}</td>`;
-                    if (data[i].grupo != null) {
-                        row += `<td>${data[i].grupo}</td>`;
-                    }
-                    row += `<td><img src="${icon}/trash.svg" class="btn-icon" onclick='deleteData("${data[i].id}"); setTimeout(function() {loadTable();},200)' style='background:lightcoral;'></td>`;
-                } else if (objLoaded.name == "supervisor") {
-                    let checked;
-                    row += `<td>${data[i].supervisor}</td>`;
-                    checked = data[i].ativo ? "checked" : "";
-                    row += `<td><input class="form-check-input" type="checkbox" ${checked} onclick="toggleAtivo('${
-                        data[i].supervisor
-                    }', ${!data[i].ativo})"></td>`;
-                    row += `<td><img src="${icon}/trash.svg" class="btn-icon" onclick='deleteData("${data[i].supervisor}"); setTimeout(function() {loadTable();},200)' style='background:lightcoral;'></td>`;
-                } else {
-                    return alert("Nenhuma table encontrado");
+    apiRequest.get('get_table','table',objLoaded.name,function(data){
+        $("#".concat(objLoaded.prefix + "table")).empty();
+        for (let i = 0; i < data.length; i++) {
+            let row = "<tr>";
+            if (objLoaded.name == "funcao") {
+                row += `<td>${data[i].funcao}</td>`;
+                if (data[i].grupo != null) {
+                    row += `<td>${data[i].grupo}</td>`;
                 }
-                row += "</tr>";
-                $("#".concat(objLoaded.prefix + "table")).append(row);
+                row += `<td><img src="${icon}/trash.svg" class="btn-icon" onclick='deleteData("${data[i].id}"); setTimeout(function() {loadTable();},200)' style='background:lightcoral;'></td>`;
+            } else if (objLoaded.name == "supervisor") {
+                let checked;
+                row += `<td>${data[i].supervisor}</td>`;
+                checked = data[i].ativo ? "checked" : "";
+                row += `<td><input class="form-check-input" type="checkbox" ${checked} onclick="toggleAtivo('${
+                    data[i].supervisor
+                }', ${!data[i].ativo})"></td>`;
+                row += `<td><img src="${icon}/trash.svg" class="btn-icon" onclick='deleteData("${data[i].supervisor}"); setTimeout(function() {loadTable();},200)' style='background:lightcoral;'></td>`;
+            } else {
+                return alert("Nenhuma table encontrado");
             }
-        },
-        error: function (error) {
-            toasts("danger", error.responseJSON);
-        },
-    });
+            row += "</tr>";
+            $("#".concat(objLoaded.prefix + "table")).append(row);
+        }
+    })
 }
 function loadSelect(select, filter) {
-    let selectHTML = objLoaded.prefix + select;
-    $("#".concat(selectHTML)).empty();
-    $.ajax({
-        url: API + "get_table", // URL da sua API no Django
-        type: "GET",
-        data: {
-            csrfmiddlewaretoken: csrftoken,
-            metodo: "select",
-            parametro: select,
-        },
-        success: function (data) {
-            for (let i = 0; i < data.length; i++) {
-                let value;
-                let text;
-                if (select == "funcao") {
-                    value = data[i].funcao;
-                } else if (select == "obra_id") {
-                    if (filter == "oculto" && data[i].finalizada) {
-                    } else {
-                        value = data[i].id;
-                        text =
-                            value +
-                            " || " +
-                            data[i].empresa +
-                            " | " +
-                            data[i].cidade;
-                    }
-                } else if (select == "supervisor_id") {
-                    value = data[i].supervisor;
-                } else if (select == "atividade_id") {
-                    value = data[i].tipo;
-                    // text = data[i].tipo;
-                } else if (select == "colaborador") {
-                    if (filter == "oculto" && data[i].demissao != null) {
-                    } else {
-                        value = data[i].nome;
-                    }
-                } else if (select == "encarregado") {
-                    value = data[i].nome;
+    apiRequest.get('get_table','select',select,function(data){
+        let selectHTML = objLoaded.prefix + select;
+        $("#".concat(selectHTML)).empty();
+        for (let i = 0; i < data.length; i++) {
+            let value;
+            let text;
+            if (select == "funcao") {
+                value = data[i].funcao;
+            } else if (select == "obra_id") {
+                if (filter == "oculto" && data[i].finalizada) {
                 } else {
-                    return alert("Nenhum select encontrado");
+                    value = data[i].id;
+                    text =
+                        value +
+                        " || " +
+                        data[i].empresa +
+                        " | " +
+                        data[i].cidade;
                 }
-                if (value != undefined) {
-                    let opt = document.createElement("option");
-                    opt.value = value;
-                    opt.text = text || value;
-                    $("#".concat(selectHTML)).append(opt);
+            } else if (select == "supervisor_id") {
+                value = data[i].supervisor;
+            } else if (select == "atividade_id") {
+                value = data[i].tipo;
+                // text = data[i].tipo;
+            } else if (select == "colaborador") {
+                if (filter == "oculto" && data[i].demissao != null) {
+                } else {
+                    value = data[i].nome;
                 }
+            } else if (select == "encarregado") {
+                value = data[i].nome;
+            } else {
+                return alert("Nenhum select encontrado");
             }
-        },
-        error: function (error) {
-            toasts("danger", error.responseJSON);
-        },
-    });
+            if (value != undefined) {
+                let opt = document.createElement("option");
+                opt.value = value;
+                opt.text = text || value;
+                $("#".concat(selectHTML)).append(opt);
+            }
+        }
+    })
 }
 
 

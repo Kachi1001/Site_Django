@@ -1,0 +1,151 @@
+<style>
+    .modal_list {
+        height: 200px;
+        overflow: auto;
+        border-top: 1px solid #dee2e6;
+    }
+
+    th {
+        font-size: small;
+    }
+</style>
+
+
+<div class="modals">
+    <div class="modal fade" id="m_funcao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Cadastro de função</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-2 nowrap">
+                        <label class="input-group-text">Nome:</label>
+                        <input type="text" id="m_funcao_id" class="form-control">
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 nowrap">
+                                <label class="input-group-text" for="form_colaborador_funcao">Categoria:</label>
+                                <select class="form-select" id="m_funcao_categoria">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 nowrap">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" id="m_funcao_insalubridade">
+                                </div>
+                                <span class="input-group-text">Insalubre</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2"  onclick="mani.register()">Cadastrar</button>
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped" id="m_funcao_table">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_equipe" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Cadastro de equipe</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-2 nowrap">
+                        <label class="input-group-text">Nome:</label>
+                        <input type="text" id="m_equipe_id" class="form-control">
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2"  onclick="mani.register()">Cadastrar</button>
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped" id="m_equipe_table">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal upadate colaborador-->
+    <div class="modal fade" id="colaborador" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de colaborador</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">NOME:</label>
+                                <input type="text" id="form_id" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">CPF:</label>
+                                <input type="number" id="form_cpf" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">RG:</label>
+                                <input type="number" id="form_rg" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text" for="form_colaborador_admissao">NASCIMENTO:</label>
+                                <input type="date" id="form_nascimento" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">TELEFONE:</label>
+                                <input type="number" id="form_telefone" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" id="form_ativo">
+                                </div>
+                                <span class="input-group-text">ATIVO:</span>
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">EQUIPE:</label>
+                                <select class="form-select" id="form_equipe">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id='update_colaborador_del'
+                            data-bs-dismiss="modal">Deletar</button>
+                        <button type="button" class="btn btn-success" id='update_colaborador_btn'>Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

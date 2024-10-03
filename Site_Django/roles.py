@@ -17,3 +17,13 @@ class app_lancamento_obra(AbstractUserRole):
     }
     role_name='app_lancamento_obra'
     
+class app_Depto_pessoal(AbstractUserRole):
+    app = 'Depto_pessoal'
+    available_permissions = {
+        f'{app}': True,
+        f'{app}-cadastros': True,
+        f'{app}-tabelas': True,
+        f'{app}-consultas': True,
+    }
+    role_name=f'app_{app}'
+    

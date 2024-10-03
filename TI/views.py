@@ -1,12 +1,13 @@
 from django.shortcuts import render
-from Home.models import *
+from .models import *
+app = __name__.split('.')[0]
 
 # Create your views here.
 def index(request):
-    return render(request, 'ti/index.html')
+    return render(request, f'{app}/index.html')
 
-def equipamentos(request, subpage):
-    return render(request, f'ti/equipamentos/{subpage}.html')
+def maquina(request, subpage):
+    return render(request, f'ti/maquina/{subpage}.html')
 
 def colaborador(request, subpage):
     return render(request, f'ti/colaborador/{subpage}.html')

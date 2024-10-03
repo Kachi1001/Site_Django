@@ -16,8 +16,8 @@
         const newToast = $("#toastTemplate").clone().removeAttr('id').css('display', 'block');
         
         // Adiciona o título e o conteúdo
-        newToast.find('.toast-method').text(response ? response.method : 'Erro desconhecido');
-        newToast.find('.toast-message').text(response ? response.message : 'Contate a equipe de TI');
+        newToast.find('.toast-method').text(response.method ? response.method : 'Erro desconhecido');
+        newToast.find('.toast-message').text(response.message ? response.message : 'Contate a equipe de TI');
 
     
         // Ajusta a cor de acordo com o tipo (sucesso ou erro)

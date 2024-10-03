@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import *
-from Site_Django import util
-from Site_Django.settings import BASE_DIR                                          
+from Site_django import util
+from Site_django.settings import BASE_DIR                                          
+app = __name__.split('.')[0]
 
 def gerarLista(reservados, horarios):
     resultado = []
@@ -30,32 +31,23 @@ horarios2= ["13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:
     
 
 
-
-
 def index(request):
-    return render(request, "reservas/index.html")
+    return render(request, "reservas/index.html",)
 
 def sala_registros(request):
     tabela = AgendaSalas.objects.all().order_by('data','hora')
     context = {
-        'atendimento': tabela.filter(sala='atendimento', data__gte=util.get_hoje()),
-        'apoio': tabela.filter(sala='apoio', data__gte=util.get_hoje()),
-        'reuniao': tabela.filter(sala='reunião', data__gte=util.get_hoje()),
+        'atendimento': tabela.filter(sala='atendimento', data__gte=util.get_hoje())[:50],
+        'apoio': tabela.filter(sala='apoio', data__gte=util.get_hoje())[:50],
+        'reuniao': tabela.filter(sala='reunião', data__gte=util.get_hoje())[:50],
+        'auxiliar': tabela.filter(sala='auxiliar', data__gte=util.get_hoje())[:50],
         'sala': 'Registros',
     }
-    return render(request, "reservas/salas/registros.html", context)
+    return render(request, "reservas/salas/registros.html",context)
 
 
 def sala(request, sala):
-    date = request.GET.get('data') if request.GET.get('data') != None else util.formatarHTML(util.get_hoje())
-    reservados = AgendaSalas.objects.using('Reservas').all().filter(sala=sala, data=date)
-    context = {
-        'data': date,   
-        'horarios1': gerarLista(reservados, horarios1),
-        'horarios2': gerarLista(reservados, horarios2),
-        'sala': sala,
-        }
-    return render(request, "reservas/salas/sala.html", context)
+    return render(request, "reservas/salas/sala.html", {'sala':sala})
 
 def carros(request):
     user = request.user

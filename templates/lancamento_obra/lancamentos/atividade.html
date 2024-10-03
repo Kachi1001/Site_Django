@@ -1,4 +1,4 @@
-{% extends 'lançamento_obra.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {%block 'header'%}
@@ -69,7 +69,8 @@
             <div class="col">
                 <div class="input-group mb-2">
                     <div class="input-group-text">
-                        <input class="form-check-input" type="checkbox" id="form_atividade_meiadiaria" onclick="confirmMeiaDiaria()">
+                        <input class="form-check-input" type="checkbox" id="form_atividade_meiadiaria"
+                            onclick="confirmMeiaDiaria()">
                     </div>
                     <span class="input-group-text">Meia diaria</span>
                 </div>
@@ -90,61 +91,100 @@
             <input type="text" class="form-control" id="form_atividade_motivo" disabled>
         </div>
     </div>
-    
-        <div class="input-group">
-            <span class="input-group-text">Descrição:</span>
-            <textarea class="form-control" id="form_atividade_descricao"></textarea>
-        </div>
-        <a href="#" class="exibir-ocultar mb-2" onclick="get_desc()">puxar do diario</a>
-    
+
+    <div class="input-group">
+        <span class="input-group-text">Descrição:</span>
+        <textarea class="form-control" id="form_atividade_descricao"></textarea>
+    </div>
+    <a href="#" class="exibir-ocultar mb-2" onclick="get_desc()">puxar do diario</a>
+
     <div class="mt-3" style="justify-content: flex-end; display: flex;">
+        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
+            data-bs-target="#modalTable">Visualizar dia</button>
         <button type="button" class="btn btn-success" id="form_atividade_btn">Lançar</button>
     </div>
-</div>
+    <div id="modalTable" class="modal fade" tabindex="2" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Lançamentos do mesmo dia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"  aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table id="lanc_dia" data-toggle="table" data-height="345" data-locale="pt-BR">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" data-field="id">ID</th>
+                                <th rowspan="2" data-field="obra_id">Obra</th>
+                                <th rowspan="2" data-field="dia" data-formatter="dataFormatter">Dia</th>
+                                <th colspan="6">Horas</th>
+                            </tr>
+                            <tr>
+                                <th data-field="horaini1">Inicio 1</th>
+                                <th data-field="horafim1">Fim 1</th>
+                                <th data-field="horaini2">Inicio 2</th>
+                                <th data-field="horafim2">Fim 2</th>
+                                <th data-field="horaini3">Inicio 3</th>
+                                <th data-field="horafim3">Fim 3</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
-    function confirmMeiaDiaria(){
-        if ($("#form_atividade_meiadiaria").prop("checked")){
-            if (!confirm('Tens certeza que deseja selecionar Meia Diária')){
-                $('#form_atividade_meiadiaria').prop('checked', false);
+    $(function() {
+      $('#modalTable').on('shown.bs.modal', function () {
+        $("#lanc_dia").bootstrapTable('refreshOptions', {
+            url: `{{api}}/lancamento_obra/get_data?metodo=lanc_dia&colaborador=${colaborador.val()}&dia=${dia.val()}`,
+        })
+      })
+    })
+    dia = $("#form_atividade_dia")
+    obra_id = $("#form_atividade_obra_id")
+    indice = $("#form_atividade_indice")
+    descricao = $('#form_atividade_descricao')
+    meiadiaria = $("#form_atividade_meiadiaria")
+    colaborador = $("#form_atividade_colaborador")
+
+    function confirmMeiaDiaria() {
+        if (meiadiaria.prop("checked")) {
+            if (!confirm('Tens certeza que deseja selecionar Meia Diária')) {
+                meiadiaria.prop('checked', false);
             }
         }
     }
+    function temData() {
+        if (dia.val() == '') {
+            toasts('warning', { 'message': 'Informe uma data antes!!', 'method': 'Pesquisa' })
+            return false
+        } else
+            return true
+    }
     function get_desc() {
-        if ($('#form_atividade_dia').val() == '') {
-            alert('Informe uma data antes!!')
-            return
+        if (temData) {
+            data = dia.val().split('-')
+            data = data[2].concat('-', data[1], '-', data[0])
+            apiRequest.get('get_data', 'diario', obra_id.val().concat('_', data, '_', indice.val()), function () { descricao.val(data[0].descricao) })
         }
-        data = $('#form_atividade_dia').val().split('-')
-        data = data[2].concat('-', data[1], '-', data[0])
-        $.ajax({
-            url: API + "get_data", // URL da sua API no Django
-            type: "GET",
-            data: {
-                csrfmiddlewaretoken: csrftoken,
-                metodo: 'diario',
-                parametro: $('#form_atividade_obra_id').val().concat('_', data, '_', $('#form_atividade_indice').val()),
-            },
-            success: function (data) {
-                $('#form_atividade_descricao').val(data[0].descricao)
-            },
-            error: function (error) {
-                toasts('danger', error.responseJSON)
-            },
-        });
     };
-    loadForm('atividade')
     $(document).ready(function () {
-        setTimeout( function(){
+        loadForm('atividade')
+        setTimeout(function () {
             const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('obra')){
-                $("#form_atividade_dia").val(urlParams.get("data"))
-                $("#form_atividade_obra_id").val(urlParams.get("obra"))
-                $("#form_atividade_indice").val(urlParams.get("indice"))
-                $("#form_atividade_descricao").val(urlParams.get("desc"))
+            if (urlParams.has('obra')) {
+                dia.val(urlParams.get("data"))
+                obra_id.val(urlParams.get("obra"))
+                indice.val(urlParams.get("indice"))
+                descricao.val(urlParams.get("desc"))
                 changeObra()
             }
-        },200)
+        }, 200)
     })
 </script>
 {%endblock%}

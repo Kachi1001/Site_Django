@@ -1,4 +1,4 @@
-{% extends 'reservas.html' %}
+{% extends 'base.html' %}
 {%load static%}
 {% load permission_tags %}
 
@@ -27,21 +27,24 @@
 	.acao:hover {
 		cursor: pointer;
 	}
+
+	.accordion-body {
+		height: 420px;
+		overflow-y: auto;
+	}
 </style>
-
-<div class="accordion" id="accordionExample">
-	<div class="accordion-item">
-		<h2 class="accordion-header">
-		   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-			  data-bs-target="#panelsStayOpen-collapse1" aria-expanded="false"
-			  aria-controls="panelsStayOpen-collapse1">
-			  Atendimento
-		   </button>
-		</h2>
-		<div id="panelsStayOpen-collapse1" class="accordion-collapse collapse">
-		   <div class="accordion-body">
-				<table class="table">
-					<thead>
+<div class="submain">
+	<div class="accordion" id="accordionExample">
+		<div class="accordion-item">
+			<h2 class="accordion-header">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+					data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+					Atendimento
+				</button>
+			</h2>
+			<div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+					<table class="table">
 						<thead>
 							<tr>
 								<th scope="col">Horário</th>
@@ -51,214 +54,273 @@
 								<th scope="col">Ações</th>
 							</tr>
 						</thead>
-					<tbody>
+						<tbody>
 
-						{% for h in atendimento %}
-						<tr id="{{h.id}}">
-							<th scope="row">
-								<p>{{h.hora}}</p>
-							</th>
-							<th scope="row">
-								<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
-							</th>
-							<th scope="row">
-								{% if user|can:'lançamento' %}
-								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}">
-                                {%else%}
-								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}" disabled>
-								{%endif%}
+							{% for h in atendimento %}
+							<tr id="{{h.id}}">
+								<th scope="row">
+									<p>{{h.hora}}</p>
+								</th>
+								<th scope="row">
+									<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}">
+									{%else%}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}" disabled>
+									{%endif%}
 
-							</th>
-							<th scope="row">
-                                {% if user|can:'lançamento' %}
-								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}">
-                                {%else%}
-								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}" disabled>
-								{%endif%}
-							</th>
-							<th scope="row">
-								{% if user|can:'lançamento' %}
-								<div class="row" style="margin-left: 0px;">
-									<div class="acao" style="background-color: lightgreen;" onclick="editar('{{h.id}}')"><img
-											src="{%static 'icons/check.svg'%}" alt></div>
-									<div class="acao" style="background-color: lightcoral;" onclick="deletar('{{h.id}}')"><img
-											src="{%static 'icons/trash3.svg'%}" alt></div>
-								</div>
-								{%endif%}
-							</th>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}">
+									{%else%}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<div class="row" style="margin-left: 0px;">
+										<div class="acao" style="background-color: lightgreen;"
+											onclick="editar('{{h.id}}')"><img src="{%static 'icons/check.svg'%}" alt>
+										</div>
+										<div class="acao" style="background-color: lightcoral;"
+											onclick="deletar('{{h.id}}')"><img src="{%static 'icons/trash3.svg'%}" alt>
+										</div>
+									</div>
+									{%endif%}
+								</th>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="accordion-item">
-		<h2 class="accordion-header">
-		   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-			  data-bs-target="#panelsStayOpen-collapse2" aria-expanded="false"
-			  aria-controls="panelsStayOpen-collapse2">
-			  Apoio
-		   </button>
-		</h2>
-		<div id="panelsStayOpen-collapse2" class="accordion-collapse collapse">
-		   <div class="accordion-body">
-				<table class="table">
-					<thead>
+		<div class="accordion-item">
+			<h2 class="accordion-header">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+					data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+					Apoio
+				</button>
+			</h2>
+			<div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+					<table class="table">
 						<thead>
-							<tr>
-								<th scope="col">Horário</th>
-								<th scope="col">Data</th>
-								<th scope="col">Responsável</th>
-								<th scope="col">Descrição</th>
-								<th scope="col">Ações</th>
-							</tr>
-						</thead>
-					<tbody>
+							<thead>
+								<tr>
+									<th scope="col">Horário</th>
+									<th scope="col">Data</th>
+									<th scope="col">Responsável</th>
+									<th scope="col">Descrição</th>
+									<th scope="col">Ações</th>
+								</tr>
+							</thead>
+						<tbody>
 
-						{% for h in apoio %}
-						<tr id="{{h.id}}">
-							<th scope="row">
-								<p>{{h.hora}}</p>
-							</th>
-							<th scope="row">
-								<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
-							</th>
-							<th scope="row">
-								{% if user|can:'lançamento' %}
-								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}">
-                                {%else%}
-								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}" disabled>
-								{%endif%}
-							</th>
-							<th scope="row">
-								{% if user|can:'lançamento' %}
-								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}">
-                                {%else%}
-								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}" disabled>
-								{%endif%}
-							</th>
-							<th scope="row">
-								{% if user|can:'lançamento' %}
-								<div class="row" style="margin-left: 0px;">
-									<div class="acao" style="background-color: lightgreen;" onclick="editar('{{h.id}}')"><img
-											src="{%static 'icons/check.svg'%}" alt></div>
-									<div class="acao" style="background-color: lightcoral;" onclick="deletar('{{h.id}}')"><img
-											src="{%static 'icons/trash3.svg'%}" alt></div>
-								</div>
-								{%endif%}
-							</th>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+							{% for h in apoio %}
+							<tr id="{{h.id}}">
+								<th scope="row">
+									<p>{{h.hora}}</p>
+								</th>
+								<th scope="row">
+									<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}">
+									{%else%}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}">
+									{%else%}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<div class="row" style="margin-left: 0px;">
+										<div class="acao" style="background-color: lightgreen;"
+											onclick="editar('{{h.id}}')"><img src="{%static 'icons/check.svg'%}" alt>
+										</div>
+										<div class="acao" style="background-color: lightcoral;"
+											onclick="deletar('{{h.id}}')"><img src="{%static 'icons/trash3.svg'%}" alt>
+										</div>
+									</div>
+									{%endif%}
+								</th>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="accordion-item">
-		<h2 class="accordion-header">
-		   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-			  data-bs-target="#panelsStayOpen-collapse3" aria-expanded="false"
-			  aria-controls="panelsStayOpen-collapse3">
-			  Reunião
-		   </button>
-		</h2>
-		<div id="panelsStayOpen-collapse3" class="accordion-collapse collapse">
-		   <div class="accordion-body">
-				<table class="table">
-					<thead>
+		<div class="accordion-item">
+			<h2 class="accordion-header">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+					data-bs-target="#panelsStayOpen-collapse3" aria-expanded="false"
+					aria-controls="panelsStayOpen-collapse3">
+					Reunião
+				</button>
+			</h2>
+			<div id="panelsStayOpen-collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+					<table class="table">
 						<thead>
-							<tr>
-								<th scope="col">Horário</th>
-								<th scope="col">Data</th>
-								<th scope="col">Responsável</th>
-								<th scope="col">Descrição</th>
-								<th scope="col">Ações</th>
-							</tr>
-						</thead>
-					<tbody>
+							<thead>
+								<tr>
+									<th scope="col">Horário</th>
+									<th scope="col">Data</th>
+									<th scope="col">Responsável</th>
+									<th scope="col">Descrição</th>
+									<th scope="col">Ações</th>
+								</tr>
+							</thead>
+						<tbody>
 
-						{% for h in reuniao %}
-						<tr id="{{h.id}}">
-							<th scope="row">
-								<p>{{h.hora}}</p>
-							</th>
-							<th scope="row">
-								<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
-							</th>
-							<th scope="row">
-								{% if user|can:'lançamento' %}
-								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}">
-                                {%else%}
-								<input type="text" class="form-control" id="responsavel{{h.id}}" value="{{h.responsavel}}" disabled>
-								{%endif%}
-							</th>
-							<th scope="row">
-								{% if user|can:'lançamento' %}
-								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}">
-                                {%else%}
-								<input type="text" class="form-control" id="descricao{{h.id}}" value="{{h.descricao}}" disabled>
-								{%endif%}
-							</th>
-							<th scope="row">
-								{% if user|can:'lançamento' %}
-								<div class="row" style="margin-left: 0px;">
-									<div class="acao" style="background-color: lightgreen;" onclick="editar('{{h.id}}')"><img
-											src="{%static 'icons/check.svg'%}" alt></div>
-									<div class="acao" style="background-color: lightcoral;" onclick="deletar('{{h.id}}')"><img
-											src="{%static 'icons/trash3.svg'%}" alt></div>
-								</div>
-								{%endif%}
-							</th>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+							{% for h in reuniao %}
+							<tr id="{{h.id}}">
+								<th scope="row">
+									<p>{{h.hora}}</p>
+								</th>
+								<th scope="row">
+									<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}">
+									{%else%}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}">
+									{%else%}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<div class="row" style="margin-left: 0px;">
+										<div class="acao" style="background-color: lightgreen;"
+											onclick="editar('{{h.id}}')"><img src="{%static 'icons/check.svg'%}" alt>
+										</div>
+										<div class="acao" style="background-color: lightcoral;"
+											onclick="deletar('{{h.id}}')"><img src="{%static 'icons/trash3.svg'%}" alt>
+										</div>
+									</div>
+									{%endif%}
+								</th>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="accordion-item">
+			<h2 class="accordion-header">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+					data-bs-target="#panelsStayOpen-Auxiliar" aria-expanded="false"
+					aria-controls="panelsStayOpen-Auxiliar">
+					Auxiliar (almoxarifado)
+				</button>
+			</h2>
+			<div id="panelsStayOpen-Auxiliar" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+					<table class="table">
+						<thead>
+							<thead>
+								<tr>
+									<th scope="col">Horário</th>
+									<th scope="col">Data</th>
+									<th scope="col">Responsável</th>
+									<th scope="col">Descrição</th>
+									<th scope="col">Ações</th>
+								</tr>
+							</thead>
+						<tbody>
+
+							{% for h in auxiliar %}
+							<tr id="{{h.id}}">
+								<th scope="row">
+									<p>{{h.hora}}</p>
+								</th>
+								<th scope="row">
+									<p>{{h.data | date:"SHORT_DATE_FORMAT"}}</p>
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}">
+									{%else%}
+									<input type="text" class="form-control" id="responsavel{{h.id}}"
+										value="{{h.responsavel}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}">
+									{%else%}
+									<input type="text" class="form-control" id="descricao{{h.id}}"
+										value="{{h.descricao}}" disabled>
+									{%endif%}
+								</th>
+								<th scope="row">
+									{% if user|can:'lançamento' %}
+									<div class="row" style="margin-left: 0px;">
+										<div class="acao" style="background-color: lightgreen;"
+											onclick="editar('{{h.id}}')"><img src="{%static 'icons/check.svg'%}" alt>
+										</div>
+										<div class="acao" style="background-color: lightcoral;"
+											onclick="deletar('{{h.id}}')"><img src="{%static 'icons/trash3.svg'%}" alt>
+										</div>
+									</div>
+									{%endif%}
+								</th>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
 <script>
 	function deletar(id) {
-		if (confirm('Deseja deletar esse agendamento?')) {
-			$.ajax({
-				url: API + 'delete',  // URL da sua API no Django
-				type: 'POST',
-				data: {
-					'csrfmiddlewaretoken': "{{ csrf_token }}",
-					'metodo': 'sala',
-					'parametro': JSON.stringify({'id':id}),
-				},
-				success: function (Response) {
-					$('#'.concat(id)).remove()
-				},
-				error: function (xhr) {
-					alert(xhr.responseJSON.message);
-				}
-			});
-		}
+		apiRequest.delete('delete','sala',JSON.stringify({'id':id}),function(){
+			$('#'.concat(id)).remove()
+		})
 	}
 	function editar(id) {
 		if (confirm('Deseja editar esse agendamento?')) {
-			$.ajax({
-				url: API + 'edit',  // URL da sua API no Django
-				type: 'POST',
-				data: {
-					'csrfmiddlewaretoken': "{{ csrf_token }}",
-					'metodo': 'sala',
-					'parametro': JSON.stringify({
-                        'id':id,
-                        'responsavel': document.getElementById('responsavel'.concat(id))?.value,
-                        'descricao': document.getElementById('descricao'.concat(id))?.value,
-                    }),
-				},
-				success: function (Response) {
-				},
-				error: function (xhr) {
-					alert(xhr.responseJSON.message);
-				}
-			});
+			parametro = {
+						'id': id,
+						'responsavel': document.getElementById('responsavel'.concat(id))?.value,
+						'descricao': document.getElementById('descricao'.concat(id))?.value,
+					}
+			apiRequest.update('edit','sala',parametro)
 		}
 	}
 </script>

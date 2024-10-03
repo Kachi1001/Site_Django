@@ -1,12 +1,12 @@
 {%load permission_tags%}
 <div class="sidenav">
 
-    <h1 class="nome_app">Reserva</h1>
+    <h1 class="nome_app">{{app_name}}</h1>
 
     <div class="accordion accordion-flush" id="accordionFlushExample">
         <div class="accordion-item">
             <h2 class="accordion-header">
-                <a href="{%url 'reservas'%}" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px">
+                <a href="{%url app%}" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px">
                     Início
                 </a>
             </h2>
@@ -23,6 +23,7 @@
                 <a href="{%url 'sala' 'atendimento'%}"><i {{icon_form}}></i> Atendimento</a>
                 <a href="{%url 'sala' 'apoio'%}"><i {{icon_form}}></i> Apoio</a>
                 <a href="{%url 'sala' 'reunião'%}"><i {{icon_form}}></i> Reunião</a>
+                <a href="{%url 'sala' 'auxiliar'%}"><i {{icon_form}}></i> Auxiliar (almoxarifado)</a>
                 <a href="{%url 'sala' 'registros'%}"><i {{icon_table}}></i> Lista de registros</a>
             </div>
         </div>

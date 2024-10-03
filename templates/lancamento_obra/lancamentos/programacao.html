@@ -1,4 +1,4 @@
-{% extends 'lançamento_obra.html' %}
+{% extends 'base.html' %}
 
 {%block 'header'%}
 <h2>Lançamento de Programação</h2>
@@ -158,32 +158,19 @@
     var colaboradores;
     var encarregados;
     function loadVar(select) {
-        $.ajax({
-            url: API + "get_table", // URL da sua API no Django
-            type: "GET",
-            data: {
-                csrfmiddlewaretoken: csrftoken,
-                metodo: "select",
-                parametro: select,
-            },
-            success: function (data) {
-                for (let i = 0; i < data.length; i++) {
-                    if (select == 'obra_id' && !data[i].finalizada) {
-                        obras += `<option value=${data[i].id}>${data[i].id} || ${data[i].empresa} | ${data[i].cidade}</option>`
-                    }
-                    else if (select == 'colaborador' && data[i].demissao == null) {
-                        colaboradores += `<option>${data[i].nome}</option>`
-                    }
-                    else if (select == 'encarregado') {
-                        encarregados += `<option>${data[i].nome}</option>`
-                    }
+        apiRequest.get('get_table','select',select,function(data){
+            for (let i = 0; i < data.length; i++) {
+                if (select == 'obra_id' && !data[i].finalizada) {
+                    obras += `<option value=${data[i].id}>${data[i].id} || ${data[i].empresa} | ${data[i].cidade}</option>`
                 }
-
-            },
-            error: function () {
-                toasts('danger')
-            },
-        });
+                else if (select == 'colaborador' && data[i].demissao == null) {
+                    colaboradores += `<option>${data[i].nome}</option>`
+                }
+                else if (select == 'encarregado') {
+                    encarregados += `<option>${data[i].nome}</option>`
+                }
+            }
+        })
     }
     var linha = 0
     loadVar('obra_id')

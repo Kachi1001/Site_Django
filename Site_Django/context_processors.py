@@ -5,10 +5,21 @@ from decouple import config
 from . import util
 api = 'http://'+config("API_HOST")+':'+config("API_PORT") # type: ignore
 media = api + '/media'
+
+translate = {
+    'Home': 'Inicio',
+    'Lancamento_obra': 'Lancamento obra',
+    'Reservas': 'Reservas',
+}
 def base(request):
+    modulo_da_view = request.resolver_match.func.__module__
+    nome_do_app = modulo_da_view.split('.')[0]
+
     return {
         'nome': request.user.username,
-        'api': api ,
+        'api': api,
+        'app': nome_do_app,
+        'app_name': translate[nome_do_app] if nome_do_app in translate else 'Sem nome',
         'media_carros': media + '/reservas/carros/',
         'media_diarios': media + '/lancamento_obra/diarios/',
         'media_programacao' : media + '/lancamento_obra/programacao/',

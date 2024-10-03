@@ -1,4 +1,4 @@
-{% extends 'lançamento_obra.html' %}
+{% extends 'base.html' %}
 
 {%block 'header'%}
 <h2>Cadastro de diário</h2>
@@ -137,7 +137,8 @@
             'climatarde': $('#form_diario_climatarde').val(),
             'descricao': $('#form_diario_descricao').val(),
         }
-        parametro['imagem'] = parametro.obra_id + '_' + parametro.data + '_' + parametro.indice + '.' + filename[(filename.length - 1)]
+        data = parametro.data.split('-')
+        parametro['imagem'] = parametro.obra_id + '_' + data[2].concat('-',data[1],'-',data[0]) + '_' + parametro.indice + '.' + filename[(filename.length - 1)]
         let formData = new FormData();
         formData.append('file', file);
         formData.append('parametro', JSON.stringify(parametro));

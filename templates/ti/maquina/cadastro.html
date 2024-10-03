@@ -11,37 +11,47 @@
     <div class="col-5">
         <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect01">Equipamento:</label>
-            <select class="form-select" id="inputGroupSelect01">
-                <option selected>Notebook</option>
-                <option value="1">Computador</option>
-                <option value="2">Impressora</option>
-            </select>
+            <select class="form-select" id="maquina_tipo"></select>
         </div>
     </div>
     <div class="col-3">
         <div class="input-group mb-3">
             <span class="input-group-text">Tag</span>
-            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+            <input type="text" class="form-control" id="maquina_id">
         </div>
     </div>
     <div class="col">
         <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect01">Data de aquisição:</label>
-            <input type="date" name="admissao" id="admissao" class="form-control">
+            <input type="date" id="maquina_aquisicao" class="form-control">
           </div>
     </div>
 </div>
 <div class="row">
     <div class="col">
         <div class="input-group mb-3">
-            <span class="input-group-text">Marca</span>
-            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+            <label class="input-group-text" for="inputGroupSelect01">Marca:</label>
+            <select class="form-select" id="maquina_marca"></select>
         </div>
     </div>
     <div class="col">
         <div class="input-group mb-3">
-            <span class="input-group-text">Modelo</span>
-            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+            <span class="input-group-text">Modelo:</span>
+            <input type="text" class="form-control" id="maquina_modelo">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Número de série:</label>
+            <input type="text" class="form-control" id="maquina_serial_number">
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group mb-3">
+                <span class="input-group-text">Descrição</span>
+                <textarea class="form-control" id="maquina_descricao"></textarea>
         </div>
     </div>
 </div>
@@ -49,17 +59,22 @@
 
 
 {%block 'submain'%}
-<h4>Detalhes</h4>
-<div class="container text-start" id="linhas">
-    <div class="row">
-        <a onclick="addLinha()" class="icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);" href="#">
-            + Adicionar detalhe
-        </a>
+<div class="submain">
+    <h4>Vínculos</h4>
+    <div class="container text-start" id="linhas">
+        <div class="row">
+            <a onclick="addLinha()" class="icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);" href="#">
+                + Adicionar vinculo
+            </a>
+        </div>
     </div>
 </div>
-{%endblock%}
-{% block "script" %}
+
     <script>
+        $(document).ready(function(){
+            load.Start('register','maquina')
+        })
+
         var linha = 0
         function addLinha(){
             $('#linhas').prepend(
@@ -91,4 +106,4 @@
         
     </script>
 
-    {% endblock "script" %}
+    {% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'header'%}
+<h2>Cadastro de colaborador</h2>
+{%endblock%}
+{% block 'main' %}
+
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap">
+            <label class="input-group-text">NOME:</label>
+            <input type="text" id="f_colaborador_id" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap">
+            <label class="input-group-text">CPF:</label>
+            <input type="number" id="f_colaborador_cpf" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap">
+            <label class="input-group-text">RG:</label>
+            <input type="number" id="f_colaborador_rg" class="form-control">
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap">
+            <label class="input-group-text">NASCIMENTO:</label>
+            <input type="date" id="f_colaborador_nascimento" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap" >
+            <label class="input-group-text">TELEFONE:</label>
+            <input type="number" id="f_colaborador_telefone" class="form-control">
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap">
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" id="f_colaborador_ativo">
+            </div>
+            <span class="input-group-text">ATIVO:</span>
+        </div>
+    </div>
+    
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap">
+            <label class="input-group-text">EQUIPE:</label>
+            <select class="form-select" id="f_colaborador_equipe">
+            </select>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row justify-content-end"><div class="col-auto"><button onclick="mani.register()" class="btn btn-success">Cadastrar</button></div></div>
+<script>
+    $(document).ready(function(){
+        load.Start('register','colaborador','form')
+    })
+</script>
+{% endblock %}
+
+{%block 'submain'%}
+<div class="submain">{%include app|add:'/table/colaborador.html'%}</div>
+{%endblock%}

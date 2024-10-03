@@ -8,17 +8,6 @@
 from django.db import models
 
 
-class Adicionais(models.Model):
-    servico = models.CharField()
-    nome = models.CharField()
-    valor = models.CharField()
-    data = models.DateField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'adicionais'
-
-
 class Colaborador(models.Model):
     id = models.BigAutoField(primary_key=True)
     nome = models.CharField()
@@ -29,18 +18,6 @@ class Colaborador(models.Model):
     class Meta:
         managed = False
         db_table = 'colaborador'
-
-
-class Detalhes(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    equipamento = models.CharField()
-    nome = models.CharField()
-    valor = models.CharField()
-    data = models.DateField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'detalhes'
 
 
 class DjangoMigrations(models.Model):
@@ -54,64 +31,38 @@ class DjangoMigrations(models.Model):
         db_table = 'django_migrations'
 
 
-class Equipamentos(models.Model):
+class Maquina(models.Model):
     tipo = models.CharField(max_length=50)
-    tag = models.CharField(blank=True, null=True)
     aquisicao = models.DateField(blank=True, null=True)
     marca = models.CharField(max_length=50, blank=True, null=True)
     modelo = models.CharField(max_length=50, blank=True, null=True)
+    serial_number = models.CharField(blank=True, null=True)
+    descricao = models.CharField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'equipamentos'
-
-
-class Estoque(models.Model):
-    lote = models.CharField()
-    quantidade = models.FloatField()
-    valor_total = models.TextField()  # This field type is a guess.
-    valor_unitario = models.TextField()  # This field type is a guess.
-    produto = models.ForeignKey('Produtos', models.DO_NOTHING, db_column='produto')
-
-    class Meta:
-        managed = False
-        db_table = 'estoque'
+        db_table = 'maquina'
 
 
 class Padrao(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    nome = models.CharField()
-    valor = models.DateField(blank=True, null=True)
-    relacionado = models.DateField(blank=True, null=True)
+    chave = models.CharField()
+    relacionado = models.CharField()
 
     class Meta:
         managed = False
         db_table = 'padrao'
 
 
-class Produtos(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    nome = models.CharField()
-    descricao = models.CharField()
-    equipamento = models.ForeignKey(Equipamentos, models.DO_NOTHING, db_column='equipamento')
-    unidade = models.CharField(max_length=30)
-    estoque_min = models.FloatField()
-    marca = models.CharField(max_length=30, blank=True, null=True)
+class Produto(models.Model):
+    chave = models.CharField()
+    maquina = models.CharField()
+    modelo = models.CharField(blank=True, null=True)
+    fabricante = models.CharField(blank=True, null=True)
+    serial_number = models.CharField(blank=True, null=True)
+    custo = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
+    data_aquisicao = models.DateField(blank=True, null=True)
+    data_baixa = models.DateField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'produtos'
-
-
-class Servicos(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    servico = models.CharField()
-    responsavel = models.DateField(blank=True, null=True)
-    data_realizacao = models.CharField()
-    data_pedido = models.CharField()
-    tag = models.CharField()
-    descricao = models.CharField()
-
-    class Meta:
-        managed = False
-        db_table = 'servicos'
+        db_table = 'produto'
