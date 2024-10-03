@@ -1,4 +1,4 @@
-{% extends 'lançamento_obra.html' %}
+{% extends 'base.html' %}
 {%load static%}
 
 {%block 'header'%}
@@ -31,7 +31,7 @@
 </div>
 <button type="button" class="btn btn-success" id="btn">Filtrar</button>
 
-{%include 'lancamento_obra/consulta.html'%}
+{%include 'consulta.html'%}
 <thead>
     <tr>
         <th data-field="colaborador" data-sortable="true" rowspan="2">Nome</th>
@@ -84,22 +84,11 @@
                 parametro[parametros[i]] = val
             }
         }
-        $.ajax({
-            url: API + 'funcao', // URL da sua API no Django
-            type: "GET",
-            data: {
-                'metodo': 'efetividade',
-                'parametro': JSON.stringify(parametro)
-            },
-            success: function (data) {
-                toasts('success', data)
-                $("#table").bootstrapTable("refresh");
-            },
-            error: function (xhr) {
-                toasts('Error', xhr.responseJSON)
-                console.error(xhr)
-            },
-        });
+        apiRequest.get('funcao','efetividade',JSON.stringify(parametro),function(data){
+            toasts('success', data)
+            $("#table").bootstrapTable("refresh");
+        })
+
     })        
 </script>
 {%endblock%}

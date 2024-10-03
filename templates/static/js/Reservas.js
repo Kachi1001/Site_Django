@@ -1,7 +1,6 @@
-var API = getAPI() + "/reservas/";
-apiRequest.app = "reservas/";
+const urlAPI = api + '/' + app +'/'
+apiRequest.app = "reservas";
 var loaded;
-const toastLiveExample = document.getElementById("liveToast");
 
 function reload(param) {
     let url = new URL(window.location.href);
@@ -17,7 +16,7 @@ function reload(param) {
 function loadModal(modal, parametro) {
     if (modal == "reservar_carro") {
         $.ajax({
-            url: API + "get", // URL da sua API no Django
+            url: urlAPI + "get", // URL da sua API no Django
             type: "GET",
             data: {
                 csrfmiddlewaretoken: csrftoken,
@@ -63,7 +62,7 @@ function loadModal(modal, parametro) {
                 formData.append("metodo", "carro");
 
                 $.ajax({
-                    url: API + "register",
+                    url: urlAPI + "register",
                     type: "POST",
                     data: formData,
                     processData: false,
@@ -152,7 +151,9 @@ function Reserva_rapida() {
             data: $("#reserva_rapida-data").val(),
             sala: $("#reserva_rapida-sala").val(),
         };
-        registarAJAX(parametro, "reservar_sala");
+        apiRequest.post("register", "reservar_sala", parametro, function(){
+            load(false)
+        });
     });
 }
 

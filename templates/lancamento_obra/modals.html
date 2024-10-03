@@ -99,7 +99,7 @@
 
     </script>
     <!-- Modal upadate colaborador-->
-    <div class="modal fade" id="update_colaborador" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="colaborador" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -111,17 +111,12 @@
                     <div class="row">
                         <div class="col-3">
                             <div class="input-group input-group mb-2">
-                                <label class="input-group-text" for="inputGroupSelect01">ID:</label>
-                                <input type="text" name="update_id" id="update_colaborador_id" class="form-control"
+                                <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
+                                <input type="text" id="modal_id" class="form-control"
                                     disabled>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="input-group input-group mb-2">
-                                <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
-                                <input type="text" name="update_nome" id="update_colaborador_nome" class="form-control">
-                            </div>
-                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col">
@@ -452,7 +447,7 @@
                         <div class="col">
                             <div class="input-group mb-2">
                                 <label class="input-group-text" for="update_diario_obra">Obra:</label>
-                                <select class="form-select" id="update_diario_obra" name="obra" disabled>
+                                <select class="form-select" id="update_diario_obra_id" disabled>
                                 </select>
                             </div>
                         </div>
@@ -610,7 +605,7 @@
         loadColumns('exibir');
         if (objLoaded.prefix != modalLoad) {
             $("#" + objLoaded.prefix + "btn").click(function () {
-                submit(objLoaded.method);
+                submit.update(objLoaded.method);
             });
             $("#" + objLoaded.prefix + "del").click(function () {
                 deleteData($("#" + objLoaded.prefix + "id").val());
@@ -618,56 +613,45 @@
             modalLoad = objLoaded.prefix;
         }
         if (objLoaded.method == "update") {
-            $.ajax({
-                url: API + "get_data", // URL da sua API no Django
-                type: "GET",
-                data: {
-                    csrfmiddlewaretoken: csrftoken,
-                    metodo: a[1],
-                    parametro: parametro,
-                },
-                success: function (data) {
-                    data = data[0]
-                    columns.inputs.push("id");
-                    values = columns.inputs.concat(columns.select);
-                    if (values !== undefined) {
-                        for (let i = 0; i < values.length; i++) {
-                            let input = values[i];
-                            $("#" + modal + "_" + input).val(data[input]);
-                        }
+            apiRequest.get('get_data',a[1],parametro,function(data){
+                data = data[0]
+                columns.inputs.push("id");
+                values = columns.inputs.concat(columns.select);
+                if (values !== undefined) {
+                    for (let i = 0; i < values.length; i++) {
+                        let input = values[i];
+                        $("#" + modal + "_" + input).val(data[input]);
                     }
-                    if (columns.checks !== undefined) {
-                        for (let i = 0; i < columns.checks.length; i++) {
-                            let check = columns.checks[i];
-                            $("#" + modal + "_" + check).prop(
-                                "checked",
-                                data[check]
-                            );
-                        }
+                }
+                if (columns.checks !== undefined) {
+                    for (let i = 0; i < columns.checks.length; i++) {
+                        let check = columns.checks[i];
+                        $("#" + modal + "_" + check).prop(
+                            "checked",
+                            data[check]
+                        );
                     }
+                }
 
-                    if (a[1] == "colaborador") {
-                        toggleDiaria();
-                    }
-                    if (a[1] == "atividade") {
-                        changeObra();
-                    }
-                },
-                error: function (error) {
-                    alert(error.responseJSON.message);
-                    toasts("danger", error.responseJSON);
-                },
-            });
+                if (a[1] == "colaborador") {
+                    toggleDiaria();
+                }
+                if (a[1] == "atividade") {
+                    changeObra();
+                }
+            })
+            
         } else if (objLoaded.method == "register") {
             loadTable(objLoaded.prefix, objLoaded.name);
             loadColumns();
             modalLoad = objLoaded.prefix;
         } else if (objLoaded.method == "view") {
-            previewModal_img(getMedia(objLoaded.name) + parametro + ".jpg");
+            previewModal_img(getMedia(objLoaded.name) + parametro + ".jpeg");
 
         }
-        showModal(old_objLoaded);
-
+        setTimeout(function(){
+            showModal (old_objLoaded);
+        },400) 
     }
     function showModal(old_objLoaded) {
         let myModal = new bootstrap.Modal(
@@ -684,23 +668,6 @@
         });
     }
     function toggleAtivo(supervisor, isActive) {
-        $.ajax({
-            url: API + "update", // URL da sua API no Django para atualizar o status
-            type: "POST",
-            data: {
-                csrfmiddlewaretoken: csrftoken,
-                metodo: "supervisor",
-                parametro: JSON.stringify({
-                    ativo: isActive,
-                    supervisor: supervisor,
-                }),
-            },
-            success: function (response) {
-                toasts("success", response);
-            },
-            error: function (error) {
-                toasts("warning", error.responseJSON.message);
-            },
-        });
+        apiRequest.update('update','supervisor',{ativo:isActive,supervisor:supervisor})
     }
 </script>

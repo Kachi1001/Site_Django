@@ -1,26 +1,23 @@
 /* Main content */
-body{
-  margin: 0;
+html{
+  height: 100%;
+}
+body{  
   font-family: "Lato", sans-serif;
+  padding-top: 60px;
   /* user-select: none; */
-}
-header {
-  margin-left: calc(var(--side-bar_width) + 50px);
-  margin-top: 50px;
-  font-size: 20px;
-  padding: 20px 25px 0px 0px;
-}
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--cor3);
 
-main {
-  margin-left: calc(var(--side-bar_width) + 50px);
-  margin-right: 50px;
-  padding: 20px 25px 0px 25px;
-  max-height: 600px;
+}
+header{
+  margin-bottom: 20px;
 }
 
 .submain {
   margin-left: calc(var(--side-bar_width) + 50px);
-  margin-right: 50px;
   margin-top: 25px;
   padding: 20px 25px 0px 25px;
   border-top: 1px solid lightgray;
@@ -41,7 +38,6 @@ footer {
 .btn-icon {
   border-radius: 10px;
   padding: 4px;
-  background-color: gray;
   width: 25px;
   display: flex;
   height: 25px;
@@ -84,9 +80,7 @@ td{
     --cor5: #bcc8ce;
     --cor6: #5E8077;
 }
-body{
-    background-color: var(--cor3);
-}
+
 .sidenav .nome_app{
     background-color: var(--cor6);
 }

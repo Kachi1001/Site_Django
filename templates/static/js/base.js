@@ -1,96 +1,141 @@
-
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-const csrftoken = getCookie('csrftoken');
-const user = getUser();
-const icon = '/static/icons'
-
 const apiRequest = {
-    baseUrl: getAPI(),
-    app: null,
-
-    get: function (endpoint, metodo, parametro, successCallback, errorCallback) {
+    baseUrl: api,
+    createURL: function (endpoint) {
+        return this.baseUrl +'/'+ app +"/"+ endpoint;
+    },
+    createDATA: function (metodo, parametro) {
+        return {
+            metodo: metodo,
+            parametro: parametro,
+            user: user,
+        };
+    },
+    get: function (
+        endpoint,
+        metodo,
+        parametro,
+        successCallback,
+        errorCallback
+    ) {
         return $.ajax({
-            url: this.baseUrl + this.app + endpoint,
-            method: 'GET',
-            data: {
-                metodo: metodo,
-                parametro: parametro,
-                user: user,
-                csrfmiddlewaretoken: csrftoken,
-            },
+            url: this.createURL(endpoint),
+            method: "GET",
+            data: this.createDATA(metodo, parametro),
             success: function (response) {
-                if (typeof successCallback === 'function') {
+                if (typeof successCallback === "function") {
                     successCallback(response);
                 }
             },
-            error: function(error) {
-                if (typeof errorCallback === 'function') {
-                    errorCallback(error);
-                }
-                toasts('danger',error.responseJSON)
-            }
+            error: (error) => {
+                this.error(error, errorCallback);
+            },
         });
     },
 
-    post: function (endpoint, metodo, parametro, successCallback, errorCallback) {
+    post: function (
+        endpoint,
+        metodo,
+        parametro,
+        successCallback,
+        errorCallback
+    ) {
         return $.ajax({
-            url: this.baseUrl + this.app + endpoint,
-            method: 'POST',
-            data: {
-                user: user,
-                csrfmiddlewaretoken: csrftoken,
-                metodo: metodo,
-                parametro: JSON.stringify(parametro),
+            url: this.createURL(endpoint),
+            method: "POST",
+            data: this.createDATA(metodo, JSON.stringify(parametro)),
+            success: (response) => {
+                this.success(response, successCallback);
             },
-            success: function (response) {
-                if (typeof successCallback === 'function') {
-                    successCallback(response);
-                }
-                toasts("success", response)
+            error: (error) => {
+                this.error(error, errorCallback);
             },
-            error: function(error) {
-                if (typeof errorCallback === 'function') {
-                    errorCallback(error);
-                }
-                toasts('danger',error.responseJSON)
-            }
         });
     },
 
-    upload: function(endpoint, formData, successCallback, errorCallback){
+    update: function (
+        endpoint,
+        metodo,
+        parametro,
+        successCallback,
+        errorCallback
+    ) {
+        return $.ajax({
+            url: this.createURL(endpoint),
+            method: "PATCH",
+            data: this.createDATA(metodo, JSON.stringify(parametro)),
+            success: (response) => {
+                this.success(response, successCallback);
+            },
+            error: (error) => {
+                this.error(error, errorCallback);
+            },
+        });
+    },
+
+    upload: function (endpoint, formData, successCallback, errorCallback) {
         $.ajax({
-            url: this.baseUrl + this.app + endpoint,
-            type: 'POST',
+            url: this.createURL(endpoint),
+            type: "POST",
             data: formData,
             processData: false,
             contentType: false,
 
-            success: function (response) {
-                if (typeof successCallback === 'function') {
-                    successCallback(response);
-                }
-                toasts("success", response)
+            success: (response) => {
+                this.success(response, successCallback);
             },
-            error: function(error) {
-                if (typeof errorCallback === 'function') {
-                    errorCallback(error);
-                }
-                toasts('danger',error.responseJSON)
-            }
+            error: (error) => {
+                this.error(error, errorCallback);
+            },
         });
-    }
+    },
+
+    delete: function (
+        endpoint,
+        metodo,
+        parametro,
+        successCallback,
+        errorCallback
+    ) {
+        if (confirm('Tens certeza que deseja apagar esse registro??')){
+            $.ajax({
+                url: this.createURL(endpoint),
+                method: "DELETE",
+                data: this.createDATA(metodo, parametro),
+                success: (response) => {
+                    this.success(response, successCallback);
+                },
+                error: (error) => {
+                    this.error(error, errorCallback);
+                },
+            });
+        } else {
+            toats('warning',{'method':'Delete','message':'Operação cancelada com sucesso!!'})
+        }
+    },
+
+    success: function (response, successCallback) {
+        // Verifica se o callback de sucesso foi passado e é uma função
+        if (typeof successCallback === "function") {
+            successCallback(response);
+        }
+        // Chama o toast de sucesso
+        toasts("success", response);
+    },
+    error: function (error, errorCallback) {
+        // Verifica se o callback de erro foi passado e é uma função
+        if (typeof errorCallback === "function") {
+            errorCallback(error);
+        }
+        // Chama o toast de erro
+        console.error(error);
+        if (error.status == 404) {
+            error = {
+                responseJSON: {
+                    method: "404 - Not Found",
+                    message: "Pagina não encontrada ou desativada",
+                }
+            };
+        }
+        toasts("danger", error.responseJSON);
+    },
 };

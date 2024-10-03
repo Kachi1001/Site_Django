@@ -50,16 +50,13 @@
 </style>
 
 <body>
-  <nav class="navbar">
-    <strong class="ps-2">Aplicativo privado</strong>
-    {%include 'profile.html'%}
-  </nav>
+  {%include 'navbar.html'%}
   <header>
     <h1>Lista de ferramentas disponiveis</h1>
   </header>
   <main>
-    <div class="container text-center">
-      <div class="row">
+    <div class="container text-center"style="max-width: 1200px;">
+      <div class="row" >
         {% if user|can:'lancamento_obra' %}
         <div class="col">
           <div class="card">
@@ -106,6 +103,22 @@
             </div>
             <div class="card-footer">
               <a href="{%url 'ti'%}" class="card-link">Abrir Aplicação</a>
+            </div>
+          </div>
+        </div>
+        {%endif%}
+        {% if user|can:'depto_pessoal' %}
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title">Departamento pessoal</h5>
+            </div>
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-body-secondary">v0.1</h6>
+              <p class="card-text">Administração de recursos do departamento</p>
+            </div>
+            <div class="card-footer">
+              <a href="{%url 'depto_pessoal'%}" class="card-link">Abrir Aplicação</a>
             </div>
           </div>
         </div>
