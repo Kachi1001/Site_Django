@@ -3,19 +3,20 @@ from rolepermissions.roles import AbstractUserRole
 
 class supervisor(AbstractUserRole):
     available_permissions = {
-        'lancamento_obra': True,
-        'lancamento_obra-consultas': True,
+        'Lancamento_obra': True,
+        'Lancamento_obra-consultas': True,
     }
     role_name='supervisor'
-class app_lancamento_obra(AbstractUserRole):
+class app_Lancamento_obra(AbstractUserRole):
+    app = 'Lancamento_obra'
     available_permissions = {
-        'lancamento_obra': True,
-        'lancamento_obra-cadastros': True,
-        'lancamento_obra-lancamentos': True,
-        'lancamento_obra-tabelas': True,
-        'lancamento_obra-consultas': True,
+        f'{app}': True,
+        f'{app}-cadastros': True,
+        f'{app}-consultas': True,
+        f'{app}-lancamentos': True,
+        f'{app}-tabelas': True,
     }
-    role_name='app_lancamento_obra'
+    role_name=f'app_{app}'
     
 class app_Depto_pessoal(AbstractUserRole):
     app = 'Depto_pessoal'

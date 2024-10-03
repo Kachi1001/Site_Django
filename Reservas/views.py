@@ -32,7 +32,7 @@ horarios2= ["13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:
 
 
 def index(request):
-    return render(request, "reservas/index.html",)
+    return render(request, f"{app}/index.html",)
 
 def sala_registros(request):
     tabela = AgendaSalas.objects.all().order_by('data','hora')
@@ -43,11 +43,11 @@ def sala_registros(request):
         'auxiliar': tabela.filter(sala='auxiliar', data__gte=util.get_hoje())[:50],
         'sala': 'Registros',
     }
-    return render(request, "reservas/salas/registros.html",context)
+    return render(request, f"{app}/salas/registros.html",context)
 
 
 def sala(request, sala):
-    return render(request, "reservas/salas/sala.html", {'sala':sala})
+    return render(request, f"{app}/salas/sala.html", {'sala':sala})
 
 def carros(request):
     user = request.user
@@ -70,7 +70,7 @@ def carros(request):
         'data': date,   
         'dados': gerarListaCarros(reservados, Carros.objects.all()),
         }
-    return render(request, "reservas/frota/carros.html", context)
+    return render(request, f"{app}/frota/carros.html", context)
 def carros_registros(request):
     return None
 def munck(request):
