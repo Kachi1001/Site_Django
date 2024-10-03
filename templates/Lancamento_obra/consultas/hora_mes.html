@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{%block 'header'%}
+<h2>Consulta de Horas por mês</h2>
+{%include 'consulta.html'%}
+<thead>
+    <th data-field="competencia" data-sortable="true">Competência</th>
+    <th data-field="colaborador" data-sortable="true">Nome</th>
+    <th data-field="contrato" data-sortable="true">Contrato</th>
+    <th data-field="folgas" data-sortable="true" data-formatter="intervalFormatter">Folgas</th>
+    <th data-field="faltas" data-sortable="true" data-formatter="intervalFormatter">Faltas</th>
+    <th data-field="dispensas" data-sortable="true" data-formatter="intervalFormatter">Dispensas</th>
+    <th data-field="he50" data-sortable="true" data-formatter="intervalFormatter">Horas +50%</th>
+    <th data-field="he100" data-sortable="true" data-formatter="intervalFormatter">Horas +100%</th>
+</tr>
+</thead>
+</table>
+<script>
+$(document).ready(function(){
+    atualizar_tabelas()
+});
+</script>
+{%endblock%}

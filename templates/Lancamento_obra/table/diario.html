@@ -1,0 +1,47 @@
+{%load static%}
+{%include 'tabela.html'%}
+  <thead>
+    <tr>
+        <th data-field="id" data-sortable="true" rowspan="2">Id</th>
+        <th data-field="obra_id" data-sortable="true" rowspan="2">Obra</th>
+        <th data-field="data" data-sortable="true" data-formatter="dataFormatter" rowspan="2">Data</th>
+        <th data-field="indice" rowspan="2">Indice</th>
+        <th data-field="diario" data-sortable="true" rowspan="2">Diario</th>
+        <th colspan="2">Climas</th>
+        <th data-field="encarregado" data-sortable="true" rowspan="2">Encarregado</th>
+        <th data-field="descricao" data-formatter="Formatter" rowspan="2">Descrição</th>
+        <th data-formatter="editarFormatter" data-events="editarEvents" rowspan="2">Editar</th>
+    </tr>
+    <tr>
+
+      <th data-field="climamanha" data-sortable="true">Manha</th>
+      <th data-field="climatarde" data-sortable="true">Tarde</th>
+
+    </tr>
+  </thead>
+</table> 
+
+{% block "script" %}
+<script>
+    function editarFormatter(value) {
+        return (
+            '<div style="margin-left: 0px; display: inline-flex;">'
+            + '<div class="btn-icon" id="editarBtn" href="javascript:void(0)" title="Editar" style="background-color: skyblue;">'
+            + '<img src="{% static "icons/pencil.svg"%}" alt="edit">'
+            + '</div>'
+            + '<div class="btn-icon" id="viewBtn" href="javascript:void(0)" title="Digitalização" style="background-color: lightgreen;">'
+            + '<img src="{% static "icons/file-earmark-text.svg"%}" alt="edit">'
+            + '</div>'
+            + '</div>'
+        )
+    }
+    window.editarEvents = {
+        'click #editarBtn': function (e, value, row, index) {
+            loadModal('update_diario', row['diario'])
+        },
+        'click #viewBtn': function (e, value, row, index) {
+            loadModal('view_diario', row['diario'])
+        },
+    }   
+</script>
+{% endblock %}

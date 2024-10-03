@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'header'%}
+<h2>Cadastro de colaborador</h2>
+{%endblock%}
+{% block 'main' %}
+
+<div class="row">
+    <div class="col">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="form_colaborador_nome">Nome:</label>
+            <input type="text" name="nome" id="form_colaborador_nome" class="form-control">
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="form_colaborador_funcao">Função:</label>
+            <select class="form-select" id="form_colaborador_funcao">
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-4">
+        <div class="input-group mb-2">
+            <label class="input-group-text" for="form_colaborador_admissao">Admissão:</label>
+            <input type="date" id="form_colaborador_admissao" class="form-control">
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="form_colaborador_contrato">Contrato:</label>
+            <select class="form-select" id="form_colaborador_contrato"
+                onchange="toggleDiaria()">
+                <option value="CLT">CLT</option>
+                <option value="Terceiro">Terceiro</option>
+            </select>
+        </div>
+    </div>
+    <div class="col">
+
+        <div class="input-group mb-3" id="form_colaborador_div_diaria">
+            <span class="input-group-text">Diária</span>
+            <input type="text" class="form-control" id="form_colaborador_diaria" disabled>
+            <span class="input-group-text">R$</span>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-3">
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" id="form_colaborador_encarregado">
+            </div>
+            <span class="input-group-text">Encarregado</span>
+        </div>
+    </div>
+</div>
+
+
+<div class="input-group mb-3">
+    <span class="input-group-text">Observações</span>
+    <textarea class="form-control" id="form_colaborador_observacao"></textarea>
+</div>
+
+<div class="row justify-content-end"><div class="col-auto"><button id="form_colaborador_btn" class="btn btn-success">Cadastrar</button></div></div>
+<script>
+    $(document).ready(function(){
+        loadForm('colaborador')
+    });
+</script>
+{% endblock %}
+
+{%block 'submain'%}
+<div class="submain">{%include 'lancamento_obra/table/colaborador.html'%}</div>
+{%endblock%}
