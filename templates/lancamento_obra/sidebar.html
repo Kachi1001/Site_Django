@@ -3,7 +3,7 @@
 <div class="sidenav">
     <h1 class="nome_app">Lançamento obra</h1>
     <div class="accordion accordion-flush" id="accordion">
-        {% if user|can:'lancamento_obra-cadastros' %}
+        {% if user|can:'Lancamento_obra-cadastros' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -20,7 +20,7 @@
             </div>
         </div>
         {%endif%}
-        {% if user|can:'lancamento_obra-lancamentos' %}
+        {% if user|can:'Lancamento_obra-lancamentos' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -35,7 +35,7 @@
             </div>
         </div>
         {%endif%}
-        {% if user|can:'lancamento_obra-tabelas' %}
+        {% if user|can:'Lancamento_obra-tabelas' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -52,7 +52,7 @@
             </div>
         </div>
         {%endif%}
-        {% if user|can:'lancamento_obra-consultas' %}
+        {% if user|can:'Lancamento_obra-consultas' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"

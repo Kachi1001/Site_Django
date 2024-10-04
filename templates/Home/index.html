@@ -7,13 +7,16 @@
     display: flex;
     align-items: center;
   }
+  .card{
+    width: 300px;
+  }
 </style>
 {%endblock%}
 {%block 'body'%}
 <div class="container text-center"id='index_body'>
-    <div class="row" >
-      {% if user|can:'lancamento_obra' %}
-      <div class="col">
+    <div class="row justify-content-center">
+      {% if user|can:'Lancamento_obra' %}
+      <div class="col-auto">
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">Lançamento obra</h5>
@@ -29,7 +32,7 @@
       </div>
       {%endif%}
 
-      <div class="col">
+      <div class="col-auto">
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">Reservas</h5>
@@ -47,7 +50,7 @@
 
       
       {% if user|can:'ti' %}
-      <div class="col">
+      <div class="col-auto">
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">TI</h5>
@@ -63,7 +66,7 @@
       </div>
       {%endif%}
       {% if user|can:'Depto_pessoal' %}
-      <div class="col">
+      <div class="col-auto">
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">Departamento pessoal</h5>
@@ -79,7 +82,7 @@
       </div>
       {%endif%}
       {% if user|can:'master' %}
-      <div class="col">
+      <div class="col-auto">
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">Painel admin</h5>
@@ -94,7 +97,7 @@
       </div>
       {%endif%}
       {% if user|can:'master' %}
-      <div class="col">
+      <div class="col-auto">
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">Painel WebMain</h5>
