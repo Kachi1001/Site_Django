@@ -18,11 +18,10 @@ def base(request):
     return {
         'nome': request.user.username,
         'api': api,
+        'media': media,
         'app': nome_do_app,
         'app_name': translate[nome_do_app] if nome_do_app in translate else 'Sem nome',
-        'media_carros': media + '/reservas/carros/',
-        'media_diarios': media + '/lancamento_obra/diarios/',
-        'media_programacao' : media + '/lancamento_obra/programacao/',
+
         'hojeJS': util.formatarHTML(util.get_hoje()),
         'icon': '/static/icons',
         'icon_table': "class=bi-table",
