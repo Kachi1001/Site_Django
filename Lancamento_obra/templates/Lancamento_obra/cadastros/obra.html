@@ -100,5 +100,6 @@
 {% endblock %}
 
 {% block 'submain' %}
-<div class="submain">{%include 'lancamento_obra/table/obra.html'%}</div>
+<div class="submain">{%include app|add:'/table/obra.html'%}</div>
+
 {% endblock %}
