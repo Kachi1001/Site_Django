@@ -38,4 +38,4 @@ urlpatterns = [
 for app in settings.INTERNAL_APP:
     urlpatterns.append(path(f'{app.casefold()}/', include(f'{app}.urls')))
         
-urlpatterns += static(settings.MIDIA_URL, document_root=settings.MIDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

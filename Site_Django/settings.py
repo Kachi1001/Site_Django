@@ -25,9 +25,10 @@ SECRET_KEY = 'django-insecure-hss4fba%6y**i6$hkin&j@gp3h^^7r5*duji$-f1&(_#m6*gx#
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True if config('DJ_DEBUG', 'false') == 'true' else False
 
-ALLOWED_HOSTS = [config("DJ_HOST",'127.0.0.1'), 'tecnikaengenharia.ddns.net', 'enjoyed-sheepdog-intense.ngrok-free.app']
+DEBUG = config('DJ_DEBUG', default=False, cast=bool)
+
+ALLOWED_HOSTS = config("DJ_ALLOWED_HOSTS", default="127.0.0.1").split(",") # type: ignore
 
 
 # Application definition
@@ -137,14 +138,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join('static')
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "templates/static"),)
     
 
-MIDIA_ROOT = os.path.join(BASE_DIR, 'midia')
-MIDIA_URL = '/midia/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
+MEDIA_URL = '/media/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
