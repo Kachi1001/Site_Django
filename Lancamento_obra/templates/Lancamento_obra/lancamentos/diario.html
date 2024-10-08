@@ -94,33 +94,35 @@
 
 <div id="liveAlertPlaceholder"></div>
 <script>
-    loadForm('diario')
-    let photo = document.getElementById('form_diario_digitalização');
-    let file = document.getElementById('form_diario_arquivo');
-    let filename
-    function adicionaZero(numero) {
+    $(document).ready(function(){
+        loadForm('diario')
+
+        let photo = document.getElementById('form_diario_digitalização');
+        let file = document.getElementById('form_diario_arquivo');
+        let filename
+        function adicionaZero(numero) {
         if (numero <= 9)
             return "0" + numero;
-        else
+            else
             return numero;
-    }
-
-    $('#form_diario_arquivo').change(function () {
-        filename = $('#form_diario_arquivo').val().replace("C:\\fakepath\\", "").split(".")
-        let reader = new FileReader();
-
-        reader.onload = () => {
-            photo.src = reader.result;
-            previewModal_img(reader.result)
-            info = filename[0].split("_")
-            $('#form_diario_obra_id').val(info[0])
-            d = info[1].split("-")
-            d = d[2] + "-" + adicionaZero(parseInt(d[1])) + "-" + adicionaZero(parseInt(d[0]));
-            $('#form_diario_data').val(d)
-            $('#form_diario_indice').val(info[2])
         }
-        reader.readAsDataURL(file.files[0]);
-    });
+        
+        $('#form_diario_arquivo').change(function () {
+            filename = $('#form_diario_arquivo').val().replace("C:\\fakepath\\", "").split(".")
+            let reader = new FileReader();
+            
+            reader.onload = () => {
+                photo.src = reader.result;
+                previewModal_img(reader.result)
+                info = filename[0].split("_")
+                $('#form_diario_obra_id').val(info[0])
+                d = info[1].split("-")
+                d = d[2] + "-" + adicionaZero(parseInt(d[1])) + "-" + adicionaZero(parseInt(d[0]));
+                $('#form_diario_data').val(d)
+                $('#form_diario_indice').val(info[2])
+            }
+            reader.readAsDataURL(file.files[0]);
+        });
     
     function registrar(redirect){
         let file = $('#form_diario_arquivo')[0].files[0];
@@ -156,15 +158,16 @@
                     window.location.href = `http://10.0.0.211:8001/lancamento_obra/lancamentos/atividade?obra=${obra}&data=${data}&indice=${indice}&desc=${desc}`;
                 }
             }
-        )
+            )
+            
+        }
         
-    }
-    
-    $('#register').click(function (){
-        registrar()
+        $('#register').click(function (){
+            registrar()
+        })
+        function register_redirect(){
+            registrar(true)
+        }
     })
-    function register_redirect(){
-        registrar(true)
-    }
 </script>
 {% endblock %}

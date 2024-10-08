@@ -9,16 +9,7 @@ function toggleDiaria() {
 }
 
 function deleteData(id) {
-    if (confirm("Tens certeza que deseja apagar essa linha")) {
-        apiRequest.delete('deletar',objLoaded.name,id,function(){$("#table").bootstrapTable('refresh')})
-    }
-}
-//Registro que é realizado via modal
-function registerModal(modal) {
-    submit("register");
-    setTimeout(function () {
-        loadTable(modal, modal.split("_")[1]);
-    }, 100);
+    apiRequest.delete('deletar',objLoaded.name,id,function(){$("#table").bootstrapTable('refresh')})
 }
 // Preenche as variaveis de dados de objetos do banco de dados
 var objLoaded = { method: undefined, name: undefined, prefix: undefined,

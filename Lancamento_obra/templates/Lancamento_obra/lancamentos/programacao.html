@@ -10,7 +10,7 @@
     <div class="col">
         <div class="input-group mb-2">
             <label class="input-group-text">Digitalizado</label>
-            <input type="file" class="form-control" id="form_programacao_arquivo" accept=".jpg" onchange="previewImg()">
+            <input type="file" class="form-control" id="form_programacao_arquivo" accept=".jpg">
         </div>
 
         <div class="input-group mb-2">
@@ -30,7 +30,8 @@
         </div>
         <div div='container text-start mb-2' style="border-top: 1px solid lightgray; padding-top: 10px;">
             <h5>Detalhes</h5>
-            <div id="linhas" style="overflow-y: auto; width: fit-content; overflow-x: hidden; padding-inline: 10px;"></div>
+            <div id="linhas" style="overflow-y: auto; width: fit-content; overflow-x: hidden; padding-inline: 10px;">
+            </div>
         </div>
 
     </div>
@@ -38,7 +39,7 @@
     <div class="col-auto">
         <div class="text-center">
             <img src="https://cdn-icons-png.flaticon.com/512/104/104090.png" class="img-thumbnail" alt="Digitalização"
-                style="width: 750px; height: 600px; object-fit: contain; " id="form_programacao_digitalização"
+                style="width: 750px; height: 600px; object-fit: contain; " id="form_programacao_digitalizacao"
                 data-bs-toggle="modal" data-bs-target="#view_programacao">
         </div>
     </div>
@@ -47,68 +48,71 @@
 {% endblock %}
 {% block "script"%}
 <script>
-    $(document).ready(function(){
-        loadForm('programacao')  
-    })
-
     const prefix = 'form_programacao_';
-    var linhas = []
-    let filename
-    function adicionaZero(numero) {
-        if (numero <= 9)
-            return "0" + numero;
-        else
-            return numero;
-    }
+    $(document).ready(function () {
+        loadForm('programacao')
 
-    arquivo = $('#form_programacao_arquivo');
-    function previewImg() {
-        let reader = new FileReader();
-        reader.onload = () => {
-            $('#form_programacao_digitalização').attr('src', reader.result);
-            previewModal_img(reader.result)
+        var linhas = []
+        function adicionaZero(numero) {
+            if (numero <= 9)
+                return "0" + numero;
+            else
+                return numero;
         }
-        reader.readAsDataURL(arquivo[0].files[0]);
-    }
+        const arquivo = $('#form_programacao_arquivo');
+        $('#form_programacao_arquivo').change(function () {
+            console.log(arquivo)
 
-    $('#register').click(function () {
-        let filename = arquivo.val().replace("C:\\fakepath\\", "").split(".")
-        let file = arquivo[0].files[0];
-        let formData = new FormData();
+            let reader = new FileReader();
+            reader.onload = () => {
+                $('#form_programacao_digitalizacao').attr('src', reader.result);
+                previewModal_img(reader.result)
+            }
+            reader.readAsDataURL(document.getElementById('form_programacao_arquivo').files[0]);
+        });
 
-        if (!file) {
-            alert("Por favor, selecione um arquivo primeiro.");
-            return;
-        }
-        let segunda = $('#form_programacao_data').val()
-        let lanc = [];
-        for (i = 0; $('#' + prefix + 'obra_id_' + linhas[i]).val() != undefined; i++) {
-            let obra = $('#' + prefix + 'obra_id_' + linhas[0]).val();
-            let encarregado = $('#' + prefix + 'encarregado_' + linhas[0]).val();
-            let colaborador = $('#' + prefix + 'colaborador_' + linhas[i]).val()
-           
-            lanc.push({
-                'colaborador': colaborador,
-                'obra_id': obra,
-                'encarregado': encarregado
-            })
-        }
-        let parametro = {
-            'lanc': JSON.stringify(lanc),
-            'iniciosemana': segunda,
-            'imagem': segunda + '.' + filename[(filename.length - 1)]
-        }
-        formData.append('file', file);
-        formData.append('parametro', JSON.stringify(parametro));
-        formData.append('metodo', 'programacao');
+        $('#register').click(function () {
+            let file = arquivo[0].files[0];
+            let filename = arquivo.val().replace("C:\\fakepath\\", "").split(".")
+            if (!file) {
+                toasts('warning', { 'method': 'Registro', 'message': "Por favor, selecione um arquivo primeiro." })
+                return;
+            }
+            let segunda = $('#form_programacao_data').val()
+            if (!segunda) {
+                toasts('warning', { 'method': 'Registro', 'message': "Por favor, selecione uma segunda-feira." })
+                return
+            }
+            let lanc = [];
+            for (i = 0; $('#' + prefix + 'obra_id_' + linhas[i]).val() != undefined; i++) {
+                let obra = $('#' + prefix + 'obra_id_' + linhas[0]).val();
+                let encarregado = $('#' + prefix + 'encarregado_' + linhas[0]).val();
+                let colaborador = $('#' + prefix + 'colaborador_' + linhas[i]).val()
 
-        apiRequest.upload(
-            'register',
-            formData
+                lanc.push({
+                    'colaborador': colaborador,
+                    'obra_id': obra,
+                    'encarregado': encarregado
+                })
+            }
+            let parametro = {
+                'lanc': JSON.stringify(lanc),
+                'iniciosemana': segunda,
+                'imagem': segunda + '.' + filename[(filename.length - 1)]
+            }
+            let formData = new FormData();
+            formData.append('file', file);
+            formData.append('parametro', JSON.stringify(parametro));
+            formData.append('metodo', 'programacao');
+
+            apiRequest.upload(
+                'register',
+                formData
+            )
+
+        }
         )
-        
-    }
-    )
+    })
     function addLinha() {
         $('#linhas').prepend(
             `<div class="row mb-1 align-items-center" id="linha${linha}">` +
@@ -160,7 +164,7 @@
     var colaboradores;
     var encarregados;
     function loadVar(select) {
-        apiRequest.get('get_table','select',select,function(data){
+        apiRequest.get('get_table', 'select', select, function (data) {
             for (let i = 0; i < data.length; i++) {
                 if (select == 'obra_id' && !data[i].finalizada) {
                     obras += `<option value=${data[i].id}>${data[i].id} || ${data[i].empresa} | ${data[i].cidade}</option>`

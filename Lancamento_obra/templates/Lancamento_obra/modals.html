@@ -99,7 +99,7 @@
 
     </script>
     <!-- Modal upadate colaborador-->
-    <div class="modal fade" id="colaborador" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="update_colaborador" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -111,9 +111,14 @@
                     <div class="row">
                         <div class="col-3">
                             <div class="input-group input-group mb-2">
+                                <label class="input-group-text" for="inputGroupSelect01">ID:</label>
+                                <input type="text" id="update_colaborador_id" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group mb-2">
                                 <label class="input-group-text" for="inputGroupSelect01">Nome:</label>
-                                <input type="text" id="modal_id" class="form-control"
-                                    disabled>
+                                <input type="text" id="update_colaborador_nome" class="form-control">
                             </div>
                         </div>
 
@@ -122,8 +127,7 @@
                         <div class="col">
                             <div class="input-group input-group mb-2">
                                 <label class="input-group-text" for="inputGroupSelect01">Admissão:</label>
-                                <input type="date" name="update_admissao" id="update_colaborador_admissao"
-                                    class="form-control">
+                                <input type="date" id="update_colaborador_admissao" class="form-control">
                             </div>
                         </div>
                         <div class="col">
@@ -139,7 +143,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="input-group input-group mb-2">
-                                <label class="input-group-text" for="inputGroupSelect01">Demissao:</label>
+                                <label class="input-group-text" for="inputGroupSelect01">Demissão:</label>
                                 <input type="date" name="uptade_demissao" id="update_colaborador_demissao"
                                     class="form-control">
                             </div>
@@ -612,26 +616,19 @@
             });
             modalLoad = objLoaded.prefix;
         }
+
         if (objLoaded.method == "update") {
-            apiRequest.get('get_data',a[1],parametro,function(data){
+            apiRequest.get('get_data', a[1], parametro, function (data) {
                 data = data[0]
                 columns.inputs.push("id");
+
                 values = columns.inputs.concat(columns.select);
-                if (values !== undefined) {
-                    for (let i = 0; i < values.length; i++) {
-                        let input = values[i];
-                        $("#" + modal + "_" + input).val(data[input]);
-                    }
-                }
-                if (columns.checks !== undefined) {
-                    for (let i = 0; i < columns.checks.length; i++) {
-                        let check = columns.checks[i];
-                        $("#" + modal + "_" + check).prop(
-                            "checked",
-                            data[check]
-                        );
-                    }
-                }
+                values.forEach((field)=>{
+                    $("#" + modal + "_" + field).val(data[field]);
+                })
+                columns.checks.forEach((check) => {
+                    $("#" + modal + "_" + check).prop("checked", data[check]);
+                })
 
                 if (a[1] == "colaborador") {
                     toggleDiaria();
@@ -640,18 +637,17 @@
                     changeObra();
                 }
             })
-            
+
         } else if (objLoaded.method == "register") {
             loadTable(objLoaded.prefix, objLoaded.name);
-            loadColumns();
+            loadColumns('exibir');
             modalLoad = objLoaded.prefix;
         } else if (objLoaded.method == "view") {
-            previewModal_img(getMedia(objLoaded.name) + parametro + ".jpeg");
-
+            previewModal_img(midia+ '/' + objLoaded.name + '/'+ parametro + ".jpeg");
         }
-        setTimeout(function(){
-            showModal (old_objLoaded);
-        },400) 
+        setTimeout(function () {
+            showModal(old_objLoaded);
+        }, 400)
     }
     function showModal(old_objLoaded) {
         let myModal = new bootstrap.Modal(
@@ -668,6 +664,14 @@
         });
     }
     function toggleAtivo(supervisor, isActive) {
-        apiRequest.update('update','supervisor',{ativo:isActive,supervisor:supervisor})
+        apiRequest.update('update', 'supervisor', { ativo: isActive, supervisor: supervisor })
     }
+    
+//Registro que é realizado via modal
+function registerModal(modal) {
+    submit.post("register");
+    setTimeout(function () {
+        loadTable(modal, modal.split("_")[1]);
+    }, 100);
+}
 </script>

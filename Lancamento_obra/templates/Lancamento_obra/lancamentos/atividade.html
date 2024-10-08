@@ -4,27 +4,32 @@
 {%block 'header'%}
 <h2>Lançamento de Atividade</h2>
 {%endblock%}
+{%block 'style'%}
+<style>
 
+</style>
+
+{%endblock%}
 {% block 'main' %}
 <div class="row justify-content-end">
     <div class="col">
         <div class="row justify-content-end">
             <div class="input-group">
                 <label class="input-group-text">Colaborador:</label>
-                <select class="form-select" id="form_atividade_colaborador"></select>
+                <select class="form-select" id="form_atividade_colaborador" tabindex="1"></select>
             </div>
             <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_demitidos"
-                onclick="toggleOculto('colaborador')">exibir demitidos</a>
+                onclick="toggleOculto('colaborador')" tabindex="-1">exibir demitidos</a>
         </div>
     </div>
     <div class="col">
         <div class="row justify-content-end">
             <div class="input-group">
                 <label class="input-group-text">Obra:</label>
-                <select class="form-select" id="form_atividade_obra_id" onchange="changeObra()"></select>
+                <select class="form-select" id="form_atividade_obra_id" onchange="changeObra()" tabindex="2"></select>
             </div>
             <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_finalizadas"
-                onclick="toggleOculto('obra_id')">exibir finalizadas</a>
+                onclick="toggleOculto('obra_id')" tabindex="-1">exibir finalizadas</a>
         </div>
     </div>
 </div>
@@ -33,46 +38,48 @@
     <div class="col">
         <div class="input-group mb-2">
             <label class="input-group-text">Hora Manhã</label>
-            <input type="time" id="form_atividade_horaini1" class="form-control" value="07:30">
-            <input type="time" id="form_atividade_horafim1" class="form-control" value="11:48">
+            <input type="time" id="form_atividade_horaini1" class="form-control" value="07:30" tabindex="3">
+            <input type="time" id="form_atividade_horafim1" class="form-control" value="11:48" tabindex="4">
         </div>
 
         <div class="input-group mb-2">
             <label class="input-group-text">Hora Tarde</label>
-            <input type="time" id="form_atividade_horaini2" class="form-control" value="13:30">
-            <input type="time" id="form_atividade_horafim2" class="form-control" value="18:00">
+            <input type="time" id="form_atividade_horaini2" class="form-control" value="13:30" tabindex="5">
+            <input type="time" id="form_atividade_horafim2" class="form-control" value="18:00" tabindex="6">
+            <a href="#" class="p-2 align-items-center text-bg-danger input-group-text" onclick="limparHora('2')"><i class="bi bi-x-circle"></i></a>
         </div>
         <div class="input-group mb-2">
             <label class="input-group-text">Hora Noite</label>
-            <input type="time" id="form_atividade_horaini3" class="form-control">
-            <input type="time" id="form_atividade_horafim3" class="form-control">
+            <input type="time" id="form_atividade_horaini3" class="form-control" tabindex="7">
+            <input type="time" id="form_atividade_horafim3" class="form-control" tabindex="8">
+            <a href="#" class="p-2 align-items-center text-bg-danger input-group-text" onclick="limparHora('3')"><i class="bi bi-x-circle"></i></a>
         </div>
     </div>
     <div class="col">
         <div class="input-group mb-2">
             <label class="input-group-text">Data de realização:</label>
-            <input type="date" id="form_atividade_dia" class="form-control" value="{{hojeJS}}">
+            <input type="date" id="form_atividade_dia" class="form-control" value="{{hojeJS}}" tabindex="8">
         </div>
         <div class="input-group mb-2">
-            <label class="input-group-text">Indice do diario:</label>
-            <input type="number" class="form-control" id="form_atividade_indice" value="1">
+            <label class="input-group-text">Índice do diário:</label>
+            <input type="number" class="form-control" id="form_atividade_indice" value="1" tabindex="9">
         </div>
         <div class="row">
             <div class="col">
                 <div class="input-group mb-2">
-                    <div class="input-group-text">
-                        <input class="form-check-input" type="checkbox" id="form_atividade_diaseguinte">
-                    </div>
                     <span class="input-group-text">Plantão</span>
+                    <div class="input-group-text">
+                        <input class="form-check-input" type="checkbox" id="form_atividade_diaseguinte" tabindex="10">
+                    </div>
                 </div>
             </div>
             <div class="col">
                 <div class="input-group mb-2">
+                    <span class="input-group-text">Meia diária</span>
                     <div class="input-group-text">
-                        <input class="form-check-input" type="checkbox" id="form_atividade_meiadiaria"
+                        <input class="form-check-input" type="checkbox" id="form_atividade_meiadiaria" tabindex="11"
                             onclick="confirmMeiaDiaria()">
                     </div>
-                    <span class="input-group-text">Meia diaria</span>
                 </div>
             </div>
         </div>
@@ -80,28 +87,28 @@
     <div class="col">
         <div class="input-group mb-2">
             <label class="input-group-text">Atividade:</label>
-            <select class="form-select" id="form_atividade_atividade_id"></select>
+            <select class="form-select" id="form_atividade_atividade_id" tabindex="12"></select>
         </div>
         <div class="input-group mb-2">
             <label class="input-group-text">Responsável:</label>
-            <select class="form-select" id="form_atividade_supervisor_id" disabled></select>
+            <select class="form-select" id="form_atividade_supervisor_id" disabled tabindex="13"></select>
         </div>
         <div class="input-group mb-2">
             <label class="input-group-text">Motivo:</label>
-            <input type="text" class="form-control" id="form_atividade_motivo" disabled>
+            <input type="text" class="form-control" id="form_atividade_motivo" disabled tabindex="14">
         </div>
     </div>
 
     <div class="input-group">
         <span class="input-group-text">Descrição:</span>
-        <textarea class="form-control" id="form_atividade_descricao"></textarea>
+        <textarea class="form-control" id="form_atividade_descricao" tabindex="15"></textarea>
     </div>
     <a href="#" class="exibir-ocultar mb-2" onclick="get_desc()">puxar do diario</a>
 
     <div class="mt-3" style="justify-content: flex-end; display: flex;">
         <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
             data-bs-target="#modalTable">Visualizar dia</button>
-        <button type="button" class="btn btn-success" id="form_atividade_btn">Lançar</button>
+        <button type="button" class="btn btn-success" id="form_atividade_btn" tabindex="16" onclick="$('#form_atividade_colaborador').focus()">Lançar</button>
     </div>
     <div id="modalTable" class="modal fade" tabindex="2" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
@@ -141,7 +148,7 @@
     $(function() {
       $('#modalTable').on('shown.bs.modal', function () {
         $("#lanc_dia").bootstrapTable('refreshOptions', {
-            url: `{{api}}/lancamento_obra/get_data?metodo=lanc_dia&colaborador=${colaborador.val()}&dia=${dia.val()}`,
+            url: `{{api}}/Lancamento_obra/get_data?metodo=lanc_dia&colaborador=${colaborador.val()}&dia=${dia.val()}`,
         })
       })
     })
@@ -170,9 +177,13 @@
         if (temData) {
             data = dia.val().split('-')
             data = data[2].concat('-', data[1], '-', data[0])
-            apiRequest.get('get_data', 'diario', obra_id.val().concat('_', data, '_', indice.val()), function () { descricao.val(data[0].descricao) })
+            apiRequest.get('get_data', 'diario', obra_id.val().concat('_', data, '_', indice.val()), function (response) { descricao.val(response[0].descricao); console.log(response) })
         }
     };
+    function limparHora(hora){
+        $('#form_atividade_horaini'+hora).val('')
+        $('#form_atividade_horafim'+hora).val('')
+    }
     $(document).ready(function () {
         loadForm('atividade')
         setTimeout(function () {
