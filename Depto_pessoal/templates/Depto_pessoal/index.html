@@ -5,9 +5,10 @@
 {%endblock%}
 
 {% block 'main' %}
-<div class="main">
-  <p>Ferramenta para gerir Efetividades em obra</p>
-  <p>Acesso a menu na barra lateral</p>
-</div>
+<script>
+  $(document).ready(function(){
+    apiRequest.post('function','periodo_aquisitivo')
+  })
+</script>
 {% endblock %}
   

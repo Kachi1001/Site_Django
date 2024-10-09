@@ -46,12 +46,13 @@ const apiRequest = {
         successCallback,
         errorCallback
     ) {
-        return $.ajax({
+         $.ajax({
             url: this.createURL(endpoint),
             method: "POST",
             data: this.createDATA(metodo, JSON.stringify(parametro)),
             success: (response) => {
                 this.success(response, successCallback);
+                return response
             },
             error: (error) => {
                 this.error(error, errorCallback);

@@ -22,9 +22,10 @@ class app_Depto_pessoal(AbstractUserRole):
     app = 'Depto_pessoal'
     available_permissions = {
         f'{app}': True,
-        f'{app}-cadastros': True,
-        f'{app}-tabelas': True,
-        f'{app}-consultas': True,
+        f'{app}-colaborador': True,
+        f'{app}-ferias': True,
+        f'{app}-pontos': True,
+        f'{app}-lembretes': True,
     }
     role_name=f'app_{app}'
     
