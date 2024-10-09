@@ -4,7 +4,6 @@ from django.utils import timezone
 from decouple import config
 from . import util
 api = 'http://'+config("API_HOST")+':'+config("API_PORT") # type: ignore
-midia = api + '/media'
 
 translate = {
     'Home': 'Inicio',
@@ -13,14 +12,15 @@ translate = {
 }
 def base(request):
     modulo_da_view = request.resolver_match.func.__module__
-    nome_do_app = modulo_da_view.split('.')[0]
+    app = modulo_da_view.split('.')[0]
+    midia = api + '/midia/' + app + '/'
 
     return {
         'nome': request.user.username,
         'api': api,
         'midia': midia,
-        'app': nome_do_app,
-        'app_name': translate[nome_do_app] if nome_do_app in translate else 'Sem nome',
+        'app': app,
+        'app_name': translate[app] if app in translate else 'Sem nome',
 
         'hojeJS': util.formatarHTML(util.get_hoje()),
         'icon': '/static/icons',
