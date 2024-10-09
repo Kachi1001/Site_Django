@@ -79,7 +79,7 @@
         <div class="row justify-content-end">
             <div class="col-auto"><button type="button" class="btn btn-primary mt-2 mb-2" onclick="register_redirect()">Lançar e Abrir atividade</button></div>
             <div class="col-auto"><button type="button" class="btn btn-success mt-2 mb-2"
-                    id="register">Lançar</button></div>
+                    onclick="registrar()">Lançar</button></div>
         </div>
         <div div='row mb-2' style="border-top: 1px solid lightgray;">{%include app|add:'/table/diario.html'%}</div>
     </div>
@@ -94,21 +94,17 @@
 
 <div id="liveAlertPlaceholder"></div>
 <script>
+    let photo = document.getElementById('form_diario_digitalização');
+    let file = document.getElementById('form_diario_arquivo');
+    var filename
     $(document).ready(function(){
         loadForm('diario')
 
-        let photo = document.getElementById('form_diario_digitalização');
-        let file = document.getElementById('form_diario_arquivo');
-        let filename
-        function adicionaZero(numero) {
-        if (numero <= 9)
-            return "0" + numero;
-            else
-            return numero;
-        }
+  
         
         $('#form_diario_arquivo').change(function () {
             filename = $('#form_diario_arquivo').val().replace("C:\\fakepath\\", "").split(".")
+            
             let reader = new FileReader();
             
             reader.onload = () => {
@@ -123,13 +119,14 @@
             }
             reader.readAsDataURL(file.files[0]);
         });
-    
-    
         
-        $('#register').click(function (){
-            registrar()
-        })
     })
+    function adicionaZero(numero) {
+        if (numero <= 9)
+            return "0" + numero;
+            else
+            return numero;
+        }
     function registrar(redirect){
         let file = $('#form_diario_arquivo')[0].files[0];
         if (!file) {
@@ -145,8 +142,8 @@
             'climatarde': $('#form_diario_climatarde').val(),
             'descricao': $('#form_diario_descricao').val(),
         }
-        data = parametro.data.split('-')
-        parametro['imagem'] = parametro.obra_id + '_' + data[2].concat('-',data[1],'-',data[0]) + '_' + parametro.indice + '.' + filename[(filename.length - 1)]
+        data = parametro['data'].split('-')
+        parametro['imagem'] = parametro.obra_id.concat('_', data[2],'-',data[1],'-',data[0]) + '_' + parametro.indice + '.' + filename[(filename.length - 1)]
         let formData = new FormData();
         formData.append('file', file);
         formData.append('parametro', JSON.stringify(parametro));
@@ -161,7 +158,7 @@
                     let data = $('#form_diario_data').val()
                     let indice = $('#form_diario_indice').val()
                     let desc = $('#form_diario_descricao').val()
-                    window.location.href = `http://10.0.0.211:8001/lancamento_obra/lancamentos/atividade?obra=${obra}&data=${data}&indice=${indice}&desc=${desc}`;
+                    window.location.href = `http://10.0.0.211:8001/Lancamento_obra/lancamentos/atividade?obra=${obra}&data=${data}&indice=${indice}&desc=${desc}`;
                 }
             }
             )
