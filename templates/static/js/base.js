@@ -52,7 +52,7 @@ const apiRequest = {
             data: this.createDATA(metodo, JSON.stringify(parametro)),
             success: (response) => {
                 this.success(response, successCallback);
-                return response
+                return responseaa
             },
             error: (error) => {
                 this.error(error, errorCallback);

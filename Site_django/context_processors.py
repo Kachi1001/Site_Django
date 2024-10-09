@@ -4,7 +4,7 @@ from django.utils import timezone
 from decouple import config
 from . import util
 api = 'http://'+config("API_HOST")+':'+config("API_PORT") # type: ignore
-media = api + '/media'
+midia = api + '/media'
 
 translate = {
     'Home': 'Inicio',
@@ -18,7 +18,7 @@ def base(request):
     return {
         'nome': request.user.username,
         'api': api,
-        'media': media,
+        'midia': midia,
         'app': nome_do_app,
         'app_name': translate[nome_do_app] if nome_do_app in translate else 'Sem nome',
 
