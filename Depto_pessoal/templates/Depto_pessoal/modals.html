@@ -143,7 +143,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" id='m_colaborador_del'
                             data-bs-dismiss="modal">Deletar</button>
-                        <button type="button" class="btn btn-success" onclick="modal.submit()">Salvar</button>
+                        <button type="button" class="btn btn-success" id="m_colaborador_submit">Salvar</button>
                     </div>
                 </div>
             </div>
@@ -239,4 +239,21 @@
             </div>
         </div>
     </div>
+    <script>
+        var modal
+        function abrirHistoricos(id){
+            modal = new Modal('historico_'+id,'table')
+            modal.open(colab)
+        }
+        function abrirRegistros(modal){
+            modal = new Modal('register',modal)
+            modal.open()
+        }
+       
+        $(document).ready(function(){
+            $('#m_colaborador_submit').click(function(){
+                modal.submit()
+            })
+        })
+    </script>
 </div>

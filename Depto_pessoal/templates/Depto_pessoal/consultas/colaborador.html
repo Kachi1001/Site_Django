@@ -206,10 +206,7 @@
             let obj = new Modal('colaborador','update')
             obj.open(colab)
         })
-        function abrirHistorico(id){
-            var modal = new Modal('historico_'+id,'table')
-            modal.open(colab)
-        }
+        
         $('#btn-demitir').click(function(){
             let resp = prompt('Escreva o nome do colaborador para confirma a demissão!!')
             if (resp == $("#f_colaborador_id").val()){
