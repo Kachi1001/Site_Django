@@ -1,5 +1,6 @@
 # myapp/context_processors.py
 from django.utils import timezone
+import time
 
 from decouple import config
 from . import util
@@ -21,7 +22,7 @@ def base(request):
         'midia': midia,
         'app': app,
         'app_name': translate[app] if app in translate else 'Sem nome',
-
+        'timestamp': int(time.time()),
         'hojeJS': util.formatarHTML(util.get_hoje()),
         'icon': '/static/icons',
         'icon_table': "class=bi-table",
