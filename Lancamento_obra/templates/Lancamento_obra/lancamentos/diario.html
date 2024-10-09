@@ -124,6 +124,12 @@
             reader.readAsDataURL(file.files[0]);
         });
     
+    
+        
+        $('#register').click(function (){
+            registrar()
+        })
+    })
     function registrar(redirect){
         let file = $('#form_diario_arquivo')[0].files[0];
         if (!file) {
@@ -161,13 +167,8 @@
             )
             
         }
-        
-        $('#register').click(function (){
-            registrar()
-        })
-        function register_redirect(){
-            registrar(true)
-        }
-    })
+    function register_redirect(){
+        registrar(true)
+    }
 </script>
 {% endblock %}
