@@ -13,8 +13,8 @@
             </h2>
             <div id="menu-colaborador" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <a href="{%url app|add:'_cadastros' 'colaborador'%}"><i {{icon_form}}></i> Cadastrar</a>
-                <a href="#" onclick="abrirRegistro('funcao')"><i {{icon_modal}}></i> Função</a>
-                <a href="#" onclick="abrirRegistro('equipe')"><i {{icon_modal}}></i> Equipe</a>
+                <a href="#" onclick="abrirRegistro('funcao', true)"><i {{icon_modal}}></i> Função</a>
+                <a href="#" onclick="abrirRegistro('equipe', true)"><i {{icon_modal}}></i> Equipe</a>
                 <a href="{%url app|add:'_tabelas' 'colaborador'%}"><i {{icon_table}}></i> Tabela</a>
             </div>
         </div>

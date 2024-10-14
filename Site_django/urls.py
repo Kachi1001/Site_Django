@@ -31,8 +31,8 @@ def teste(request):
 urlpatterns = [
     path('', include("Home.urls")),
     path('admin/', admin.site.urls),
-    path("status/", status),
-    path("teste/", teste)
+    path("status", status),
+    path("teste", teste)
 ]
 
 for app in settings.INTERNAL_APP:

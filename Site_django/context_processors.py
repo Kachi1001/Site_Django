@@ -6,10 +6,12 @@ from decouple import config
 from . import util
 api = 'http://'+config("API_HOST")+':'+config("API_PORT") # type: ignore
 
+timestamp = int(time.time()),
 translate = {
     'Home': 'Inicio',
     'Lancamento_obra': 'Lancamento obra',
     'Reservas': 'Reservas',
+    'Depto_pessoal': 'Departamento pessoal',
 }
 def base(request):
     modulo_da_view = request.resolver_match.func.__module__
@@ -22,7 +24,7 @@ def base(request):
         'midia': midia,
         'app': app,
         'app_name': translate[app] if app in translate else 'Sem nome',
-        'timestamp': int(time.time()),
+        'timestamp': timestamp,
         'hojeJS': util.formatarHTML(util.get_hoje()),
         'icon': '/static/icons',
         'icon_table': "class=bi-table",

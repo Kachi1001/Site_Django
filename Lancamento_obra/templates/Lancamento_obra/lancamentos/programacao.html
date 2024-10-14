@@ -39,7 +39,7 @@
     <div class="col-auto">
         <div class="text-center">
             <img src="https://cdn-icons-png.flaticon.com/512/104/104090.png" class="img-thumbnail" alt="Digitalização"
-                style="width: 750px; height: 600px; object-fit: contain; " id="form_programacao_digitalizacao"
+                style="width: 600px; height: 500px; object-fit: contain; " id="form_programacao_digitalizacao"
                 data-bs-toggle="modal" data-bs-target="#view_programacao">
         </div>
     </div>
@@ -49,10 +49,10 @@
 {% block "script"%}
 <script>
     const prefix = 'form_programacao_';
+    var linhas = []
     $(document).ready(function () {
         loadForm('programacao')
 
-        var linhas = []
         function adicionaZero(numero) {
             if (numero <= 9)
                 return "0" + numero;

@@ -10,7 +10,7 @@
         <h3 class="mb-0">Informações gerais</h3>
     </div>
     <div class="col-auto"><button type="button" class="btn btn-primary btn-sm" id="btn-update">Editar</button></div>
-    <div class="col-auto"><button type="button" class="btn btn-danger btn-sm" id="btn-demitir">Demitir</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-danger btn-sm" id="btn-demissao">Demitir</button></div>
     <hr class="mt-2">
 </div>
 <div class="col">
@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">EQUIPE:</label>
@@ -65,14 +65,21 @@
 </div>
 <div class="row align-items-center mt-4">
     <div class="col-auto">
-        <h3 class="mb-0">Ocupação</h3>
+        <h3 class="mb-0">Função atual</h3>
     </div>
-    <div class="col-auto"><button type="button" class="btn btn-success btn-sm">Alterar</button></div>
-    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm">Dissídio</button></div>
-    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm" onclick="abrirHistorico('ocupacao')">Histórico</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-success btn-sm" onclick="abrirLancamento('ocupacao')">Alterar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm" onclick="abrirLancamento('dissidio')">Dissídio</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('ocupacao')">Histórico</button></div>
     <hr class="mt-2">
 </div>
 <div class="row">
+    <div class="col-auto d-none">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ID:</label>
+            <input type="text" class="form-control form-control-sm" id="f_ocupacao_id">
+        </div>
+    </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">FUNÇÃO:</label>
@@ -111,10 +118,17 @@
     <div class="col-auto">
         <h3 class="mb-0">Período aquisitivo</h3>
     </div>
-    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"  onclick="abrirHistorico('periodo_aquisitivo')">Histórico</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('periodo_aquisitivo')">Histórico</button></div>
     <hr class="mt-2">
 </div>
 <div class="row">
+    <div class="col-auto d-none">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ID:</label>
+            <input type="text" class="form-control form-control-sm" id="f_periodo_aquisitivo_id">
+        </div>
+    </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">ADQUIRIDO EM:</label>
@@ -138,10 +152,11 @@
 </div>
 <div class="row align-items-center mt-4">
     <div class="col-auto">
-        <h3 class="mb-0">Feria processada</h3>
+        <h3 class="mb-0">Férias processadas</h3>
     </div>
-    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm">Processar</button></div>
-    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"  onclick="abrirHistorico('ferias_processadas')">Histórico</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm" onclick="abrirProcesso('ferias_processadas')">Processar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('ferias_processadas')">Histórico</button></div>
     <hr class="mt-2">
 </div>
 <div class="row">
@@ -160,10 +175,11 @@
 </div>
 <div class="row align-items-center mt-4">
     <div class="col-auto">
-        <h3 class="mb-0">Feria utilizada</h3>
+        <h3 class="mb-0">Férias utilizadas</h3>
     </div>
-    <div class="col-auto"><button type="button" class="btn btn-success btn-sm">Consumir</button></div>
-    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"  onclick="abrirHistorico('ferias_utilizadas')">Histórico</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-success btn-sm" onclick="abrirProcesso('ferias_utilizadas')">Consumir</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('ferias_utilizadas')">Histórico</button></div>
 
     <hr class="mt-2">
 </div>
@@ -193,31 +209,38 @@
 
 
 <script>
-    $(document).ready(function(){
+    var colab
+    var objs = ['colaborador', 'ferias_utilizadas', 'ferias_processadas', 'periodo_aquisitivo', 'ocupacao']
+    function carregarDados() {
+        for (x in objs) {
+            let obj = new Form(objs[x], 'view')
+            obj.open(colab)
+        }
+    }
+    $(document).ready(function () {
         colab = page.getParam('id')
-        objs = ['colaborador','ferias_utilizadas','ferias_processadas','periodo_aquisitivo','ocupacao']
-        for (x in objs){
-            let obj = new Form(objs[x],'view')
-            obj.open(colab)
-            }
-        })
+        carregarDados()
+    })
 
-        $('#btn-update').click(function(){
-            let obj = new Modal('colaborador','update')
-            obj.open(colab)
-        })
-        
-        $('#btn-demitir').click(function(){
-            let resp = prompt('Escreva o nome do colaborador para confirma a demissão!!')
-            if (resp == $("#f_colaborador_id").val()){
-                toasts('success')
-            } else {
-                toasts('danger')
-            }
-        })
-        $("#mudar-cargo").click(function(){
+    $('#btn-update').click(function () {
+        let obj = new Modal('colaborador', 'update')
+        obj.open(colab)
+    })
 
-        })
+    $('#btn-demissao').click(function () {
+        let obj = new Modal('desligamento', 'desligamento')
+        obj.open([{
+            'key': 'colaborador',
+            'value': $("#f_colaborador_id").val()
+        }, {
+            'key': 'id',
+            'value': $("#f_ocupacao_id").val()
+        }])
+    })
+    
+    $("#mudar-cargo").click(function () {
+
+    })
 </script>
 {% endblock %}
 

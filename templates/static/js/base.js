@@ -52,7 +52,7 @@ const apiRequest = {
             data: this.createDATA(metodo, JSON.stringify(parametro)),
             success: (response) => {
                 this.success(response, successCallback);
-                return responseaa
+                return response
             },
             error: (error) => {
                 this.error(error, errorCallback);
@@ -148,7 +148,8 @@ const apiRequest = {
 
 const page = {
     redirect: function (path, params) {
-        // Remove parâmetros com valores vazios, nulos ou indefinidos
+        queryString = ''
+        if (typeof params != 'undefined'){// Remove parâmetros com valores vazios, nulos ou indefinidos
         const filteredParams = Object.fromEntries(
             Object.entries(params).filter(
                 ([key, value]) =>
@@ -157,12 +158,12 @@ const page = {
         );
 
         // Constrói a query string com encodeURIComponent para lidar com espaços e caracteres especiais
-        const queryString = new URLSearchParams(
+        queryString = new URLSearchParams(
             Object.entries(filteredParams).map(([key, value]) => [
                 key,
                 encodeURIComponent(value),
             ])
-        ).toString();
+        ).toString();}
 
         // Constrói a nova URL com base no path informado e na URL atual
         const currentBaseUrl = window.location.origin; // Pega o domínio atual
