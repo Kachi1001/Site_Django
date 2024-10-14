@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'header'%}
+<h2>Perfil do colaborador</h2>
+{%endblock%}
+{% block 'main' %}
+<div class="row align-items-center">
+    <div class="col-auto">
+        <h3 class="mb-0">Informações gerais</h3>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm" id="btn-update">Editar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-danger btn-sm" id="btn-demissao">Demitir</button></div>
+    <hr class="mt-2">
+</div>
+<div class="col">
+    <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <label class="input-group-text">NOME:</label>
+        <input type="text" id="f_colaborador_id" class="form-control">
+    </div>
+</div>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CPF:</label>
+            <input type="number" id="f_colaborador_cpf" class="form-control form-control-sm">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">RG:</label>
+            <input type="number" id="f_colaborador_rg" class="form-control form-control-sm">
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">NASCIMENTO:</label>
+            <input type="date" id="f_colaborador_nascimento" class="form-control form-control-sm">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">TELEFONE:</label>
+            <input type="number" id="f_colaborador_telefone" class="form-control form-control-sm">
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <span class="input-group-text">ATIVO:</span>
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" id="f_colaborador_ativo">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">EQUIPE:</label>
+            <select class="form-control" id="f_colaborador_equipe">
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row align-items-center mt-4">
+    <div class="col-auto">
+        <h3 class="mb-0">Função atual</h3>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-success btn-sm" onclick="abrirLancamento('ocupacao')">Alterar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm" onclick="abrirLancamento('dissidio')">Dissídio</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('ocupacao')">Histórico</button></div>
+    <hr class="mt-2">
+</div>
+<div class="row">
+    <div class="col-auto d-none">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ID:</label>
+            <input type="text" class="form-control form-control-sm" id="f_ocupacao_id">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">FUNÇÃO:</label>
+            <input type="text" class="form-control form-control-sm" id="f_ocupacao_funcao_id">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <span class="input-group-text">REMUNERAÇÃO:</span>
+            <input type="text" class="form-control form-control-sm" id="f_ocupacao_remuneracao">
+            <span class="input-group-text">R$</span>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DATA INICIO:</label>
+            <input type="date" class="form-control form-control-sm" id="f_ocupacao_data_inicio">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DATA FIM:</label>
+            <input type="date" class="form-control form-control-sm" id="f_ocupacao_data_fim">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CONTINUO:</label>
+            <div class="input-group-text">
+                <input type="checkbox" class="form-check-input mt-0" id="f_ocupacao_continuo">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row align-items-center mt-4">
+    <div class="col-auto">
+        <h3 class="mb-0">Período aquisitivo</h3>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('periodo_aquisitivo')">Histórico</button></div>
+    <hr class="mt-2">
+</div>
+<div class="row">
+    <div class="col-auto d-none">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ID:</label>
+            <input type="text" class="form-control form-control-sm" id="f_periodo_aquisitivo_id">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ADQUIRIDO EM:</label>
+            <input type="date" class="form-control form-control-sm" id="f_periodo_aquisitivo_adquirido_em">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">PERÍODO:</label>
+            <input type="text" class="form-control form-control-sm" id="f_periodo_aquisitivo_periodo">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CONSUMIDO:</label>
+            <div class="input-group-text">
+                <input type="checkbox" class="form-check-input mt-0" id="f_periodo_aquisitivo_consumido">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row align-items-center mt-4">
+    <div class="col-auto">
+        <h3 class="mb-0">Férias processadas</h3>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm" onclick="abrirProcesso('ferias_processadas')">Processar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('ferias_processadas')">Histórico</button></div>
+    <hr class="mt-2">
+</div>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DATA INICIO:</label>
+            <input type="date" class="form-control form-control-sm" id="f_ferias_processadas_data_inicio">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DIAS PROCESSADOS:</label>
+            <input type="text" class="form-control form-control-sm" id="f_ferias_processadas_dias_processados">
+        </div>
+    </div>
+</div>
+<div class="row align-items-center mt-4">
+    <div class="col-auto">
+        <h3 class="mb-0">Férias utilizadas</h3>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-success btn-sm" onclick="abrirProcesso('ferias_utilizadas')">Consumir</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('ferias_utilizadas')">Histórico</button></div>
+
+    <hr class="mt-2">
+</div>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DATA INICIO:</label>
+            <input type="date" class="form-control form-control-sm" id="f_ferias_utilizadas_data_inicio">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DIAS UTILIZADOS:</label>
+            <input type="text" class="form-control form-control-sm" id="f_ferias_utilizadas_dias_utilizados">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ANTECIPAÇÃO:</label>
+            <div class="input-group-text">
+                <input type="checkbox" class="form-check-input mt-0" id="f_ferias_utilizadas_periodo_aquisitivo">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    var colab
+    var objs = ['colaborador', 'ferias_utilizadas', 'ferias_processadas', 'periodo_aquisitivo', 'ocupacao']
+    function carregarDados() {
+        for (x in objs) {
+            let obj = new Form(objs[x], 'view')
+            obj.open(colab)
+        }
+    }
+    $(document).ready(function () {
+        colab = page.getParam('id')
+        carregarDados()
+    })
+
+    $('#btn-update').click(function () {
+        let obj = new Modal('colaborador', 'update')
+        obj.open(colab)
+    })
+
+    $('#btn-demissao').click(function () {
+        let obj = new Modal('desligamento', 'desligamento')
+        obj.open([{
+            'key': 'colaborador',
+            'value': $("#f_colaborador_id").val()
+        }, {
+            'key': 'id',
+            'value': $("#f_ocupacao_id").val()
+        }])
+    })
+    
+    $("#mudar-cargo").click(function () {
+
+    })
+</script>
+{% endblock %}
+
+{%block 'submain'%}
+{%endblock%}

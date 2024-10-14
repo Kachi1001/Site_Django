@@ -1,44 +1,25 @@
-{%include 'static/imports/base.html'%}
-{%include 'static/imports/jquery.html'%}
-<div>
-    <canvas id="myChart"></canvas>
-</div>
-<script src="
-https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js
-"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hora Atualizada</title>
+</head>
+<body>
+    <h1>Hora Atual:</h1>
+    <div style="display: flex;">
+        <h2>15:32:</h2>
+        <h2 id="segs"></h2>
+    </div>
+    <script>
+        const segs = document.getElementById('segs');
+        let time = 10
+        segs.textContent = time
 
-<script>
-    $.ajax({
-        url: API + ,
-        type: 'GEt',
-        data: formData,
-        processData: false,
-        contentType: false,
-
-        success: function() {
-            return true
-        },
-        error: function(error) {
-            console.error('Erro:', error);
-            alert('Erro ao carregar o arquivo.');
-        }
-    });
-    const ctx = document.getElementById('myChart');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            datasets: [{
-                label: 'Teste', 
-                data: [{x: 'Sales', y: 20}, {x: 'Revenue', y: 10}]
-              }]
-          },
-        options: {
-            scales: {
-                y: {
-                    stacked: false
-                }
-            }
-        }
-
-    });
-</script>
+        setInterval(function(){
+            segs.textContent = time
+            time ++
+        },1000)
+    </script>
+</body>
+</html>

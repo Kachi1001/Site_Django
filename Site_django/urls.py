@@ -31,11 +31,11 @@ def teste(request):
 urlpatterns = [
     path('', include("Home.urls")),
     path('admin/', admin.site.urls),
-    path("status/", status),
-    path("teste/", teste)
+    path("status", status),
+    path("teste", teste)
 ]
 
 for app in settings.INTERNAL_APP:
-    urlpatterns.append(path(f'{app.casefold()}/', include(f'{app}.urls')))
+    urlpatterns.append(path(f'{app}/', include(f'{app}.urls')))
         
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

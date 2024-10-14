@@ -1,27 +1,30 @@
 # myapp/context_processors.py
 from django.utils import timezone
+import time
 
 from decouple import config
 from . import util
 api = 'http://'+config("API_HOST")+':'+config("API_PORT") # type: ignore
-media = api + '/media'
 
+timestamp = int(time.time()),
 translate = {
     'Home': 'Inicio',
     'Lancamento_obra': 'Lancamento obra',
     'Reservas': 'Reservas',
+    'Depto_pessoal': 'Departamento pessoal',
 }
 def base(request):
     modulo_da_view = request.resolver_match.func.__module__
-    nome_do_app = modulo_da_view.split('.')[0]
+    app = modulo_da_view.split('.')[0]
+    midia = api + '/midia/' + app + '/'
 
     return {
         'nome': request.user.username,
         'api': api,
-        'media': media,
-        'app': nome_do_app,
-        'app_name': translate[nome_do_app] if nome_do_app in translate else 'Sem nome',
-
+        'midia': midia,
+        'app': app,
+        'app_name': translate[app] if app in translate else 'Sem nome',
+        'timestamp': timestamp,
         'hojeJS': util.formatarHTML(util.get_hoje()),
         'icon': '/static/icons',
         'icon_table': "class=bi-table",

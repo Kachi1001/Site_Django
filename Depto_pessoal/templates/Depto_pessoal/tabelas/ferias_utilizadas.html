@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+
+{%block 'header'%}
+  <h2>Tabela de Ferias utilizadas</h2>
+  {%include app|add:'/table/'|add:table|add:'.html'%}
+{%endblock%}

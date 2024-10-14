@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{%block 'header'%}
+  <h2>{{app_name}}</h2>
+{%endblock%}
+
+{% block 'main' %}
+<script>
+  $(document).ready(function(){
+    apiRequest.post('function','periodo_aquisitivo')
+  })
+</script>
+{% endblock %}
+  

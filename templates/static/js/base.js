@@ -1,7 +1,7 @@
 const apiRequest = {
     baseUrl: api,
     createURL: function (endpoint) {
-        return this.baseUrl +'/'+ app +"/"+ endpoint;
+        return this.baseUrl + "/" + app + "/" + endpoint;
     },
     createDATA: function (metodo, parametro) {
         return {
@@ -27,7 +27,14 @@ const apiRequest = {
                 }
             },
             error: (error) => {
-                this.error(error, errorCallback);
+                // Verifica se o callback de erro foi passado e é uma função
+                if (typeof errorCallback === "function") {
+                    errorCallback(error);
+                }
+                // Chama o toast de erro
+                console.error(error);
+
+            toasts("warning", error.responseJSON);
             },
         });
     },
@@ -39,12 +46,13 @@ const apiRequest = {
         successCallback,
         errorCallback
     ) {
-        return $.ajax({
+         $.ajax({
             url: this.createURL(endpoint),
             method: "POST",
             data: this.createDATA(metodo, JSON.stringify(parametro)),
             success: (response) => {
                 this.success(response, successCallback);
+                return response
             },
             error: (error) => {
                 this.error(error, errorCallback);
@@ -96,7 +104,7 @@ const apiRequest = {
         successCallback,
         errorCallback
     ) {
-        if (confirm('Tens certeza que deseja apagar esse registro??')){
+        if (confirm("Tens certeza que deseja apagar esse registro??")) {
             $.ajax({
                 url: this.createURL(endpoint),
                 method: "DELETE",
@@ -109,33 +117,81 @@ const apiRequest = {
                 },
             });
         } else {
-            toats('warning',{'method':'Delete','message':'Operação cancelada com sucesso!!'})
+            toats("warning", {
+                method: "Delete",
+                message: "Operação cancelada com sucesso!!",
+            });
         }
     },
 
+
+
     success: function (response, successCallback) {
+        toasts("success", response);
         // Verifica se o callback de sucesso foi passado e é uma função
         if (typeof successCallback === "function") {
             successCallback(response);
         }
         // Chama o toast de sucesso
-        toasts("success", response);
     },
     error: function (error, errorCallback) {
+        toasts("danger", error.responseJSON);
         // Verifica se o callback de erro foi passado e é uma função
         if (typeof errorCallback === "function") {
             errorCallback(error);
         }
         // Chama o toast de erro
         console.error(error);
-        if (error.status == 404) {
-            error = {
-                responseJSON: {
-                    method: "404 - Not Found",
-                    message: "Pagina não encontrada ou desativada",
-                }
-            };
-        }
-        toasts("danger", error.responseJSON);
+
     },
 };
+
+const page = {
+    redirect: function (path, params) {
+        queryString = ''
+        if (typeof params != 'undefined'){// Remove parâmetros com valores vazios, nulos ou indefinidos
+        const filteredParams = Object.fromEntries(
+            Object.entries(params).filter(
+                ([key, value]) =>
+                    value !== "" && value !== null && value !== undefined
+            )
+        );
+
+        // Constrói a query string com encodeURIComponent para lidar com espaços e caracteres especiais
+        queryString = new URLSearchParams(
+            Object.entries(filteredParams).map(([key, value]) => [
+                key,
+                encodeURIComponent(value),
+            ])
+        ).toString();}
+
+        // Constrói a nova URL com base no path informado e na URL atual
+        const currentBaseUrl = window.location.origin; // Pega o domínio atual
+        const newUrl = `${currentBaseUrl}/${app}/${path}?${queryString}`;
+
+        // Redireciona para a nova URL
+        window.location.href = newUrl;
+    },
+    getParam: function (param) {
+        const params = new URLSearchParams(window.location.search); // Pega a query string da URL
+        const values = {};
+
+        // Itera sobre todos os parâmetros e armazena no objeto values
+        params.forEach((value, key) => {
+            values[key] = value.replaceAll("%20", " ");
+        });
+
+        return values[param];
+    },
+
+    // Exemplo de uso:
+};
+
+const modal = {
+    open: function (name) {
+        let myModal = document.getElementById(name);
+        let modal = new bootstrap.Modal(myModal);
+        modal.show();
+
+    }
+}

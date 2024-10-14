@@ -47,7 +47,7 @@
     {%block 'submain'%}{%endblock%}
     {%include app|add:'/modals.html'%}
 </body>
-<script src="{% static 'js/'|add:app|add:'.js' %}"></script>
+<script src="{% static 'js/'|add:app|add:'.js' %}?v={{ timestamp }}"></script>
 {%include 'toasts.html'%}
 
 </html>

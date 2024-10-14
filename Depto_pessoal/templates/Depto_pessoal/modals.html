@@ -1,0 +1,602 @@
+<style>
+    .modal_list {
+        height: 200px;
+        overflow: auto;
+        border-top: 1px solid #dee2e6;
+    }
+
+    th {
+        font-size: small;
+    }
+</style>
+
+
+<div class="modals">
+    <div class="modal fade" id="m_funcao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Cadastro de função</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-2 nowrap">
+                        <label class="input-group-text">Nome:</label>
+                        <input type="text" id="m_funcao_id" class="form-control form-control-sm">
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 nowrap">
+                                <label class="input-group-text" for="form_colaborador_funcao">Categoria:</label>
+                                <select class="form-select form-control-sm" id="m_funcao_categoria">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 nowrap">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" id="m_funcao_insalubridade">
+                                </div>
+                                <span class="input-group-text">Insalubre</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2" id="m_funcao_submit">Cadastrar</button>
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped" id="m_funcao_table">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_equipe" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Cadastro de equipe</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-2 nowrap">
+                        <label class="input-group-text">Nome:</label>
+                        <input type="text" id="m_equipe_id" class="form-control form-control-sm">
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2" id="m_equipe_submit">Cadastrar</button>
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped" id="m_equipe_table">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal upadate colaborador-->
+    <div class="modal fade" id="m_colaborador" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de colaborador</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">NOME:</label>
+                                <input type="text" id="m_colaborador_id" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">CPF:</label>
+                                <input type="number" id="m_colaborador_cpf" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">RG:</label>
+                                <input type="number" id="m_colaborador_rg" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">NASCIMENTO:</label>
+                                <input type="date" id="m_colaborador_nascimento" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">TELEFONE:</label>
+                                <input type="number" id="m_colaborador_fone" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" id="m_colaborador_ativo">
+                                </div>
+                                <span class="input-group-text">ATIVO:</span>
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">EQUIPE:</label>
+                                <select class="form-select" id="m_colaborador_equipe">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id='m_colaborador_del'
+                            data-bs-dismiss="modal">Deletar</button>
+                        <button type="button" class="btn btn-success" id="m_colaborador_submit"
+                            onclick="carregarDados()">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Historico -->
+    <div class="modal fade" id="m_historico_ocupacao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Histórico de Ocupação</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover table-bordered table-striped" id="m_historico_ocupacao_table">
+                        <thead>
+                            <tr>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Historico -->
+    <div class="modal fade" id="m_historico_periodo_aquisitivo" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Histórico de Período aquisitivo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover table-bordered table-striped"
+                        id="m_historico_periodo_aquisitivo_table">
+                        <thead>
+                            <tr>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Historico -->
+    <div class="modal fade" id="m_historico_ferias_processadas" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Histórico de Férias processadas</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover table-bordered table-striped"
+                        id="m_historico_ferias_processadas_table">
+                        <thead>
+                            <tr>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Historico -->
+    <div class="modal fade" id="m_historico_ferias_utilizadas" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Histórico de Férias utilizadas</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover table-bordered table-striped"
+                        id="m_historico_ferias_utilizadas_table">
+                        <thead>
+                            <tr>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Editar cargos -->
+    <div class="modal fade" id="m_ocupacao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Mudança de cargos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">ID:</label>
+                                <input type="text" class="form-control" id="m_ocupacao_id" disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">COLABORADOR:</label>
+                                <input type="text" class="form-control" id="m_ocupacao_colaborador" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">FUNÇÃO:</label>
+                                <select class="form-select" id="m_ocupacao_funcao_id">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA DE INÍCIO:</label>
+                                <input type="date" id="m_ocupacao_data_inicio" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA DE FIM:</label>
+                                <input type="date" id="m_ocupacao_data_fim" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">REMUNERAÇÃO:</label>
+                                <input type="number" id="m_ocupacao_remuneracao" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <span class="input-group-text">CONTINUO:</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" id="m_ocupacao_continuo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="m_ocupacao_submit">Lançar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Mudança cargo -->
+    <div class="modal fade" id="m_mudar_cargo" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Mudança de cargos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">ID:</label>
+                                <input type="text" class="form-control" id="m_mudar_cargo_id" disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">COLABORADOR:</label>
+                                <input type="text" class="form-control" id="m_mudar_cargo_colaborador" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">FUNÇÃO:</label>
+                                <select class="form-select" id="m_mudar_cargo_id">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA DE INÍCIO:</label>
+                                <input type="date" id="m_mudar_cargo_data_inicio" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">REMUNERAÇÃO:</label>
+                                <input type="number" id="m_mudar_cargo_remuneracao" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="m_mudar_cargo_submit">Lançar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Lancar dissidio  -->
+    <div class="modal fade" id="m_dissidio" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Lançamento de dissídio</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">ID:</label>
+                                <input type="text" class="form-control" id="m_dissidio_id" disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">COLABORADOR:</label>
+                                <input type="text" class="form-control" id="m_dissidio_colaborador" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">FUNÇÃO:</label>
+                                <select class="form-select" id="m_dissidio_funcao_id" disabled>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA DE INÍCIO:</label>
+                                <input type="date" id="m_dissidio_data_inicio" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">REMUNERAÇÃO:</label>
+                                <input type="number" id="m_dissidio_remuneracao" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="m_dissidio_submit">Lançar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_desligamento" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Desligamento</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">ID:</label>
+                                <input type="text" class="form-control" id="m_desligamento_id" disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">NOME:</label>
+                                <input type="text" class="form-control" id="m_desligamento_colaborador" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-2 flex-nowrap">
+                            <label class="input-group-text">DATA DA DEMISSÃO:</label>
+                            <input type="date" id="m_desligamento_data" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="m_desligamento_submit">Lançar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_ferias_processadas" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Processando férias</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">COLABORADOR:</label>
+                                <input type="text" class="form-control" id="m_ferias_processadas_colaborador" disabled>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">PERÍODO AQUISITIVO:</label>
+                                <select class="form-select" id="m_ferias_processadas_periodo_aquisitivo_id"></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_ferias_processadas_data_inicio" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DIAS:</label>
+                                <input type="number" id="m_ferias_processadas_dias_processados" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="m_ferias_processadas_submit">Lançar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_ferias_utilizadas" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Utilizando férias</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">COLABORADOR:</label>
+                                <input type="text" class="form-control" id="m_ferias_utilizadas_colaborador" disabled>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">PERÍODO AQUISITIVO:</label>
+                                <select class="form-select" id="m_ferias_utilizadas_periodo_aquisitivo"></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_ferias_utilizadas_data_inicio" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DIAS:</label>
+                                <input type="number" id="m_ferias_utilizadas_dias_utilizados" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <span class="input-group-text">ANTECIPADO:</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" id="m_ferias_utilizadas_antecipacao_periodo" onclick="confirmarAntecipacao()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="m_ferias_utilizadas_submit">Lançar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        function abrirHistorico(id) {
+            let modal = new Modal('historico_' + id, 'table')
+            modal.open(colab)
+        }
+        function abrirRegistro(modal, table = false) {
+            let registro = new Modal(modal, 'register')
+            registro.open(table)
+        }
+        function abrirLancamento(modal) {
+            let data = {}
+            let registro = new Modal(modal, 'lanc')
+            switch (modal) {
+                case "ocupacao":
+                    data = [{
+                        'key': 'colaborador',
+                        'value': $("#f_colaborador_id").val()
+                    }, {
+                        'key': 'id',
+                        'value': $("#f_ocupacao_id").val()
+                    }]
+                    break
+                case "dissidio":
+                    data = [{
+                        'key': 'colaborador',
+                        'value': $("#f_colaborador_id").val()
+                    }, {
+                        'key': 'id',
+                        'value': $("#f_ocupacao_id").val()
+                    }, {
+                        'key': 'funcao_id',
+                        'value': $("#f_ocupacao_funcao_id").val()
+                    }]
+                    break
+            }
+            registro.open(data)
+            console.debug(data)
+        }
+        function abrirProcesso(modal) {
+
+            let registro = new Modal(modal, 'processo')
+
+            data = [{
+                'key': 'colaborador',
+                'value': $("#f_colaborador_id").val()
+            }, {
+                'key': 'periodo_aquisitivo_id',
+                'value': $("#f_periodo_aquisitivo_id").val()
+            }]
+
+            registro.open(data)
+
+        }
+        function confirmarAntecipacao() {
+            let field = $("#m_ferias_utilizadas_antecipacao")
+            let periodo = $("#m_ferias_utilizadas_periodo_aquisitivo_id")
+            if (field.prop("checked")) {
+                if (!confirm('Tens certeza que deseja selecionar antecipação?')) {
+                    field.prop('checked', false);
+                }
+            }
+            if (field.prop("checked")) {
+                periodo.val('').attr('disabled', true)
+
+            } else{
+                periodo.val($("#f_periodo_aquisitivo_id").val()).attr('disabled', false)
+            }
+        }
+
+    </script>
+</div>
