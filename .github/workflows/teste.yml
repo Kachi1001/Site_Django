@@ -41,6 +41,5 @@ jobs:
     - name: Deploy to Production
       if: success()  # Só faz o deploy se os testes passarem
       run: |
-        cd /home/tecnika
         bash bat/django-update.sh teste front
         bash bat/django-reload.sh teste
