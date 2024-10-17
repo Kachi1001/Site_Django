@@ -47,7 +47,6 @@ jobs:
       app: front
     defaults:
       run:
-        shell: bash
         working-directory: /home/tecnika/bat
     steps:
       # Deploy no servidor de produção
@@ -58,7 +57,7 @@ jobs:
       run: sudo bash django-update.sh $branch $app #Faz a atualização das dependencia e arquivos
       
     - name: Coletando estáticos
-      working-directory: /home/tecnika/TK/django/$branch/$app
+      working-directory: /home/tecnika/TK/django/teste/front
       run: python manage.py collectstatic
 
     - name: Reiniciando servidor
