@@ -31,6 +31,7 @@
         </div>
         <div class="card-body">
             <form action="{% url 'login'%}" method="post"> {%csrf_token%}
+                <input type="hidden" name="next" value="{{next}}">
                 <div class="form-floating mb-3">
                     <input type="name" class="form-control" id="floatingInput" placeholder="Nome" name="nome" value="{{login}}">
                     <label for="floatingInput">Nome</label>
