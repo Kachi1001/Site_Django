@@ -7,3 +7,4 @@ django-role-permissions
 djangorestframework
 django-cors-headers
 whitenoise
+requests
