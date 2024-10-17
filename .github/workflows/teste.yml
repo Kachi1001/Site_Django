@@ -56,6 +56,10 @@ jobs:
 
     - name: Atualizando o servidor
       run: sudo bash django-update.sh $branch $app #Faz a atualização das dependencia e arquivos
+      
+    - name: Coletando estáticos
+      working-directory: /home/tecnika/TK/django/$branch/$app
+      run: python manage.py collectstatic
 
     - name: Reiniciando servidor
       run: sudo bash django-reload.sh $branch $app #Reinicia o processo do django
