@@ -58,7 +58,7 @@ jobs:
       
     - name: Coletando estáticos
       working-directory: /home/tecnika/TK/django/teste/front
-      run: python3 manage.py collectstatic
+      run: python3 manage.py collectstatic --noinput
 
     - name: Reiniciando servidor
       run: sudo bash django-reload.sh $branch $app #Reinicia o processo do django
