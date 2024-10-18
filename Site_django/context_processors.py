@@ -16,12 +16,12 @@ translate = {
 def base(request):
     modulo_da_view = request.resolver_match.func.__module__
     app = modulo_da_view.split('.')[0]
-    midia = api + 'midia/' + app + '/'
+    media = config("MEDIA") + app + '/'
 
     return {
         'nome': request.user.username,
-        'api': api,
-        'midia': midia,
+        'api': config("API"),
+        'media': media,
         'app': app,
         'app_name': translate[app] if app in translate else 'Sem nome',
         'timestamp': timestamp,
