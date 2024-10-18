@@ -17,10 +17,9 @@ def login(request):
         user = authenticate(username= request.POST['nome'], password= request.POST['senha'])
         if user:
             login_django(request, user)
-            print(request.POST)
             return redirect(request.POST.get('next', '/'))
         else:
-            return render(request, f'{app}/login.html', {"login": request.POST.get('nome')})
+            return render(request, f'{app}/login.html', {"login": request.POST.get('nome'), 'next':request.GET.get('next', '/')})
 
 @login_required
 def index(request):
