@@ -4,7 +4,7 @@ import time
 
 from decouple import config
 from . import util
-api = str(config("API_HOST")) # type: ignore
+api = str(config("API")) # type: ignore
 
 timestamp = int(time.time()),
 translate = {

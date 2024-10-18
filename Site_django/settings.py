@@ -161,4 +161,4 @@ LOGIN_URL = "/login"
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-CSRF_TRUSTED_ORIGINS = ['http://10.0.0.139:81'] 
+CSRF_TRUSTED_ORIGINS = ['http://10.0.0.139:81', 'https://publicly-noted-penguin.ngrok-free.app', 'http://tecnikaengenharia.ddns.net'] 
