@@ -16,7 +16,7 @@ translate = {
 def base(request):
     modulo_da_view = request.resolver_match.func.__module__
     app = modulo_da_view.split('.')[0]
-    midia = api + '/midia/' + app + '/'
+    midia = api + 'midia/' + app + '/'
 
     return {
         'nome': request.user.username,
