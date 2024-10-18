@@ -1,7 +1,7 @@
 const apiRequest = {
     baseUrl: api,
     createURL: function (endpoint) {
-        return this.baseUrl + "/" + app + "/" + endpoint;
+        return this.baseUrl + app + "/" + endpoint;
     },
     createDATA: function (metodo, parametro) {
         return {
