@@ -597,6 +597,55 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="impressao_diario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Imprimir Diário</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="input-group mb-2">
+                                <label class="input-group-text" for="update_programacao_id">CR:</label>
+                                <input type="text" class="form-control" id="impressao_diario_cr">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2">
+                                <label class="input-group-text"
+                                    for="update_programacao_iniciosemana">Segunda-feira:</label>
+                                <input type="date" id="impressao_diario_iniciosemana" class="form-control"
+                                    value="{{hojeJS}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="downloadXLSX()">Baixar</button>
+                </div>
+            </div>
+        </div>
+        <script>
+            function downloadXLSX() {
+                // Definir os parâmetros que serão enviados via GET
+                const cr = $("#impressao_diario_cr").val(); // Exemplo de valor para param1
+                const data = $("#impressao_diario_iniciosemana").val(); // Exemplo de valor para param2
+
+                // Montar a URL com os parâmetros
+                const url = `${api}Lancamento_obra/diario?cr=${encodeURIComponent(cr)}&data=${encodeURIComponent(data)}`;
+                const link = document.createElement('a');
+                link.href = url;
+                link.target = '_blank';
+                document.body.appendChild(link);
+                link.click();
+                link.parentNode.removeChild(link); // Remover o link após o download
+            }
+
+        </script>
+
+    </div>
 </div>
 
 <script>
@@ -623,7 +672,7 @@
                 columns.inputs.push("id");
 
                 values = columns.inputs.concat(columns.select);
-                values.forEach((field)=>{
+                values.forEach((field) => {
                     $("#" + modal + "_" + field).val(data[field]);
                 })
                 columns.checks.forEach((check) => {
@@ -643,7 +692,7 @@
             loadColumns('exibir');
             modalLoad = objLoaded.prefix;
         } else if (objLoaded.method == "view") {
-            previewModal_img(midia + objLoaded.name + '/'+ parametro + ".jpeg");
+            previewModal_img(midia + objLoaded.name + '/' + parametro + ".jpeg");
         }
         setTimeout(function () {
             showModal(old_objLoaded);
@@ -666,12 +715,12 @@
     function toggleAtivo(supervisor, isActive) {
         apiRequest.update('update', 'supervisor', { ativo: isActive, supervisor: supervisor })
     }
-    
-//Registro que é realizado via modal
-function registerModal(modal) {
-    submit.post("register");
-    setTimeout(function () {
-        loadTable(modal, modal.split("_")[1]);
-    }, 100);
-}
+
+    //Registro que é realizado via modal
+    function registerModal(modal) {
+        submit.post("register");
+        setTimeout(function () {
+            loadTable(modal, modal.split("_")[1]);
+        }, 100);
+    }
 </script>
