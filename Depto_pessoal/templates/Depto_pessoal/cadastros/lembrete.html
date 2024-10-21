@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'header'%}
+<h2>Registro de lembrete</h2>
+{%endblock%}
+{% block 'main' %}
+
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">NOME:</label>
+            <input type="text" id="f_colaborador_id" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm" >
+            <label class="input-group-text">TELEFONE:</label>
+            <input type="number" id="f_colaborador_telefone" class="form-control">
+        </div>
+    </div>    
+</div>
+
+
+
+
+<div class="row justify-content-end"><div class="col-auto"><button onclick="mani.register()" class="btn btn-success">Cadastrar</button></div></div>
+
+{% endblock %}
+
+{%block 'submain'%}
+<div class="submain">
+    {%include 'tabela.html'%}
+    
+        <thead>
+            <th data-field="id" data-sortable="true">Nome</th>
+            <th data-field="telefone" data-sortable="true">Telefone</th>
+            <th data-formatter="editarFormatter" data-events="editarEvents"></th>
+        </thead>
+    </table>
+    <script>
+        function editarFormatter(value) {
+            return '<a class="editarBtn" href="javascript:void(0)" title="Like"> <div class="btn-icon" style="background-color: skyblue;"><img src="{% static "icons/pencil.svg"%}" alt="edit"></div></div>'
+        }
+        window.editarEvents = {
+            'click .editarBtn': function (e, value, row, index) {
+                loadModal('update_lembrete', row['id'])
+            },
+        }
+    </script>
+</div>
+{%endblock%}
