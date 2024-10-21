@@ -39,4 +39,3 @@ apps.remove('Home')
 for app in apps:
     urlpatterns.append(path(f'{app}/', include(f'{app}.urls')))
         
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
