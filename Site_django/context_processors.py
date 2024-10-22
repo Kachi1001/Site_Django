@@ -1,4 +1,5 @@
 # myapp/context_processors.py
+from math import exp
 from django.utils import timezone
 import time
 
@@ -16,8 +17,8 @@ translate = {
 def base(request):
     modulo_da_view = request.resolver_match.func.__module__
     app = modulo_da_view.split('.')[0]
-    media = config("MEDIA") + app + '/'
-
+    media = config("MEDIA_URL") + app + '/'
+    
     return {
         'nome': request.user.username,
         'api': config("API"),

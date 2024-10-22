@@ -18,14 +18,13 @@ from django.http import HttpResponse
 from django.contrib import admin
 from django.urls import path , include
 from django.conf import settings
-from django.conf.urls.static import static
 
 def status(request):
     return HttpResponse("Estamos online")
 
 from django.shortcuts import render
 def teste(request):
-    return render(request, teste.html)
+    return render(request, 'teste.html')
 
 
 urlpatterns = [
@@ -38,4 +37,3 @@ apps = settings.INTERNAL_APP
 apps.remove('Home')
 for app in apps:
     urlpatterns.append(path(f'{app}/', include(f'{app}.urls')))
-        

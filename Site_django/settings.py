@@ -138,13 +138,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = config('STATIC_URL','/static/')
 STATIC_ROOT = os.path.join('static')
-
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "templates/static"),)
     
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 
@@ -161,4 +160,6 @@ LOGIN_URL = "/login"
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-CSRF_TRUSTED_ORIGINS = ['http://10.0.0.139:81', 'https://publicly-noted-penguin.ngrok-free.app', 'http://tecnikaengenharia.ddns.net'] 
+CSRF_TRUSTED_ORIGINS = ['http://10.0.0.139:81', 'https://publicly-noted-penguin.ngrok-free.app', 'http://tecnikaengenharia.ddns.net']
+
+APPEND_SLASH = True
