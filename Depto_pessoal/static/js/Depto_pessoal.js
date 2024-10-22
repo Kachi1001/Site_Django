@@ -35,7 +35,7 @@ const objFields = {
             "data_inicio",
             
         ], //campos que pode ser preencher
-        select: ["periodo_aquisitivo",], // campos selecionavel
+        select: ["periodo_aquisitivo_id",], // campos selecionavel
         check: ["antecipacao_periodo"], // campos marcaveis
     },
     periodo_aquisitivo: {
@@ -187,7 +187,7 @@ class BaseLoader {
                     const removeButton = document.createElement("img");
                     if (this.type != "table") {
                         removeButton.src =
-                            "http://10.0.0.211:8001/static/icons/trash.svg";
+                            "/static/icons/trash.svg";
                         removeButton.classList.add("btn-icon", "bg-danger");
 
                         removeButton.addEventListener("click", () => {
@@ -195,7 +195,7 @@ class BaseLoader {
                         });
                     } else {
                         removeButton.src =
-                            "http://10.0.0.211:8001/static/icons/pencil-fill.svg";
+                            "/static/icons/pencil-fill.svg";
                         removeButton.classList.add("btn-icon", "bg-primary");
 
                         removeButton.addEventListener("click", () => {
@@ -222,6 +222,7 @@ class Modal extends BaseLoader {
         this.prefix = "m_" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById("m_" + this.object);
         this.modal = new bootstrap.Modal(this.myModal);
+        console.log(this)
     }
 
     
@@ -256,17 +257,15 @@ class Modal extends BaseLoader {
             })
             
         });
-
+        
     }
-
+    
     lanc() {
         this.populateSelect().then(() => {
             this.load()
             this.modal.show();
             $("#"+ this.prefix + 'submit').off().on('click',() => {
-                if (loader.object in ['ocupacao','dissidio']){
                     Submit.funcao(this)
-                }
             })
         });
     }
@@ -348,8 +347,7 @@ Submit = {
     readFields: function(type, object) {
         const prefix = type == 'form' ? "f_" : 'm_' + object + "_"; // Prefixo de modal
         const inputs = objFields[object]
-        console.debug(inputs)
-        console.log(inputs)
+
         let data = {};
         
         const fields = inputs.text.concat(inputs.select); // Junta os campos de texto e campos de seleção
@@ -367,19 +365,16 @@ Submit = {
         return data;
     },
     update: function(loader){
-        console.log(loader)
             apiRequest.update('update',loader.object,this.readFields(loader.type, loader.object),function(){
                 loader.modal.hide();
             })
     },
     register: function(loader){
-        console.log(loader)
             apiRequest.post('register',loader.object,this.readFields(loader.type, loader.object),function(){
                 loader.refresh()
             })
     },
     funcao: function(loader){
-        console.debug(loader)
         try{apiRequest.post('function',loader.object,this.readFields(loader.type, loader.object),function(){
             loader.modal.hide();
             carregarDados()
