@@ -13,7 +13,7 @@ jobs:
       matrix:
         python-version: [3.12]
     env:
-      venv: /home/tecnika/TK/django/venv/teste/api
+      venv: /home/tecnika/TK/django/venv/teste/front
     steps:
     - uses: actions/checkout@v4  # Faz o checkout do código fonte
 
