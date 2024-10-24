@@ -70,6 +70,7 @@
             </div>
         </div>
         {%endif%}
+        {% if user|can:'Lancamento_obra-impressoes' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -81,6 +82,9 @@
                 <a href="#" data-bs-toggle="modal" data-bs-target="#impressao_diario"><i {{icon_modal}}></i>  Baixar Diário</a>
             </div>
         </div>
+        {%endif%}
+
+        {% if user|can:'Lancamento_obra-graficos' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -93,5 +97,7 @@
                     extras</a>
             </div>
         </div>
+        {%endif%}
+
     </div>
 </div>
