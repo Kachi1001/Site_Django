@@ -12,9 +12,11 @@ class app_Lancamento_obra(AbstractUserRole):
     available_permissions = {
         f'{app}': True,
         f'{app}-cadastros': True,
-        f'{app}-consultas': True,
         f'{app}-lancamentos': True,
         f'{app}-tabelas': True,
+        f'{app}-consultas': True,
+        f'{app}-impressoes': True,
+        f'{app}-graficos': True,
     }
     role_name=f'app_{app}'
     
@@ -22,9 +24,10 @@ class app_Depto_pessoal(AbstractUserRole):
     app = 'Depto_pessoal'
     available_permissions = {
         f'{app}': True,
-        f'{app}-cadastros': True,
-        f'{app}-tabelas': True,
-        f'{app}-consultas': True,
+        f'{app}-colaborador': True,
+        f'{app}-ferias': True,
+        f'{app}-ponto': True,
+        f'{app}-lembrete': True,
     }
     role_name=f'app_{app}'
     

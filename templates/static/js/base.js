@@ -34,7 +34,7 @@ const apiRequest = {
                 // Chama o toast de erro
                 console.error(error);
 
-            toasts("warning", error.responseJSON);
+                toasts("warning", error.responseJSON);
             },
         });
     },
@@ -46,13 +46,13 @@ const apiRequest = {
         successCallback,
         errorCallback
     ) {
-         $.ajax({
+        $.ajax({
             url: this.createURL(endpoint),
             method: "POST",
             data: this.createDATA(metodo, JSON.stringify(parametro)),
             success: (response) => {
                 this.success(response, successCallback);
-                return response
+                return response;
             },
             error: (error) => {
                 this.error(error, errorCallback);
@@ -124,7 +124,18 @@ const apiRequest = {
         }
     },
 
-
+    touch: function (endpoint, successCallback, errorCallback) {
+        $.ajax({
+            url: this.createURL(endpoint),
+            method: "GET",
+            success: (response) => {
+                this.success(response, successCallback);
+            },
+            error: (error) => {
+                this.error(error, errorCallback);
+            },
+        });
+    },
 
     success: function (response, successCallback) {
         toasts("success", response);
@@ -142,28 +153,29 @@ const apiRequest = {
         }
         // Chama o toast de erro
         console.error(error);
-
     },
 };
 
 const page = {
     redirect: function (path, params) {
-        queryString = ''
-        if (typeof params != 'undefined'){// Remove parâmetros com valores vazios, nulos ou indefinidos
-        const filteredParams = Object.fromEntries(
-            Object.entries(params).filter(
-                ([key, value]) =>
-                    value !== "" && value !== null && value !== undefined
-            )
-        );
+        queryString = "";
+        if (typeof params != "undefined") {
+            // Remove parâmetros com valores vazios, nulos ou indefinidos
+            const filteredParams = Object.fromEntries(
+                Object.entries(params).filter(
+                    ([key, value]) =>
+                        value !== "" && value !== null && value !== undefined
+                )
+            );
 
-        // Constrói a query string com encodeURIComponent para lidar com espaços e caracteres especiais
-        queryString = new URLSearchParams(
-            Object.entries(filteredParams).map(([key, value]) => [
-                key,
-                encodeURIComponent(value),
-            ])
-        ).toString();}
+            // Constrói a query string com encodeURIComponent para lidar com espaços e caracteres especiais
+            queryString = new URLSearchParams(
+                Object.entries(filteredParams).map(([key, value]) => [
+                    key,
+                    encodeURIComponent(value),
+                ])
+            ).toString();
+        }
 
         // Constrói a nova URL com base no path informado e na URL atual
         const currentBaseUrl = window.location.origin; // Pega o domínio atual
@@ -192,6 +204,5 @@ const modal = {
         let myModal = document.getElementById(name);
         let modal = new bootstrap.Modal(myModal);
         modal.show();
-
-    }
-}
+    },
+};

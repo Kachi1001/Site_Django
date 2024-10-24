@@ -72,6 +72,15 @@ const objFields = {
         select: [], // campos selecionavel
         check: [], // campos marcaveis
     },
+    lembrete:{
+        text: [
+            'id',
+            'colaborador',
+            "telefone",
+        ], //campos que pode ser preencher
+        select: ['padrao'], // campos selecionavel
+        check: [], // campos marcaveis
+    },
     editar_cargo: this.ocupacao
 };
 var loader
@@ -140,7 +149,9 @@ class BaseLoader {
         } finally {
             let disabled = this.type == "view";
             textFields.concat(this.inputs.check).forEach((field) => {
-                $("#" + this.prefix + field).attr("disabled", disabled);
+                if (field != 'id' || disabled){
+                    $("#" + this.prefix + field).attr("disabled", disabled);
+                }
             });
         }
     }
@@ -169,7 +180,7 @@ class BaseLoader {
 
                 response.forEach((obj) => {
                     const row = document.createElement("tr");
-
+                    console.debug(obj)
                     keys.forEach((key) => {
                         const cell = document.createElement("td");
                         if (typeof obj[key] === "boolean") {
@@ -200,7 +211,7 @@ class BaseLoader {
 
                         removeButton.addEventListener("click", () => {
                             let modal = new Modal(this.object.split('_')[1],'update')
-                            modal.open(obj.colaborador)
+                            modal.open(obj.id)
                         });
                     }
                     removeCell.appendChild(removeButton);
@@ -327,6 +338,13 @@ class Form extends BaseLoader {
 
     // Registro
     register() {
+        let loader = this;
+
+        $("#"+ this.prefix + 'submit').off().click(function(){
+            console.debug(loader)
+                Submit.register(loader)
+           
+        })
         this.populateSelect();
     }
 
@@ -344,38 +362,39 @@ class Form extends BaseLoader {
 }
 
 Submit = {
-    readFields: function(type, object) {
-        const prefix = type == 'form' ? "f_" : 'm_' + object + "_"; // Prefixo de modal
-        const inputs = objFields[object]
-
+    readFields: function(loader) {
         let data = {};
-        
+        const inputs = loader.inputs 
         const fields = inputs.text.concat(inputs.select); // Junta os campos de texto e campos de seleção
 
         fields.forEach((field) => {
-            val = $("#" + prefix + field).val();
+            val = $("#" + loader.prefix + field).val();
             if (val != "") {
                 data[field] = val;
             }
         });
         inputs.check.forEach((check) => {
-            data[check] = $("#" + prefix + check).prop("checked");
+            data[check] = $("#" + loader.prefix + check).prop("checked");
         });
 
         return data;
     },
     update: function(loader){
-            apiRequest.update('update',loader.object,this.readFields(loader.type, loader.object),function(){
+            apiRequest.update('update',loader.object,this.readFields(loader),function(){
                 loader.modal.hide();
             })
     },
     register: function(loader){
-            apiRequest.post('register',loader.object,this.readFields(loader.type, loader.object),function(){
+        try{
+            apiRequest.post('register',loader.object,this.readFields(loader),function(){
                 loader.refresh()
             })
+        } catch {
+            throw error
+        }
     },
     funcao: function(loader){
-        try{apiRequest.post('function',loader.object,this.readFields(loader.type, loader.object),function(){
+        try{apiRequest.post('function',loader.object,this.readFields(loader),function(){
             loader.modal.hide();
             carregarDados()
         })} catch {

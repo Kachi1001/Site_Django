@@ -528,8 +528,50 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="m_lembrete" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Editando lembrete</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">ID:</label>
+                                <input type="text" class="form-control" id="m_lembrete_id" disabled>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">COLABORADOR:</label>
+                                <input type="text" class="form-control" id="m_lembrete_colaborador">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">NUMERO:</label>
+                                <input type="tel" id="m_lembrete_telefone" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">PADRÃO:</label>
+                                <select class="form-select" id="m_lembrete_padrao"></select>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="m_lembrete_submit">Lançar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
-        
+
         function abrirHistorico(id) {
             let modal = new Modal('historico_' + id, 'table')
             modal.open(colab)
