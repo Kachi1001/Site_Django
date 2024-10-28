@@ -1,0 +1,25 @@
+.img-thumbnail {
+    max-width: 170px;
+}
+
+@media (max-width: 800px) {
+    .sidenav{
+        display: none;
+    }
+    header, main, .submain{
+        margin-left: 0px;
+        padding: 0px;
+    }
+    main, .submain{
+        margin-left: 0px;
+        padding-left: 20px;
+        padding-right: 30px;
+    }
+    .navbar{
+        height: 50px;
+    }
+    
+    .img-thumbnail {
+        max-width: 100px;
+    }
+}
