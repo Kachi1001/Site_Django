@@ -11,8 +11,6 @@ jobs:
       max-parallel: 4
       matrix:
         python-version: [3.12]
-    env:
-      venv: /home/tecnika/TK/django/venv/teste/front
 
     steps:
     - uses: actions/checkout@v4  # Faz o checkout do código fonte
@@ -21,18 +19,13 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
- 
-    - name: Copiando Bibliotecas
-      working-directory: /home/tecnika/TK/django/venv/
-      run: |
-        sudo rm -rf main/front
-        cp teste/front main/front -r
 
     - name: Run Tests
       run: |
-        source $venv/bin/activate  # Ativa o ambiente virtual
+        source venv/bin/activate  # Ativa o ambiente virtual
         python manage.py test  # Roda os testes
 
+        
   deploy:
     needs: test
     runs-on: self-hosted  # O runner self-hosted está no servidor de produção
@@ -41,23 +34,33 @@ jobs:
       matrix:
         python-version: [3.12]
     env:
-      branch: main
+      branch: teste
       app: front
     defaults:
       run:
-        working-directory: /home/tecnika/bat
+        working-directory: /home/tecnika/TK/django/main/front
+
     steps:
       # Deploy no servidor de produção
     - name: Finalizando servidor
+      working-directory: /home/tecnika/bat
       run: sudo bash django-stop.sh $branch $app #Fecha os serviços do django
 
-    - name: Atualizando o servidor
-      run: sudo bash django-update.sh $branch $app #Faz a atualização das dependencia e arquivos
+    - name: Baixando bibliotecas
+      run: |
+        source venv/bin/activate
+        pip install -r requirements.txt
+        
+    - name: Atualizando arquivos
+      run: sudo git pull origin $branch
+        
+    - name: Copiando .env
+      run: cp /home/tecnika/TK/django/env/main_front.env .env
 
     - name: Coletando estáticos
-      working-directory: /home/tecnika/TK/django/main/front
       run: python3 manage.py collectstatic --noinput
 
     - name: Reiniciando servidor
+      working-directory: /home/tecnika/bat
       run: sudo bash django-reload.sh $branch $app #Reinicia o processo do django
 
