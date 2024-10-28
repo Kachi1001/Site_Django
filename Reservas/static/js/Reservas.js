@@ -166,9 +166,7 @@ function reserva_simples(sala) {
         if (
             $("#check" + hora).is(":checked") &&
             !$("#check" + hora).is(":disabled")
-        ) {
-            
-            console.log(horarios[i])
+        ) {            
             if (resp == null && $("#responsavel" + hora).val() == "") {
                 toasts('danger',{'method':'Reserva Sala','message':'O registro precisa ter um responsável!'})
                 return;
