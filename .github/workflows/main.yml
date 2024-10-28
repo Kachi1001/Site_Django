@@ -34,7 +34,7 @@ jobs:
       matrix:
         python-version: [3.12]
     env:
-      branch: teste
+      branch: main
       app: front
     defaults:
       run:

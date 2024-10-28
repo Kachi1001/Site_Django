@@ -84,9 +84,16 @@
                 return
             }
             let lanc = [];
+            if (false) {linhas.forEach((linha) => {
+                lanc.push({
+                    'colaborador': $('#' + prefix + 'colaborador_' + linha).val(),
+                    'obra_id': $('#' + prefix + 'obra_id_' + linha).val(),
+                    'encarregado': $('#' + prefix + 'encarregado_' + linha).val()
+                })
+            })}
             for (i = 0; $('#' + prefix + 'obra_id_' + linhas[i]).val() != undefined; i++) {
-                let obra = $('#' + prefix + 'obra_id_' + linhas[0]).val();
-                let encarregado = $('#' + prefix + 'encarregado_' + linhas[0]).val();
+                let obra = $('#' + prefix + 'obra_id_' + linhas[i]).val();
+                let encarregado = $('#' + prefix + 'encarregado_' + linhas[i]).val();
                 let colaborador = $('#' + prefix + 'colaborador_' + linhas[i]).val()
 
                 lanc.push({
