@@ -38,17 +38,17 @@ const apiRequest = {
             },
         });
     },
-
     post: function (
         endpoint,
-        parametro = {},
+        metodo,
+        parametro,
         successCallback,
         errorCallback
     ) {
         $.ajax({
             url: this.createURL(endpoint),
             method: "POST",
-            data: JSON.stringify(parametro),
+            data: this.createDATA(metodo, JSON.stringify(parametro)),
             success: (response) => {
                 this.success(response, successCallback);
                 return response;
