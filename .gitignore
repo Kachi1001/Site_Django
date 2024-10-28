@@ -144,3 +144,5 @@ migrations/
 disabled/
 scripts/
 *.sh
+
+/static/
