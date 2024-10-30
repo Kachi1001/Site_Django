@@ -93,8 +93,14 @@
                     <div class="row">
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">ID:</label>
+                                <input type="text" id="m_colaborador_id" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">NOME:</label>
-                                <input type="text" id="m_colaborador_id" class="form-control">
+                                <input type="text" id="m_colaborador_nome" class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
@@ -141,8 +147,6 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id='m_colaborador_del'
-                            data-bs-dismiss="modal">Deletar</button>
                         <button type="button" class="btn btn-success" id="m_colaborador_submit"
                             onclick="carregarDados()">Salvar</button>
                     </div>
@@ -151,7 +155,7 @@
         </div>
     </div>
     <!-- Historico -->
-    <div class="modal fade" id="m_historico_ocupacao" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_historico-ocupacao" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -159,7 +163,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-hover table-bordered table-striped" id="m_historico_ocupacao_table">
+                    <table class="table table-hover table-bordered table-striped" id="m_historico-ocupacao_table">
                         <thead>
                             <tr>
                             </tr>
@@ -171,7 +175,7 @@
         </div>
     </div>
     <!-- Historico -->
-    <div class="modal fade" id="m_historico_periodo_aquisitivo" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_historico-periodo_aquisitivo" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -180,7 +184,7 @@
                 </div>
                 <div class="modal-body">
                     <table class="table table-hover table-bordered table-striped"
-                        id="m_historico_periodo_aquisitivo_table">
+                        id="m_historico-periodo_aquisitivo_table">
                         <thead>
                             <tr>
                             </tr>
@@ -192,7 +196,7 @@
         </div>
     </div>
     <!-- Historico -->
-    <div class="modal fade" id="m_historico_ferias_processadas" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_historico-feriasprocessadas" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -201,7 +205,7 @@
                 </div>
                 <div class="modal-body">
                     <table class="table table-hover table-bordered table-striped"
-                        id="m_historico_ferias_processadas_table">
+                        id="m_historico-feriasprocessadas_table">
                         <thead>
                             <tr>
                             </tr>
@@ -213,7 +217,7 @@
         </div>
     </div>
     <!-- Historico -->
-    <div class="modal fade" id="m_historico_ferias_utilizadas" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_historico-feriasutilizadas" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -222,7 +226,7 @@
                 </div>
                 <div class="modal-body">
                     <table class="table table-hover table-bordered table-striped"
-                        id="m_historico_ferias_utilizadas_table">
+                        id="m_historico-feriasutilizadas_table">
                         <thead>
                             <tr>
                             </tr>
@@ -252,7 +256,8 @@
                         <div class="col">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">COLABORADOR:</label>
-                                <input type="text" class="form-control" id="m_ocupacao_colaborador" disabled>
+                                <select class="form-select" id="m_ocupacao_colaborador" disabled>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -260,7 +265,7 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">FUNÇÃO:</label>
-                                <select class="form-select" id="m_ocupacao_funcao_id">
+                                <select class="form-select" id="m_ocupacao_funcao">
                                 </select>
                             </div>
                         </div>
@@ -293,14 +298,14 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_ocupacao_submit">Lançar</button>
+                    <button type="button" class="btn btn-success" id="m_ocupacao_submit">Salvar</button>
 
                 </div>
             </div>
         </div>
     </div>
     <!-- Mudança cargo -->
-    <div class="modal fade" id="m_mudar_cargo" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_ocupacao_alterar" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -312,13 +317,14 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">ID:</label>
-                                <input type="text" class="form-control" id="m_mudar_cargo_id" disabled>
+                                <input type="text" class="form-control" id="m_ocupacao_alterar_id" disabled>
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">COLABORADOR:</label>
-                                <input type="text" class="form-control" id="m_mudar_cargo_colaborador" disabled>
+                                <select class="form-select" id="m_ocupacao_alterar_colaborador" disabled>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -326,33 +332,33 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">FUNÇÃO:</label>
-                                <select class="form-select" id="m_mudar_cargo_id">
+                                <select class="form-select" id="m_ocupacao_alterar_funcao">
                                 </select>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DATA DE INÍCIO:</label>
-                                <input type="date" id="m_mudar_cargo_data_inicio" class="form-control">
+                                <input type="date" id="m_ocupacao_alterar_data_inicio" class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">REMUNERAÇÃO:</label>
-                                <input type="number" id="m_mudar_cargo_remuneracao" class="form-control">
+                                <input type="number" id="m_ocupacao_alterar_remuneracao" class="form-control">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_mudar_cargo_submit">Lançar</button>
+                    <button type="button" class="btn btn-success" id="m_ocupacao_alterar_submit">Lançar</button>
 
                 </div>
             </div>
         </div>
     </div>
     <!-- Lancar dissidio  -->
-    <div class="modal fade" id="m_dissidio" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_ocupacao_dissidio" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -364,13 +370,14 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">ID:</label>
-                                <input type="text" class="form-control" id="m_dissidio_id" disabled>
+                                <input type="text" class="form-control" id="m_ocupacao_dissidio_id" disabled>
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">COLABORADOR:</label>
-                                <input type="text" class="form-control" id="m_dissidio_colaborador" disabled>
+                                <select class="form-select" id="m_ocupacao_dissidio_colaborador" disabled>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -378,26 +385,26 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">FUNÇÃO:</label>
-                                <select class="form-select" id="m_dissidio_funcao_id" disabled>
+                                <select class="form-select" id="m_ocupacao_dissidio_funcao" disabled>
                                 </select>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DATA DE INÍCIO:</label>
-                                <input type="date" id="m_dissidio_data_inicio" class="form-control">
+                                <input type="date" id="m_ocupacao_dissidio_data_inicio" class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">REMUNERAÇÃO:</label>
-                                <input type="number" id="m_dissidio_remuneracao" class="form-control">
+                                <input type="number" id="m_ocupacao_dissidio_remuneracao" class="form-control">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_dissidio_submit">Lançar</button>
+                    <button type="button" class="btn btn-success" id="m_ocupacao_dissidio_submit">Lançar</button>
 
                 </div>
             </div>
@@ -438,7 +445,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_ferias_processadas" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_feriasprocessadas" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -450,36 +457,38 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">COLABORADOR:</label>
-                                <input type="text" class="form-control" id="m_ferias_processadas_colaborador" disabled>
+                                <select class="form-select" id="m_feriasprocessadas_colaborador" disabled></select>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">PERÍODO AQUISITIVO:</label>
-                                <select class="form-select" id="m_ferias_processadas_periodo_aquisitivo_id"></select>
+                                <select class="form-select" id="m_feriasprocessadas_periodo_aquisitivo"></select>
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DATA:</label>
-                                <input type="date" id="m_ferias_processadas_data_inicio" class="form-control">
+                                <input type="date" id="m_feriasprocessadas_data_inicio" class="form-control">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DIAS:</label>
-                                <input type="number" id="m_ferias_processadas_dias_processados" class="form-control">
+                                <input type="number" id="m_feriasprocessadas_dias_processados" class="form-control">
                             </div>
                         </div>
+                        <input type="checkbox" style="display: none;" id="m_feriasprocessadas_consumido">
+
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_ferias_processadas_submit">Lançar</button>
+                    <button type="button" class="btn btn-success" id="m_feriasprocessadas_submit">Lançar</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_ferias_utilizadas" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_feriasutilizadas" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -491,39 +500,41 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">COLABORADOR:</label>
-                                <input type="text" class="form-control" id="m_ferias_utilizadas_colaborador" disabled>
+                                <select class="form-select" id="m_feriasutilizadas_colaborador" disabled></select>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">PERÍODO AQUISITIVO:</label>
-                                <select class="form-select" id="m_ferias_utilizadas_periodo_aquisitivo"></select>
+                                <select class="form-select" id="m_feriasutilizadas_periodo_aquisitivo"></select>
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DATA:</label>
-                                <input type="date" id="m_ferias_utilizadas_data_inicio" class="form-control">
+                                <input type="date" id="m_feriasutilizadas_data_inicio" class="form-control">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DIAS:</label>
-                                <input type="number" id="m_ferias_utilizadas_dias_utilizados" class="form-control">
+                                <input type="number" id="m_feriasutilizadas_dias_utilizados" class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <span class="input-group-text">ANTECIPADO:</span>
                                 <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="checkbox" id="m_ferias_utilizadas_antecipacao_periodo" onclick="confirmarAntecipacao()">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_feriasutilizadas_antecipacao_periodo" onclick="confirmarAntecipacao()">
                                 </div>
                             </div>
                         </div>
+                            <input type="checkbox" id="m_feriasutilizadas_consumido" style="display: none;">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_ferias_utilizadas_submit">Lançar</button>
+                    <button type="button" class="btn btn-success" id="m_feriasutilizadas_submit">Lançar</button>
                 </div>
             </div>
         </div>
@@ -561,7 +572,7 @@
                                 <select class="form-select" id="m_lembrete_padrao"></select>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -573,7 +584,7 @@
     <script>
 
         function abrirHistorico(id) {
-            let modal = new Modal('historico_' + id, 'table')
+            let modal = new Modal('historico-' + id, 'table')
             modal.open(colab)
         }
         function abrirRegistro(modal, table = false) {
@@ -583,29 +594,8 @@
         function abrirLancamento(modal) {
             let data = {}
             let registro = new Modal(modal, 'lanc')
-            switch (modal) {
-                case "ocupacao":
-                    data = [{
-                        'key': 'colaborador',
-                        'value': $("#f_colaborador_id").val()
-                    }, {
-                        'key': 'id',
-                        'value': $("#f_ocupacao_id").val()
-                    }]
-                    break
-                case "dissidio":
-                    data = [{
-                        'key': 'colaborador',
-                        'value': $("#f_colaborador_id").val()
-                    }, {
-                        'key': 'id',
-                        'value': $("#f_ocupacao_id").val()
-                    }, {
-                        'key': 'funcao_id',
-                        'value': $("#f_ocupacao_funcao_id").val()
-                    }]
-                    break
-            }
+
+            data = $("#f_ocupacao_id").val()
             registro.open(data)
             console.debug(data)
         }
@@ -613,13 +603,10 @@
 
             let registro = new Modal(modal, 'processo')
 
-            data = [{
-                'key': 'colaborador',
-                'value': $("#f_colaborador_id").val()
-            }, {
-                'key': 'periodo_aquisitivo_id',
-                'value': $("#f_periodo_aquisitivo_id").val()
-            }]
+            data = {
+                'colaborador': $("#f_colaborador_id").val(),
+                'periodo_aquisitivo': $("#f_periodo_aquisitivo_id").val()
+            }
 
             registro.open(data)
 
@@ -635,7 +622,7 @@
             if (field.prop("checked")) {
                 periodo.val('').attr('disabled', true)
 
-            } else{
+            } else {
                 periodo.val($("#f_periodo_aquisitivo_id").val()).attr('disabled', false)
             }
         }

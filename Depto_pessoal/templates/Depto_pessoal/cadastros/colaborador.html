@@ -10,7 +10,7 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">NOME:</label>
-            <input type="text" id="f_colaborador_id" class="form-control">
+            <input type="text" id="f_colaborador_nome" class="form-control">
         </div>
     </div>
     <div class="col-auto">
@@ -35,7 +35,7 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm" >
             <label class="input-group-text">TELEFONE:</label>
-            <input type="number" id="f_colaborador_telefone" class="form-control">
+            <input type="number" id="f_colaborador_fone" class="form-control">
         </div>
     </div>
 
@@ -60,7 +60,7 @@
 
 
 
-<div class="row justify-content-end"><div class="col-auto"><button onclick="Submit.register()" class="btn btn-success">Cadastrar</button></div></div>
+<div class="row justify-content-end"><div class="col-auto"><button id="f_colaborador_submit" class="btn btn-success">Cadastrar</button></div></div>
 <script>
     $(document).ready(function(){
         loader = new Form('colaborador','register')
