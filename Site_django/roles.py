@@ -30,4 +30,13 @@ class app_Depto_pessoal(AbstractUserRole):
         f'{app}-lembrete': True,
     }
     role_name=f'app_{app}'
+
+class ambientes(AbstractUserRole):
+    app = 'ambiente'
+    available_permissions = {
+        f'{app}-teste': True,
+        f'{app}-dev': True,
+        f'{app}-prod': True,
+    }
+    role_name=f'app_{app}'
     
