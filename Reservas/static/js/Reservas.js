@@ -131,7 +131,7 @@ function Reserva_rapida() {
         }
     });
     $("#reserva_rapida-sala").change(function () {
-        document.getElementById("reserva_rapida-img").src = `/static/image/${$(
+        document.getElementById("reserva_rapida-img").src = `/static/image/Reservas/${$(
             "#reserva_rapida-sala"
         ).val()}.jpg`;
     });
