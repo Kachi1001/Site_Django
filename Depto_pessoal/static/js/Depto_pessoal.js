@@ -144,19 +144,42 @@ const apiTeste = {
                 this.error(error, errorCallback);
             });
     },
-
     touch: function (endpoint, successCallback, errorCallback) {
-        $.ajax({
-            url: this.createURL(endpoint),
+        fetch(this.createURL(endpoint), {
             method: "POST",
-            success: (response) => {
-                this.success(response, successCallback);
-            },
-            error: (error) => {
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                console.error(response);
+                this.success(
+                    {
+                        method: "Sucesso",
+                        message: "Função executada com sucesso",
+                    },
+                    successCallback
+                );
+            })
+            .catch((error) => {
+                console.error("Erro:", error);
+
                 this.error(error, errorCallback);
-            },
-        });
+            });
     },
+
+    // touch: function (endpoint, successCallback, errorCallback) {
+    //     $.ajax({
+    //         url: this.createURL(endpoint),
+    //         method: "POST",
+    //         success: (response) => {
+    //             this.success(response, successCallback);
+    //         },
+    //         error: (error) => {
+    //             this.error(error, errorCallback);
+    //         },
+    //     });
+    // },
 
     success: function (response, successCallback) {
         toasts("success", response);
@@ -359,7 +382,7 @@ class BaseLoader {
 
                         removeButton.addEventListener("click", () => {
                             let modal = new Modal(
-                                this.object.split("_")[1],
+                                this.object.split("-")[1],
                                 "update"
                             );
                             modal.open(obj.id);
