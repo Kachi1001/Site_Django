@@ -11,6 +11,8 @@ const apiTeste = {
         };
     },
     get: function (endpoint, params = undefined, errorCallback) {
+        console.log (endpoint)
+        console.log(this.createURL(endpoint))
         const url = new URL(this.createURL(endpoint));
         if (typeof params === "object") {
             Object.keys(params).forEach((key) =>
@@ -118,7 +120,7 @@ const apiTeste = {
             },
         });
     },
-    delete: function (endpoint, parametro, successCallback, errorCallback) {
+    delete: function (endpoint, successCallback, errorCallback) {
         fetch(this.createURL(endpoint), {
             method: "DELETE",
             // headers: {
