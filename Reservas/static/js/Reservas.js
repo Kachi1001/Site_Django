@@ -131,19 +131,26 @@ function Reserva_rapida() {
         }
     });
     $("#reserva_rapida-sala").change(function () {
-        document.getElementById("reserva_rapida-img").src = `/static/image/${$(
+        document.getElementById("reserva_rapida-img").src = `/static/image/Reservas/${$(
             "#reserva_rapida-sala"
         ).val()}.jpg`;
     });
     $("#reserva_rapida-submit").click(function () {
+        const responsavel = $("#reserva_rapida-responsavel").val()
+        const descricao = $("#reserva_rapida-descricao").val()
+        const data = $("#reserva_rapida-data").val()
+        if (responsavel == '' || data == '') {
+            toasts('warning',{'method':'Reserva','message':'Falta alguma informação revise!!'})
+            return
+        }
         let reservas = [];
         let inicio = parseInt($("#reserva_rapida-sel1").val());
         let fim = parseInt($("#reserva_rapida-sel2").val());
         for (i = inicio; i < fim; i++) {
             reservas.push({
                 hora: horarios[i],
-                responsavel: $("#reserva_rapida-responsavel").val(),
-                descricao: $("#reserva_rapida-descricao").val(),
+                responsavel: responsavel,
+                descricao: descricao,
             });
         }
         parametro = {
