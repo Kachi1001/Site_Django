@@ -34,19 +34,19 @@
             </div>
         </div>
         {%endif%}
-        {% if user|can:'Depto_pessoal-ponto' %}
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#menu-ponto" aria-expanded="false">
-                    Pontos
-                </button>
-            </h2>
-            <div id="menu-ponto" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_tabelas' 'ponto'%}"><i {{icon_table}}></i> Tabela</a>
-            </div>
+    <!-- {% if user|can:'Depto_pessoal-ponto' %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#menu-ponto" aria-expanded="false">
+                Pontos
+            </button>
+        </h2>
+        <div id="menu-ponto" class="accordion-collapse collapse" data-bs-parent="#accordion">
+            <a href="{%url app|add:'_tabelas' 'ponto'%}"><i {{icon_table}}></i> Tabela</a>
         </div>
-        {%endif%}
+    </div>
+    {%endif%} -->
         {% if user|can:'Depto_pessoal-lembrete' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -58,7 +58,7 @@
             <div id="menu-lembretes" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <a href="{%url app|add:'_cadastros' 'lembrete'%}"><i {{icon_table}}></i> Registro</a>
                 <!-- <a href="{%url app|add:'_tabelas' 'lembrete'%}"><i {{icon_table}}></i> Tabela</a> -->
-                <a href="{%url app|add:'_consultas' 'lembrete'%}" title="Fara leitura do bd e enviar para cada linha"><i {{icon_table}}></i> Sobre</a>
+                <a href="{%url app|add:'_app'%}" title="Fara leitura do bd e enviar para cada linha"><i {{icon_table}}></i> Sobre</a>
             </div>
         </div>
         {%endif%}

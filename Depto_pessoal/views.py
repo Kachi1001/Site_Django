@@ -34,3 +34,8 @@ def lancamentos(request, type):
 @has_permission_decorator(app)
 def graficos(request, type):
     return render(request, f"{app}/grafico/{type}.html", {'table': type})
+
+@login_required
+@has_permission_decorator(app+'-menu')
+def app_menu(request):
+    return render(request, f"{app}/app.html")

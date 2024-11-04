@@ -7,77 +7,101 @@ const apiRequest = {
         return {
             metodo: metodo,
             parametro: parametro,
-            user: user,
+            // user: user,
         };
     },
-    get: function (
-        endpoint,
-        metodo,
-        parametro,
-        successCallback,
-        errorCallback
-    ) {
-        return $.ajax({
-            url: this.createURL(endpoint),
+    get: function (endpoint, params = undefined, errorCallback) {
+        console.log(this.createURL(endpoint));
+        const url = new URL(this.createURL(endpoint));
+        if (typeof params === "object") {
+            Object.keys(params).forEach((key) =>
+                url.searchParams.append(key, params[key])
+            );
+        }
+
+        return fetch(url, {
             method: "GET",
-            data: this.createDATA(metodo, parametro),
-            success: function (response) {
-                if (typeof successCallback === "function") {
-                    successCallback(response);
-                }
+            headers: {
+                "Content-Type": "application/json",
             },
-            error: (error) => {
-                // Verifica se o callback de erro foi passado e é uma função
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then((errorData) => {
+                        throw errorData; // Lança os dados de erro
+                    });
+                }
+                return response.json(); // Converte a resposta em JSON se a requisição foi bem-sucedida
+            })
+            .catch((error) => {
                 if (typeof errorCallback === "function") {
-                    errorCallback(error);
+                    errorCallback(error); // Chama o callback de erro com os dados de erro
+                } else {
+                    console.error("Erro na requisição GET:", error, url);
                 }
-                // Chama o toast de erro
-                console.error(error);
-
-                toasts("warning", error.responseJSON);
-            },
-        });
+            });
     },
-    post: function (
-        endpoint,
-        metodo,
-        parametro,
-        successCallback,
-        errorCallback
-    ) {
-        $.ajax({
-            url: this.createURL(endpoint),
+    post: function (endpoint, parametro, successCallback, errorCallback) {
+        fetch(this.createURL(endpoint), {
             method: "POST",
-            data: this.createDATA(metodo, JSON.stringify(parametro)),
-            success: (response) => {
-                this.success(response, successCallback);
-                return response;
+            headers: {
+                "Content-Type": "application/json",
             },
-            error: (error) => {
+            body: JSON.stringify(parametro),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then((data) => {
+                this.success(data, successCallback);
+            })
+            .catch((error) => {
                 this.error(error, errorCallback);
+            });
+    },
+    update: function (endpoint, parametro, successCallback, errorCallback) {
+        fetch(this.createURL(endpoint), {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
             },
-        });
+            body: JSON.stringify(parametro),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then((data) => {
+                this.success(data, successCallback);
+            })
+            .catch((error) => {
+                this.error(error, errorCallback);
+            });
     },
 
-    update: function (
-        endpoint,
-        metodo,
-        parametro,
-        successCallback,
-        errorCallback
-    ) {
-        return $.ajax({
-            url: this.createURL(endpoint),
-            method: "PATCH",
-            data: this.createDATA(metodo, JSON.stringify(parametro)),
-            success: (response) => {
-                this.success(response, successCallback);
-            },
-            error: (error) => {
-                this.error(error, errorCallback);
-            },
-        });
-    },
+    // update: function (
+    //     endpoint,
+    //     parametro,
+    //     successCallback,
+    //     errorCallback
+    // ) {
+    //     return $.ajax({
+    //         url: this.createURL(endpoint),
+    //         method: "PATCH",
+    //         data: JSON.stringify(parametro),
+    //         success: (response) => {
+    //             this.success(response, successCallback);
+    //         },
+    //         error: (error) => {
+    //             this.error(error, errorCallback);
+    //         },
+    //     });
+    // },
 
     upload: function (endpoint, formData, successCallback, errorCallback) {
         $.ajax({
@@ -95,46 +119,75 @@ const apiRequest = {
             },
         });
     },
-
-    delete: function (
-        endpoint,
-        metodo,
-        parametro,
-        successCallback,
-        errorCallback
-    ) {
-        if (confirm("Tens certeza que deseja apagar esse registro??")) {
-            $.ajax({
-                url: this.createURL(endpoint),
+    delete: function (endpoint, successCallback, errorCallback) {
+        if (confirm("Tem certeza que deseja apagar esse registro?")) {
+            fetch(this.createURL(endpoint), {
                 method: "DELETE",
-                data: this.createDATA(metodo, parametro),
-                success: (response) => {
-                    this.success(response, successCallback);
-                },
-                error: (error) => {
+                // headers: {
+                //     "Content-Type": "application/json",
+                // },
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw response;
+                    }
+                    console.error(response);
+                    this.success(
+                        {
+                            method: "Sucesso",
+                            message: "Registro deletado com sucesso",
+                        },
+                        successCallback
+                    );
+                })
+                .catch((error) => {
+                    console.error("Erro:", error);
+
                     this.error(error, errorCallback);
-                },
-            });
+                });
         } else {
-            toats("warning", {
-                method: "Delete",
-                message: "Operação cancelada com sucesso!!",
+            toasts("warning", {
+                method: "Operação cancelada",
+                message: "Cancelada pelo usuário",
             });
         }
     },
-
     touch: function (endpoint, successCallback, errorCallback) {
-        $.ajax({
-            url: this.createURL(endpoint),
-            method: "GET",
-            success: (response) => {
-                this.success(response, successCallback);
-            },
-            error: (error) => {
+        fetch(this.createURL(endpoint), {
+            method: "POST",
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                console.error(response);
+                this.success(
+                    {
+                        method: "Sucesso",
+                        message: "Função executada com sucesso",
+                    },
+                    successCallback
+                );
+            })
+            .catch((error) => {
+                console.error("Erro:", error);
+
                 this.error(error, errorCallback);
-            },
-        });
+            });
     },
+
+    // touch: function (endpoint, successCallback, errorCallback) {
+    //     $.ajax({
+    //         url: this.createURL(endpoint),
+    //         method: "POST",
+    //         success: (response) => {
+    //             this.success(response, successCallback);
+    //         },
+    //         error: (error) => {
+    //             this.error(error, errorCallback);
+    //         },
+    //     });
+    // },
 
     success: function (response, successCallback) {
         toasts("success", response);
@@ -145,13 +198,35 @@ const apiRequest = {
         // Chama o toast de sucesso
     },
     error: function (error, errorCallback) {
-        toasts("danger", error.responseJSON);
+        // toasts("danger", error);
         // Verifica se o callback de erro foi passado e é uma função
         if (typeof errorCallback === "function") {
             errorCallback(error);
         }
         // Chama o toast de erro
         console.error(error);
+
+        error
+            .json()
+            .then((errMessage) => {
+                console.error(errMessage);
+                console.debug(Object.keys(errMessage));
+                Object.keys(errMessage).forEach((key) => {
+                    toasts("danger", {
+                        method: "Registro",
+                        message: `[${key.toLocaleUpperCase()}] ${
+                            errMessage[key]
+                        }`,
+                    });
+                });
+            })
+            .catch(() => {
+                console.error("Erro ao interpretar a resposta de erro.");
+                toasts("warning", {
+                    method: "Ocorreu um erro inesperado.",
+                    message: "Erro ao interpretar a resposta de erro.",
+                });
+            });
     },
 };
 
@@ -195,6 +270,7 @@ const page = {
         return values[param];
     },
 
+    
     // Exemplo de uso:
 };
 

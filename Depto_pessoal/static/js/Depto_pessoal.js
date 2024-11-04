@@ -1,228 +1,3 @@
-const apiTeste = {
-    baseUrl: api,
-    createURL: function (endpoint) {
-        return this.baseUrl + app + "/" + endpoint;
-    },
-    createDATA: function (metodo, parametro) {
-        return {
-            metodo: metodo,
-            parametro: parametro,
-            // user: user,
-        };
-    },
-    get: function (endpoint, params = undefined, errorCallback) {
-        console.log (endpoint)
-        console.log(this.createURL(endpoint))
-        const url = new URL(this.createURL(endpoint));
-        if (typeof params === "object") {
-            Object.keys(params).forEach((key) =>
-                url.searchParams.append(key, params[key])
-            );
-        }
-
-        return fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    return response.json().then((errorData) => {
-                        throw errorData; // Lança os dados de erro
-                    });
-                }
-                return response.json(); // Converte a resposta em JSON se a requisição foi bem-sucedida
-            })
-            .catch((error) => {
-                if (typeof errorCallback === "function") {
-                    errorCallback(error); // Chama o callback de erro com os dados de erro
-                } else {
-                    console.error("Erro na requisição GET:", error, url);
-                }
-            });
-    },
-    post: function (endpoint, parametro, successCallback, errorCallback) {
-        fetch(this.createURL(endpoint), {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(parametro),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw response;
-                }
-                return response.json();
-            })
-            .then((data) => {
-                this.success(data, successCallback);
-            })
-            .catch((error) => {
-                this.error(error, errorCallback);
-            });
-    },
-    update: function (endpoint, parametro, successCallback, errorCallback) {
-        fetch(this.createURL(endpoint), {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(parametro),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw response;
-                }
-                return response.json();
-            })
-            .then((data) => {
-                this.success(data, successCallback);
-            })
-            .catch((error) => {
-                this.error(error, errorCallback);
-            });
-    },
-
-    // update: function (
-    //     endpoint,
-    //     parametro,
-    //     successCallback,
-    //     errorCallback
-    // ) {
-    //     return $.ajax({
-    //         url: this.createURL(endpoint),
-    //         method: "PATCH",
-    //         data: JSON.stringify(parametro),
-    //         success: (response) => {
-    //             this.success(response, successCallback);
-    //         },
-    //         error: (error) => {
-    //             this.error(error, errorCallback);
-    //         },
-    //     });
-    // },
-
-    upload: function (endpoint, formData, successCallback, errorCallback) {
-        $.ajax({
-            url: this.createURL(endpoint),
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-
-            success: (response) => {
-                this.success(response, successCallback);
-            },
-            error: (error) => {
-                this.error(error, errorCallback);
-            },
-        });
-    },
-    delete: function (endpoint, successCallback, errorCallback) {
-        fetch(this.createURL(endpoint), {
-            method: "DELETE",
-            // headers: {
-            //     "Content-Type": "application/json",
-            // },
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw response;
-                }
-                console.error(response);
-                this.success(
-                    {
-                        method: "Sucesso",
-                        message: "Registro deletado com sucesso",
-                    },
-                    successCallback
-                );
-            })
-            .catch((error) => {
-                console.error("Erro:", error);
-
-                this.error(error, errorCallback);
-            });
-    },
-    touch: function (endpoint, successCallback, errorCallback) {
-        fetch(this.createURL(endpoint), {
-            method: "POST",
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw response;
-                }
-                console.error(response);
-                this.success(
-                    {
-                        method: "Sucesso",
-                        message: "Função executada com sucesso",
-                    },
-                    successCallback
-                );
-            })
-            .catch((error) => {
-                console.error("Erro:", error);
-
-                this.error(error, errorCallback);
-            });
-    },
-
-    // touch: function (endpoint, successCallback, errorCallback) {
-    //     $.ajax({
-    //         url: this.createURL(endpoint),
-    //         method: "POST",
-    //         success: (response) => {
-    //             this.success(response, successCallback);
-    //         },
-    //         error: (error) => {
-    //             this.error(error, errorCallback);
-    //         },
-    //     });
-    // },
-
-    success: function (response, successCallback) {
-        toasts("success", response);
-        // Verifica se o callback de sucesso foi passado e é uma função
-        if (typeof successCallback === "function") {
-            successCallback(response);
-        }
-        // Chama o toast de sucesso
-    },
-    error: function (error, errorCallback) {
-        // toasts("danger", error);
-        // Verifica se o callback de erro foi passado e é uma função
-        if (typeof errorCallback === "function") {
-            errorCallback(error);
-        }
-        // Chama o toast de erro
-        console.error(error);
-
-        error
-            .json()
-            .then((errMessage) => {
-                console.error(errMessage);
-                console.debug(Object.keys(errMessage));
-                Object.keys(errMessage).forEach((key) => {
-                    toasts("danger", {
-                        method: "Registro",
-                        message: `[${key.toLocaleUpperCase()}] ${
-                            errMessage[key]
-                        }`,
-                    });
-                });
-            })
-            .catch(() => {
-                console.error("Erro ao interpretar a resposta de erro.");
-                toasts("warning", {
-                    method: "Ocorreu um erro inesperado.",
-                    message: "Erro ao interpretar a resposta de erro.",
-                });
-            });
-    },
-};
 const ocupacao = {
 text: ["id", "data_inicio", "data_fim", "remuneracao"], //campos que pode ser preencher
 select: ["colaborador", "funcao"], // campos selecionavel
@@ -246,13 +21,13 @@ const objFields = {
         check: [], // campos marcaveis
     },
     feriasprocessadas: {
-        text: ["id", "colaborador", "dias_processados", "data_inicio"], //campos que pode ser preencher
-        select: ["periodo_aquisitivo"], // campos selecionavel
+        text: ["id", "dias_processados", "data_inicio"], //campos que pode ser preencher
+        select: ["colaborador","periodo_aquisitivo"], // campos selecionavel
         check: ["consumido"], // campos marcaveis
     },
     feriasutilizadas: {
-        text: ["id", "colaborador", "dias_utilizados", "data_inicio"], //campos que pode ser preencher
-        select: ["periodo_aquisitivo"], // campos selecionavel
+        text: ["id", "dias_utilizados", "data_inicio"], //campos que pode ser preencher
+        select: [ "colaborador", "periodo_aquisitivo"], // campos selecionavel
         check: ["antecipacao_periodo","consumido"], // campos marcaveis
     },
     periodo_aquisitivo: {
@@ -311,7 +86,7 @@ class BaseLoader {
             });
 
             this.inputs.select.forEach(async (field) => {
-                const selects = await apiTeste.get(`select/${field}`);
+                const selects = await apiRequest.get(`select/${field}`);
                 this.populateSelect(selects, field);
                 $("#" + this.prefix + field).val(data[field]);
             });
@@ -412,7 +187,7 @@ class Modal extends BaseLoader {
     }
 
     register() {
-        this.populateSelect(apiTeste.get()).then(() => {
+        this.populateSelect(apiRequest.get()).then(() => {
             this.load();
             if (typeof this.id == "boolean" && this.id) {
                 this.populateTable(this.object).then(() => {
@@ -432,7 +207,7 @@ class Modal extends BaseLoader {
     }
     async update() {
         try {
-            const data = await apiTeste.get(this.object + "/" + this.id);
+            const data = await apiRequest.get(this.object + "/" + this.id);
             this.populateData(data).then(() => {
                 this.modal.show();
                 let loader = this;
@@ -440,6 +215,11 @@ class Modal extends BaseLoader {
                     .off()
                     .click(function () {
                         Submit.update(loader);
+                    });
+                $("#" + this.prefix + "del")
+                    .off()
+                    .click(function () {
+                        Submit.delete(loader);
                     });
             });
         } catch (error) {
@@ -449,7 +229,7 @@ class Modal extends BaseLoader {
 
     async lanc() {
         try {
-            const data = await apiTeste.get(this.object, {'id':this.id});
+            const data = await apiRequest.get(this.object, {'id':this.id});
             this.populateData(data).then(() => {
                 this.modal.show();
                 $("#" + this.prefix + "submit")
@@ -465,12 +245,12 @@ class Modal extends BaseLoader {
 
     async processo() {
         try {
-                apiTeste.get('periodo_aquisitivo', {'colaborador':this.id.colaborador}).then((data)=>{
+                apiRequest.get('periodo_aquisitivo', {'colaborador':this.id.colaborador}).then((data)=>{
                     this.populateSelect(data, 'periodo_aquisitivo').then(()=>{
                         $("#" + this.prefix + 'periodo_aquisitivo').val(this.id.periodo_aquisitivo);
                     })
                 })
-                apiTeste.get('select/colaborador').then((data)=>{
+                apiRequest.get('select/colaborador').then((data)=>{
                     this.populateSelect(data, 'colaborador').then(()=>{
                         $("#" + this.prefix + 'colaborador').val(this.id.colaborador);
                     })  
@@ -523,7 +303,7 @@ class Modal extends BaseLoader {
 
     async table() {
             try {
-                const data = await apiTeste.get(this.object.split('-')[1], {'colaborador': this.id});
+                const data = await apiRequest.get(this.object.split('-')[1], {'colaborador': this.id});
                 this.populateTable(data).then(() => {
                     this.modal.show();
                 });
@@ -556,7 +336,7 @@ class Form extends BaseLoader {
                 Submit.register(loader);
             });
         this.inputs.select.forEach((field) =>{
-            apiTeste.get(`select/${field}`).then((data)=>{
+            apiRequest.get(`select/${field}`).then((data)=>{
                 this.populateSelect(data,field);
             })
         })
@@ -568,7 +348,7 @@ class Form extends BaseLoader {
 
     async view() {
         try {
-            const data = await apiTeste.get(this.object + "/" + this.id);
+            const data = await apiRequest.get(this.object + "/" + this.id);
             this.populateData(data);
         } catch (error) {
             console.error("Error ao carregar", error);
@@ -582,7 +362,7 @@ class Form extends BaseLoader {
 
     async filter(filtro) {
         try {
-            const data = await apiTeste.get(this.object, filtro);
+            const data = await apiRequest.get(this.object, filtro);
             this.populateData(data[0]);
         } catch (error) {
             console.error("Error ao carregar", error);
@@ -608,7 +388,7 @@ Submit = {
         return data;
     },
     update: function (loader) {
-        apiTeste.update(
+        apiRequest.update(
             `${loader.object}/${loader.id}`,
             this.readFields(loader),
             function () {
@@ -620,7 +400,7 @@ Submit = {
     },
     register: function (loader) {
         try {
-            apiTeste.post(loader.object, this.readFields(loader), function () {
+            apiRequest.post(loader.object, this.readFields(loader), function () {
                 loader.refresh();
             });
         } catch {
@@ -629,7 +409,7 @@ Submit = {
     },
     funcao: function (loader) {
         try {
-            apiTeste.post(
+            apiRequest.post(
                 "function",
                 loader.object,
                 this.readFields(loader),
@@ -643,9 +423,10 @@ Submit = {
             throw error;
         }
     },
-    delete: function (id, loader) {
-        apiTeste.delete(loader.object + "/" + id, NaN, function () {
-            loader.refresh();
+    delete: function (loader) {
+        apiRequest.delete(loader.object + "/" + loader.id, ()=>{
+            loader.modal.hide();
+            loader.refresh()
         });
     },
 };

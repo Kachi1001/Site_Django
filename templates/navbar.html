@@ -31,19 +31,12 @@
   {%endif%}
   <script>
     function change_ambiente(ambiente) {
-      path = window.location.pathname;
-      switch (ambiente) {
-        case "producao":
-          newUrl = `tecnikaengenharia.ddns.net${path}`;
-          break;
-        case "teste":
-          newUrl = `10.0.0.139:81${path}`;
-          break;
-        case "dev":
-          newUrl = `10.0.0.211:81${path}`;
-          break;
+      ambientes = {
+        'producao': 'tecnikaengenharia.ddns.net',
+        'teste': '10.0.0.139:81',
+        'dev': '10.0.0.211:81',
       }
-      window.location.href = "http://" + newUrl;
+      window.location.href = ambientes[ambiente];
       console.error();
     }
   </script>
