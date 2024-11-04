@@ -15,14 +15,36 @@
       <span><strong>{{nome}}</strong></span>
     </button>
     <ul class="dropdown-menu dropdown-menu-end">
-        
-      <li><a class="dropdown-item" href="http://tecnikaengenharia.ddns.net/">Ambiente Produção</a></li>
-      {% if user|can:'ambiente-teste' %}<li><a class="dropdown-item" href="http://10.0.0.139:81">Ambiente Teste</a></li>{%endif%}
-      {% if user|can:'ambiente-dev' %}<li><a class="dropdown-item" href="http://10.0.0.211:81">Ambiente Desenvolvimento</a></li>{%endif%}
-      <li><hr class="dropdown-divider"></li>
+
+      <li><a class="dropdown-item" href="#" onclick="change_ambiente('producao')">Ambiente Produção</a></li>
+      {% if user|can:'ambiente-teste' %}<li><a class="dropdown-item" href="#"
+          onclick="change_ambiente('teste')">Ambiente Teste</a></li>{%endif%}
+      {% if user|can:'ambiente-dev' %}<li><a class="dropdown-item" href="#"
+          onclick="change_ambiente('dev')">Ambiente Desenvolvimento</a></li>{%endif%}
+      <li>
+        <hr class="dropdown-divider">
+      </li>
       <li><a class="dropdown-item" href="https://wa.me/555596238751" target="_blank">Ajuda</a></li>
       <li><a class="dropdown-item" href="/login">Desconectar</a></li>
     </ul>
   </div>
   {%endif%}
+  <script>
+    function change_ambiente(ambiente) {
+      path = window.location.pathname;
+      switch (ambiente) {
+        case "producao":
+          newUrl = `tecnikaengenharia.ddns.net${path}`;
+          break;
+        case "teste":
+          newUrl = `10.0.0.139:81${path}`;
+          break;
+        case "dev":
+          newUrl = `10.0.0.211:81${path}`;
+          break;
+      }
+      window.location.href = "http://" + newUrl;
+      console.error();
+    }
+  </script>
 </nav>
