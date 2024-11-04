@@ -5,6 +5,7 @@ class supervisor(AbstractUserRole):
     available_permissions = {
         'Lancamento_obra': True,
         'Lancamento_obra-consultas': True,
+        'Lancamento_obra-impressoes': True,
     }
     role_name='supervisor'
 class app_Lancamento_obra(AbstractUserRole):
@@ -28,6 +29,7 @@ class app_Depto_pessoal(AbstractUserRole):
         f'{app}-ferias': True,
         f'{app}-ponto': True,
         f'{app}-lembrete': True,
+        f'{app}-menu': True,
     }
     role_name=f'app_{app}'
 
