@@ -28,12 +28,11 @@ def teste(request):
 
 
 urlpatterns = [
-    path('', include("Home.urls")),
     path('admin/', admin.site.urls),
     path("status", status),
     path("teste", teste)
 ]
-apps = settings.INTERNAL_APP
-apps.remove('Home')
-for app in apps:
-    urlpatterns.append(path(f'{app}/', include(f'{app}.urls')))
+
+for app in settings.INTERNAL_APP:
+    url = app + '/' if app != 'Home' else ''
+    urlpatterns.append(path(f'{url}', include(f'{app}.urls')))
