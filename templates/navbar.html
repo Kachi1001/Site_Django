@@ -36,7 +36,7 @@
         'teste': '10.0.0.139:81',
         'dev': '10.0.0.211:81',
       }
-      window.location.href = ambientes[ambiente];
+      window.location.href = window.location.protocol+ '//'+ ambientes[ambiente] + window.location.pathname
       console.error();
     }
   </script>
