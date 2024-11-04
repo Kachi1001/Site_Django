@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{%block 'caminho'%}
+<li class="breadcrumb-item active" aria-current="page">Health</li>
+{%endblock%}
+{%block 'header'%}
+<h2>Painel dos aplicativos</h2>
+{%endblock%}
+
+{% block 'main' %}
+<div class="main">
+  <div class="card" style="width: 18rem;">
+    <div class="card-header">
+      <h5 class="card-title">Health</h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text">Monitoramento de site internos. Em casos de estado seja desativado ou parado, o app enviara
+        uma mensagem aos responsáveis</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Ativo: <span id='Ti:app:toggle'></span></li>
+      <li class="list-group-item">Rodando: <span id='Ti:app:run'></span></li>
+    </ul>
+    <div class="card-body">
+      <button type="button" class="btn btn-primary" onclick="touch_toggle()">Alterar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  fields = ['Ti:app:run', 'Ti:app:toggle']
+  function carregar() {
+    apiRequest.get('app').then((data) => {
+      fields.forEach((field) => {
+        const element = document.getElementById(field);
+        if (element) { // Verifica se o elemento existe
+          element.style.color = Boolean(data[field]) ? "Green" : 'Red';
+          element.textContent = Boolean(data[field]) ? "Sim" : 'Não';
+        } else {
+          console.warn(`Elemento com ID '${field}' não encontrado`);
+        }
+      })
+    })
+  }
+  function touch_toggle() {
+    apiRequest.touch('app')
+    for (var i = 0; i < 6; i++){
+      setTimeout(carregar,5000*i)
+    }
+  }
+  $(document).ready(() => {
+    carregar()
+  })
+</script>
+{% endblock %}

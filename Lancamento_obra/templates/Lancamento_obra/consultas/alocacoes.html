@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{%block 'header'%}
+<h2>Consulta de Alocações</h2>
+{%include 'consulta.html'%}
+
+    <thead>
+        <tr>
+            <th data-field="colaborador" data-sortable="true" rowspan="2">Nome</th>
+            <th data-field="obra" data-sortable="true" rowspan="2">Obra CR</th>
+            <th data-field="tecnicon" data-sortable="true" rowspan="2">Tecnicon</th>
+            <th colspan="2">Data</th>
+
+        </tr>
+        <tr>
+            <th data-field="dia_ini" data-sortable="true" data-formatter="dataFormatter" >Inicio</th>
+            <th data-field="data_fim" data-sortable="true"data-formatter="dataFormatter">Fim</th>
+
+        </tr>
+    </thead>
+</table>
+{%endblock%}
+
