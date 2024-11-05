@@ -38,7 +38,7 @@ const objFields = {
     ocupacao: ocupacao,
     ocupacao_dissidio: ocupacao,
     ocupacao_alterar: ocupacao,
-    desligamento: {
+    colaborador_desligamento: {
         text: ["id", "data", "colaborador"], //campos que pode ser preencher
         select: [], // campos selecionavel
         check: [], // campos marcaveis
@@ -53,7 +53,7 @@ var loader;
 class BaseLoader {
     constructor(object, type) {
         this.object = object; // Nome do objeto (colaborador, equipe, etc.)
-        this.type = type; // Tipo do loader (register, view, update, etc...)
+        this.type = type; // Tipo do loader (post, view, update, etc...)
         this.prefix = object + "_"; // Prefixo para os campos (modal/form)
         this.inputs = objFields[object]; // Campos associados ao objeto
         this.id = undefined; // ID de registro, se necessário
@@ -205,7 +205,7 @@ class Modal extends BaseLoader {
             $("#" + this.prefix + "submit")
                 .off()
                 .click(function () {
-                    Submit.register(loader);
+                    Submit.post(loader);
                 });
     }
     async update() {
@@ -238,7 +238,7 @@ class Modal extends BaseLoader {
                 $("#" + this.prefix + "submit")
                     .off()
                     .on("click", () => {
-                        Submit.register(this);
+                        Submit.post(this);
                     });
             });
         } catch (error) {
@@ -263,7 +263,7 @@ class Modal extends BaseLoader {
                 $("#" + this.prefix + "submit")
                     .off()
                     .on("click", () => {
-                        Submit.register(this);
+                        Submit.post(this);
                     });
         } catch (error) {
             console.error("Error ao carregar", error);
@@ -287,12 +287,12 @@ class Modal extends BaseLoader {
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
-                console.debug(loader.id);
+                console.debug(loader);
                 if (
                     prompt("Digite o ID do colaborador para confirmar!!") ==
-                    $("#m_desligamento_colaborador").val()
+                    $("#m_colaborador_desligamento_colaborador").val()
                 ) {
-                    Submit.funcao(loader).then(() => {
+                    Submit.post(loader).then(() => {
                         page.redirect("");
                     });
                 } else {
@@ -331,13 +331,13 @@ class Form extends BaseLoader {
     // Inicializa o carregador
 
     // Registro
-    register() {
+    post() {
         let loader = this;
 
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
-                Submit.register(loader);
+                Submit.post(loader);
             });
         this.inputs.select.forEach((field) =>{
             apiRequest.get(`select/${field}`).then((data)=>{
@@ -402,28 +402,13 @@ Submit = {
             }
         );
     },
-    register: function (loader) {
+    post: function (loader) {
         try {
             apiRequest.post(loader.object, this.readFields(loader), function () {
+                loader.modal.hide();
                 loader.refresh();
             });
-        } catch {
-            throw "error";
-        }
-    },
-    funcao: function (loader) {
-        try {
-            apiRequest.post(
-                "function",
-                loader.object,
-                this.readFields(loader),
-                function () {
-                    loader.modal.hide();
-                    loader.refresh();
-
-                }
-            );
-        } catch {
+        } catch (error){
             throw error;
         }
     },
