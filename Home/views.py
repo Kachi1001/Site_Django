@@ -28,3 +28,8 @@ def index(request):
 @login_required
 def teste(request):
     return render(request, 'teste.html')
+
+
+from django.http import HttpResponse
+def status(request):
+    return HttpResponse("Estamos online!!")
