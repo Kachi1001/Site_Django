@@ -19,18 +19,10 @@ from django.contrib import admin
 from django.urls import path , include
 from django.conf import settings
 
-def status(request):
-    return HttpResponse("Estamos online")
-
-from django.shortcuts import render
-def teste(request):
-    return render(request, 'teste.html')
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("status", status),
-    path("teste", teste)
+
 ]
 
 for app in settings.INTERNAL_APP:
