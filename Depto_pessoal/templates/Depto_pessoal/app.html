@@ -19,15 +19,16 @@
     <ul class="list-group list-group-flush">
       <li class="list-group-item">Ativo: <span id='Depto_pessoal:app:toggle'></span></li>
       <li class="list-group-item">Rodando: <span id='Depto_pessoal:app:run'></span></li>
+      <li class="list-group-item">Atualizado: <span id='Depto_pessoal:app:updated'></span></li>
     </ul>
     <div class="card-body">
-      <button type="button" class="btn btn-primary" onclick="touch_toggle()">Alterar</button>
+      <button type="button" class="btn btn-primary" onclick="apiRequest.touch('app')">Alterar</button>
     </div>
   </div>
 </div>
 
 <script>
-  fields = ['Depto_pessoal:app:run', 'Depto_pessoal:app:toggle']
+  fields = ['Depto_pessoal:app:run', 'Depto_pessoal:app:toggle','Depto_pessoal:app:updated']
   function carregar() {
     apiRequest.get('app').then((data) => {
       fields.forEach((field) => {
@@ -41,14 +42,9 @@
       })
     })
   }
-  function touch_toggle() {
-    apiRequest.touch('app')
-    for (var i = 0; i < 6; i++){
-      setTimeout(carregar,5000*i)
-    }
-  }
   $(document).ready(() => {
     carregar()
+    setInterval(carregar,5000)
   })
 </script>
 {% endblock %}

@@ -186,11 +186,15 @@ class Modal extends BaseLoader {
         console.log(this);
     }
 
-    register() {
-        this.populateSelect(apiRequest.get()).then(() => {
-            this.load();
+    async register() {
+        this.inputs.select.forEach(async (select) =>{
+            const data = await apiRequest.get(`select/${select}`)
+            this.populateSelect(data, select)
+        })
+            
             if (typeof this.id == "boolean" && this.id) {
-                this.populateTable(this.object).then(() => {
+                const table = await apiRequest.get(this.object)
+                this.populateTable(table).then(() => {
                     this.modal.show();
                 });
             } else {
@@ -203,7 +207,6 @@ class Modal extends BaseLoader {
                 .click(function () {
                     Submit.register(loader);
                 });
-        });
     }
     async update() {
         try {
@@ -286,7 +289,7 @@ class Modal extends BaseLoader {
             .click(function () {
                 console.debug(loader.id);
                 if (
-                    prompt("Digite o nome do colaborador para confirmar!!") ==
+                    prompt("Digite o ID do colaborador para confirmar!!") ==
                     $("#m_desligamento_colaborador").val()
                 ) {
                     Submit.funcao(loader).then(() => {
@@ -313,7 +316,8 @@ class Modal extends BaseLoader {
         }
 
     refresh() {
-        // this[this.type](); // Registra ou atualiza conforme o tipo
+        $("#table").bootstrapTable("refresh");
+
         carregarDados();
     }
 }
