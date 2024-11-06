@@ -27,22 +27,6 @@
                 <a href="{%url 'sala' 'registros'%}"><i {{icon_table}}></i> Lista de registros</a>
             </div>
         </div>
-        {% if user|can:'frota' %}
-
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#flush-collapse2" aria-expanded="false" aria-controls="flush-collapseTwo">
-                    Frotas
-                </button>
-            </h2>
-            <div id="flush-collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                <a href="{%url 'carros'%}"><i {{icon_form}}></i> Carros</a>
-
-                <a href="#" data-bs-toggle="modal" data-bs-target="#cadastrar_carro" onclick="loadModal('cadastrar_carro')"><i {{icon_modal}}></i> Cadastrar carro</a>
-            </div>
-        </div>
-        {%endif%}
 
     </div>
 </div>

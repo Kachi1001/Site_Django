@@ -68,8 +68,7 @@
     var lastestTick = null;
 
     $(document).ready(function () {
-        let today = new Date()
-        $("#data-picker").val(today.toISOString().split('T')[0])
+        $("#data-picker").val('{{hojeJS}}')
         load()
         setInterval(load, 5000)
     })
@@ -78,7 +77,7 @@
         return !isNaN(date.getTime());
     }
     function load(force) {
-            apiRequest.get("get", "latestTick", "reservasala", function (response) {
+            apiRequest.get("lastick/agenda_sala").then((response) => {
                 if (response != lastestTick || force) {
                     if (isDate($("#data-picker").val())) {
                         loadReservas('{{sala}}', $("#data-picker").val())

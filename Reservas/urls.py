@@ -5,8 +5,5 @@ urlpatterns = [
     path("", views.index,  name=views.app),
 
     path("sala/registros", views.sala_registros, name= "sala_registros"), 
-    path('sala/<str:sala>', views.sala, name='sala'),
-    
-    path("frota/carros", views.carros, name= "carros"), 
-    
+    path('sala/<str:sala>', views.sala, name='sala'),    
 ]  

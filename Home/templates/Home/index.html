@@ -6,10 +6,12 @@
   body{
     display: flex;
     align-items: center;
+    height: 90%;
   }
   @media (max-width: 800px) {
     body{
       justify-content: flex-start;
+      padding-top: 0px;
     }
   }
   .card{
@@ -18,7 +20,10 @@
   }
 </style>
 {%endblock%}
-{%block 'body'%}
+
+
+  
+{%block 'main'%}
 <div class="container text-center"id='index_body'>
     <div class="row justify-content-center">
       {% if user|can:'Lancamento_obra' %}

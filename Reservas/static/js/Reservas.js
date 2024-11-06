@@ -13,74 +13,6 @@ function reload(param) {
     // Atualizar a URL no navegador e recarregar a página
     window.location.href = `${url.pathname}?${params}`;
 }
-function loadModal(modal, parametro) {
-    if (modal == "reservar_carro") {
-        $.ajax({
-            url: urlAPI + "get", // URL da sua API no Django
-            type: "GET",
-            data: {
-                csrfmiddlewaretoken: csrftoken,
-                parametro: parametro,
-                metodo: "carro",
-            },
-            success: function (data) {
-                $("#placa").val(data.placa);
-                $("#modelo").val(data.modelo);
-                $("#marca").val(data.marca);
-
-                document.getElementById("modal-imagem").src =
-                    getMedia("carros") + data.imagem;
-            },
-            error: function (xhr) {
-                alert(xhr.responseJSON.message);
-            },
-        });
-    } else if (modal == "cadastrar_carro") {
-        if (loaded != modal) {
-            loaded = modal;
-            $("#cadastrar_carro_btn").click(function () {
-                let file = $("#arquivo")[0].files[0];
-                let filename = $("#arquivo")
-                    .val()
-                    .replace("C:\\fakepath\\", "")
-                    .split(".");
-                if (!file) {
-                    alert("Por favor, selecione um arquivo primeiro.");
-                    return;
-                }
-                let parametro = {
-                    placa: $("#cadastro_placa").val(),
-                    modelo: $("#cadastro_modelo").val(),
-                    marca: $("#cadastro_marca").val(),
-                    imagem: $("#cadastro_placa")
-                        .val()
-                        .concat(".", filename[filename.length - 1]),
-                };
-                let formData = new FormData();
-                formData.append("file", file);
-                formData.append("parametro", JSON.stringify(parametro));
-                formData.append("metodo", "carro");
-
-                $.ajax({
-                    url: urlAPI + "register",
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-
-                    success: function (response) {
-                        toasts("Success");
-                        location.reload();
-                    },
-                    error: function (error) {
-                        console.error("Erro:", error);
-                        alert("Erro ao carregar o arquivo.");
-                    },
-                });
-            });
-        }
-    }
-}
 
 const horarios = [
     "07:30",
@@ -204,24 +136,27 @@ function reserva_simples(sala) {
         load(true)
     });
 }
-function loadReservas(sala, data) {
-
-            apiRequest.get(
-                "get",
-                sala,
-                JSON.stringify({ data: data, horario: "manha" }),
-                function (response) {
-                    populateReservas(response.dados, "manha");
-                }
-            );
-            apiRequest.get(
-                "get",
-                sala,
-                JSON.stringify({ data: data, horario: "tarde" }),
-                function (response) {
-                    populateReservas(response.dados, "tarde");
-                }
-            );
+async function loadReservas(sala, data) {
+    manha = await apiRequest.get('agenda_sala',{'sala':sala,'data':data,'horario':'manha'})
+    populateReservas(manha.dados, "manha");
+    
+    tarde = await apiRequest.get('agenda_sala',{'sala':sala,'data':data,'horario':'tarde'})
+    populateReservas(tarde.dados, "tarde");
+            // apiRequest.get(
+            //     "get",
+            //     sala,
+            //     JSON.stringify({ data: data, horario: "manha" }),
+            //     function (response) {
+            //     }
+            // );
+            // apiRequest.get(
+            //     "get",
+            //     sala,
+            //     JSON.stringify({ data: data, horario: "tarde" }),
+            //     function (response) {
+            //         populateReservas(response.dados, "tarde");
+            //     }
+            // );
         }
 function populateReservas(response, horario) {
     tabela = $(`#tabela_${horario}`);

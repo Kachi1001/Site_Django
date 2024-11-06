@@ -2,38 +2,22 @@
 html{
   height: 100%;
 }
-body{  
+body{ 
   font-family: "Lato", sans-serif;
-  padding-top: 60px;
+  margin-top: var(--navbar_width);
+  margin-left: var(--side_bar_width);
+  padding: 40px;
   /* user-select: none; */
-  height: 100%;
   flex-direction: column;
   justify-content: center;
   background-color: var(--cor3);
-
+  box-sizing: border-box;
 }
 header{
   margin-bottom: 20px;
 }
 
-.submain {
-  margin-left: calc(var(--side-bar_width) + 50px);
-  /* margin-top: 25px; */
-  /* padding: 20px 25px 0px 25px; */
-  /* border-top: 1px solid lightgray; */
-}
 
-footer {
-  background-color: azure;
-  border-radius: 5px;
-  padding: 5px;
-  position: fixed;
-  margin-right: 20px;
-  display: flex;
-  justify-content: flex-end;
-  bottom: 20px;
-  right: 20px;
-}
 
 .btn-icon {
   border-radius: 10px;
@@ -57,7 +41,7 @@ footer {
   left: 0;
   top: 0;
   width: 100%;
-  height: 50px;
+  height: var(--navbar_width);
 }
 .card{
   box-shadow: 3px 3px 3px lightgray;
@@ -73,6 +57,7 @@ td{
     font-size: smaller;
 }
 :root{
+  --navbar_width: 50px;
     --cor1: #73beab;
     --cor2: #91DBFA;
     --cor3: #f1f0ee;

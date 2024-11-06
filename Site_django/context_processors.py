@@ -1,6 +1,4 @@
 # myapp/context_processors.py
-from math import exp
-from django.utils import timezone
 import time
 
 from decouple import config
@@ -10,7 +8,7 @@ api = str(config("API")) # type: ignore
 timestamp = int(time.time()),
 translate = {
     'Home': 'Inicio',
-    'Lancamento_obra': 'Lancamento obra',
+    'Lancamento_obra': 'Lançamento obra',
     'Reservas': 'Reservas',
     'Depto_pessoal': 'Departamento pessoal',
 }
@@ -20,6 +18,7 @@ def base(request):
     media = config("MEDIA_URL") + app + '/'
     
     return {
+        # 'ambiente': config('AMBIENTE'),
         'nome': request.user.username,
         'api': config("API"),
         'media': media,

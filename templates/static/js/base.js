@@ -84,25 +84,6 @@ const apiRequest = {
             });
     },
 
-    // update: function (
-    //     endpoint,
-    //     parametro,
-    //     successCallback,
-    //     errorCallback
-    // ) {
-    //     return $.ajax({
-    //         url: this.createURL(endpoint),
-    //         method: "PATCH",
-    //         data: JSON.stringify(parametro),
-    //         success: (response) => {
-    //             this.success(response, successCallback);
-    //         },
-    //         error: (error) => {
-    //             this.error(error, errorCallback);
-    //         },
-    //     });
-    // },
-
     upload: function (endpoint, formData, successCallback, errorCallback) {
         $.ajax({
             url: this.createURL(endpoint),
@@ -119,6 +100,7 @@ const apiRequest = {
             },
         });
     },
+
     delete: function (endpoint, successCallback, errorCallback) {
         if (confirm("Tem certeza que deseja apagar esse registro?")) {
             fetch(this.createURL(endpoint), {
@@ -152,6 +134,7 @@ const apiRequest = {
             });
         }
     },
+
     touch: function (endpoint, successCallback, errorCallback) {
         fetch(this.createURL(endpoint), {
             method: "POST",
@@ -175,19 +158,6 @@ const apiRequest = {
                 this.error(error, errorCallback);
             });
     },
-
-    // touch: function (endpoint, successCallback, errorCallback) {
-    //     $.ajax({
-    //         url: this.createURL(endpoint),
-    //         method: "POST",
-    //         success: (response) => {
-    //             this.success(response, successCallback);
-    //         },
-    //         error: (error) => {
-    //             this.error(error, errorCallback);
-    //         },
-    //     });
-    // },
 
     success: function (response, successCallback) {
         toasts("success", response);
@@ -276,8 +246,7 @@ const page = {
 
 const modal = {
     open: function (name) {
-        let myModal = document.getElementById(name);
-        let modal = new bootstrap.Modal(myModal);
+        let modal = new bootstrap.Modal(document.getElementById(name));
         modal.show();
     },
 };

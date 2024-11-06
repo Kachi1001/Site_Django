@@ -15,7 +15,7 @@
 
 {%endblock%}
 
-{%block 'main'%}
+{%block 'header'%}
     <h2>Salas disponíveis</h2>
     <hr>
     <div class="row justify-content-around">
@@ -61,26 +61,4 @@
         </div>
     </div>
 
-{%endblock%}
-
-{%block 'submain'%}
-
-{% if user|can:'frota' %}
-<div class="submain">
-    <h2>Frotas disponíveis</h2>
-    <hr>
-    <div class="row justify-content-start ">
-      <div class="col-auto">
-        <a href="{%url 'carros'%}" style="text-decoration: none;">
-          <div class="card" style="width: 18rem;">
-            <div class="card-header">
-              <h5 class="card-title" >Carros</h5>
-            </div>
-            <img src="{% static 'image/reservas/carro.png' %}" class="card-img-bottom" alt="...">
-          </div>
-        </a>
-      </div>
-    </div>
-</div>
-{%endif%}
 {%endblock%}

@@ -1,4 +1,6 @@
 {% load static %}
+{% load permission_tags %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -9,13 +11,13 @@
     <meta property="og:title" content="{{app_name}}">
     <meta property="og:description" content="Ferramenta interna da Tecnika Engenharia, aplicativo privado">
     <meta property="og:image" content="{% static 'favicon.ico' %}">
-  
+
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
     {%include 'static/imports/jquery.html'%} <!-- Jquery -->
     {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
-    <link rel="stylesheet" href= "{% static 'css/base.css' %}">
-    
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
     <script>
         const api = '{{api}}'
         const media = '{{media}}'
@@ -25,14 +27,13 @@
         const icon = "/static/icons";
     </script> <!--Routers de Tag -->
     <script src="{%static 'js/base.js'%}"></script>
-    
+
     {%if app != 'Home'%}
-    <link rel="stylesheet" href= "{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
     {%endif%}
-    
+
     <link rel="stylesheet" href="{% static 'css/'|add:app|add:'.css' %}?v={{ timestamp }}">
 </head>
-{% block "script" %}{% endblock %}
 {% block 'style' %}{% endblock %}
 
 
@@ -46,15 +47,21 @@
     <header>
         {%block 'header'%}{%endblock%}
     </header>
-    
+    <hr>
     <main>
         {% block 'main' %}{% endblock %}
     </main>
     <hr>
-    {%block 'submain'%}{%endblock%}
-    {%include app|add:'/modals.html'%}
+    <footer>
+        {%block 'footer'%}{%endblock%}
+    </footer>
 </body>
+
+
+{% block "script" %}{% endblock %}
 <script src="{% static 'js/'|add:app|add:'.js' %}?v={{ timestamp }}"></script>
+
+{%include app|add:'/modals.html'%}
 {%include 'toasts.html'%}
 
 </html>

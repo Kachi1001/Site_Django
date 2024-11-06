@@ -1,14 +1,14 @@
 {% load permission_tags %}
 {%load static%}
 <div class="sidenav">
-    <h1 class="nome_app">Lançamento obra</h1>
+    <a href="/{{app}}/" class="nome_app">{{app_name}}</a>
     <div class="accordion accordion-flush" id="accordion">
         {% if user|can:'Lancamento_obra-cadastros' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#menu-cadastro" aria-expanded="false">
-                    Cadastros
+                    Cadastros   
                 </button>
             </h2>
             <div id="menu-cadastro" class="accordion-collapse collapse" data-bs-parent="#accordion">
