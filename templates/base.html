@@ -13,11 +13,11 @@
     <meta property="og:image" content="{% static 'favicon.ico' %}">
 
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-
+    
     {%include 'static/imports/jquery.html'%} <!-- Jquery -->
     {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-
+    
     <script>
         const api = '{{api}}'
         const media = '{{media}}'
@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="{% static 'css/'|add:app|add:'.css' %}?v={{ timestamp }}">
 </head>
 {% block 'style' %}{% endblock %}
+{% block "scripts" %}{% endblock %}
 
 
 
@@ -47,21 +48,18 @@
     <header>
         {%block 'header'%}{%endblock%}
     </header>
-    <hr>
     <main>
         {% block 'main' %}{% endblock %}
     </main>
-    <hr>
     <footer>
         {%block 'footer'%}{%endblock%}
     </footer>
+    
+    
+    <script src="{% static 'js/'|add:app|add:'.js' %}?v={{ timestamp }}"></script>
+    
+    {%include app|add:'/modals.html'%}
+    {%include 'toasts.html'%}
 </body>
-
-
-{% block "script" %}{% endblock %}
-<script src="{% static 'js/'|add:app|add:'.js' %}?v={{ timestamp }}"></script>
-
-{%include app|add:'/modals.html'%}
-{%include 'toasts.html'%}
 
 </html>

@@ -1,4 +1,4 @@
-const urlAPI = api + '/' + app +'/'
+const urlAPI = api + "/" + app + "/";
 apiRequest.app = "reservas";
 var loaded;
 
@@ -63,51 +63,61 @@ function Reserva_rapida() {
         }
     });
     $("#reserva_rapida-sala").change(function () {
-        document.getElementById("reserva_rapida-img").src = `/static/image/Reservas/${$(
-            "#reserva_rapida-sala"
-        ).val()}.jpg`;
+        document.getElementById(
+            "reserva_rapida-img"
+        ).src = `/static/image/Reservas/${$("#reserva_rapida-sala").val()}.jpg`;
     });
-    $("#reserva_rapida-submit").click(function () {
-        const responsavel = $("#reserva_rapida-responsavel").val()
-        const descricao = $("#reserva_rapida-descricao").val()
-        const data = $("#reserva_rapida-data").val()
-        if (responsavel == '' || data == '') {
-            toasts('warning',{'method':'Reserva','message':'Falta alguma informação revise!!'})
-            return
-        }
-        let reservas = [];
-        let inicio = parseInt($("#reserva_rapida-sel1").val());
-        let fim = parseInt($("#reserva_rapida-sel2").val());
-        for (i = inicio; i < fim; i++) {
-            reservas.push({
-                hora: horarios[i],
-                responsavel: responsavel,
-                descricao: descricao,
+    $("#reserva_rapida-submit")
+        .off()
+        .click(function () {
+            const responsavel = $("#reserva_rapida-responsavel").val();
+            const descricao = $("#reserva_rapida-descricao").val();
+            const data = $("#reserva_rapida-data").val();
+            if (responsavel == "" || data == "") {
+                toasts("warning", {
+                    method: "Reserva",
+                    message: "Falta alguma informação revise!!",
+                });
+                return;
+            }
+            let reservas = [];
+            let inicio = parseInt($("#reserva_rapida-sel1").val());
+            let fim = parseInt($("#reserva_rapida-sel2").val());
+            for (i = inicio; i < fim; i++) {
+                reservas.push({
+                    hora: horarios[i],
+                    responsavel: responsavel,
+                    descricao: descricao,
+                    data: $("#reserva_rapida-data").val(),
+                    sala: $("#reserva_rapida-sala").val(),
+                });
+            }
+            apiRequest.post("agendasala", { reservas: reservas }, function () {
+                load(false);
             });
-        }
-        parametro = {
-            reservas: JSON.stringify(reservas),
-            data: $("#reserva_rapida-data").val(),
-            sala: $("#reserva_rapida-sala").val(),
-        };
-        apiRequest.post("register", "reservar_sala", parametro, function(){
-            load(false)
         });
-    });
 }
 
 function reserva_simples(sala) {
     let reservas = [];
     let resp = null;
     let desc = "";
-    for (i = 0; i < horarios.length; i++) {
-        hora = horarios[i].replace(":", "\\:");
+    var loop = horarios;
+    loop.pop()
+    loop.forEach((hora) => {
+        hora = hora.replace(":", "\\:")
+        console.log($("#responsavel" + hora).val());
         if (
-            $("#check" + hora).is(":checked") &&
-            !$("#check" + hora).is(":disabled")
-        ) {            
+            !$("#check" + hora).is(":disabled") &&
+            !$("#responsavel" + hora).is(":disabled") &&
+            ($("#check" + hora).is(":checked") ||
+                $("#responsavel" + hora).val() != "")
+        ) {
             if (resp == null && $("#responsavel" + hora).val() == "") {
-                toasts('danger',{'method':'Reserva Sala','message':'O registro precisa ter um responsável!'})
+                toasts("danger", {
+                    method: "Reserva Sala",
+                    message: "O registro precisa ter um responsável!",
+                });
                 return;
             } else if ($("#responsavel" + hora).val() != "") {
                 resp = $("#responsavel" + hora).val();
@@ -119,45 +129,54 @@ function reserva_simples(sala) {
                 hora: hora.replace("\\:", ":"),
                 responsavel: resp,
                 descricao: desc,
+                sala: sala,
+                data: $("#data-picker").val(),
             });
         }
-    }
-    parametro = {
-        sala: sala,
-        data: $("#data-picker").val(),
-        reservas: JSON.stringify(reservas),
-    };
+    });
+
     if (reservas.length == 0) {
-        toasts('warning',{'method':'Reserva Sala','message':'Nenhuma reserva salva!!'})
+        toasts("warning", {
+            method: "Reserva Sala",
+            message: "Nenhuma reserva salva!!",
+        });
         return;
     }
     // registarAJAX(parametro, 'reservar_sala');
-    apiRequest.post("register", "reservar_sala", parametro, function(){
-        load(true)
+    apiRequest.post("agendasala", { reservas: reservas }, function () {
+        load(true);
     });
 }
 async function loadReservas(sala, data) {
-    manha = await apiRequest.get('agenda_sala',{'sala':sala,'data':data,'horario':'manha'})
+    manha = await apiRequest.get("agendasala_quadro", {
+        sala: sala,
+        data: data,
+        horario: "manha",
+    });
     populateReservas(manha.dados, "manha");
-    
-    tarde = await apiRequest.get('agenda_sala',{'sala':sala,'data':data,'horario':'tarde'})
+
+    tarde = await apiRequest.get("agendasala_quadro", {
+        sala: sala,
+        data: data,
+        horario: "tarde",
+    });
     populateReservas(tarde.dados, "tarde");
-            // apiRequest.get(
-            //     "get",
-            //     sala,
-            //     JSON.stringify({ data: data, horario: "manha" }),
-            //     function (response) {
-            //     }
-            // );
-            // apiRequest.get(
-            //     "get",
-            //     sala,
-            //     JSON.stringify({ data: data, horario: "tarde" }),
-            //     function (response) {
-            //         populateReservas(response.dados, "tarde");
-            //     }
-            // );
-        }
+    // apiRequest.get(
+    //     "get",
+    //     sala,
+    //     JSON.stringify({ data: data, horario: "manha" }),
+    //     function (response) {
+    //     }
+    // );
+    // apiRequest.get(
+    //     "get",
+    //     sala,
+    //     JSON.stringify({ data: data, horario: "tarde" }),
+    //     function (response) {
+    //         populateReservas(response.dados, "tarde");
+    //     }
+    // );
+}
 function populateReservas(response, horario) {
     tabela = $(`#tabela_${horario}`);
     tabela.empty();
@@ -173,7 +192,10 @@ function populateReservas(response, horario) {
                 `</th>` +
                 `<th scope="row">` +
                 `<div class="input-group input-group-sm">` +
-                `<input type="text" class="form-control" id="responsavel${x.hora}" value="${x.responsavel || ""}" placeholder="Responsável" ${x.reservado
+                `<input type="text" class="form-control" id="responsavel${
+                    x.hora
+                }" value="${x.responsavel || ""}" placeholder="Responsável" ${
+                    x.reservado
                 }>` +
                 `</div>` +
                 `</th>` +

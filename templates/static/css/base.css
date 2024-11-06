@@ -6,7 +6,7 @@ body{
   font-family: "Lato", sans-serif;
   margin-top: var(--navbar_width);
   margin-left: var(--side_bar_width);
-  padding: 40px;
+  padding: 20px 40px 0px 40px;
   /* user-select: none; */
   flex-direction: column;
   justify-content: center;
@@ -51,6 +51,7 @@ h2{
 }
 td{
     font-size: 10px;
+    padding: 1px
 }
 .exibir-ocultar{
     text-align: end;
