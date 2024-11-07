@@ -582,6 +582,53 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="m_feriado" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Lançamento de feriado</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_feriado_dia" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DESCRIÇÃO:</label>
+                                <input type="text" class="form-control" id="m_feriado_descricao" disabled>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <span class="input-group-text">RECORRENTE:</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_feriado_recorrente">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success" id="m_feriado_submit">Lançar</button>
+                        <div class="modal_list">
+                            <table class="table table-hover table-bordered table-striped" id="m_funcao_table">
+                                <thead>
+                                    <tr>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
     <script>
 
         function abrirHistorico(id) {

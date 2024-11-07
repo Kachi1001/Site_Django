@@ -8,35 +8,54 @@
   {%else%}
   <strong class="ps-2">Aplicativo privado</strong>
   {%endif%}
-  {%if user.is_authenticated %}
-  <div class="dropdown-center me-1">
-    <button class="navbar-toggler" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <img src="{% static 'icons/person-circle.svg'%}" alt="" class="user-icon">
-      <span><strong>{{nome}}</strong></span>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end">
+    <div class="row flex-nowrap" id="navbar-left">
+     
 
-      <li><a class="dropdown-item" href="#" onclick="change_ambiente('producao')">Ambiente Produção</a></li>
-      {% if user|can:'ambiente-teste' %}<li><a class="dropdown-item" href="#"
+      {%if user.is_authenticated %}
+      <div class="dropdown-center me-1">
+      <button class="navbar-toggler" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="{% static 'icons/person-circle.svg'%}" alt="" class="user-icon">
+        <span><strong>{{nome}}</strong></span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        
+        <li><a class="dropdown-item" href="#" onclick="change_ambiente('producao')">Ambiente Produção</a></li>
+        {% if user|can:'ambiente-teste' %}<li><a class="dropdown-item" href="#"
           onclick="change_ambiente('teste')">Ambiente Teste</a></li>{%endif%}
-      {% if user|can:'ambiente-dev' %}<li><a class="dropdown-item" href="#"
-          onclick="change_ambiente('dev')">Ambiente Desenvolvimento</a></li>{%endif%}
-      <li>
-        <hr class="dropdown-divider">
-      </li>
-      <li><a class="dropdown-item" href="https://wa.me/555596238751" target="_blank">Ajuda</a></li>
-      <li><a class="dropdown-item" href="/login">Desconectar</a></li>
-    </ul>
+          {% if user|can:'ambiente-dev' %}<li><a class="dropdown-item" href="#" onclick="change_ambiente('dev')">Ambiente
+            Desenvolvimento</a></li>{%endif%}
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" href="https://wa.me/555596238751" target="_blank">Ajuda</a></li>
+        <li><a class="dropdown-item" href="/login">Desconectar</a></li>
+      </ul>
+    </div>
+    {%endif%}
   </div>
-  {%endif%}
   <script>
+    $(document).ready(() => {
+      console.log(window.location.host)
+      switch (window.location.host) {
+        case '10.0.0.139:81':
+        $('#navbar-left').prepend(
+          '<div class="btn-icon" style="background-color: yellow;"><i class="bi bi-question-octagon-fill" title="Ambiente de teste"></i></div>'
+        )
+          break;
+        case '10.0.0.211:81':
+        $('#navbar-left').prepend(
+          '<div class="btn-icon" style="background-color: red;"><i class="bi bi-question-octagon-fill" title="Ambiente de desenvolvimento"></i></div>'
+        )
+          break;
+      }
+    })
     function change_ambiente(ambiente) {
       ambientes = {
         'producao': 'tecnikaengenharia.ddns.net',
         'teste': '10.0.0.139:81',
         'dev': '10.0.0.211:81',
       }
-      window.location.href = window.location.protocol+ '//'+ ambientes[ambiente] + window.location.pathname
+      window.location.href = window.location.protocol + '//' + ambientes[ambiente] + window.location.pathname
       console.error();
     }
   </script>

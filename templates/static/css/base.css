@@ -21,11 +21,14 @@ header{
 
 .btn-icon {
   border-radius: 10px;
-  padding: 4px;
+  /* padding: 4px; */
   width: 25px;
   display: flex;
-  height: 25px;
+  /* height: 25px; */
   margin: 2px;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
 }
 
 .btn-icon:hover {
