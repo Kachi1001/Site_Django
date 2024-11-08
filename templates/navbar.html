@@ -8,21 +8,19 @@
   {%else%}
   <strong class="ps-2">Aplicativo privado</strong>
   {%endif%}
-    <div class="row flex-nowrap" id="navbar-left">
-     
-
-      {%if user.is_authenticated %}
-      <div class="dropdown-center me-1">
+  <div class="row align-items-center" id="navbar-left">
+    {%if user.is_authenticated %}
+    <div class="col-auto dropdown me-3 pe-0">
       <button class="navbar-toggler" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         <img src="{% static 'icons/person-circle.svg'%}" alt="" class="user-icon">
         <span><strong>{{nome}}</strong></span>
       </button>
+
       <ul class="dropdown-menu dropdown-menu-end">
-        
         <li><a class="dropdown-item" href="#" onclick="change_ambiente('producao')">Ambiente Produção</a></li>
         {% if user|can:'ambiente-teste' %}<li><a class="dropdown-item" href="#"
-          onclick="change_ambiente('teste')">Ambiente Teste</a></li>{%endif%}
-          {% if user|can:'ambiente-dev' %}<li><a class="dropdown-item" href="#" onclick="change_ambiente('dev')">Ambiente
+            onclick="change_ambiente('teste')">Ambiente Teste</a></li>{%endif%}
+        {% if user|can:'ambiente-dev' %}<li><a class="dropdown-item" href="#" onclick="change_ambiente('dev')">Ambiente
             Desenvolvimento</a></li>{%endif%}
         <li>
           <hr class="dropdown-divider">
@@ -38,14 +36,14 @@
       console.log(window.location.host)
       switch (window.location.host) {
         case '10.0.0.139:81':
-        $('#navbar-left').prepend(
-          '<div class="btn-icon" style="background-color: yellow;"><i class="bi bi-question-octagon-fill" title="Ambiente de teste"></i></div>'
-        )
+          $('#navbar-left').prepend(
+            '<div class="col btn-icon" style="background-color: yellow;"><i class="bi bi-question-octagon-fill" title="Ambiente de teste"></i></div>'
+          )
           break;
         case '10.0.0.211:81':
-        $('#navbar-left').prepend(
-          '<div class="btn-icon" style="background-color: red;"><i class="bi bi-question-octagon-fill" title="Ambiente de desenvolvimento"></i></div>'
-        )
+          $('#navbar-left').prepend(
+            '<div class="col-auto btn-icon" style="background-color: red;"><i class="bi bi-question-octagon-fill" title="Ambiente de desenvolvimento"></i></div>'
+          )
           break;
       }
     })

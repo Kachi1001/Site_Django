@@ -1,8 +1,8 @@
 const ocupacao = {
-text: ["id", "data_inicio", "data_fim", "remuneracao"], //campos que pode ser preencher
-select: ["colaborador", "funcao"], // campos selecionavel
-check: ["continuo"], // campos marcaveis
-}
+    text: ["id", "data_inicio", "data_fim", "remuneracao"], //campos que pode ser preencher
+    select: ["colaborador", "funcao"], // campos selecionavel
+    check: ["continuo"], // campos marcaveis
+};
 
 const objFields = {
     colaborador: {
@@ -22,13 +22,13 @@ const objFields = {
     },
     feriasprocessadas: {
         text: ["id", "dias_processados", "data_inicio"], //campos que pode ser preencher
-        select: ["colaborador","periodo_aquisitivo"], // campos selecionavel
+        select: ["colaborador", "periodo_aquisitivo"], // campos selecionavel
         check: ["consumido"], // campos marcaveis
     },
     feriasutilizadas: {
         text: ["id", "dias_utilizados", "data_inicio"], //campos que pode ser preencher
-        select: [ "colaborador", "periodo_aquisitivo"], // campos selecionavel
-        check: ["antecipacao_periodo","consumido"], // campos marcaveis
+        select: ["colaborador", "periodo_aquisitivo"], // campos selecionavel
+        check: ["antecipacao_periodo", "consumido"], // campos marcaveis
     },
     periodo_aquisitivo: {
         text: ["id", "colaborador", "adquirido_em", "periodo"], //campos que pode ser preencher
@@ -61,7 +61,7 @@ class BaseLoader {
     }
     open(id = undefined) {
         this.id = id;
-
+        console.log(this)
         this[this.type](); // Registra ou atualiza conforme o tipo
     }
     async populateSelect(data = [], field = "") {
@@ -153,7 +153,7 @@ class BaseLoader {
                         removeButton.addEventListener("click", () => {
                             Submit.delete(obj.id, loader);
                         });
-                    } else if (this.object != 'historico_periodoaquisitivo'){
+                    } else if (this.object != "historico_periodoaquisitivo") {
                         removeButton.src = "/static/icons/pencil-fill.svg";
                         removeButton.classList.add("btn-icon", "bg-primary");
 
@@ -187,26 +187,26 @@ class Modal extends BaseLoader {
     }
 
     async register() {
-        this.inputs.select.forEach(async (select) =>{
-            const data = await apiRequest.get(`select/${select}`)
-            this.populateSelect(data, select)
-        })
-            
-            if (typeof this.id == "boolean" && this.id) {
-                const table = await apiRequest.get(this.object)
-                this.populateTable(table).then(() => {
-                    this.modal.show();
-                });
-            } else {
-                this.modal.show();
-            }
+        this.inputs.select.forEach(async (select) => {
+            const data = await apiRequest.get(`select/${select}`);
+            this.populateSelect(data, select);
+        });
 
-            let loader = this;
-            $("#" + this.prefix + "submit")
-                .off()
-                .click(function () {
-                    Submit.post(loader);
-                });
+        if (typeof this.id == "boolean" && this.id) {
+            const table = await apiRequest.get(this.object);
+            this.populateTable(table).then(() => {
+                this.modal.show();
+            });
+        } else {
+            this.modal.show();
+        }
+
+        let loader = this;
+        $("#" + this.prefix + "submit")
+            .off()
+            .click(function () {
+                Submit.post(loader);
+            });
     }
     async update() {
         try {
@@ -232,7 +232,7 @@ class Modal extends BaseLoader {
 
     async lanc() {
         try {
-            const data = await apiRequest.get(this.object, {'id':this.id});
+            const data = await apiRequest.get(this.object, { id: this.id });
             this.populateData(data).then(() => {
                 this.modal.show();
                 $("#" + this.prefix + "submit")
@@ -248,27 +248,32 @@ class Modal extends BaseLoader {
 
     async processo() {
         try {
-                apiRequest.get('periodo_aquisitivo', {'colaborador':this.id.colaborador}).then((data)=>{
-                    this.populateSelect(data, 'periodo_aquisitivo').then(()=>{
-                        $("#" + this.prefix + 'periodo_aquisitivo').val(this.id.periodo_aquisitivo);
-                    })
-                })
-                apiRequest.get('select/colaborador').then((data)=>{
-                    this.populateSelect(data, 'colaborador').then(()=>{
-                        $("#" + this.prefix + 'colaborador').val(this.id.colaborador);
-                    })  
-                })
+            apiRequest
+                .get("periodo_aquisitivo", { colaborador: this.id.colaborador })
+                .then((data) => {
+                    this.populateSelect(data, "periodo_aquisitivo").then(() => {
+                        $("#" + this.prefix + "periodo_aquisitivo").val(
+                            this.id.periodo_aquisitivo
+                        );
+                    });
+                });
+            apiRequest.get("select/colaborador").then((data) => {
+                this.populateSelect(data, "colaborador").then(() => {
+                    $("#" + this.prefix + "colaborador").val(
+                        this.id.colaborador
+                    );
+                });
+            });
             this.modal.show();
 
-                $("#" + this.prefix + "submit")
-                    .off()
-                    .on("click", () => {
-                        Submit.post(this);
-                    });
+            $("#" + this.prefix + "submit")
+                .off()
+                .on("click", () => {
+                    Submit.post(this);
+                });
         } catch (error) {
             console.error("Error ao carregar", error);
         }
-
     }
 
     load() {
@@ -305,15 +310,17 @@ class Modal extends BaseLoader {
     }
 
     async table() {
-            try {
-                const data = await apiRequest.get(this.object.split('-')[1], {'colaborador': this.id});
-                this.populateTable(data).then(() => {
-                    this.modal.show();
-                });
-            } catch (error) {
-                console.error("Error ao carregar", error);
-            }
+        try {
+            const data = await apiRequest.get(this.object.split("-")[1], {
+                colaborador: this.id,
+            });
+            this.populateTable(data).then(() => {
+                this.modal.show();
+            });
+        } catch (error) {
+            console.error("Error ao carregar", error);
         }
+    }
 
     refresh() {
         $("#table").bootstrapTable("refresh");
@@ -331,7 +338,7 @@ class Form extends BaseLoader {
     // Inicializa o carregador
 
     // Registro
-    post() {
+    register() {
         let loader = this;
 
         $("#" + this.prefix + "submit")
@@ -339,11 +346,11 @@ class Form extends BaseLoader {
             .click(function () {
                 Submit.post(loader);
             });
-        this.inputs.select.forEach((field) =>{
-            apiRequest.get(`select/${field}`).then((data)=>{
-                this.populateSelect(data,field);
-            })
-        })
+        this.inputs.select.forEach((field) => {
+            apiRequest.get(`select/${field}`).then((data) => {
+                this.populateSelect(data, field);
+            });
+        });
     }
 
     update() {
@@ -383,7 +390,7 @@ Submit = {
         fields.forEach((field) => {
             val = $("#" + loader.prefix + field).val();
 
-                data[field] = val || null;
+            data[field] = val || null;
         });
         inputs.check.forEach((check) => {
             data[check] = $("#" + loader.prefix + check).prop("checked");
@@ -398,24 +405,27 @@ Submit = {
             function () {
                 loader.modal.hide();
                 loader.refresh();
-
             }
         );
     },
     post: function (loader) {
         try {
-            apiRequest.post(loader.object, this.readFields(loader), function () {
-                loader.modal.hide();
-                loader.refresh();
-            });
-        } catch (error){
+            apiRequest.post(
+                loader.object,
+                this.readFields(loader),
+                function () {
+                    loader.modal.hide();
+                    loader.refresh();
+                }
+            );
+        } catch (error) {
             throw error;
         }
     },
     delete: function (loader) {
-        apiRequest.delete(loader.object + "/" + loader.id, ()=>{
+        apiRequest.delete(loader.object + "/" + loader.id, () => {
             loader.modal.hide();
-            loader.refresh()
+            loader.refresh();
         });
     },
 };

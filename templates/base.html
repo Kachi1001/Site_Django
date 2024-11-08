@@ -34,8 +34,11 @@
 
     <link rel="stylesheet" href="{% static 'css/'|add:app|add:'.css' %}?v={{ timestamp }}">
 </head>
+
+{% block "script" %}{% endblock %}
+
 {% block 'style' %}{% endblock %}
-{% block "scripts" %}{% endblock %}
+
 
 
 
