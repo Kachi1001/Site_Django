@@ -9,7 +9,6 @@
   <strong class="ps-2">Aplicativo privado</strong>
   {%endif%}
   <div class="row align-items-center" id="navbar-left">
-    {%if user.is_authenticated %}
     <div class="col-auto dropdown me-3 pe-0">
       <button class="navbar-toggler" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         <img src="{% static 'icons/person-circle.svg'%}" alt="" class="user-icon">
@@ -29,7 +28,6 @@
         <li><a class="dropdown-item" href="/login">Desconectar</a></li>
       </ul>
     </div>
-    {%endif%}
   </div>
   <script>
     $(document).ready(() => {
