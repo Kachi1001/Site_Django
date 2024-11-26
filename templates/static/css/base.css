@@ -25,6 +25,7 @@ body{
   justify-content: center;
   align-content: center;
   flex-wrap: wrap;
+  font-size: medium;
 }
 
 .btn-icon:hover {

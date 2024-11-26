@@ -11,7 +11,7 @@
         <h5 class="mb-0"><small>Cadastro</small></h5>
     </div>
     <div class="col-auto"><button type="button" class="btn btn-primary btn-sm" id="btn-update">Editar</button></div>
-    <div class="col-auto"><button type="button" class="btn btn-danger btn-sm" id="btn-demissao">Demitir</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-danger btn-sm" id="btn-demissao">Desligamento</button></div>
     <hr class="mt-2">
 </div>
 
@@ -76,7 +76,7 @@
         <h5 class="mb-0"><small>Função atual</small></h5>
     </div>
     <div class="col-auto"><button type="button" class="btn btn-success btn-sm"
-            onclick="abrirLancamento('ocupacao_alterar')">Alterar</button></div>
+            onclick="abrirLancamento('ocupacao_alterar')">Alterar cargo</button></div>
     <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
             onclick="abrirLancamento('ocupacao_dissidio')">Dissídio</button></div>
     <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
@@ -84,7 +84,7 @@
     <hr class="mt-2">
 </div>
 <div class="row">
-    <div class="col-auto d-none">
+    <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">ID:</label>
             <input type="text" class="form-control form-control-sm" id="f_ocupacao_id">
@@ -261,7 +261,7 @@
     })
 
     $('#btn-demissao').click(function () {
-        let obj = new Modal('colaborador_desligamento', 'desligamento')
+        let obj = new Modal('colaborador', 'desligamento')
         obj.open([{
             'key': 'colaborador',
             'value': $("#f_colaborador_id").val()
@@ -276,6 +276,3 @@
     })
 </script>
 {% endblock %}
-
-{%block 'submain'%}
-{%endblock%}

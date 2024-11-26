@@ -1,3 +1,13 @@
+const True = true;
+const False = false;
+const date ={
+    adicionarZero: function (value) {
+        if (value <= 9)
+            return "0" + value;
+        else
+            return value;
+    }
+}
 const apiRequest = {
     baseUrl: api,
     createURL: function (endpoint) {
@@ -42,7 +52,7 @@ const apiRequest = {
             });
     },
     post: function (endpoint, parametro, successCallback, errorCallback) {
-        fetch(this.createURL(endpoint), {
+        return fetch(this.createURL(endpoint), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -83,7 +93,6 @@ const apiRequest = {
                 this.error(error, errorCallback);
             });
     },
-
     upload: function (endpoint, formData, successCallback, errorCallback) {
         $.ajax({
             url: this.createURL(endpoint),
@@ -96,7 +105,21 @@ const apiRequest = {
                 this.success(response, successCallback);
             },
             error: (error) => {
-                this.error(error, errorCallback);
+                error = error.responseJSON
+                Object.keys(error).forEach((key) => {
+                    toasts("danger", {
+                        method: "Registro",
+                        message: `[${key.toLocaleUpperCase()}] ${
+                            error[key]
+                        }`,
+                    });
+                });
+                // Verifica se o callback de erro foi passado e é uma função
+                if (typeof errorCallback === "function") {
+                    errorCallback(error);
+                }
+                // Chama o toast de erro
+                console.error(error);
             },
         });
     },
@@ -105,9 +128,6 @@ const apiRequest = {
         if (confirm("Tem certeza que deseja apagar esse registro?")) {
             fetch(this.createURL(endpoint), {
                 method: "DELETE",
-                // headers: {
-                //     "Content-Type": "application/json",
-                // },
             })
                 .then((response) => {
                     if (!response.ok) {
@@ -239,14 +259,18 @@ const page = {
 
         return values[param];
     },
+    refresh: function () {
+        location.reload();
+    },
 
-    
     // Exemplo de uso:
 };
 
-const modal = {
-    open: function (name) {
-        let modal = new bootstrap.Modal(document.getElementById(name));
-        modal.show();
-    },
-};
+// const modal = {
+//     open: function (name) {
+//         let modal = new bootstrap.Modal(document.getElementById(name));
+//         modal.show();
+//     },
+// };
+
+const populate = {};

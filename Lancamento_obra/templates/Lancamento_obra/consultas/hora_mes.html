@@ -18,8 +18,10 @@
 </thead>
 </table>
 <script>
-$(document).ready(function(){
-    atualizar_tabelas()
-});
+    function load () {
+        apiRequest.post('exec/atualizar_tabelas').then(()=>{
+            $("#table").bootstrapTable("refresh");
+        })
+    }
 </script>
 {%endblock%}

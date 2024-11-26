@@ -1,62 +1,3 @@
-function toggleDiaria() {
-    diaria = $("#".concat(objLoaded.prefix, "diaria"));
-    if ($("#".concat(objLoaded.prefix, "contrato")).val() == "Terceiro") {
-        diaria.attr("disabled", false);
-    } else {
-        diaria.attr("disabled", true);
-        diaria.val("");
-    }
-}
-
-function deleteData(id) {
-    apiRequest.delete('deletar',objLoaded.name,id,function(){$("#table").bootstrapTable('refresh')})
-}
-// Preenche as variaveis de dados de objetos do banco de dados
-var objLoaded = { method: undefined, name: undefined, prefix: undefined,
-    field: function(id){
-        return $(`#${prefix}_${id}`);
-    }
-,};
-var columns = {
-    inputs: undefined,
-    checks: undefined,
-    obj: undefined,
-    select: undefined,
-    
-};
-var modalLoad;
-function changeAtividade() {
-    let obra = $("#" + objLoaded.prefix + "obra_id").val();
-    const campos1 = [
-        "horaini3",
-        "horafim3",
-        "diaseguinte",
-        "atividade_id",
-    ];
-    const campos2 = ["supervisor_id", "motivo"];
-    if (obra > 1 && obra < 5) {
-        desativado = true;
-    } else {
-        desativado = false;
-    }
-    for (let X in campos1) {
-        $("#" + objLoaded.prefix + campos1[X]).attr("disabled", desativado);
-    }
-    for (let X in campos2) {
-        $("#" + objLoaded.prefix + campos2[X]).attr("disabled", !desativado);
-    }
-}
-function changeObra() {
-    const att = ['ATESTADO', 'DISPENSA', 'FALTA', 'FOLGA', 'FÉRIAS', 'TREINAMENTO', 'ATIVIDADE OBRA']
-
-    let obra = $("#" + objLoaded.prefix + "obra_id").val();
-    if (obra >= 7) {
-        $("#" + objLoaded.prefix + "atividade_id").val(att[6]);
-    } else {
-        $("#" + objLoaded.prefix + "atividade_id").val(att[obra - 1]);
-    }
-    changeAtividade();
-}
 function removeColumns(value) {
     if (value in columns.inputs) {
         columns.inputs.slice(columns.inputs.indexOf(value), 1);
@@ -66,206 +7,268 @@ function removeColumns(value) {
         columns.select.slice(columns.select.indexOf(value), 1);
     }
 }
-function loadColumns(oculto) {
-    if (objLoaded != columns.obj) {
-        let inputs = [];
-        let checks = [];
-        let select = [];
-        if (objLoaded.name === "atividade") {
-            inputs = [
-                "dia",
-                "descricao",
-                "indice",
-                "horaini1",
-                "horafim1",
-                "horaini2",
-                "horafim2",
-                "horaini3",
-                "horafim3",
-                "motivo",
-            ];
-            checks = ["diaseguinte", "meiadiaria"];
-            select = ["obra_id", "atividade_id", "colaborador", "supervisor_id"];
-        } else if (objLoaded.name === "colaborador") {
-            inputs = [
-                "nome",
-                "admissao",
-                "contrato",
-                "diaria",
-                "observacao",
-                "demissao",
-            ];
-            checks = ["encarregado"];
-            select = ["funcao"];
-        } else if (objLoaded.name === "obra") {
-            inputs = [
-                "id",
-                "orcamento",
-                "empresa",
-                "cidade",
-                "descricao",
-                "indice",
-                "retrabalho",
-                'tecnicon',
-            ];
-            checks = ["finalizada"];
-            select = ["supervisor_id"];
-        } else if (objLoaded.name === "diario") {
-            inputs = [
-                "indice",
-                "data",
-                "climamanha",
-                "climatarde",
-                "descricao",
-            ];
-            select = ["encarregado", "obra_id"];
-        } else if (objLoaded.name === "supervisor") {
-            inputs = ["supervisor"];
-            checks = ["ativo"];
-        } else if (objLoaded.name === "funcao") {
-            inputs = ["funcao", "grupo"];
-        } else if (objLoaded.name === "programacao") {
-            inputs = ["observacao", "iniciosemana"];
-            select = ["colaborador", "encarregado", "obra_id"];
-        }
-        columns = {
-            inputs: inputs,
-            checks: checks,
-            select: select,
-            obj: objLoaded,
-        };
-        for (i = 0; i < columns.select.length; i++) {
-            loadSelect(columns.select[i], oculto);
-        }
+var loaded = {'resource':'','reload':'function'}
 
+$(document).ready(async () => {
+    try {
+        load();
+    } catch {
+        console.log("Tela sem inicializador");
     }
-}
-function getData(){
-    data = {}
-    values = columns.inputs.concat(columns.select)
-    for (let i = 0; i < values.length; i++) {
-        data[values[i]] = $("#" + objLoaded.prefix + values[i]).val() || NaN;
-    }
-    for (let i = 0; i < columns.checks.length; i++) {
-        data[columns.checks[i]] = $(
-            "#" + objLoaded.prefix + columns.checks[i]
-        ).prop("checked");
-    }
-    return data
-}
-// Faz um post na API para registrar oque estiver nos inputs, normalmente referente a um formulário
-submit = {
-    post: function(type){
-        apiRequest.post(type,objLoaded.name,getData(),function(){$("#table").bootstrapTable("refresh");})
-    },
-    update: function(type){
-        apiRequest.update(type,objLoaded.name,getData(),function(){$("#table").bootstrapTable("refresh");})
-    },
-}
-function loadForm(name) {
-    objLoaded = { method: "form", name: name, prefix: "form_" + name + "_" };
-    loadColumns('oculto');
-    $("#" + objLoaded.prefix + "btn").click(function () {
-        submit.post("register");
-    });
-}
-function toggleOculto(campo) {
-    let element;
-    let filtrar;
-    if (campo == "colaborador") {
-        element = $("#mostrar_demitidos");
-    } else if (campo == "obra_id") {
-        element = $("#mostrar_finalizadas");
-    }
-    let text = element.text().split(" ");
-    if (text[0] == "exibir") {
-        filtrar = false;
-        element.text("ocultar ".concat(text[1]));
-    } else {
-        filtrar = true;
-        element.text("exibir ".concat(text[1]));
-    }
-    if (!filtrar) {
-        loadSelect(campo, "exibir");
-    } else {
-        loadSelect(campo, "oculto");
-    }
-}
+});
 
-function loadTable() {
-    apiRequest.get('get_table','table',objLoaded.name,function(data){
-        $("#".concat(objLoaded.prefix + "table")).empty();
-        for (let i = 0; i < data.length; i++) {
-            let row = "<tr>";
-            if (objLoaded.name == "funcao") {
-                row += `<td>${data[i].funcao}</td>`;
-                if (data[i].grupo != null) {
-                    row += `<td>${data[i].grupo}</td>`;
-                }
-                row += `<td><img src="${icon}/trash.svg" class="btn-icon" onclick='deleteData("${data[i].id}"); setTimeout(function() {loadTable();},200)' style='background:lightcoral;'></td>`;
-            } else if (objLoaded.name == "supervisor") {
-                let checked;
-                row += `<td>${data[i].supervisor}</td>`;
-                checked = data[i].ativo ? "checked" : "";
-                row += `<td><input class="form-check-input" type="checkbox" ${checked} onclick="toggleAtivo('${
-                    data[i].supervisor
-                }', ${!data[i].ativo})"></td>`;
-                row += `<td><img src="${icon}/trash.svg" class="btn-icon" onclick='deleteData("${data[i].supervisor}"); setTimeout(function() {loadTable();},200)' style='background:lightcoral;'></td>`;
-            } else {
-                return alert("Nenhuma table encontrado");
-            }
-            row += "</tr>";
-            $("#".concat(objLoaded.prefix + "table")).append(row);
-        }
-    })
-}
-function loadSelect(select, filter) {
-    apiRequest.get('get_table','select',select,function(data){
-        let selectHTML = objLoaded.prefix + select;
-        $("#".concat(selectHTML)).empty();
-        for (let i = 0; i < data.length; i++) {
-            let value;
-            let text;
-            if (select == "funcao") {
-                value = data[i].funcao;
-            } else if (select == "obra_id") {
-                if (filter == "oculto" && data[i].finalizada) {
-                } else {
-                    value = data[i].id;
-                    text =
-                        value +
-                        " || " +
-                        data[i].empresa +
-                        " | " +
-                        data[i].cidade;
-                }
-            } else if (select == "supervisor_id") {
-                value = data[i].supervisor;
-            } else if (select == "atividade_id") {
-                value = data[i].tipo;
-                // text = data[i].tipo;
-            } else if (select == "colaborador") {
-                if (filter == "oculto" && data[i].demissao != null) {
-                } else {
-                    value = data[i].nome;
-                }
-            } else if (select == "encarregado") {
-                value = data[i].nome;
-            } else {
-                return alert("Nenhum select encontrado");
-            }
-            if (value != undefined) {
+const generics = {
+    populate: {
+        select: async (id, data) => {
+            const selectHTML = $("#".concat(id));
+            console.log(selectHTML);
+            selectHTML.empty();
+            await data.forEach((element) => {
                 let opt = document.createElement("option");
-                opt.value = value;
-                opt.text = text || value;
-                $("#".concat(selectHTML)).append(opt);
+                opt.value = element.value || element.text;
+                opt.text = element.text || element.value;
+                selectHTML.append(opt);
+            });
+        },
+        table: async (prefix, data, feature) => {
+            try {
+                const tabela = document.getElementById(prefix + "table");
+                const thead = tabela.querySelector("thead tr");
+                thead.innerHTML = "";
+                const tbody = tabela.querySelector("tbody");
+                tbody.innerHTML = "";
+                if (data.length > 0) {
+                    const keys = Object.keys(data[0]);
+
+                    keys.forEach((key) => {
+                        const th = document.createElement("th");
+                        th.textContent =
+                            key.charAt(0).toUpperCase() + key.slice(1);
+                        thead.appendChild(th);
+                    });
+                    if (this.type != "table") {
+                        const thRemove = document.createElement("th");
+                        thRemove.textContent = "Ações";
+                        thead.appendChild(thRemove);
+                    }
+
+                    data.forEach((obj) => {
+                        const row = document.createElement("tr");
+                        keys.forEach((key) => {
+                            const cell = document.createElement("td");
+                            if (typeof obj[key] === "boolean") {
+                                const checkbox =
+                                    document.createElement("input");
+                                checkbox.type = "checkbox";
+                                checkbox.disabled = true;
+                                checkbox.checked = obj[key];
+                                if (loaded.resource == 'supervisor') {
+                                    checkbox.disabled = false;
+                                    checkbox.addEventListener('click', () =>{
+                                        apiRequest.update(`${loaded.resource}/${obj.id}`, {'id':obj.id, 'ativo':!obj[key]})
+                                    })
+                                }
+                                cell.appendChild(checkbox);
+                            } else {
+                                cell.textContent = obj[key];
+                            }
+                            row.appendChild(cell);
+                        });
+                        if (feature) {
+                            const extraCell = document.createElement("td");
+                            extraCell.classList.add("d-flex");
+
+                            const deleteButton = document.createElement("i");
+                            deleteButton.classList.add(
+                                "btn-icon",
+                                "bg-danger",
+                                "bi-trash3",
+                                "fs-6",
+                                "me-1"
+                            );
+
+                            deleteButton.addEventListener("click", () => {
+                                // console.log(reload.open.carregar_table)
+                                apiRequest.delete(`${loaded.resource}/${obj.id}`,()=>{
+                                    loaded.reload()
+                                });
+                            });
+
+                            const editButton = document.createElement("i");
+                            editButton.classList.add(
+                                "btn-icon",
+                                "bg-primary",
+                                "bi-pencil",
+                                "fs-6",
+                                "me-1"
+                            );
+
+                            editButton.addEventListener("click", () => {
+                                // let modal = new Modal(
+                                //     this.object.split("-")[1],
+                                //     "update"
+                                // );
+                                // modal.open(obj.id);
+                            });
+                            if (feature.delete) {
+                                extraCell.appendChild(deleteButton);
+                            }
+                            if (feature.edit) {
+                                extraCell.appendChild(editButton);
+                            }
+
+                            row.appendChild(extraCell);
+                        }
+                        tbody.appendChild(row);
+                    });
+                }
+            } catch (error) {
+                throw error;
             }
+        },
+        data: async (resource, prefix, data) => {
+            try {
+                resource.text.forEach((field) => {
+                    $("#" + prefix + field).val(data[field]);
+                });
+
+                resource.select.forEach((field) => {
+                    apiRequest.get(`select/${field}`).then((selects) => {
+                        generics.populate
+                            .select(prefix + field, selects)
+                            .then(() => {
+                                $("#" + prefix + field).val(data[field]);
+                            });
+                    });
+                });
+
+                resource.check.forEach((field) => {
+                    $("#" + prefix + field).prop("checked", data[field]);
+                });
+            } catch (error) {
+                throw error;
+            }
+        },
+    },
+    load: {
+        resource: function (type) {
+            return apiRequest.get(`resource/${type}`);
+        },
+        register: async function (resource) {
+            const resource_fields = await generics.load.resource(resource);
+
+            const prefix = `form_${resource}_`;
+
+            resource_fields.select.forEach(async (select) => {
+                data = await apiRequest.get(`select/${select}`);
+                this.populate.select(prefix + select, data);
+            });
+
+            $(`#${prefix}submit`).on("click", async () => {
+                data = await this.reader.fields(resource_fields, prefix);
+                apiRequest.post(resource, data).then(() => {
+                    $("#table").bootstrapTable("refresh");
+                });
+            });
+        },
+    },
+    reader: {
+        fields: async (resource, prefix) => {
+            var data = {};
+            const fields = {}
+            fields.text = resource.text || []
+            fields.select = resource.select || []
+            fields.check = resource.check || []
+
+            text = fields.text.concat(fields.select)
+            text.forEach((field) => {
+                console.log("#" + prefix + field)
+                val = $("#" + prefix + field).val() || null;
+                data[field] = val;
+            });
+
+            fields.check.forEach((check) => {
+                    data[check] = $("#" + prefix + check).prop("checked");
+                });
+
+            return data;
+        },
+    },
+    submit: {
+        simples: function () {
+            console.log("num fiz ainda");
+        },
+    },
+};
+const modal = {
+    open: async function (method, resource, id = undefined) {
+        modal_name = `m_${method}-${resource}`;
+        console.log(modal_name);
+        const modal = new bootstrap.Modal(document.getElementById(modal_name));
+        loaded.resource = resource
+        const prefix = modal_name + "_";
+        const resource_fields = await generics.load.resource(resource);
+        switch (method) {
+            case "register":
+                if (resource_fields.select != undefined) {
+                    resource_fields.select.forEach(async (select) => {
+                        data = await apiRequest.get(`select/${select}`);
+                        generics.populate.select(prefix + select, data);
+                    });
+                }
+                async function carregar_table(){
+                    table_data = await apiRequest.get(resource);
+                    generics.populate
+                        .table(prefix, table_data, { delete: true, edit: false })
+                        .then(() => {
+                            modal.show();
+                        });
+                }
+                loaded.reload = carregar_table
+
+                carregar_table()
+                $(`#${prefix}submit`)
+                    .off()
+                    .on("click", async () => {
+                        const data = await generics.reader.fields(resource_fields, prefix);
+                        apiRequest.post(resource, data).then(() => {
+                            carregar_table()
+                        });
+                    });
+                break;
+            case "update":
+                const data = await apiRequest.get(resource + "/" + id);
+                const endpoint = `${resource}/${id}`;
+                generics.populate
+                    .data(resource_fields, prefix, data)
+                    .then(() => {
+                        modal.show();
+                    });
+                $(`#${prefix}del`)
+                    .off()
+                    .on("click", async () => {
+                        apiRequest.delete(endpoint, () => {
+                            modal.hide();
+                            $("#table").bootstrapTable("refresh");
+                        });
+                    });
+                $(`#${prefix}save`)
+                    .off()
+                    .on("click", async () => {
+                        new_data = await generics.reader.fields(
+                            resource_fields,
+                            prefix
+                        );
+                        apiRequest.update(endpoint, new_data, () => {
+                            modal.hide();
+                            $("#table").bootstrapTable("refresh");
+                        });
+                    });
+                break;
+            case "image":
+                image = document.getElementById(`${prefix}imagem`);
+                image.src = `http://10.0.0.139/media/Lancamento_obra/${resource}/${id}.jpeg`;
+                modal.show();
         }
-    })
-}
-
-
-function previewModal_img(img) {
-    image = document.getElementById("view_" + objLoaded.name + "_digitalizado");
-    image.src = img;
-}
+    },
+};

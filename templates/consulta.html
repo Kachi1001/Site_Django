@@ -1,7 +1,7 @@
 {%include 'static/imports/bootstrap_tables.html'%} <!-- Bootstrap -->
 
-<table id="table" class="table table-hover table-bordered table-striped" data-locale="pt-BR" data-toggle="table"
+<table id="table" class="table table-hover table-bordered table-striped table-sm" data-locale="pt-BR" data-toggle="table"
     data-pagination="true" data-page-list="[100, 200, 500, 1000]" data-search="true" data-side-pagination="server"
     data-sortable="true" data-height='{{table_height}}' data-cookie="true" data-show-refresh="true"
-    data-search-time-out="1000" data-url="{{api}}{{app}}/tabela/{{table}}"
-    data-cookie-id-table="{{table}}" data-page-size="100" data-show-export="true" data-search-highlight="true"  data-search-selector="input_search">
+    data-search-time-out="1000" data-url="{{api}}{{app}}/tabela/{{resource}}"
+    data-cookie-id-table="{{resource}}" data-page-size="100" data-show-export="true" data-search-highlight="true"  data-search-selector="input_search">

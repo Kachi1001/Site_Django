@@ -12,21 +12,19 @@
         <th data-field="supervisor_id" data-sortable="true">Supervisor</th>
         <th data-field="finalizada" data-sortable="true" data-formatter="checkFormatter">Finalizada</th>
         <th data-field="indice" data-sortable="true">Indice</th>
-        <th data-field="etapas" data-formatter="Formatter">Etapas</th>
-        <th data-field="editar" data-formatter="editarFormatter" data-events="editarEvents">Editar</th>
+        <th data-searchable="false" data-formatter="editarFormatter" data-events="editarEvents">Editar</th>
 
     </tr>
 </thead>
 </table>
 {% block "script" %}
 <script>
-    function editarFormatter(value) {
-        return '<a class="editarBtn" href="javascript:void(0)" title="Like"> <div class="btn-icon" style="background-color: skyblue;"><img src="{% static "icons/pencil.svg"%}" alt="edit"></div></div>'
+    
+    function editarFormatter() {
+        return (
+            '<div class="btn-icon bg-info bi-pencil fs-6 me-1" id="editarBtn" title="Editar"></div>'
+        )
     }
-    window.editarEvents = {
-        'click .editarBtn': function (e, value, row, index) {
-            loadModal('update_obra', row['id'])
-        },
-    }
+    
 </script>
 {% endblock %}

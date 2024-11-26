@@ -4,12 +4,14 @@ const ocupacao = {
     check: ["continuo"], // campos marcaveis
 };
 
+const colaborador= {
+    text: ["nome", "id", "cpf", "rg", "nascimento", "fone",'avaliacao_descricao'], //campos que pode ser preencher
+    select: ["equipe",'avaliacao'], // campos selecionavel
+    check: ["ativo",'avaliacao_recontratar'], // campos marcaveis
+};
+
 const objFields = {
-    colaborador: {
-        text: ["nome", "id", "cpf", "rg", "nascimento", "fone"], //campos que pode ser preencher
-        select: ["equipe"], // campos selecionavel
-        check: ["ativo"], // campos marcaveis
-    },
+    colaborador: colaborador,
     funcao: {
         text: ["id"], //campos que pode ser preencher
         select: ["categoria"], // campos selecionavel
@@ -48,6 +50,17 @@ const objFields = {
         select: ["padrao"], // campos selecionavel
         check: [], // campos marcaveis
     },
+    feriado: {
+        text: ["id", "descricao"], //campos que pode ser preencher
+        select: [], // campos selecionavel
+        check: ['recorrente'], // campos marcaveis
+    },
+    tipoavaliacao: {
+    text: ["id", "situacao"], //campos que pode ser preencher
+    select: [], // campos selecionavel
+    check: [], // campos marcaveis
+    },
+    avaliacao: colaborador
 };
 var loader;
 class BaseLoader {
@@ -58,6 +71,7 @@ class BaseLoader {
         this.inputs = objFields[object]; // Campos associados ao objeto
         this.id = undefined; // ID de registro, se necessário
         loader = this;
+        console.log(this)
     }
     open(id = undefined) {
         this.id = id;
@@ -122,15 +136,13 @@ class BaseLoader {
                     th.textContent = key.charAt(0).toUpperCase() + key.slice(1);
                     thead.appendChild(th);
                 });
-                if (this.type != "table") {
-                    const thRemove = document.createElement("th");
-                    thRemove.textContent = "Ações";
-                    thead.appendChild(thRemove);
-                }
+
+                const thExtra = document.createElement("th");
+                thExtra.textContent = "Ações";
+                thead.appendChild(thExtra);
 
                 response.forEach((obj) => {
                     const row = document.createElement("tr");
-                    console.debug(obj);
                     keys.forEach((key) => {
                         const cell = document.createElement("td");
                         if (typeof obj[key] === "boolean") {
@@ -144,29 +156,32 @@ class BaseLoader {
                         }
                         row.appendChild(cell);
                     });
-                    const removeCell = document.createElement("td");
-                    const removeButton = document.createElement("img");
-                    if (this.type != "table") {
-                        removeButton.src = "/static/icons/trash.svg";
-                        removeButton.classList.add("btn-icon", "bg-danger");
-
+                    
+                    const extraBtn = document.createElement("td");
+                    if (this.type != "historico") {
+                        const removeButton = document.createElement("i");
+                        removeButton.classList.add("btn-icon", "bg-danger","bi-trash3", "fs-6",'me-1');
+                        
                         removeButton.addEventListener("click", () => {
-                            Submit.delete(obj.id, loader);
+                            loader.id = obj.id
+                            Submit.delete(loader);
                         });
-                    } else if (this.object != "historico_periodoaquisitivo") {
-                        removeButton.src = "/static/icons/pencil-fill.svg";
-                        removeButton.classList.add("btn-icon", "bg-primary");
-
-                        removeButton.addEventListener("click", () => {
+                        extraBtn.appendChild(removeButton);
+                    } 
+                    if (this.object != "periodo_aquisitivo" && this.object != "funcao" && this.object != "equipe" && this.object != "feriado" && this.object != "tipoavaliacao") {
+                        const editBtn = document.createElement("i");
+                        editBtn.classList.add("btn-icon", "bg-primary","bi-pencil", "fs-6",'me-1');
+                        
+                        editBtn.addEventListener("click", () => {
                             let modal = new Modal(
-                                this.object.split("-")[1],
+                                this.object,
                                 "update"
                             );
                             modal.open(obj.id);
                         });
+                        extraBtn.appendChild(editBtn);
                     }
-                    removeCell.appendChild(removeButton);
-                    row.appendChild(removeCell);
+                    row.appendChild(extraBtn);
                     tbody.appendChild(row);
                 });
             }
@@ -180,10 +195,9 @@ class Modal extends BaseLoader {
     constructor(object, type) {
         super(object, type); // Chama o construtor da classe DataManager
         this.modal = ""; // Para armazenar a instância do modal
-        this.prefix = "m_" + this.prefix; // Prefixo de modal
-        this.myModal = document.getElementById("m_" + this.object);
+        this.prefix = "m_" + this.type + '-' + this.prefix; // Prefixo de modal
+        this.myModal = document.getElementById(this.prefix.slice(0,-1));
         this.modal = new bootstrap.Modal(this.myModal);
-        console.log(this);
     }
 
     async register() {
@@ -192,16 +206,13 @@ class Modal extends BaseLoader {
             this.populateSelect(data, select);
         });
 
-        if (typeof this.id == "boolean" && this.id) {
-            const table = await apiRequest.get(this.object);
-            this.populateTable(table).then(() => {
-                this.modal.show();
-            });
-        } else {
+        const table = await apiRequest.get(this.object);
+        this.populateTable(table).then(() => {
             this.modal.show();
-        }
+        })
 
         let loader = this;
+        console.log (loader)
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
@@ -213,8 +224,10 @@ class Modal extends BaseLoader {
             const data = await apiRequest.get(this.object + "/" + this.id);
             this.populateData(data).then(() => {
                 this.modal.show();
+
                 let loader = this;
-                $("#" + this.prefix + "submit")
+
+                $("#" + this.prefix + "save")
                     .off()
                     .click(function () {
                         Submit.update(loader);
@@ -233,7 +246,7 @@ class Modal extends BaseLoader {
     async lanc() {
         try {
             const data = await apiRequest.get(this.object, { id: this.id });
-            this.populateData(data).then(() => {
+            this.populateData(data[0]).then(() => {
                 this.modal.show();
                 $("#" + this.prefix + "submit")
                     .off()
@@ -244,6 +257,12 @@ class Modal extends BaseLoader {
         } catch (error) {
             console.error("Error ao carregar", error);
         }
+    }
+    async dissidio(){
+        this.lanc()
+    }
+    async alterar(){
+        this.lanc()
     }
 
     async processo() {
@@ -279,27 +298,25 @@ class Modal extends BaseLoader {
     load() {
         if (typeof this.id == "object") {
             this.id.forEach((field) => {
-                console.debug(field);
                 $("#" + this.prefix + field.key).val(field.value);
             });
         }
     }
 
     desligamento() {
-        let loader = this;
         this.load();
         this.modal.show();
+        let loader = this;
+        this.id = this.id[0].value
         $("#" + this.prefix + "submit")
-            .off()
-            .click(function () {
-                console.debug(loader);
-                if (
-                    prompt("Digite o ID do colaborador para confirmar!!") ==
-                    $("#m_colaborador_desligamento_colaborador").val()
-                ) {
-                    Submit.post(loader).then(() => {
-                        page.redirect("");
-                    });
+        .off()
+        .click(function () {
+            if (
+                prompt("Digite o ID do colaborador para confirmar!!") ==
+                $("#m_desligamento-colaborador_colaborador").val()
+            ) {
+                    loader.refresh = function () {page.redirect('')}
+                    Submit.delete(loader)
                 } else {
                     toasts("danger", {
                         method: "Desligamento",
@@ -309,9 +326,9 @@ class Modal extends BaseLoader {
             });
     }
 
-    async table() {
+    async historico() {
         try {
-            const data = await apiRequest.get(this.object.split("-")[1], {
+            const data = await apiRequest.get(this.object, {
                 colaborador: this.id,
             });
             this.populateTable(data).then(() => {
@@ -323,9 +340,7 @@ class Modal extends BaseLoader {
     }
 
     refresh() {
-        $("#table").bootstrapTable("refresh");
-
-        carregarDados();
+        page.refresh()
     }
 }
 
@@ -423,6 +438,7 @@ Submit = {
         }
     },
     delete: function (loader) {
+        console.log(loader)
         apiRequest.delete(loader.object + "/" + loader.id, () => {
             loader.modal.hide();
             loader.refresh();

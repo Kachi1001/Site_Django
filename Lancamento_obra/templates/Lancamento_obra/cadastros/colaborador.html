@@ -1,20 +1,44 @@
-{% extends app|add:'/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
-{%block 'header'%}
-<h2>Cadastro de colaborador</h2>
-{%endblock%}
+{% block "script" %}
+<script>
+
+    async function load() {
+        const resource = await generics.load.resource('{{resource}}')
+
+        const prefix = 'form_colaborador_'
+
+        resource.select.forEach(async (select) => {
+            data = await apiRequest.get(`select/${select}`)
+            generics.populate.select(prefix + select, data)
+        })
+
+        $(`#${prefix}submit`).on('click', async () => {
+            data = await generics.reader.fields(resource, prefix)
+            apiRequest.post('colaborador', data).then(()=>{
+                $("#table").bootstrapTable("refresh");
+            })
+        })
+    }
+
+</script>
+
+{% endblock %}
+
+
 {% block 'main' %}
-<div class="row">
+<h2>Cadastro de colaborador</h2>
+<div class="row mt-2">
     <div class="col">
-        <div class="input-group mb-2">
+        <div class="input-group mb-2 input-group-sm">
             <label class="input-group-text" for="form_colaborador_nome">Nome:</label>
             <input type="text" name="nome" id="form_colaborador_nome" class="form-control">
         </div>
     </div>
 
     <div class="col">
-        <div class="input-group mb-2">
+        <div class="input-group mb-2 input-group-sm">
             <label class="input-group-text" for="form_colaborador_funcao">Função:</label>
             <select class="form-select" id="form_colaborador_funcao">
             </select>
@@ -24,16 +48,15 @@
 
 <div class="row">
     <div class="col-4">
-        <div class="input-group mb-2">
+        <div class="input-group mb-2 input-group-sm">
             <label class="input-group-text" for="form_colaborador_admissao">Admissão:</label>
             <input type="date" id="form_colaborador_admissao" class="form-control">
         </div>
     </div>
     <div class="col">
-        <div class="input-group mb-2">
+        <div class="input-group mb-2 input-group-sm">
             <label class="input-group-text" for="form_colaborador_contrato">Contrato:</label>
-            <select class="form-select" id="form_colaborador_contrato"
-                onchange="toggleDiaria()">
+            <select class="form-select" id="form_colaborador_contrato" onchange="toggleDiaria()">
                 <option value="CLT">CLT</option>
                 <option value="Terceiro">Terceiro</option>
             </select>
@@ -41,14 +64,14 @@
     </div>
     <div class="col">
 
-        <div class="input-group mb-2" id="form_colaborador_div_diaria">
+        <div class="input-group mb-2 input-group-sm" id="form_colaborador_div_diaria">
             <span class="input-group-text">Diária</span>
             <input type="text" class="form-control" id="form_colaborador_diaria" disabled>
             <span class="input-group-text">R$</span>
         </div>
     </div>
     <div class="col-auto">
-        <div class="input-group mb-2">
+        <div class="input-group mb-2 input-group-sm">
             <div class="input-group-text">
                 <input class="form-check-input mt-0" type="checkbox" id="form_colaborador_encarregado">
             </div>
@@ -58,17 +81,16 @@
 </div>
 
 
-<div class="input-group mb-2">
+<div class="input-group mb-2 input-group-sm">
     <span class="input-group-text">Observações</span>
     <textarea class="form-control" id="form_colaborador_observacao"></textarea>
 </div>
 
-<div class="row justify-content-end"><div class="col-auto"><button id="form_colaborador_btn" class="btn btn-success">Cadastrar</button></div></div>
-<script>
-    $(document).ready(function(){
-        loadForm('colaborador')
-    });
-</script>
+<div class="row justify-content-end">
+    <div class="col-auto">
+        <button class="btn btn-success" id="form_colaborador_submit">Cadastrar</button>
+    </div>
+</div>
 {% endblock %}
 
 {%block 'footer'%}

@@ -32,13 +32,14 @@
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-success" id="btn">Filtrar</button>
+    <button type="button" class="btn btn-success" id="visualizacao_efetividade_submit">Filtrar</button>
 </div>
 
 {%include 'consulta.html'%}
 <thead>
     <tr>
-        <th data-field="colaborador" data-sortable="true" rowspan="2">Nome</th>
+        <th data-field="id" data-sortable="true" rowspan="2">ID</th>
+        <th data-field="colaborador" data-sortable="true" rowspan="2">ID</th>
         <th data-field="dia" data-sortable="true" rowspan="2" data-Formatter="dataFormatter">Dia</th>
         <th data-field="obra" data-sortable="true" rowspan="2">Obra</th>
         <th data-field="descricao" data-sortable="true" rowspan="2">Descrição</th>
@@ -57,42 +58,35 @@
 </thead>
 </table>
 <script>
+    prefix = 'visualizacao_efetividade_'
+    resource = { 'text': ['colaborador', 'obra', 'dataini', 'datafim'] }
+    function load() {
+
+            $(`#${prefix}submit`).on('click', async () => {
+                data = await generics.reader.fields(resource, prefix)
+                apiRequest.post('exec/efetividade', data, () => {
+                    $("#table").bootstrapTable("refresh");
+                })
+            })
+    }
     function editarFormatter(value) {
 
         return (
             '<div style="margin-left: 0px; display: inline-flex;">'
-            + '<div class="btn-icon" id="editarBtn" href="javascript:void(0)" title="Editar" style="background-color: skyblue;">'
-            + '<img src="{% static "icons/pencil.svg"%}" alt="edit">'
+            + '<div class="btn-icon bg-info bi-pencil me-1" id="editarBtn" href="javascript:void(0)" title="Editar">'
             + '</div>'
-            + '<div class="btn-icon" id="viewBtn" href="javascript:void(0)" title="Diário" style="background-color: lightgreen;">'
-            + '<img src="{% static "icons/file-earmark-text.svg"%}" alt="edit">'
+            + '<div class="btn-icon bg-success bi-file-earmark-text" id="viewBtn" href="javascript:void(0)" title="Diário">'
             + '</div>'
             + '</div>'
         )
     }
     window.editarEvents = {
         'click #editarBtn': function (e, value, row, index) {
-            loadModal('update_atividade', row['id'])
-
+            modal.open('update','atividade', row['id'])
         },
         'click #viewBtn': function (e, value, row, index) {
-            loadModal('view_diario', row['diario'])
+            modal.open('image','diario', row['diario'])
         },
     }
-    $('#btn').click(function () {
-        parametro = {}
-        parametros = ['colaborador', 'obra', 'dataini', 'datafim']
-        for (let i = 0; i < parametros.length; i++) {
-            val = $('#visualizacao_efetividade_' + parametros[i]).val()
-            if (val != '') {
-                parametro[parametros[i]] = val
-            }
-        }
-        apiRequest.get('funcao', 'efetividade', JSON.stringify(parametro), function (data) {
-            toasts('success', data)
-            $("#table").bootstrapTable("refresh");
-        })
-
-    })        
 </script>
 {%endblock%}

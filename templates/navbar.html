@@ -31,16 +31,15 @@
   </div>
   <script>
     $(document).ready(() => {
-      console.log(window.location.host)
       switch (window.location.host) {
         case '10.0.0.139:81':
           $('#navbar-left').prepend(
-            '<div class="col btn-icon" style="background-color: yellow;"><i class="bi bi-question-octagon-fill" title="Ambiente de teste"></i></div>'
+            '<i class="col-auto btn-icon bi-question-octagon-fill bg-warning" title="Ambiente de teste"></i>'
           )
           break;
         case '10.0.0.211:81':
           $('#navbar-left').prepend(
-            '<div class="col-auto btn-icon" style="background-color: red;"><i class="bi bi-question-octagon-fill" title="Ambiente de desenvolvimento"></i></div>'
+            '<i class="col-auto btn-icon bi-question-octagon-fill bg-danger" title="Ambiente de desenvolvimento" </i>'
           )
           break;
       }
@@ -51,7 +50,7 @@
         'teste': '10.0.0.139:81',
         'dev': '10.0.0.211:81',
       }
-      window.location.href = window.location.protocol + '//' + ambientes[ambiente] + window.location.pathname
+      window.location.href = window.location.protocol + '//' + ambientes[ambiente] + window.location.pathname + window.location.search
       console.error();
     }
   </script>

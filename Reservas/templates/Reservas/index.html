@@ -4,9 +4,6 @@
 
 {%block 'style'%}
 <style>
-    .col-auto {
-        margin-bottom: 24px;
-    }
     .card-img-bottom {
         height: 150px;
         object-fit: cover;
@@ -19,7 +16,7 @@
     <h2>Salas disponíveis</h2>
     <hr>
     <div class="row justify-content-around">
-        <div class="col-auto">
+        <div class="col-auto mb-2">
             <a href="{%url 'sala' 'atendimento'%}" style="text-decoration: none;">
                 <div class="card" style="width: 15rem;">
                     <div class="card-header">
@@ -29,7 +26,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-auto">
+        <div class="col-auto mb-2">
             <a href="{%url 'sala' 'apoio'%}" style="text-decoration: none;">
                 <div class="card" style="width: 15rem;">
                     <div class="card-header">
@@ -39,7 +36,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-auto">
+        <div class="col-auto mb-2">
             <a href="{%url 'sala' 'reunião'%}" style="text-decoration: none;">
                 <div class="card" style="width: 15rem;">
                     <div class="card-header">
@@ -49,7 +46,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-auto">
+        <div class="col-auto mb-2">
             <a href="{%url 'sala' 'auxiliar'%}" style="text-decoration: none;">
                 <div class="card" style="width: 15rem;">
                     <div class="card-header">

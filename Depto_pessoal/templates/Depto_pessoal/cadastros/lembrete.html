@@ -1,11 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{%block 'header'%}
-<h2>Registro de lembrete</h2>
-{%endblock%}
 {% block 'main' %}
-
+<h2>Registro de lembrete</h2>
 <div class="row">
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap">
@@ -22,11 +19,7 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap">
             <label class="input-group-text">PADRÃO:</label>
-            <select class="form-select" id="f_lembrete_padrao">
-                <option value="7:25, 17:55"></option>
-                <option value="7:25, 15:25"></option>
-                <option value="13:25, 17:25"></option>
-            </select>
+            <select class="form-select" id="f_lembrete_padrao"></select>
         </div>
     </div>
 </div>
@@ -52,14 +45,9 @@
         </thead>
     </table>
     <script>
-        function editarFormatter(value) {
-            return '<a class="editarBtn" href="javascript:void(0)" title="Like"> <div class="btn-icon" style="background-color: skyblue;"><img src="{% static "icons/pencil.svg"%}" alt="edit"></div></div>'
-        }
-        window.editarEvents = {
-            'click .editarBtn': function (e, value, row, index) {
-                let modal = new Modal('lembrete', 'update')
-                modal.open(row['id'])
-            },
-        }
+        modal = {open: function(method, resource, id){
+            let modal = new Modal(resource, method)
+            modal.open(id)
+        }}
     </script>
 {%endblock%}

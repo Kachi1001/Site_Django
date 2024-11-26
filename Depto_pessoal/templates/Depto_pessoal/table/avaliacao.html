@@ -8,18 +8,22 @@
         <th data-field="rg" data-sortable="true">RG</th>
         <th data-field="telefone" data-sortable="true">Telefone</th>
         <th data-field="nascimento"data-sortable="true" data-formatter="dataFormatter">Nascimento</th>
-        <th data-field="ativo" data-formatter="checkFormatter">Ativo</th>
-        <th data-field="equipe" data-sortable="true">Equipe</th>
+        <th data-field="avaliacao" data-sortable="true">Situação</th>
+        <th data-field="avaliacao_recontratar" data-formatter="checkFormatter">Recontratar</th>
+        <th data-field="avaliacao_descricao" data-sortable="true">Descrição</th>
         <th data-formatter="editarFormatter" data-events="editarEvents"></th>
     </thead>
 </table>
 <script>
-    function editarFormatter(value) {
-        return '<div id="viewBtn" class="btn-icon bg-info"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit"></div></div>'
+    function editarFormatter() {
+        return (
+            '<div class="btn-icon bg-info bi-pencil fs-6 me-1" id="editarBtn" title="Editar"></div>'
+        )
     }
     window.editarEvents = {
-        'click #viewBtn': function (e, value, row, index) {
-            page.redirect('consultas/colaborador',{id:row['id']})
+        'click #editarBtn': function (e, value, row, index) {
+            let obj = new Modal('avaliacao', 'update')
+            obj.open(row['id'])
         },
     }
 </script>

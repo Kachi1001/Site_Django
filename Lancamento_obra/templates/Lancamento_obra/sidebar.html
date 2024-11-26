@@ -14,8 +14,8 @@
             <div id="menu-cadastro" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <a href="{%url 'cadastros' 'colaborador'%}"><i {{icon_form}}></i> Colaborador</a>
                 <a href="{%url 'cadastros' 'obra'%}"><i {{icon_form}}></i> Obra</a>
-                <a href="#" onclick="loadModal('register_funcao', 'funcao')"><i {{icon_modal}}></i> Função</a>
-                <a href="#" onclick="loadModal('register_supervisor', 'supervisor')"><i {{icon_modal}}></i>
+                <a href="#" onclick="modal.open('register', 'funcao')"><i {{icon_modal}}></i> Função</a>
+                <a href="#" onclick="modal.open('register', 'supervisor')"><i {{icon_modal}}></i>
                     Supervisor</a>
             </div>
         </div>

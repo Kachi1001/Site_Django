@@ -24,23 +24,22 @@
 {% block "script" %}
 <script>
     function editarFormatter(value) {
+
         return (
             '<div style="margin-left: 0px; display: inline-flex;">'
-            + '<div class="btn-icon" id="editarBtn" href="javascript:void(0)" title="Editar" style="background-color: skyblue;">'
-            + '<img src="{% static "icons/pencil.svg"%}" alt="edit">'
+            + '<div class="btn-icon bg-info bi-pencil me-1" id="editarBtn" href="javascript:void(0)" title="Editar">'
             + '</div>'
-            + '<div class="btn-icon" id="viewBtn" href="javascript:void(0)" title="Digitalização" style="background-color: lightgreen;">'
-            + '<img src="{% static "icons/file-earmark-text.svg"%}" alt="edit">'
+            + '<div class="btn-icon bg-success bi-file-earmark-text" id="viewBtn" href="javascript:void(0)" title="Diário">'
             + '</div>'
             + '</div>'
         )
     }
     window.editarEvents = {
         'click #editarBtn': function (e, value, row, index) {
-            loadModal('update_diario', row['diario'])
+            modal.open('update','{{resource}}', row['id'])
         },
         'click #viewBtn': function (e, value, row, index) {
-            loadModal('view_diario', row['diario'])
+        modal.open('image','{{resource}}', row['diario'])
         },
     }   
 </script>
