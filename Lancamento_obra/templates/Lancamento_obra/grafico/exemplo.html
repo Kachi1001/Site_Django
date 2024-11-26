@@ -1,17 +1,30 @@
 {% extends app|add:'/base.html' %}
 
 
-{%block 'header'%}
+{% block 'header' %}
 {%include 'static/imports/graficos.html'%} <!-- Graficos -->
-<h2>Grafico de exemplo</h2>
-<canvas id="myChart"></canvas>
+{% endblock %}
 
+{% block 'main' %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <canvas id="myChart"></canvas>
+        </div>
+        <div class="col-6">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block 'script' %}
 <script>
     function pegar_grafico(linha){
         $.ajax({
             url: `${api}/${app}/grafico`,
         type: 'GET',
-        data: {
+    data: {
             metodo: 'grafico1',
             parametro: linha
         },
@@ -35,6 +48,12 @@
                       }]
                   },
                 options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Gráfico de horas extras'
+                        }
+                    },
                     parsing: {
                         xAxisKey: 'mes',
                     }
@@ -54,4 +73,4 @@ $(document).ready(function(){
 })
     
 </script>
-{%endblock%}
+{% endblock %}

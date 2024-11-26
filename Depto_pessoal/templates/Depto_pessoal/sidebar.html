@@ -71,6 +71,19 @@
             </h2>
         </div>
         {%endif%}
+        {% if user|can:'Depto_pessoal-exemplo' %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#menu-grafico" aria-expanded="false">
+                    Graficos
+                </button>
+            </h2>
+            <div id="menu-grafico" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                <a href="{%url app|add:'_graficos' 'exemplo'%}"><i {{icon_table}}></i> Exemplo</a>
+            </div>
+        </div>
+        {%endif%}
     
     </div>
     <script>

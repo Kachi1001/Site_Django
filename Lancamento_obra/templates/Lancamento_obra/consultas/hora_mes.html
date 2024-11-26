@@ -19,7 +19,7 @@
 </table>
 <script>
     function load () {
-        apiRequest.post('exec/atualizar_tabelas').then(()=>{
+        apiRequest.touch('exec/atualizar_tabelas').then(()=>{
             $("#table").bootstrapTable("refresh");
         })
     }

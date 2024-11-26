@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+
+{% block 'header' %}
+{%include 'static/imports/graficos.html'%} <!-- Graficos -->
+{% endblock %}
+
+{% block 'main' %}
+<div class="container">
+    <canvas id="ativos_rotatividade"></canvas>
+    <div class="row">
+        <div class="col-6">
+        </div>
+        <div class="col-6">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block 'script' %}
+<script>
+    function pegar_grafico(linha){
+        $.ajax({
+            url: `${api}/${app}/grafico`,
+        type: 'GET',
+    data: {
+            metodo: 'grafico1',
+            parametro: linha
+        },
+        success: function(a) {
+            const ctx = document.getElementById('myChart');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Hora_50', 
+                        data: a,
+                        parsing: {
+                            yAxisKey: 'hora_50'
+                        },
+                      },{
+                        label: 'Hora_100', 
+                        data: a,
+                        parsing: {
+                            yAxisKey: 'hora_100'
+                        },
+                      }]
+                  },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Gráfico de horas extras'
+                        }
+                    },
+                    parsing: {
+                        xAxisKey: 'mes',
+                    }
+                    
+                }
+        
+            });
+        },
+        error: function(error) {
+            console.error('Erro:', error);
+            alert('Erro ao carregar o grafico.');
+        }
+    });
+}
+$(document).ready(function(){  
+    apiRequest.get('grafico/ativos_rotatividade').then((data)=>{
+        const ctx = document.getElementById('ativos_rotatividade');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Ativos', 
+                        data: data,
+                        parsing: {
+                            yAxisKey: 'ativos'
+                        },
+                        type: 'line',
+                        yAxisID: 'y2',
+                        borderColor: color.blue80,
+                        backgroundColor: color.blue,
+
+                      },{
+                        label: 'Admissões', 
+                        data: data,
+                        parsing: {
+                            yAxisKey: 'admissoes'
+                        },
+                        type: 'bar',
+                        backgroundColor: color.green80,
+                        
+                        
+                    },{
+                        label: 'Desligamentos', 
+                        data: data,
+                        parsing: {
+                            yAxisKey: 'desligamentos'
+                        },
+                        type: 'bar',
+                        backgroundColor: color.red80,
+
+                      }]
+                  },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Gráfico de horas extras'
+                        }
+                    },
+                    parsing: {
+                        xAxisKey: 'cpt',
+                    },
+                    scales: {
+                        y: {
+                          type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                          position: 'left',
+        
+                        },
+                        y2: {
+                            min: 0,
+                            
+                          type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                          position: 'right',
+                          
+                          grid: {
+                            drawOnChartArea: false // only want the grid lines for one axis to show up
+                          }
+                        }
+                      }
+                    
+                }
+        
+            });
+    })
+})
+    
+</script>
+{% endblock %}

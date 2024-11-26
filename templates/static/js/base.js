@@ -66,7 +66,7 @@ const apiRequest = {
                 return response.json();
             })
             .then((data) => {
-                this.success(data, successCallback);
+                this.success({'method':'Registrado com êxito!','message':'Foi concluído com sucesso a operação.'}, successCallback);
             })
             .catch((error) => {
                 this.error(error, errorCallback);
@@ -87,7 +87,7 @@ const apiRequest = {
                 return response.json();
             })
             .then((data) => {
-                this.success(data, successCallback);
+                this.success({'method':'Atualizado com êxito!','message':'Seu registro foi atualizado com sucesso.'}, successCallback);
             })
             .catch((error) => {
                 this.error(error, errorCallback);
@@ -136,8 +136,8 @@ const apiRequest = {
                     console.error(response);
                     this.success(
                         {
-                            method: "Sucesso",
-                            message: "Registro deletado com sucesso",
+                            method: "Deletado com êxito!",
+                            message: "Registro deletado com sucesso.",
                         },
                         successCallback
                     );
@@ -166,8 +166,8 @@ const apiRequest = {
                 console.error(response);
                 this.success(
                     {
-                        method: "Sucesso",
-                        message: "Função executada com sucesso",
+                        method: "Sucesso!",
+                        message: "Função executada com sucesso.",
                     },
                     successCallback
                 );
@@ -213,7 +213,7 @@ const apiRequest = {
             .catch(() => {
                 console.error("Erro ao interpretar a resposta de erro.");
                 toasts("warning", {
-                    method: "Ocorreu um erro inesperado.",
+                    method: "Ocorreu um erro inesperado!", 
                     message: "Erro ao interpretar a resposta de erro.",
                 });
             });
@@ -245,7 +245,7 @@ const page = {
         const currentBaseUrl = window.location.origin; // Pega o domínio atual
         const newUrl = `${currentBaseUrl}/${app}/${path}?${queryString}`;
 
-        // Redireciona para a nova URL
+        // Redireciona para a nova URL  
         window.location.href = newUrl;
     },
     getParam: function (param) {
