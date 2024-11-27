@@ -1,0 +1,8 @@
+{% extends app|add:'/base.html' %}
+
+
+
+{%block 'header'%}
+    <h2>Tabela de Diário</h2>
+    {%include app|add:'/table/diario.html'%}
+{%endblock%}

@@ -1,0 +1,22 @@
+{% extends app|add:'/base.html' %}
+
+{%block 'header'%}
+<h2>Consulta de Alocações</h2>
+{%include 'consulta.html'%}
+
+    <thead>
+        <tr>
+            <th data-field="obra" data-sortable="true">Obra</th>
+            <th data-field="etapa" data-sortable="true">Etapa</th>
+            <th data-field="produto" data-sortable="true">Produto</th>
+            <th data-field="unidade" data-sortable="true">Unidade</th>
+            <th data-field="quantidade" data-sortable="true">Quantidade</th>
+            <th data-field="observacao" data-sortable="true">Observação</th>
+            <th data-field="composicao" data-sortable="true">Composição</th>
+            <th data-field="enviar_cotacaop" data-sortable="true" data-formatter="checkFormatter">Cotação</th>
+            
+        </tr>
+    </thead>
+</table>
+{%endblock%}
+

@@ -1,0 +1,26 @@
+{% extends app|add:'/base.html' %}
+
+{%load static%}
+
+{%block 'header'%}
+<h2>Lançamentos referente ao mês passado, para lançar no tecnicon</h2>
+{%include 'consulta.html'%}
+<thead>
+    <tr>
+        <th data-field="lanc_colab" >Colaborador</th>
+        <th data-field="lanc_atividade" >Atividade</th>
+        <th data-field="lanc_data" data-formatter="dataFormatter">Data</th>
+        <th data-field="lanc_descricao"  data-formatter="Formatter">Descrição</th>
+        <th data-field="lanc_horaini1"  data-formatter="Formatter">Horaini1</th>
+        <th data-field="lanc_horafim1" data-formatter="Formatter">Horafim1</th>
+        <th data-field="lanc_horaini2" data-formatter="Formatter">Horaini2</th>
+        <th data-field="lanc_horafim2" data-formatter="Formatter">Horafim2</th>
+        <th data-field="lanc_horaini3" data-formatter="Formatter">Horaini3</th>
+        <th data-field="lanc_horafim3"  data-formatter="Formatter">Horafim3</th>
+        <th data-field="tecnicon" data-formatter="Formatter">Tecnicon</th>
+        <th data-field="lancado" data-formatter="checkFormatter">Lançado</th>
+    </tr>
+</thead>
+</table>
+
+{%endblock%}

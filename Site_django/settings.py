@@ -30,7 +30,6 @@ DEBUG = config('DJ_DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config("DJ_ALLOWED_HOSTS", default="127.0.0.1").split(",") # type: ignore
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,13 +42,12 @@ INSTALLED_APPS = [
     'rolepermissions', #6
 ]
 
-INTERNAL_APP = [
-    'Home', #7
-    'Lancamento_obra',
-    'Reservas',
-    'Ti',
-    'Depto_pessoal',
-]
+INTERNAL_APP = []
+for app in BASE_DIR.iterdir():
+    app = app.stem
+    if os.path.exists('/'.join([str(BASE_DIR),app,'urls.py'])) and app != 'Site_django':
+        INTERNAL_APP.append(str(app))
+        
 INSTALLED_APPS += INTERNAL_APP
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -89,17 +87,19 @@ WSGI_APPLICATION = 'Site_django.wsgi.application'
 
 DATABASE_ROUTERS = ['Site_django.routers.AppRouter']
 DATABASES = {}
-x = 1
 for app in INTERNAL_APP:
-    DATABASES[app if app != INTERNAL_APP[0] else 'default']  = {
+    db = app
+    if app == "Home":
+        app = 'default'
+        db = 'Site_Django'
+    DATABASES[app]  = {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": app if app != INTERNAL_APP[0] else config("DB_NAME", "Site_django"),
+        "NAME": db,
         "USER": config("DB_USER", "django"),
         "PASSWORD": config("DB_PASSWORD", 'django@senha'),
         "HOST": config("DB_HOST", '127.0.0.1'),
         "PORT": config("DB_PORT", '5432'),
-    }
-    x = x + 1   
+    }   
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

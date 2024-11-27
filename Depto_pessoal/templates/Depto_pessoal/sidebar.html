@@ -12,10 +12,10 @@
                 </button>
             </h2>
             <div id="menu-colaborador" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_cadastros' 'colaborador'%}"><i {{icon_form}}></i> Cadastrar</a>
-                <a href="#" onclick="abrirRegistro('funcao')"><i {{icon_modal}}></i> Função</a>
-                <a href="#" onclick="abrirRegistro('funcao')"><i {{icon_modal}}></i> Equipe</a>
-                <a href="{%url app|add:'_tabelas' 'colaborador'%}"><i {{icon_table}}></i> Tabela</a>
+                <a href="{%url app|add:'_cadastros' 'colaborador'%}"><i {{icon.form}}></i> Cadastrar</a>
+                <a href="#" onclick="abrirRegistro('funcao')"><i {{icon.modal}}></i> Função</a>
+                <a href="#" onclick="abrirRegistro('funcao')"><i {{icon.modal}}></i> Equipe</a>
+                <a href="{%url app|add:'_tabelas' 'colaborador'%}"><i {{icon.table}}></i> Tabela</a>
             </div>
         </div>
         {%endif%}
@@ -28,9 +28,9 @@
                 </button>
             </h2>
             <div id="menu-ferias" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_tabelas' 'periodo_aquisitivo'%}"><i {{icon_table}}></i> Período aquisitivo</a>
-                <a href="{%url app|add:'_tabelas' 'ferias_processadas'%}"><i {{icon_table}}></i> Ferias Processadas</a>
-                <a href="{%url app|add:'_tabelas' 'ferias_utilizadas'%}"><i {{icon_table}}></i> Ferias Utilizadas</a>
+                <a href="{%url app|add:'_tabelas' 'periodo_aquisitivo'%}"><i {{icon.table}}></i> Período aquisitivo</a>
+                <a href="{%url app|add:'_tabelas' 'ferias_processadas'%}"><i {{icon.table}}></i> Ferias Processadas</a>
+                <a href="{%url app|add:'_tabelas' 'ferias_utilizadas'%}"><i {{icon.table}}></i> Ferias Utilizadas</a>
             </div>
         </div>
         {%endif%}
@@ -43,8 +43,8 @@
             </button>
         </h2>
         <div id="menu-ponto" class="accordion-collapse collapse" data-bs-parent="#accordion">
-            <a href="#" onclick="abrirRegistro('tipoavaliacao')"><i {{icon_modal}}></i> Tipo de avaliação</a>
-            <a href="{%url app|add:'_tabelas' 'avaliacao'%}"><i {{icon_table}}></i> Desligados</a>
+            <a href="#" onclick="abrirRegistro('tipoavaliacao')"><i {{icon.modal}}></i> Tipo de avaliação</a>
+            <a href="{%url app|add:'_tabelas' 'avaliacao'%}"><i {{icon.table}}></i> Desligados</a>
         </div>
     </div>
     {%endif%}
@@ -57,8 +57,8 @@
                 </button>
             </h2>
             <div id="menu-lembretes" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_cadastros' 'lembrete'%}"><i {{icon_table}}></i> Registro</a>
-                <a href="{%url app|add:'_app'%}"><i {{icon_table}}></i> Sobre</a>
+                <a href="{%url app|add:'_cadastros' 'lembrete'%}"><i {{icon.table}}></i> Registro</a>
+                <a href="{%url app|add:'_app'%}"><i {{icon.table}}></i> Sobre</a>
             </div>
         </div>
         {%endif%}
@@ -80,7 +80,7 @@
                 </button>
             </h2>
             <div id="menu-grafico" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_graficos' 'exemplo'%}"><i {{icon_table}}></i> Exemplo</a>
+                <a href="{%url app|add:'_graficos' 'rotatividade'%}"><i {{icon.table}}></i> Rotatividade</a>
             </div>
         </div>
         {%endif%}

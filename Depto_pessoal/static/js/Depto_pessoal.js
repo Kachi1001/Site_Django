@@ -445,3 +445,10 @@ Submit = {
         });
     },
 };
+$(document).ready(async () => {
+    try {
+        load();
+    } catch {
+        console.log("Tela sem inicializador");
+    }
+});

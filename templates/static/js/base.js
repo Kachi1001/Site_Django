@@ -52,6 +52,7 @@ const apiRequest = {
             });
     },
     post: function (endpoint, parametro, successCallback, errorCallback) {
+        parametro.user = user
         return fetch(this.createURL(endpoint), {
             method: "POST",
             headers: {
@@ -65,7 +66,7 @@ const apiRequest = {
                 }
                 return response.json();
             })
-            .then((data) => {
+            .then(() => {
                 this.success({'method':'Registrado com êxito!','message':'Foi concluído com sucesso a operação.'}, successCallback);
             })
             .catch((error) => {
@@ -125,9 +126,14 @@ const apiRequest = {
     },
 
     delete: function (endpoint, successCallback, errorCallback) {
+        parametro = {'user': user}
         if (confirm("Tem certeza que deseja apagar esse registro?")) {
             fetch(this.createURL(endpoint), {
                 method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(parametro),
             })
                 .then((response) => {
                     if (!response.ok) {

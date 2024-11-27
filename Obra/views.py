@@ -32,4 +32,4 @@ def lancamentos(request, resource):
 @login_required
 @has_permission_decorator(f'{app}-graficos')
 def graficos(request, resource):
-    return render(request, f"{app}/graficos/{resource}.html",{'resource':resource})
+    return render(request, f"{app}/grafico/{resource}.html",{'resource':resource})

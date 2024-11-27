@@ -26,5 +26,8 @@ urlpatterns = [
 ]
 
 for app in settings.INTERNAL_APP:
-    url = app + '/' if app != 'Home' else ''
-    urlpatterns.append(path(f'{url}', include(f'{app}.urls')))
+    try:
+        url = app + '/' if app != 'Home' else ''
+        urlpatterns.append(path(f'{url}', include(f'{app}.urls')))
+    except Exception as e:
+        print(f'App sem configuração de url <{app}> <{e}>')

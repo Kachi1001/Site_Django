@@ -20,55 +20,7 @@
 
 {% block 'script' %}
 <script>
-    function pegar_grafico(linha){
-        $.ajax({
-            url: `${api}/${app}/grafico`,
-        type: 'GET',
-    data: {
-            metodo: 'grafico1',
-            parametro: linha
-        },
-        success: function(a) {
-            const ctx = document.getElementById('myChart');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    datasets: [{
-                        label: 'Hora_50', 
-                        data: a,
-                        parsing: {
-                            yAxisKey: 'hora_50'
-                        },
-                      },{
-                        label: 'Hora_100', 
-                        data: a,
-                        parsing: {
-                            yAxisKey: 'hora_100'
-                        },
-                      }]
-                  },
-                options: {
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Gráfico de horas extras'
-                        }
-                    },
-                    parsing: {
-                        xAxisKey: 'mes',
-                    }
-                    
-                }
-        
-            });
-        },
-        error: function(error) {
-            console.error('Erro:', error);
-            alert('Erro ao carregar o grafico.');
-        }
-    });
-}
-$(document).ready(function(){  
+function load(){  
     apiRequest.get('grafico/ativos_rotatividade').then((data)=>{
         const ctx = document.getElementById('ativos_rotatividade');
             new Chart(ctx, {
@@ -110,7 +62,7 @@ $(document).ready(function(){
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Gráfico de horas extras'
+                            text: 'Gráfico de rotatividade de colaboradores'
                         }
                     },
                     parsing: {
@@ -138,7 +90,7 @@ $(document).ready(function(){
         
             });
     })
-})
+}
     
 </script>
 {% endblock %}

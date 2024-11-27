@@ -3,19 +3,18 @@
 {% load permission_tags %}
 {%block 'style'%}
 <style>
-  body{
-    display: flex;
-    align-items: center;
-    height: 90%;
-  }
   @media (max-width: 800px) {
     body{
       justify-content: flex-start;
       padding-top: 0px;
     }
+    main {
+      margin-right: 20px;
+      margin-left: 20px;
+    }
   }
   .card{
-    width: 300px;
+    width: 270px;
     margin-bottom: 24px;
   }
 </style>
@@ -24,8 +23,7 @@
 
   
 {%block 'main'%}
-<div class="container text-center"id='index_body'>
-    <div class="row justify-content-center">
+    <div class="row text-center">
       {% if user|can:'Lancamento_obra' %}
       <div class="col-auto">
         <div class="card">
@@ -92,6 +90,22 @@
         </div>
       </div>
       {%endif%}
+      {% if user|can:'Obra' %}
+      <div class="col-auto">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Obra</h5>
+          </div>
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-body-secondary">Versão 0.0</h6>
+            <p class="card-text">Administração de recursos relacionado a obra</p>
+          </div>
+          <div class="card-footer">
+            <a href="{%url 'Obra'%}" class="stretched-link">Abrir Aplicação</a>
+          </div>
+        </div>
+      </div>
+      {%endif%}
       {% if user|can:'master' %}
       <div class="col-auto">
         <div class="card">
@@ -123,5 +137,4 @@
       </div>
       {%endif%}
     </div>
-  </div>
 {%endblock%}

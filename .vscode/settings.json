@@ -3,7 +3,8 @@
         "csrftoken",
         "lancamento",
         "Loadedinputs",
-        "psycopg"
+        "psycopg",
+        "Rotatividade"
     ],
     "editor.detectIndentation": true,
     "commentTranslate.hover.enabled": true,
