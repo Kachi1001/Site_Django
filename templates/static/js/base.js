@@ -41,6 +41,7 @@ const apiRequest = {
                         throw errorData; // Lança os dados de erro
                     });
                 }
+                console.log (response)
                 return response.json(); // Converte a resposta em JSON se a requisição foi bem-sucedida
             })
             .catch((error) => {
@@ -74,6 +75,7 @@ const apiRequest = {
             });
     },
     update: function (endpoint, parametro, successCallback, errorCallback) {
+        parametro.user = user
         fetch(this.createURL(endpoint), {
             method: "PATCH",
             headers: {
