@@ -407,7 +407,7 @@
         </div>
     </div>
     <!-- Modal diario-->
-    <div class="modal" id="m_image-diario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal" id="m_image-diarioobra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -415,7 +415,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img alt="imagem ausente" class="img-thumbnail" id="m_image-diario_imagem">
+                    <img alt="imagem ausente" class="img-thumbnail" id="m_image-diarioobra_imagem">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -424,7 +424,7 @@
         </div>
     </div>
     <!-- Modal Update diário -->
-    <div class="modal fade" id="m_update-diario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="m_update-diarioobra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -435,22 +435,22 @@
                     <div class="col-4">
                         <div class="input-group input-group-sm mb-2">
                             <label class="input-group-text">ID:</label>
-                            <input type="number" class="form-control" id="m_update-diario_id" disabled>
+                            <input type="number" class="form-control" id="m_update-diarioobra_id" disabled>
                         </div>
                     </div>
                     <div class="row">
 
                         <div class="col">
                             <div class="input-group input-group-sm mb-2">
-                                <label class="input-group-text" for="m_update-diario_obra">Obra:</label>
-                                <select class="form-select" id="m_update-diario_obra" disabled>
+                                <label class="input-group-text" for="m_update-diarioobra_obra">Obra:</label>
+                                <select class="form-select" id="m_update-diarioobra_obra" disabled>
                                 </select>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="input-group input-group-sm mb-2">
-                                <label class="input-group-text" for="m_update-diario_indice">Indice:</label>
-                                <input type="number" name="indice" id="m_update-diario_indice" class="form-control"
+                                <label class="input-group-text" for="m_update-diarioobra_indice">Indice:</label>
+                                <input type="number" name="indice" id="m_update-diarioobra_indice" class="form-control"
                                     disabled>
                             </div>
                         </div>
@@ -459,25 +459,25 @@
 
 
                     <div class="input-group input-group-sm mb-2">
-                        <label class="input-group-text" for="m_update-diario_encarregado">Encarregado:</label>
-                        <select class="form-select" id="m_update-diario_encarregado" name="encarregado">
+                        <label class="input-group-text" for="m_update-diarioobra_encarregado">Encarregado:</label>
+                        <select class="form-select" id="m_update-diarioobra_encarregado" name="encarregado">
                             <option value=""></option>
                         </select>
                     </div>
 
                     <div class="input-group input-group-sm mb-2">
-                        <label class="input-group-text" for="m_update-diario_data">Data:</label>
-                        <input type="date" name="data" id="m_update-diario_data" class="form-control" disabled>
+                        <label class="input-group-text" for="m_update-diarioobra_data">Data:</label>
+                        <input type="date" name="data" id="m_update-diarioobra_data" class="form-control" disabled>
                     </div>
                     <div class="input-group input-group-sm mb-2">
                         <span class="input-group-text">Descrição:</span>
-                        <textarea class="form-control" id="m_update-diario_descricao"></textarea>
+                        <textarea class="form-control" id="m_update-diarioobra_descricao"></textarea>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="input-group input-group-sm mb-2">
-                                <label class="input-group-text" for="m_update-diario_climamanha">Manhã</label>
-                                <select class="form-select" id="m_update-diario_climamanha" name="climamanha">
+                                <label class="input-group-text" for="m_update-diarioobra_climamanha">Manhã</label>
+                                <select class="form-select" id="m_update-diarioobra_climamanha" name="climamanha">
                                     <option>Sol</option>
                                     <option>Chuva</option>
                                     <option>Nublado</option>
@@ -487,8 +487,8 @@
                         </div>
                         <div class="col">
                             <div class="input-group input-group-sm mb-2">
-                                <label class="input-group-text" for="m_update-diario_climatarde">Tarde</label>
-                                <select class="form-select" id="m_update-diario_climatarde" name="climatarde">
+                                <label class="input-group-text" for="m_update-diarioobra_climatarde">Tarde</label>
+                                <select class="form-select" id="m_update-diarioobra_climatarde" name="climatarde">
                                     <option selected>Sol</option>
                                     <option>Chuva</option>
                                     <option>Nublado</option>
@@ -500,9 +500,9 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id='m_update-diario_del'
+                    <button type="button" class="btn btn-danger" id='m_update-diarioobra_del'
                         data-bs-dismiss="modal">Deletar</button>
-                    <button type="button" class="btn btn-success" id='m_update-diario_save'>Salvar</button>
+                    <button type="button" class="btn btn-success" id='m_update-diarioobra_save'>Salvar</button>
                 </div>
             </div>
         </div>
@@ -589,7 +589,7 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="impressao_diario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal" id="impressao_diarioobra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -600,15 +600,15 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="input-group input-group-sm mb-2">
-                                <label class="input-group-text" for="m_update-programacao_id">CR:</label>
-                                <input type="text" class="form-control" id="impressao_diario_cr">
+                                <label class="input-group-text" >CR:</label>
+                                <input type="text" class="form-control" id="impressao_diarioobra_cr">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2">
                                 <label class="input-group-text"
                                     for="m_update-programacao_iniciosemana">Segunda-feira:</label>
-                                <input type="date" id="impressao_diario_iniciosemana" class="form-control"
+                                <input type="date" id="impressao_diarioobra_iniciosemana" class="form-control"
                                     value="{{hojeJS}}">
                             </div>
                         </div>

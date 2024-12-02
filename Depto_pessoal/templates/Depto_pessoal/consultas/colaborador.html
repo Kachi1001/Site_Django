@@ -63,13 +63,7 @@
         </div>
     </div>
 
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">EQUIPE:</label>
-            <select class="form-control" id="f_colaborador_equipe">
-            </select>
-        </div>
-    </div>
+
 </div>
 <div class="row align-items-center mt-3">
     <div class="col-auto">
@@ -95,6 +89,13 @@
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">FUNÇÃO:</label>
             <select class="form-control" id="f_ocupacao_funcao">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">EQUIPE:</label>
+            <select class="form-control" id="f_ocupacao_equipe">
             </select>
         </div>
     </div>
@@ -240,7 +241,7 @@
 <!-- , 'ferias_utilizadas', 'ferias_processadas', 'periodo_aquisitivo', 'ocupacao' -->
 <script>
     var colab
-    var objs = ['ocupacao', 'feriasutilizadas', 'feriasprocessadas', 'periodo_aquisitivo']
+    var objs = ['periodo_aquisitivo','ocupacao', 'feriasutilizadas', 'feriasprocessadas']
     function carregarDados() {
         let c = new Form('colaborador', 'view')
         c.open(colab)

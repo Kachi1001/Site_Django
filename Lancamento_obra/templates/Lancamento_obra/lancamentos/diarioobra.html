@@ -11,14 +11,14 @@
     <div class="col-7">
         <div class="input-group input-group-sm mb-2">
             <label class="input-group-text">Digitalizado</label>
-            <input type="file" class="form-control" id="form_diario_arquivo" accept="image/*">
+            <input type="file" class="form-control" id="form_diarioobra_arquivo" accept="image/*">
         </div>
         <div class="row">
             <div class="col">
                 <div class="row justify-content-end">
                     <div class="input-group input-group-sm">
                         <label class="input-group-text">Obra:</label>
-                        <select class="form-select" id="form_diario_obra"></select>
+                        <select class="form-select" id="form_diarioobra_obra"></select>
                     </div>
                     <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_finalizadas"
                         onclick="filtrar('obra')">ocultar finalizadas</a>
@@ -26,37 +26,37 @@
             </div>
             <div class="col-4">
                 <div class="input-group input-group-sm mb-2">
-                    <label class="input-group-text" for="form_diario_indice">Indice:</label>
-                    <input type="number" id="form_diario_indice" class="form-control">
+                    <label class="input-group-text" for="form_diarioobra_indice">Indice:</label>
+                    <input type="number" id="form_diarioobra_indice" class="form-control">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <div class="input-group input-group-sm mb-2">
-                    <label class="input-group-text" for="form_diario_encarregado">Encarregado:</label>
-                    <select class="form-select" id="form_diario_encarregado">
+                    <label class="input-group-text" for="form_diarioobra_encarregado">Encarregado:</label>
+                    <select class="form-select" id="form_diarioobra_encarregado">
                     </select>
                 </div>
             </div>
             <div class="col-5">
                 <div class="input-group input-group-sm mb-1">
-                    <label class="input-group-text" for="form_diario_data">Data:</label>
-                    <input type="date" id="form_diario_data" class="form-control">
+                    <label class="input-group-text" for="form_diarioobra_data">Data:</label>
+                    <input type="date" id="form_diarioobra_data" class="form-control">
                 </div>
             </div>
         </div>
         <div class="input-group input-group-sm mb-2">
             <span class="input-group-text">Descrição:</span>
-            <textarea class="form-control" id="form_diario_descricao"></textarea>
+            <textarea class="form-control" id="form_diarioobra_descricao"></textarea>
         </div>
         <div class="col align-self-center">
             <h4>Climas</h4>
             <div class="row">
                 <div class="col">
                     <div class="input-group input-group-sm mb-2">
-                        <label class="input-group-text" for="form_diario_climamanha">Manhã</label>
-                        <select class="form-select" id="form_diario_climamanha">
+                        <label class="input-group-text" for="form_diarioobra_climamanha">Manhã</label>
+                        <select class="form-select" id="form_diarioobra_climamanha">
                             <option>Sol</option>
                             <option>Chuva</option>
                             <option>Nublado</option>
@@ -66,8 +66,8 @@
                 </div>
                 <div class="col">
                     <div class="input-group input-group-sm mb-2">
-                        <label class="input-group-text" for="form_diario_climatarde">Tarde</label>
-                        <select class="form-select" id="form_diario_climatarde">
+                        <label class="input-group-text" for="form_diarioobra_climatarde">Tarde</label>
+                        <select class="form-select" id="form_diarioobra_climatarde">
                             <option selected>Sol</option>
                             <option>Chuva</option>
                             <option>Nublado</option>
@@ -80,15 +80,15 @@
         <div class="row justify-content-end">
             <div class="col-auto"><button type="button" class="btn btn-primary mt-2 mb-2"
                     onclick="register_redirect()">Lançar e Abrir atividade</button></div>
-            <div class="col-auto"><button type="button" class="btn btn-success mt-2 mb-2" id="form_diario_submit"
+            <div class="col-auto"><button type="button" class="btn btn-success mt-2 mb-2" id="form_diarioobra_submit"
                     onclick="registrar()">Lançar</button></div>
         </div>
-        <div div='row mb-2' style="border-top: 1px solid lightgray;">{%include app|add:'/table/diario.html'%}</div>
+        <div div='row mb-2' style="border-top: 1px solid lightgray;">{%include app|add:'/table/diarioobra.html'%}</div>
     </div>
     <div class="col">
         <div class="text-center">
             <img src="https://cdn-icons-png.flaticon.com/512/104/104090.png" class="img-thumbnail" alt="Digitalização"
-                style="width: 600px;height: 750px; object-fit: contain; " id="form_diario_digitalização"
+                style="width: 600px;height: 750px; object-fit: contain; " id="form_diarioobra_digitalização"
                 data-bs-toggle="modal" data-bs-target="#view_diario">
         </div>
     </div>
@@ -100,8 +100,8 @@
     const prefix = 'form_{{resource}}_'
     var resource
 
-    const photo = document.getElementById('form_diario_digitalização');
-    const file = document.getElementById('form_diario_arquivo');
+    const photo = document.getElementById('form_diarioobra_digitalização');
+    const file = document.getElementById('form_diarioobra_arquivo');
     var filename
     async function load() {
         resource = await generics.load.resource('{{resource}}')
@@ -117,8 +117,8 @@
             }
         })
 
-        $('#form_diario_arquivo').change(function () {
-            filename = $('#form_diario_arquivo').val().replace("C:\\fakepath\\", "").split(".")
+        $('#form_diarioobra_arquivo').change(function () {
+            filename = $('#form_diarioobra_arquivo').val().replace("C:\\fakepath\\", "").split(".")
 
             let reader = new FileReader();
 
@@ -126,11 +126,11 @@
                 photo.src = reader.result;
                 previewModal_img(reader.result)
                 info = filename[0].split("_")
-                $('#form_diario_obra_id').val(info[0])
+                $('#form_diarioobra_obra_id').val(info[0])
                 d = info[1].split("-")
                 d = d[2] + "-" + adicionaZero(parseInt(d[1])) + "-" + adicionaZero(parseInt(d[0]));
-                $('#form_diario_data').val(d)
-                $('#form_diario_indice').val(info[2])
+                $('#form_diarioobra_data').val(d)
+                $('#form_diarioobra_indice').val(info[2])
             }
             reader.readAsDataURL(file.files[0]);
         });
@@ -162,12 +162,12 @@
             return numero;
     }
     async function registrar(redirect) {
-        let file = $('#form_diario_arquivo')[0].files[0];
+        let file = $('#form_diarioobra_arquivo')[0].files[0];
         if (!file) {
             toasts('warning', { 'method': 'Registro', 'message': "Por favor, selecione um arquivo primeiro." })
             return;
         }
-        if (!$("#form_diario_data").val()) {
+        if (!$("#form_diarioobra_data").val()) {
             toasts('warning', { 'method': 'Registro', 'message': "Por favor, selecione uma data primeiro." })
             return;
         }
@@ -182,10 +182,10 @@
         apiRequest.upload('diario', formData).then(() => {
             $("#table").bootstrapTable("refresh");
             if (redirect) {
-                let obra = $('#form_diario_obra').val()
-                let data = $('#form_diario_data').val()
-                let indice = $('#form_diario_indice').val()
-                let desc = $('#form_diario_descricao').val()
+                let obra = $('#form_diarioobra_obra').val()
+                let data = $('#form_diarioobra_data').val()
+                let indice = $('#form_diarioobra_indice').val()
+                let desc = $('#form_diarioobra_descricao').val()
                 window.location.href = `${window.location.origin}/Lancamento_obra/lancamentos/atividade?obra=${obra}&data=${data}&indice=${indice}&desc=${desc}`;
             }
         })

@@ -1,12 +1,12 @@
 const ocupacao = {
     text: ["id", "data_inicio", "data_fim", "remuneracao"], //campos que pode ser preencher
-    select: ["colaborador", "funcao"], // campos selecionavel
+    select: ["equipe","colaborador", "funcao"], // campos selecionavel
     check: ["continuo"], // campos marcaveis
 };
 
 const colaborador= {
     text: ["nome", "id", "cpf", "rg", "nascimento", "fone",'avaliacao_descricao'], //campos que pode ser preencher
-    select: ["equipe",'avaliacao'], // campos selecionavel
+    select: ['avaliacao'], // campos selecionavel
     check: ["ativo",'avaliacao_recontratar'], // campos marcaveis
 };
 
@@ -19,8 +19,8 @@ const objFields = {
     },
     equipe: {
         text: ["id"], //campos que pode ser preencher
-        select: [], // campos selecionavel
-        check: [], // campos marcaveis
+        select: [''], // campos selecionavel
+        check: [''], // campos marcaveis
     },
     feriasprocessadas: {
         text: ["id", "dias_processados", "data_inicio"], //campos que pode ser preencher
@@ -34,7 +34,7 @@ const objFields = {
     },
     periodo_aquisitivo: {
         text: ["id", "colaborador", "adquirido_em", "periodo"], //campos que pode ser preencher
-        select: [], // campos selecionavel
+        select: [''], // campos selecionavel
         check: ["consumido"], // campos marcaveis
     },
     ocupacao: ocupacao,
@@ -42,23 +42,23 @@ const objFields = {
     ocupacao_alterar: ocupacao,
     colaborador_desligamento: {
         text: ["id", "data", "colaborador"], //campos que pode ser preencher
-        select: [], // campos selecionavel
-        check: [], // campos marcaveis
+        select: [''], // campos selecionavel
+        check: [''], // campos marcaveis
     },
     lembrete: {
         text: ["id", "colaborador", "telefone"], //campos que pode ser preencher
         select: ["padrao"], // campos selecionavel
-        check: [], // campos marcaveis
+        check: [''], // campos marcaveis
     },
     feriado: {
         text: ["id", "descricao"], //campos que pode ser preencher
-        select: [], // campos selecionavel
+        select: [''], // campos selecionavel
         check: ['recorrente'], // campos marcaveis
     },
     tipoavaliacao: {
     text: ["id", "situacao"], //campos que pode ser preencher
-    select: [], // campos selecionavel
-    check: [], // campos marcaveis
+    select: [''], // campos selecionavel
+    check: [''], // campos marcaveis
     },
     avaliacao: colaborador
 };
@@ -68,7 +68,9 @@ class BaseLoader {
         this.object = object; // Nome do objeto (colaborador, equipe, etc.)
         this.type = type; // Tipo do loader (post, view, update, etc...)
         this.prefix = object + "_"; // Prefixo para os campos (modal/form)
-        this.inputs = objFields[object]; // Campos associados ao objeto
+        apiRequest.get(`resource/${object}`).then((data)=>{
+            this.inputs = data
+        }) // Campos associados ao objeto
         this.id = undefined; // ID de registro, se necessário
         loader = this;
         console.log(this)

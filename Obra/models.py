@@ -6,305 +6,299 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+# Unable to inspect table 'alocacoes'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'atividade'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'atividade_horas'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'base_terceiros'
+# The error was: user mapping not found for "dev_front"
 
 
-class Atividade(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    colaborador = models.CharField(max_length=255)
-    dia = models.DateField()
-    descricao = models.CharField(max_length=600, blank=True, null=True)
-    indice = models.IntegerField()
-    diaseguinte = models.BooleanField()
-    horaini1 = models.TimeField()
-    horafim1 = models.TimeField()
-    horaini2 = models.TimeField(blank=True, null=True)
-    horafim2 = models.TimeField(blank=True, null=True)
-    horaini3 = models.TimeField(blank=True, null=True)
-    horafim3 = models.TimeField(blank=True, null=True)
-    perdevale = models.BooleanField(blank=True, null=True)
-    revisaorh = models.CharField(max_length=255, blank=True, null=True)
-    etapa1 = models.IntegerField(blank=True, null=True)
-    etapa2 = models.IntegerField(blank=True, null=True)
-    etapa3 = models.IntegerField(blank=True, null=True)
-    atividade = models.ForeignKey('TipoAtividade', models.DO_NOTHING, db_column='atividade')
-    obra = models.ForeignKey('Obra', models.DO_NOTHING, db_column='obra')
-    diario = models.CharField(max_length=30, blank=True, null=True)
-    meiadiaria = models.BooleanField(blank=True, null=True)
-    supervisor = models.CharField(max_length=100, blank=True, null=True)
-    motivo = models.CharField(max_length=30, blank=True, null=True)
+class Cidade(models.Model):
+    cidade = models.CharField()
+    estado = models.CharField(max_length=2)
 
     class Meta:
         managed = False
-        db_table = 'atividade'
+        db_table = 'cidade'
+# Unable to inspect table 'colaborador'
+# The error was: user mapping not found for "dev_front"
 
 
-class AtividadeHoras(models.Model):
-    id = models.IntegerField(primary_key=True)
-    colaborador = models.CharField(blank=True, null=True)
-    dia = models.DateField(blank=True, null=True)
-    obra = models.IntegerField(blank=True, null=True)
-    hn = models.TimeField(blank=True, null=True)
-    h50 = models.TimeField(blank=True, null=True)
-    h100 = models.TimeField(blank=True, null=True)
-    competencia = models.CharField(blank=True, null=True)
-    dispensa = models.TimeField(blank=True, null=True)
-    falta = models.TimeField(blank=True, null=True)
+class CotComposicao(models.Model):
+    nome = models.CharField()
+    padrao = models.CharField()
 
     class Meta:
         managed = False
-        db_table = 'atividade_horas'
+        db_table = 'cot_composicao'
 
 
-class BaseTerceiros(models.Model):
-    dia = models.DateField(blank=True, null=True)
-    colaborador = models.CharField(max_length=255, blank=True, null=True)
-    atestado = models.DurationField(blank=True, null=True)
-    atividade_obra = models.DurationField(blank=True, null=True)
-    dispensa = models.DurationField(blank=True, null=True)
-    falta = models.DurationField(blank=True, null=True)
-    ferias = models.DurationField(blank=True, null=True)
-    folga = models.DurationField(blank=True, null=True)
-    treinamento = models.DurationField(blank=True, null=True)
-    he100 = models.IntegerField(blank=True, null=True)
-    he50 = models.IntegerField(blank=True, null=True)
-    hn = models.IntegerField(blank=True, null=True)
-    obra = models.IntegerField(blank=True, null=True)
-    ate2 = models.DurationField(blank=True, null=True)
-    atv2 = models.DurationField(blank=True, null=True)
-    d2 = models.DurationField(blank=True, null=True)
-    fl2 = models.DurationField(blank=True, null=True)
-    fe2 = models.DurationField(blank=True, null=True)
-    fo2 = models.DurationField(blank=True, null=True)
-    tr2 = models.DurationField(blank=True, null=True)
-    totalmax = models.DurationField(blank=True, null=True)
-    totalparc = models.DurationField(blank=True, null=True)
-    uteis = models.DurationField(blank=True, null=True)
-    he_100 = models.DurationField(blank=True, null=True)
-    he_50 = models.DurationField(blank=True, null=True)
-    hesaldo = models.DurationField(blank=True, null=True)
-    dcid = models.TextField(blank=True, null=True)
+class CotMaterialComposicao(models.Model):
+    composicao = models.ForeignKey(CotComposicao, models.DO_NOTHING, db_column='composicao')
+    material = models.ForeignKey('MatProduto', models.DO_NOTHING, db_column='material')
+    unidade = models.CharField()
+    rendimento = models.DecimalField(max_digits=65535, decimal_places=65535)
+    espessura = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    sn_espessura = models.BooleanField()
+    largura = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    sn_largura = models.BooleanField()
+    comprimento = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    sn_comprimento = models.BooleanField()
+    outra_dimensao = models.BooleanField()
+    desconto_dimensao = models.DecimalField(max_digits=65535, decimal_places=65535)
 
     class Meta:
         managed = False
-        db_table = 'base_terceiros'
+        db_table = 'cot_material_composicao'
 
 
-class Colaborador(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    nome = models.CharField(max_length=255)
-    admissao = models.DateField(blank=True, null=True)
-    demissao = models.DateField(blank=True, null=True)
-    diaria = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
-    observacao = models.CharField(max_length=255, blank=True, null=True)
-    funcao = models.CharField(max_length=100, blank=True, null=True)
-    contrato = models.CharField(max_length=20)
-    encarregado = models.BooleanField(blank=True, null=True)
+class CustoAdm(models.Model):
+    competencia = models.CharField(primary_key=True, max_length=7)
+    valor = models.DecimalField(max_digits=15, decimal_places=2)
 
     class Meta:
         managed = False
-        db_table = 'colaborador'
+        db_table = 'custo_adm'
+# Unable to inspect table 'descontos_resumo'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'dia'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'diarias'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'diarioobra'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'django_migrations'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'efetividade'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'etapa'
+# The error was: user mapping not found for "dev_front"
 
 
-class Dia(models.Model):
-    dia = models.DateField(primary_key=True)
-    diasemana = models.IntegerField()
-    feriado = models.BooleanField()
-    programacao = models.DateField()
-
-    class Meta:
-        managed = False
-        db_table = 'dia'
-
-
-class Diarias(models.Model):
-    colaborador = models.CharField(max_length=255, blank=True, null=True)
-    competencia = models.TextField(blank=True, null=True)
-    diaria = models.DecimalField(max_digits=4, decimal_places=1, blank=True, null=True)
-    horas = models.DecimalField(max_digits=4, decimal_places=1, blank=True, null=True)
-    valor_diarias = models.DecimalField(max_digits=6, decimal_places=1, blank=True, null=True)
-    valor_horas = models.DecimalField(max_digits=6, decimal_places=1, blank=True, null=True)
-    total = models.DecimalField(max_digits=6, decimal_places=1, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'diarias'
-
-
-class Diarioobra(models.Model):
+class FdCompra(models.Model):
+    obra = models.IntegerField()
+    nf = models.CharField()
+    fornecedor = models.ForeignKey('MatFornecedor', models.DO_NOTHING, db_column='fornecedor')
+    produto = models.ForeignKey('MatProduto', models.DO_NOTHING, db_column='produto')
+    quantidade = models.DecimalField(max_digits=65535, decimal_places=65535)
+    valor_unitario = models.DecimalField(max_digits=65535, decimal_places=65535)
+    valor_total = models.DecimalField(max_digits=65535, decimal_places=65535)
+    observacao = models.CharField(blank=True, null=True)
+    bm = models.CharField(blank=True, null=True)
+    cancelamento = models.BooleanField()
+    unidade = models.CharField(max_length=5)
     data = models.DateField()
+    email = models.BooleanField()
+    boleto = models.BooleanField()
+    vencimento = models.DateField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'fd_compra'
+
+
+class FdOrcado(models.Model):
     obra = models.ForeignKey('Obra', models.DO_NOTHING, db_column='obra')
-    encarregado = models.CharField(max_length=100, blank=True, null=True)
-    climamanha = models.CharField(max_length=20, blank=True, null=True)
-    climatarde = models.CharField(max_length=20, blank=True, null=True)
-    imagem = models.CharField(max_length=255, blank=True, null=True)
-    diario = models.CharField(max_length=50)
-    indice = models.IntegerField()
+    fornecedor = models.ForeignKey('MatFornecedor', models.DO_NOTHING, db_column='fornecedor', blank=True, null=True)
+    produto = models.ForeignKey('MatProduto', models.DO_NOTHING, db_column='produto')
+    quantidade = models.DecimalField(max_digits=15, decimal_places=6)
+    valor_unitario = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    valor_total = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    observacao = models.CharField(blank=True, null=True)
+    unidade = models.CharField(max_length=5)
+    programado = models.BooleanField()
+    composicao = models.IntegerField(blank=True, null=True)
+    enviar_cotacao = models.BooleanField()
+    etapa = models.CharField(blank=True, null=True)
+    cidade = models.ForeignKey(Cidade, models.DO_NOTHING, db_column='cidade')
+    endereco = models.CharField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'fd_orcado'
+
+
+class FdProgramacaoCompra(models.Model):
+    obra = models.ForeignKey('Obra', models.DO_NOTHING, db_column='obra')
+    fornecedor = models.ForeignKey('MatFornecedor', models.DO_NOTHING, db_column='fornecedor', blank=True, null=True)
+    produto = models.ForeignKey('MatProduto', models.DO_NOTHING, db_column='produto')
+    quantidade = models.DecimalField(max_digits=65535, decimal_places=65535)
+    valor_unitario = models.DecimalField(max_digits=65535, decimal_places=65535)
+    valor_total = models.DecimalField(max_digits=65535, decimal_places=65535)
+    observacao = models.CharField(blank=True, null=True)
+    unidade = models.CharField(max_length=5)
+    aquisicao_finalizada = models.BooleanField()
+
+    class Meta:
+        managed = False
+        db_table = 'fd_programacao_compra'
+
+
+class FdSobras(models.Model):
+    obra = models.IntegerField()
+    produto = models.IntegerField()
+    quantidade = models.DecimalField(max_digits=65535, decimal_places=65535)
+    custo_unitario = models.DecimalField(max_digits=65535, decimal_places=65535)
+    total_sobra = models.DecimalField(max_digits=65535, decimal_places=65535)
+
+    class Meta:
+        managed = False
+        db_table = 'fd_sobras'
+# Unable to inspect table 'feriado'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'funcao'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'grafico'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'horas_mes'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'horas_totais'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'incompletos'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'inconsistencias'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'indicadores'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'indiceobra'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'localizacaoprogramada'
+# The error was: user mapping not found for "dev_front"
+
+
+class MatCategoria(models.Model):
+    categoria = models.CharField()
+    descricao = models.CharField()
+
+    class Meta:
+        managed = False
+        db_table = 'mat_categoria'
+
+
+class MatFornecedor(models.Model):
+    nome = models.CharField()
+    cnpj = models.CharField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'mat_fornecedor'
+
+
+class MatProduto(models.Model):
+    produto = models.CharField()
+    categoria = models.CharField(blank=True, null=True)
     descricao = models.CharField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'diarioobra'
+        db_table = 'mat_produto'
 
 
-class DjangoMigrations(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    app = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    applied = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_migrations'
-
-
-class Efetividade(models.Model):
-    colaborador = models.CharField(max_length=255, blank=True, null=True)
-    dia = models.DateField(blank=True, null=True)
-    obra = models.IntegerField(blank=True, null=True)
-    descricao = models.TextField(blank=True, null=True)
-    horaini1 = models.TimeField(blank=True, null=True)
-    horafim1 = models.TimeField(blank=True, null=True)
-    horaini2 = models.TimeField(blank=True, null=True)
-    horafim2 = models.TimeField(blank=True, null=True)
-    horaini3 = models.TimeField(blank=True, null=True)
-    horafim3 = models.TimeField(blank=True, null=True)
-    id = models.IntegerField(primary_key=True)
-    diario = models.CharField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'efetividade'
-
-
-class Etapa(models.Model):
-    cr = models.IntegerField(primary_key=True)
-    etapa = models.IntegerField()
-    descricao = models.CharField(max_length=50)
-
-    class Meta:
-        managed = False
-        db_table = 'etapa'
-        unique_together = (('cr', 'etapa'),)
-
-
-class Funcao(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    funcao = models.CharField(max_length=100)
-    grupo = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'funcao'
-
-
-class Indiceobra(models.Model):
-    indice = models.CharField(primary_key=True, max_length=50)
-
-    class Meta:
-        managed = False
-        db_table = 'indiceobra'
-
-
-class Localizacaoprogramada(models.Model):
-    colaborador = models.CharField(max_length=255)
-    iniciosemana = models.DateField()
-    encarregado = models.CharField(max_length=100, blank=True, null=True)
-    observacao = models.CharField(max_length=255, blank=True, null=True)
-    obra = models.ForeignKey('Obra', models.DO_NOTHING, db_column='obra')
+class Medicoes(models.Model):
     id = models.CharField(primary_key=True)
+    obra = models.ForeignKey('Obra', models.DO_NOTHING, db_column='obra')
+    numero = models.IntegerField()
+    data = models.DateField(blank=True, null=True)
+    observacao = models.CharField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'localizacaoprogramada'
-        unique_together = (('colaborador', 'iniciosemana', 'obra'),)
+        db_table = 'medicoes'
+# Unable to inspect table 'obra'
+# The error was: user mapping not found for "dev_front"
 
 
 class Obra(models.Model):
     id = models.IntegerField(primary_key=True)
-    orcamento = models.CharField(max_length=20)
-    retrabalho = models.CharField(max_length=20, blank=True, null=True)
-    empresa = models.CharField(max_length=100)
-    cidade = models.CharField(max_length=100)
-    descricao = models.CharField(max_length=500, blank=True, null=True)
-    finalizada = models.BooleanField()
-    indice = models.CharField(max_length=100)
-    supervisor = models.ForeignKey('Supervisor', models.DO_NOTHING, db_column='supervisor', blank=True, null=True)
-    tecnicon = models.CharField(blank=True, null=True)
+    orcamento = models.CharField()
+    retrabalho = models.CharField(blank=True, null=True)
+    cliente = models.CharField()
+    cidade = models.CharField()
+    descricao = models.CharField()
+    segmento = models.CharField(blank=True, null=True)
+    supervisor = models.CharField(blank=True, null=True)
+    indice = models.CharField(blank=True, null=True)
+    data_inicio = models.DateField(blank=True, null=True)
+    data_fim = models.DateField(blank=True, null=True)
+    finaliza_medicoes = models.BooleanField()
 
     class Meta:
         managed = False
-        db_table = 'obra'
+        db_table = 'obra_'
 
 
-class RevisaoTerceiros(models.Model):
-    dia = models.DateField(blank=True, null=True)
-    nome = models.CharField(max_length=255, blank=True, null=True)
-    diaria = models.DecimalField(max_digits=4, decimal_places=1, blank=True, null=True)
-    horas = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
-    dispensa = models.DurationField(blank=True, null=True)
-    falta = models.DurationField(blank=True, null=True)
-    horas_lancadas = models.DurationField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'revisao_terceiros'
-
-
-class Supervisor(models.Model):
-    supervisor = models.CharField(primary_key=True, max_length=100)
-    ativo = models.BooleanField()
+class Orcado(models.Model):
+    id = models.OneToOneField(Obra, models.DO_NOTHING, db_column='id', primary_key=True)
+    execucao_dias = models.DecimalField(max_digits=65535, decimal_places=65535)
+    execucao_horas = models.DecimalField(max_digits=65535, decimal_places=65535)
+    fat_direto = models.DecimalField(max_digits=15, decimal_places=2)
+    mat_tecnika = models.DecimalField(max_digits=65535, decimal_places=65535)
+    maquinas = models.DecimalField(max_digits=65535, decimal_places=65535)
+    mo = models.DecimalField(max_digits=65535, decimal_places=65535)
+    diversas = models.DecimalField(max_digits=65535, decimal_places=65535)
+    impostos = models.DecimalField(max_digits=65535, decimal_places=65535)
+    adm_comercial = models.DecimalField(max_digits=65535, decimal_places=65535)
+    venda_geral = models.DecimalField(max_digits=65535, decimal_places=65535)
+    faturamento = models.DecimalField(max_digits=65535, decimal_places=65535)
+    lucro = models.DecimalField(max_digits=65535, decimal_places=65535)
+    resultado_p100 = models.DecimalField(max_digits=65535, decimal_places=65535)
 
     class Meta:
         managed = False
-        db_table = 'supervisor'
+        db_table = 'orcado'
 
 
-class Temp(models.Model):
-    idd = models.IntegerField(blank=True, null=True)
-    cr = models.IntegerField(blank=True, null=True)
-    hora = models.TimeField(blank=True, null=True)
-    total = models.TimeField(blank=True, null=True)
-    he50 = models.TimeField(blank=True, null=True)
-    dia = models.DateField(blank=True, null=True)
-    hn = models.TimeField(blank=True, null=True)
+class OrcadoRealizado(models.Model):
+    orcado = models.DecimalField(max_digits=15, decimal_places=2)
+    realizado = models.DecimalField(max_digits=15, decimal_places=2)
+    tipo = models.CharField(primary_key=True)
 
     class Meta:
         managed = False
-        db_table = 'temp'
+        db_table = 'orcado_realizado'
 
 
-class Temp2(models.Model):
-    idd = models.IntegerField(blank=True, null=True)
-    cr = models.IntegerField(blank=True, null=True)
-    hora = models.TimeField(blank=True, null=True)
-    htot = models.TimeField(blank=True, null=True)
-    h50 = models.TimeField(blank=True, null=True)
-    hn = models.TimeField(blank=True, null=True)
-    dia = models.DateField(blank=True, null=True)
-    h100 = models.TimeField(blank=True, null=True)
-    dispensa = models.TimeField(blank=True, null=True)
-    falta = models.TimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'temp2'
-
-
-class Temp3(models.Model):
-    idd = models.IntegerField(blank=True, null=True)
-    h50 = models.DurationField(blank=True, null=True)
-    hn = models.DurationField(blank=True, null=True)
-    h100 = models.DurationField(blank=True, null=True)
+class Realizado(models.Model):
+    id = models.OneToOneField(Obra, models.DO_NOTHING, db_column='id', primary_key=True)
+    r_execucao_dias = models.DecimalField(max_digits=65535, decimal_places=65535)
+    r_execucao_horas = models.DecimalField(max_digits=65535, decimal_places=65535)
+    r_fat_direto = models.DecimalField(max_digits=15, decimal_places=2)
+    r_mat_tecnika = models.DecimalField(max_digits=65535, decimal_places=65535)
+    r_maquinas = models.DecimalField(max_digits=65535, decimal_places=65535)
+    r_mo = models.DecimalField(max_digits=65535, decimal_places=65535)
+    r_diversas = models.DecimalField(max_digits=65535, decimal_places=65535)
+    r_impostos = models.DecimalField(max_digits=65535, decimal_places=65535)
+    r_adm_comercial = models.DecimalField(max_digits=65535, decimal_places=65535)
+    r_venda_geral = models.DecimalField(max_digits=65535, decimal_places=65535)
+    r_faturamento = models.DecimalField(max_digits=65535, decimal_places=65535)
+    r_lucro = models.DecimalField(max_digits=65535, decimal_places=65535)
+    r_resultado_p100 = models.DecimalField(max_digits=65535, decimal_places=65535)
 
     class Meta:
         managed = False
-        db_table = 'temp3'
-
-
-class TipoAtividade(models.Model):
-    tipo = models.CharField(primary_key=True, max_length=30)
-    indice = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'tipo_atividade'
+        db_table = 'realizado'
+# Unable to inspect table 'revisao_terceiros'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'sub'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'subconsulta_lancamento'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'supervisor'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'tecnicon'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'temp'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'temp2'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'temp3'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'temp4'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'temp5'
+# The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'tipo_atividade'
+# The error was: user mapping not found for "dev_front"
