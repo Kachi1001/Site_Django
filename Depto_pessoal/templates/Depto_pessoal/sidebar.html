@@ -14,7 +14,7 @@
             <div id="menu-colaborador" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <a href="{%url app|add:'_cadastros' 'colaborador'%}"><i {{icon.form}}></i> Cadastrar</a>
                 <a href="#" onclick="abrirRegistro('funcao')"><i {{icon.modal}}></i> Função</a>
-                <a href="#" onclick="abrirRegistro('funcao')"><i {{icon.modal}}></i> Equipe</a>
+                <a href="#" onclick="abrirRegistro('equipe')"><i {{icon.modal}}></i> Equipe</a>
                 <a href="{%url app|add:'_tabelas' 'colaborador'%}"><i {{icon.table}}></i> Tabela</a>
             </div>
         </div>
@@ -89,7 +89,6 @@
     <script>
         function abrirRegistro(modal){
             const load = new Modal(modal,'register')
-            load.open()
         }
     </script>
 </div>

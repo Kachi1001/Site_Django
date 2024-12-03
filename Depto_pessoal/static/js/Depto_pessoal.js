@@ -1,13 +1,21 @@
 const ocupacao = {
     text: ["id", "data_inicio", "data_fim", "remuneracao"], //campos que pode ser preencher
-    select: ["equipe","colaborador", "funcao"], // campos selecionavel
+    select: ["equipe", "colaborador", "funcao"], // campos selecionavel
     check: ["continuo"], // campos marcaveis
 };
 
-const colaborador= {
-    text: ["nome", "id", "cpf", "rg", "nascimento", "fone",'avaliacao_descricao'], //campos que pode ser preencher
-    select: ['avaliacao'], // campos selecionavel
-    check: ["ativo",'avaliacao_recontratar'], // campos marcaveis
+const colaborador = {
+    text: [
+        "nome",
+        "id",
+        "cpf",
+        "rg",
+        "nascimento",
+        "fone",
+        "avaliacao_descricao",
+    ], //campos que pode ser preencher
+    select: ["avaliacao"], // campos selecionavel
+    check: ["ativo", "avaliacao_recontratar"], // campos marcaveis
 };
 
 const objFields = {
@@ -19,8 +27,8 @@ const objFields = {
     },
     equipe: {
         text: ["id"], //campos que pode ser preencher
-        select: [''], // campos selecionavel
-        check: [''], // campos marcaveis
+        select: [""], // campos selecionavel
+        check: [""], // campos marcaveis
     },
     feriasprocessadas: {
         text: ["id", "dias_processados", "data_inicio"], //campos que pode ser preencher
@@ -34,7 +42,7 @@ const objFields = {
     },
     periodo_aquisitivo: {
         text: ["id", "colaborador", "adquirido_em", "periodo"], //campos que pode ser preencher
-        select: [''], // campos selecionavel
+        select: [""], // campos selecionavel
         check: ["consumido"], // campos marcaveis
     },
     ocupacao: ocupacao,
@@ -42,42 +50,39 @@ const objFields = {
     ocupacao_alterar: ocupacao,
     colaborador_desligamento: {
         text: ["id", "data", "colaborador"], //campos que pode ser preencher
-        select: [''], // campos selecionavel
-        check: [''], // campos marcaveis
+        select: [""], // campos selecionavel
+        check: [""], // campos marcaveis
     },
     lembrete: {
         text: ["id", "colaborador", "telefone"], //campos que pode ser preencher
         select: ["padrao"], // campos selecionavel
-        check: [''], // campos marcaveis
+        check: [""], // campos marcaveis
     },
     feriado: {
         text: ["id", "descricao"], //campos que pode ser preencher
-        select: [''], // campos selecionavel
-        check: ['recorrente'], // campos marcaveis
+        select: [""], // campos selecionavel
+        check: ["recorrente"], // campos marcaveis
     },
     tipoavaliacao: {
-    text: ["id", "situacao"], //campos que pode ser preencher
-    select: [''], // campos selecionavel
-    check: [''], // campos marcaveis
+        text: ["id", "situacao"], //campos que pode ser preencher
+        select: [""], // campos selecionavel
+        check: [""], // campos marcaveis
     },
-    avaliacao: colaborador
+    avaliacao: colaborador,
 };
 var loader;
+
 class BaseLoader {
     constructor(object, type) {
         this.object = object; // Nome do objeto (colaborador, equipe, etc.)
         this.type = type; // Tipo do loader (post, view, update, etc...)
         this.prefix = object + "_"; // Prefixo para os campos (modal/form)
-        apiRequest.get(`resource/${object}`).then((data)=>{
-            this.inputs = data
-        }) // Campos associados ao objeto
         this.id = undefined; // ID de registro, se necessário
-        loader = this;
-        console.log(this)
+        this.loader = this;
     }
-    open(id = undefined) {
+    async open(id = undefined) {
         this.id = id;
-        console.log(this)
+        this.inputs = await apiRequest.get(`resource/${this.object}`);
         this[this.type](); // Registra ou atualiza conforme o tipo
     }
     async populateSelect(data = [], field = "") {
@@ -100,7 +105,6 @@ class BaseLoader {
             this.inputs.text.forEach((field) => {
                 $("#" + this.prefix + field).val(data[field]);
             });
-
             this.inputs.select.forEach(async (field) => {
                 const selects = await apiRequest.get(`select/${field}`);
                 this.populateSelect(selects, field);
@@ -116,7 +120,7 @@ class BaseLoader {
             this.inputs.text
                 .concat(this.inputs.check, this.inputs.select)
                 .forEach((field) => {
-                    if (this.type == "view") {
+                    if (this.type == "view" || this.type == 'filter') {
                         $("#" + this.prefix + field).attr("disabled", true);
                     }
                 });
@@ -158,27 +162,42 @@ class BaseLoader {
                         }
                         row.appendChild(cell);
                     });
-                    
+
                     const extraBtn = document.createElement("td");
                     if (this.type != "historico") {
                         const removeButton = document.createElement("i");
-                        removeButton.classList.add("btn-icon", "bg-danger","bi-trash3", "fs-6",'me-1');
-                        
+                        removeButton.classList.add(
+                            "btn-icon",
+                            "bg-danger",
+                            "bi-trash3",
+                            "fs-6",
+                            "me-1"
+                        );
+
                         removeButton.addEventListener("click", () => {
-                            loader.id = obj.id
+                            loader.id = obj.id;
                             Submit.delete(loader);
                         });
                         extraBtn.appendChild(removeButton);
-                    } 
-                    if (this.object != "periodo_aquisitivo" && this.object != "funcao" && this.object != "equipe" && this.object != "feriado" && this.object != "tipoavaliacao") {
+                    }
+                    if (
+                        this.object != "periodo_aquisitivo" &&
+                        this.object != "funcao" &&
+                        this.object != "equipe" &&
+                        this.object != "feriado" &&
+                        this.object != "tipoavaliacao"
+                    ) {
                         const editBtn = document.createElement("i");
-                        editBtn.classList.add("btn-icon", "bg-primary","bi-pencil", "fs-6",'me-1');
-                        
+                        editBtn.classList.add(
+                            "btn-icon",
+                            "bg-primary",
+                            "bi-pencil",
+                            "fs-6",
+                            "me-1"
+                        );
+
                         editBtn.addEventListener("click", () => {
-                            let modal = new Modal(
-                                this.object,
-                                "update"
-                            );
+                            let modal = new Modal(this.object, "update");
                             modal.open(obj.id);
                         });
                         extraBtn.appendChild(editBtn);
@@ -196,14 +215,13 @@ class BaseLoader {
 class Modal extends BaseLoader {
     constructor(object, type) {
         super(object, type); // Chama o construtor da classe DataManager
-        this.modal = ""; // Para armazenar a instância do modal
-        this.prefix = "m_" + this.type + '-' + this.prefix; // Prefixo de modal
-        this.myModal = document.getElementById(this.prefix.slice(0,-1));
+        this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
+        this.myModal = document.getElementById(this.prefix.slice(0, -1));
         this.modal = new bootstrap.Modal(this.myModal);
     }
 
     async register() {
-        this.inputs.select.forEach(async (select) => {
+        this.inputs = await this.inputs.select.forEach(async (select) => {
             const data = await apiRequest.get(`select/${select}`);
             this.populateSelect(data, select);
         });
@@ -211,14 +229,12 @@ class Modal extends BaseLoader {
         const table = await apiRequest.get(this.object);
         this.populateTable(table).then(() => {
             this.modal.show();
-        })
+        });
 
-        let loader = this;
-        console.log (loader)
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
-                Submit.post(loader);
+                Submit.post(this.loader);
             });
     }
     async update() {
@@ -260,11 +276,11 @@ class Modal extends BaseLoader {
             console.error("Error ao carregar", error);
         }
     }
-    async dissidio(){
-        this.lanc()
+    async dissidio() {
+        this.lanc();
     }
-    async alterar(){
-        this.lanc()
+    async alterar() {
+        this.lanc();
     }
 
     async processo() {
@@ -309,16 +325,18 @@ class Modal extends BaseLoader {
         this.load();
         this.modal.show();
         let loader = this;
-        this.id = this.id[0].value
+        this.id = this.id[0].value;
         $("#" + this.prefix + "submit")
-        .off()
-        .click(function () {
-            if (
-                prompt("Digite o ID do colaborador para confirmar!!") ==
-                $("#m_desligamento-colaborador_colaborador").val()
-            ) {
-                    loader.refresh = function () {page.redirect('')}
-                    Submit.delete(loader)
+            .off()
+            .click(function () {
+                if (
+                    prompt("Digite o ID do colaborador para confirmar!!") ==
+                    $("#m_desligamento-colaborador_colaborador").val()
+                ) {
+                    loader.refresh = function () {
+                        page.redirect("");
+                    };
+                    Submit.delete(loader);
                 } else {
                     toasts("danger", {
                         method: "Desligamento",
@@ -342,7 +360,7 @@ class Modal extends BaseLoader {
     }
 
     refresh() {
-        page.refresh()
+        page.refresh();
     }
 }
 
@@ -351,17 +369,13 @@ class Form extends BaseLoader {
         super(object, type); // Chama o construtor da classe DataManager
         this.prefix = "f_" + this.prefix; // Prefixo de modal
     }
-
-    // Inicializa o carregador
-
     // Registro
     register() {
-        let loader = this;
 
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
-                Submit.post(loader);
+                Submit.post(this.loader);
             });
         this.inputs.select.forEach((field) => {
             apiRequest.get(`select/${field}`).then((data) => {
@@ -370,14 +384,11 @@ class Form extends BaseLoader {
         });
     }
 
-    update() {
-        this.populateData();
-    }
-
     async view() {
         try {
-            const data = await apiRequest.get(this.object + "/" + this.id);
-            this.populateData(data);
+            apiRequest.get(this.object + "/" + this.id).then((data) =>{
+                this.populateData(data);
+            })
         } catch (error) {
             console.error("Error ao carregar", error);
         }
@@ -440,7 +451,7 @@ Submit = {
         }
     },
     delete: function (loader) {
-        console.log(loader)
+        console.log(loader);
         apiRequest.delete(loader.object + "/" + loader.id, () => {
             loader.modal.hide();
             loader.refresh();

@@ -243,18 +243,18 @@
     var colab
     var objs = ['periodo_aquisitivo','ocupacao', 'feriasutilizadas', 'feriasprocessadas']
     function carregarDados() {
-        let c = new Form('colaborador', 'view')
+        let c = new Form('colaborador', 'view', colab)
         c.open(colab)
 
         for (x in objs) {
-            const obj = new Form(objs[x], 'view')
-            obj.filter({ 'colaborador': colab })
+            x = new Form(objs[x], 'filter')
+            x.open({ 'colaborador': colab })
         }
     }
-    $(document).ready(function () {
+    function load () {
         colab = page.getParam('id')
         carregarDados()
-    })
+    }
 
     $('#btn-update').click(function () {
         let obj = new Modal('colaborador', 'update')
