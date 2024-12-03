@@ -398,9 +398,9 @@ class Form extends BaseLoader {
         carregarDados();
     }
 
-    async filter(filtro) {
+    async filter() {
         try {
-            const data = await apiRequest.get(this.object, filtro);
+            const data = await apiRequest.get(this.object, this.id);
             this.populateData(data[0]);
         } catch (error) {
             console.error("Error ao carregar", error);
