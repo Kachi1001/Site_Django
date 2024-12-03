@@ -78,11 +78,11 @@ class BaseLoader {
         this.type = type; // Tipo do loader (post, view, update, etc...)
         this.prefix = object + "_"; // Prefixo para os campos (modal/form)
         this.id = undefined; // ID de registro, se necessário
-        this.loader = this;
     }
     async open(id = undefined) {
         this.id = id;
-        this.inputs = await apiRequest.get(`resource/${this.object}`);
+        this.inputs = await apiRequest.get(`resource/${this.object}`)
+        loader = this;
         this[this.type](); // Registra ou atualiza conforme o tipo
     }
     async populateSelect(data = [], field = "") {
@@ -221,7 +221,7 @@ class Modal extends BaseLoader {
     }
 
     async register() {
-        this.inputs = await this.inputs.select.forEach(async (select) => {
+        this.inputs.select.forEach(async (select) => {
             const data = await apiRequest.get(`select/${select}`);
             this.populateSelect(data, select);
         });
@@ -234,7 +234,7 @@ class Modal extends BaseLoader {
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
-                Submit.post(this.loader);
+                Submit.post(loader);
             });
     }
     async update() {
@@ -243,7 +243,6 @@ class Modal extends BaseLoader {
             this.populateData(data).then(() => {
                 this.modal.show();
 
-                let loader = this;
 
                 $("#" + this.prefix + "save")
                     .off()
@@ -375,7 +374,7 @@ class Form extends BaseLoader {
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
-                Submit.post(this.loader);
+                Submit.post(loader);
             });
         this.inputs.select.forEach((field) => {
             apiRequest.get(`select/${field}`).then((data) => {
@@ -411,6 +410,7 @@ class Form extends BaseLoader {
 
 Submit = {
     readFields: function (loader) {
+        console.log(loader)
         let data = {};
         const inputs = loader.inputs;
         const fields = inputs.text.concat(inputs.select); // Junta os campos de texto e campos de seleção
