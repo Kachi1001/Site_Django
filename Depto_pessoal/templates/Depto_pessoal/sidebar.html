@@ -28,9 +28,10 @@
                 </button>
             </h2>
             <div id="menu-ferias" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_tabelas' 'periodo_aquisitivo'%}"><i {{icon.table}}></i> Período aquisitivo</a>
-                <a href="{%url app|add:'_tabelas' 'ferias_processadas'%}"><i {{icon.table}}></i> Ferias Processadas</a>
-                <a href="{%url app|add:'_tabelas' 'ferias_utilizadas'%}"><i {{icon.table}}></i> Ferias Utilizadas</a>
+                <a href="{%url app|add:'_tabelas' 'periodoaquisitivo'%}"><i {{icon.table}}></i> Período aquisitivo</a>
+                <a href="{%url app|add:'_tabelas' 'feriasprocessadas'%}"><i {{icon.table}}></i> Ferias Processadas</a>
+                <a href="{%url app|add:'_tabelas' 'feriasutilizadas'%}"><i {{icon.table}}></i> Ferias Utilizadas</a>
+                <a href="{%url app|add:'_tabelas' 'feriassaldos'%}"><i {{icon.table}}></i> Saldos</a>
             </div>
         </div>
         {%endif%}
@@ -44,7 +45,7 @@
         </h2>
         <div id="menu-ponto" class="accordion-collapse collapse" data-bs-parent="#accordion">
             <a href="#" onclick="abrirRegistro('tipoavaliacao')"><i {{icon.modal}}></i> Tipo de avaliação</a>
-            <a href="{%url app|add:'_tabelas' 'avaliacao'%}"><i {{icon.table}}></i> Desligados</a>
+            <a href="{%url app|add:'_tabelas' 'avaliacao'%}"><i {{icon.table}}></i> Tabela</a>
         </div>
     </div>
     {%endif%}
@@ -57,8 +58,8 @@
                 </button>
             </h2>
             <div id="menu-lembretes" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_cadastros' 'lembrete'%}"><i {{icon.table}}></i> Registro</a>
-                <a href="{%url app|add:'_app'%}"><i {{icon.table}}></i> Sobre</a>
+                <a href="{%url app|add:'_cadastros' 'ponto'%}"><i {{icon.table}}></i> Ponto</a>
+                <a href="{%url app|add:'_app'%}"><i {{icon.table}}></i> Painel</a>
             </div>
         </div>
         {%endif%}

@@ -1,0 +1,27 @@
+{%load static%}
+{%include 'tabela.html'%}
+
+    <thead>
+        <th data-field="id" data-sortable="true">ID</th>
+        <th data-field="colaborador" data-sortable="true">Colaborador</th>
+        <th data-field="equipe" data-sortable="true">Período</th>
+        <th data-field="adquirido_em" data-sortable="true" data-formatter="dataFormatter">Adquirido em</th>
+        <th data-field="data_limite_processar" data-sortable="true" data-formatter="dataFormatter">Adquirido em</th>
+        <th data-field="proximidade" data-sortable="true">Período</th>
+        <th data-field="saldo_escritorio" data-sortable="true">Período</th>
+        <th data-field="dias_processados" data-sortable="true">Período</th>
+        <th data-field="dias_utilizados" data-sortable="true">Período</th>
+        <th data-field="saldo_pf" data-sortable="true">Período</th>
+        <th data-formatter="editarFormatter" data-events="editarEvents"></th>
+    </thead>
+</table>
+<script>
+    function editarFormatter(value) {
+        return '<div id="viewBtn" class="btn-icon bg-info"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit"></div></div>'
+    }
+    window.editarEvents = {
+        'click #viewBtn': function (e, value, row, index) {
+            page.redirect('consultas/colaborador',{id:row['id']})
+        },
+    }
+</script>

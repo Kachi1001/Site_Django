@@ -7,15 +7,17 @@
         <th data-field="dias_processados" data-sortable="true">Dias processados</th>
         <th data-field="data_inicio" data-sortable="true" data-formatter="dataFormatter">Data inicio</th>
         <th data-field="periodo_aquisitivo"data-sortable="true">Período aquisitivo</th>
+        <th data-formatter="editarFormatter" data-events="editarEvents" data-searchable="false"></th>
     </thead>
 </table>
 <script>
     function editarFormatter(value) {
-        return '<a class="editarBtn" href="javascript:void(0)" title="Like"> <div class="btn-icon" style="background-color: skyblue;"><img src="{% static "icons/pencil.svg"%}" alt="edit"></div></div>'
+        return '<div class="btn-icon bg-info bi-pencil me-1" id="editarBtn" href="javascript:void(0)" title="Editar">'
     }
     window.editarEvents = {
-        'click .editarBtn': function (e, value, row, index) {
-            loadModal('update_colaborador', row['id'])
+        'click #editarBtn': function (e, value, row, index) {
+            let modal = new Modal('{{resource}}', "update");
+            modal.open(row['id']);
         },
     }
 </script>

@@ -47,8 +47,8 @@
                 <a href="{%url app|add:'-tabelas' 'colaborador'%}"><i {{icon.table}}></i> Colaboradores</a>
                 <a href="{%url app|add:'-tabelas' 'obra'%}"><i {{icon.table}}></i> Obras</a>
                 <a href="{%url app|add:'-tabelas' 'atividade'%}"><i {{icon.table}}></i> Atividade</a>
-                <a href="{%url app|add:'-tabelas' 'diarioobra.html'%}"><i {{icon.table}}></i> Diário</a>
-                <a href="{%url app|add:'-tabelas' 'programacao'%}"><i {{icon.table}}></i> Programação</a>
+                <a href="{%url app|add:'-tabelas' 'diarioobra'%}"><i {{icon.table}}></i> Diário</a>
+                <a href="{%url app|add:'-tabelas' 'localizacaoprogramada'%}"><i {{icon.table}}></i> Programação</a>
             </div>
         </div>
         {%endif%}
@@ -64,7 +64,7 @@
                 <a href="{%url app|add:'-consultas' 'incompletos'%}"><i {{icon.table}}></i> Incompletos</a>
                 <a href="{%url app|add:'-consultas' 'hora_mes'%}"><i {{icon.table}}></i> Horas por mês</a>
                 <a href="{%url app|add:'-consultas' 'efetividade'%}"><i {{icon.table}}></i> Efetividade</a>
-                <a href="{%url app|add:'-consultas' 'descontos_resumo'%}"><i {{icon.table}}></i> Descontos</a>
+                <a href="{%url app|add:'-consultas' 'descontosresumo'%}"><i {{icon.table}}></i> Descontos</a>
                 <a href="{%url app|add:'-consultas' 'diarias'%}"><i {{icon.table}}></i> Diárias</a>
                 <a href="{%url app|add:'-consultas' 'tecnicon'%}"><i {{icon.table}}></i> Fechados</a>
                 <a href="{%url app|add:'-consultas' 'alocacoes'%}"><i {{icon.table}}></i> Alocações</a>
@@ -80,7 +80,7 @@
                 </button>
             </h2>
             <div id="menu-impressao" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#impressao_diario"><i {{icon.modal}}></i>  Baixar Diário</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#impressao_diarioobra"><i {{icon.modal}}></i>  Baixar Diário</a>
             </div>
         </div>
         {%endif%}

@@ -8,30 +8,56 @@
 {%endblock%}
 
 {% block 'main' %}
-<div class="main">
-  <div class="card" style="width: 18rem;">
-    <div class="card-header">
-      <h5 class="card-title">Lembrete</h5>
+<div class="row">
+  <div class="col-auto">
+    <div class="card" style="width: 18rem;">
+      <div class="card-header">
+        <h5 class="card-title">Ponto</h5>
+      </div>
+      <div class="card-body">
+        <p class="card-text">Envio automatizado de mensagem, lembrete de registrar o ponto</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Ativo: <span id='Depto_pessoal:app:ponto:toggle'></span></li>
+        <li class="list-group-item">Rodando: <span id='Depto_pessoal:app:ponto:run'></span></li>
+        <li class="list-group-item">Atualizado: <span id='Depto_pessoal:app:ponto:updated'></span></li>
+      </ul>
+      <div class="card-body">
+        <button type="button" class="btn btn-primary" onclick="apiRequest.touch('app/ponto')">Alterar</button>
+      </div>
     </div>
-    <div class="card-body">
-      <p class="card-text">Envio automatizado de mensagem, lembrete de registrar o ponto</p>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Ativo: <span id='Depto_pessoal:app:toggle'></span></li>
-      <li class="list-group-item">Rodando: <span id='Depto_pessoal:app:run'></span></li>
-      <li class="list-group-item">Atualizado: <span id='Depto_pessoal:app:updated'></span></li>
-    </ul>
-    <div class="card-body">
-      <button type="button" class="btn btn-primary" onclick="apiRequest.touch('app')">Alterar</button>
+  </div>
+  <div class="col-auto">
+    <div class="card" style="width: 18rem;">
+      <div class="card-header">
+        <h5 class="card-title">Férias</h5>
+      </div>
+      <div class="card-body">
+        <p class="card-text">Envio automatizado de mensagem, lembrete de férias<br><small style="font-style: italic;">Os dados para envio é feito automático</small></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Ativo: <span id='Depto_pessoal:app:ferias:toggle'></span></li>
+        <li class="list-group-item">Rodando: <span id='Depto_pessoal:app:ferias:run'></span></li>
+      </ul>
+      <div class="card-body">
+        <button type="button" class="btn btn-primary" onclick="apiRequest.touch('app/ferias')">Alterar</button>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-  fields = ['Depto_pessoal:app:run', 'Depto_pessoal:app:toggle','Depto_pessoal:app:updated']
-  function carregar() {
-    apiRequest.get('app').then((data) => {
-      fields.forEach((field) => {
+  fields = {
+    'ponto': ['Depto_pessoal:app:ponto:run', 'Depto_pessoal:app:ponto:toggle', 'Depto_pessoal:app:ponto:updated'],
+    'ferias': ['Depto_pessoal:app:ferias:run', 'Depto_pessoal:app:ferias:toggle']
+  }
+  function carregar_all() {
+    carregar('ponto')
+    carregar('ferias')
+  }
+  function carregar(app) {
+    apiRequest.get(`app/${app}`).then((data) => {
+      fields[app].forEach((field) => {
         const element = document.getElementById(field);
         if (element) { // Verifica se o elemento existe
           element.style.color = Boolean(data[field]) ? "Green" : 'Red';
@@ -43,8 +69,9 @@
     })
   }
   $(document).ready(() => {
-    carregar()
-    setInterval(carregar,5000)
+    carregar_all()
+    setInterval(carregar_all, 5000)
+    setInterval(carregar_all, 5000)
   })
 </script>
 {% endblock %}

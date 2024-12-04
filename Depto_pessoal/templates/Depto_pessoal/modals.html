@@ -165,14 +165,6 @@
                                 <span class="input-group-text">ATIVO:</span>
                             </div>
                         </div>
-
-                        <div class="col-auto">
-                            <div class="input-group mb-2 flex-nowrap">
-                                <label class="input-group-text">EQUIPE:</label>
-                                <select class="form-select" id="m_update-colaborador_equipe">
-                                </select>
-                            </div>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" id="m_update-colaborador_del">Excluir</button>
@@ -188,7 +180,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Edição de colaborador</h1>
+                    <h1 class="modal-title fs-5">Edição de avaliação</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -288,7 +280,7 @@
     </div>
 </div>
 <!-- Historico -->
-<div class="modal fade" id="m_historico-periodo_aquisitivo" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="m_historico-periodoaquisitivo" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -296,7 +288,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <table class="table table-hover table-bordered table-striped" id="m_historico-periodo_aquisitivo_table">
+                <table class="table table-hover table-bordered table-striped" id="m_historico-periodoaquisitivo_table">
                     <thead>
                         <tr>
                         </tr>
@@ -381,6 +373,13 @@
                     </div>
                     <div class="col-auto">
                         <div class="input-group mb-2 flex-nowrap">
+                            <label class="input-group-text">EQUIPE:</label>
+                            <select class="form-select" id="m_update-ocupacao_equipe">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-2 flex-nowrap">
                             <label class="input-group-text">DATA DE INÍCIO:</label>
                             <input type="date" id="m_update-ocupacao_data_inicio" class="form-control">
                         </div>
@@ -449,6 +448,13 @@
                     </div>
                     <div class="col-auto">
                         <div class="input-group mb-2 flex-nowrap">
+                            <label class="input-group-text">EQUIPE:</label>
+                            <select class="form-select" id="m_alterar-ocupacao_equipe">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-2 flex-nowrap">
                             <label class="input-group-text">DATA DE INÍCIO:</label>
                             <input type="date" id="m_alterar-ocupacao_data_inicio" class="form-control">
                         </div>
@@ -497,6 +503,13 @@
                         <div class="input-group mb-2 flex-nowrap">
                             <label class="input-group-text">FUNÇÃO:</label>
                             <select class="form-select" id="m_dissidio-ocupacao_funcao" disabled>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-2 flex-nowrap">
+                            <label class="input-group-text">EQUIPE:</label>
+                            <select class="form-select" id="m_dissidio-ocupacao_equipe" disabled>
                             </select>
                         </div>
                     </div>
@@ -873,7 +886,7 @@
 
         data = {
             'colaborador': $("#f_colaborador_id").val(),
-            'periodo_aquisitivo': $("#f_periodo_aquisitivo_id").val()
+            'periodo_aquisitivo': $("#f_periodoaquisitivo_id").val()
         }
 
         registro.open(data)

@@ -508,7 +508,7 @@
         </div>
     </div>
     <!-- Modal programação-->
-    <div class="modal" id="m_image-programacao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal" id="m_image-localizacaoprogramada" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -516,7 +516,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img alt="imagem ausente" class="img-thumbnail" id="m_image-programacao_imagem">
+                    <img alt="imagem ausente" class="img-thumbnail" id="m_image-localizacaoprogramada_imagem">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -525,7 +525,7 @@
         </div>
     </div>
     <!-- Modal update programação -->
-    <div class="modal fade" id="m_update-programacao" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="m_update-localizacaoprogramada" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -537,15 +537,15 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="input-group input-group-sm mb-2">
-                                <label class="input-group-text" for="m_update-programacao_id">ID:</label>
-                                <input type="text" class="form-control" id="m_update-programacao_id" disabled>
+                                <label class="input-group-text" for="m_update-localizacaoprogramada_id">ID:</label>
+                                <input type="text" class="form-control" id="m_update-localizacaoprogramada_id" disabled>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2">
                                 <label class="input-group-text"
-                                    for="m_update-programacao_iniciosemana">Segunda-feira:</label>
-                                <input type="date" name="data" id="m_update-programacao_iniciosemana" class="form-control"
+                                    for="m_update-localizacaoprogramada_iniciosemana">Segunda-feira:</label>
+                                <input type="date" name="data" id="m_update-localizacaoprogramada_iniciosemana" class="form-control"
                                     disabled>
                             </div>
                         </div>
@@ -554,37 +554,37 @@
 
                     <div class="col">
                         <div class="input-group input-group-sm mb-2">
-                            <label class="input-group-text" for="m_update-programacao_colaborador">Colaborador:</label>
-                            <select class="form-select" id="m_update-programacao_colaborador" disabled>
+                            <label class="input-group-text" for="m_update-localizacaoprogramada_colaborador">Colaborador:</label>
+                            <select class="form-select" id="m_update-localizacaoprogramada_colaborador" disabled>
                             </select>
                         </div>
                     </div>
 
                     <div class="input-group input-group-sm mb-2">
-                        <label class="input-group-text" for="m_update-programacao_encarregado">Encarregado:</label>
-                        <select class="form-select" id="m_update-programacao_encarregado">
+                        <label class="input-group-text" for="m_update-localizacaoprogramada_encarregado">Encarregado:</label>
+                        <select class="form-select" id="m_update-localizacaoprogramada_encarregado">
                             <option value=""></option>
                         </select>
                     </div>
 
                     <div class="input-group input-group-sm mb-2">
-                        <label class="input-group-text" for="m_update-programacao_obra">Obra:</label>
-                        <select class="form-select" id="m_update-programacao_obra">
+                        <label class="input-group-text" for="m_update-localizacaoprogramada_obra">Obra:</label>
+                        <select class="form-select" id="m_update-localizacaoprogramada_obra">
 
                         </select>
                     </div>
 
                     <div class="input-group input-group-sm mb-2">
                         <span class="input-group-text">Observação:</span>
-                        <textarea class="form-control" id="m_update-programacao_observacao"></textarea>
+                        <textarea class="form-control" id="m_update-localizacaoprogramada_observacao"></textarea>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id='m_update-programacao_del'
+                    <button type="button" class="btn btn-danger" id='m_update-localizacaoprogramada_del'
                         data-bs-dismiss="modal">Deletar</button>
                     <button type="button" class="btn btn-primary" id=''>Visualizar</button>
-                    <button type="button" class="btn btn-success" id='m_update-programacao_btn'>Salvar</button>
+                    <button type="button" class="btn btn-success" id='m_update-localizacaoprogramada_btn'>Salvar</button>
                 </div>
             </div>
         </div>
@@ -607,7 +607,7 @@
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2">
                                 <label class="input-group-text"
-                                    for="m_update-programacao_iniciosemana">Segunda-feira:</label>
+                                    for="m_update-localizacaoprogramada_iniciosemana">Segunda-feira:</label>
                                 <input type="date" id="impressao_diarioobra_iniciosemana" class="form-control"
                                     value="{{hojeJS}}">
                             </div>
@@ -622,11 +622,11 @@
         <script>
             function downloadXLSX() {
                 // Definir os parâmetros que serão enviados via GET
-                const cr = $("#impressao_diario_cr").val(); // Exemplo de valor para param1
-                const data = $("#impressao_diario_iniciosemana").val(); // Exemplo de valor para param2
+                const cr = $("#impressao_diarioobra_cr").val(); // Exemplo de valor para param1
+                const data = $("#impressao_diarioobra_iniciosemana").val(); // Exemplo de valor para param2
 
                 // Montar a URL com os parâmetros
-                const url = `${api}Lancamento_obra/diario_impressao?cr=${encodeURIComponent(cr)}&data=${encodeURIComponent(data)}`;
+                const url = `${api}Lancamento_obra/diarioobra_impressao?cr=${encodeURIComponent(cr)}&data=${encodeURIComponent(data)}`;
                 const link = document.createElement('a');
                 link.href = url;
                 link.target = '_blank';

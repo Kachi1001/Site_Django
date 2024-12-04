@@ -285,7 +285,7 @@ class Modal extends BaseLoader {
     async processo() {
         try {
             apiRequest
-                .get("periodo_aquisitivo", { colaborador: this.id.colaborador })
+                .get("periodoaquisitivo", { colaborador: this.id.colaborador })
                 .then((data) => {
                     this.populateSelect(data, "periodo_aquisitivo").then(() => {
                         $("#" + this.prefix + "periodo_aquisitivo").val(
