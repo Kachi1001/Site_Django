@@ -8,7 +8,6 @@ function removeColumns(value) {
     }
 }
 var loaded = {'resource':'','reload':'function'}
-
 $(document).ready(async () => {
     try {
         load();

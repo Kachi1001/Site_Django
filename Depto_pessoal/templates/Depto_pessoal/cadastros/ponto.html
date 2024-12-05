@@ -2,32 +2,32 @@
 {% load static %}
 
 {% block 'main' %}
-<h2>Registro de lembrete</h2>
+<h2>Registro de lembrete do ponto</h2>
 <div class="row">
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap">
             <label class="input-group-text">NOME:</label>
-            <input type="text" id="f_lembrete_colaborador" class="form-control">
+            <input type="text" id="f_ponto_colaborador" class="form-control">
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap" >
             <label class="input-group-text">TELEFONE:</label>
-            <input type="tel" id="f_lembrete_telefone" class="form-control">
+            <input type="tel" id="f_ponto_telefone" class="form-control">
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap">
             <label class="input-group-text">PADRÃO:</label>
-            <select class="form-select" id="f_lembrete_padrao"></select>
+            <select class="form-select" id="f_ponto_padrao"></select>
         </div>
     </div>
 </div>
 
-<div class="row justify-content-end"><div class="col-auto"><button id="f_lembrete_submit" class="btn btn-success">Cadastrar</button></div></div>
+<div class="row justify-content-end"><div class="col-auto"><button id="f_ponto_submit" class="btn btn-success">Cadastrar</button></div></div>
 <script>
     $(document).ready(function(){
-        loader = new Form('lembrete','register')
+        loader = new Form('ponto','register')
         loader.open()
     })
 </script>

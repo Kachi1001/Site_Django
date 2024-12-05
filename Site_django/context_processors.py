@@ -17,17 +17,18 @@ def base(request):
     modulo_da_view = request.resolver_match.func.__module__
     app = modulo_da_view.split('.')[0]
     media = config("MEDIA_URL") + app + '/'
-    
+    token = request.session.get('api_token') or None 
     return {
         # 'ambiente': config('AMBIENTE'),
         'nome': request.user.username,
         'api': config("API"),
+        'api_external': config("API_EXTERNAL"),
         'media': media,
         'app': app,
         'app_name': translate[app] if app in translate else 'Sem nome',
         'timestamp': timestamp,
         'hojeJS': util.formatarHTML(util.get_hoje()),
-
+        'token': token,
         'icon': {
             'table': "class=bi-table",
             'modal': "class=bi-window-stack",

@@ -18,11 +18,10 @@ from django.http import HttpResponse
 from django.contrib import admin
 from django.urls import path , include
 from django.conf import settings
-from .views import proxy_api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('proxy-api/<path:path>/', proxy_api, name='proxy_api'),
+    
 ]
 
 for app in settings.INTERNAL_APP:

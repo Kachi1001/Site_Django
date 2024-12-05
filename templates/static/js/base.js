@@ -11,7 +11,7 @@ const date ={
 const apiRequest = {
     baseUrl: api,
     createURL: function (endpoint) {
-        return this.baseUrl + app + "/" + endpoint;
+        return this.baseUrl + app + "/" + endpoint ;
     },
     createDATA: function (metodo, parametro) {
         return {
@@ -58,7 +58,8 @@ const apiRequest = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-            },
+                'X-CSRFToken': csrftoken,
+            },  
             body: JSON.stringify(parametro),
         })
             .then((response) => {
@@ -80,6 +81,7 @@ const apiRequest = {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
+                'X-CSRFToken': csrftoken,
             },
             body: JSON.stringify(parametro),
         })
@@ -134,6 +136,7 @@ const apiRequest = {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
+                    'X-CSRFToken': csrftoken,
                 },
                 body: JSON.stringify(parametro),
             })
@@ -166,6 +169,9 @@ const apiRequest = {
     touch: function (endpoint, successCallback, errorCallback) {
         fetch(this.createURL(endpoint), {
             method: "POST",
+            headers: {
+                'X-CSRFToken': csrftoken,
+            }
         })
             .then((response) => {
                 if (!response.ok) {

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from pickle import APPEND, FALSE
 from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -161,4 +162,4 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 CSRF_TRUSTED_ORIGINS = ['http://10.0.0.139:81', 'https://publicly-noted-penguin.ngrok-free.app', 'http://tecnikaengenharia.ddns.net']
 
-APPEND_SLASH = True
+APPEND_SLASH=False  
