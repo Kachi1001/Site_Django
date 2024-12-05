@@ -5,3 +5,4 @@ python-decouple
 django-role-permissions
 gunicorn
 djangorestframework-simplejwt==5.3.1
+requests==2.32.2
