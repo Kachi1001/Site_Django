@@ -2,17 +2,22 @@
 {%include 'tabela.html'%}
 
     <thead>
-        <th data-field="id" data-sortable="true">ID</th>
-        <th data-field="colaborador" data-sortable="true">Colaborador</th>
-        <th data-field="equipe" data-sortable="true">Período</th>
-        <th data-field="adquirido_em" data-sortable="true" data-formatter="dataFormatter">Adquirido em</th>
-        <th data-field="data_limite_processar" data-sortable="true" data-formatter="dataFormatter">Adquirido em</th>
-        <th data-field="proximidade" data-sortable="true">Período</th>
-        <th data-field="saldo_escritorio" data-sortable="true">Período</th>
-        <th data-field="dias_processados" data-sortable="true">Período</th>
-        <th data-field="dias_utilizados" data-sortable="true">Período</th>
-        <th data-field="saldo_pf" data-sortable="true">Período</th>
-        <th data-formatter="editarFormatter" data-events="editarEvents"></th>
+        <tr>
+        <th data-field="id" data-sortable="true"rowspan="2">ID</th>
+        <th data-field="colaborador" data-sortable="true"rowspan="2">Colaborador</th>
+        <th data-field="equipe" data-sortable="true"rowspan="2">Equipe</th>
+        <th data-field="adquirido_em" data-sortable="true" data-formatter="dataFormatter"rowspan="2">Adquirido em</th>
+        <th data-field="data_limite_processar" data-sortable="true" data-formatter="dataFormatter"rowspan="2">Data limite</th>
+        <th data-field="proximidade" data-sortable="true" rowspan="2">Prazo</th>
+        <th colspan="5">Saldos</th>
+        </tr>
+        <tr>
+            <th data-field="saldo_escritorio" data-sortable="true">Escritório</th>
+            <th data-field="dias_processados" data-sortable="true">Processados</th>
+            <th data-field="dias_utilizados" data-sortable="true">Utilizados</th>
+            <th data-field="saldo_pf" data-sortable="true">PF</th>
+            <th data-formatter="editarFormatter" data-events="editarEvents"></th>
+        </tr>
     </thead>
 </table>
 <script>
