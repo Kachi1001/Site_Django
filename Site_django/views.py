@@ -18,7 +18,7 @@ def proxy_api(request, path):
     api_url = f"{config('API')}{path}"
 
     # Transfere os métodos, cabeçalhos e corpo da requisição original
-    headers = {'Authorization': f'Bearer {token}'}
+    headers = {'Authorization': f'Bearer {token}'}  
     if 'Content-Type' in request.headers:
       headers['Content-Type'] = request.headers['Content-Type']
     if 'X-CSRFToken' in request.headers:
