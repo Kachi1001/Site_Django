@@ -4,3 +4,4 @@ psycopg2-binary
 python-decouple
 django-role-permissions
 gunicorn
+djangorestframework-simplejwt==5.3.1
