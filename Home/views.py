@@ -51,20 +51,19 @@ def status(request):
 
 from django.http import JsonResponse, HttpResponse
 
-@login_required
+@login_required # type: ignore
 def proxy_api(request, path):
     from urllib.parse import urlencode
-    """
-    Proxy genérico para redirecionar requisições do Django para a API externa.
-    """
+
     token = request.session.get('api_token')  # Recupera o token da sessão
     if not token:
-    #   return redirect('/login')
+    
       return JsonResponse({'error': 'Usuário não autenticado'}, status=401)
 
     api_url = f"{config('API_EXTERNAL')}{path}"
     # Transfere os métodos, cabeçalhos e corpo da requisição original
     headers = {'Authorization': f'Bearer {token['access']}'} 
+    headers['X-User-ID'] = str(request.user.id)
     if 'Content-Type' in request.headers:
       headers['Content-Type'] = request.headers['Content-Type']
     if 'X-CSRFToken' in request.headers:
@@ -79,10 +78,15 @@ def proxy_api(request, path):
             response = requests.post(api_url, headers=headers, data=request.body)
         elif request.method == "PUT":
             response = requests.put(api_url, headers=headers, data=request.body)
+        elif request.method == "PATCH":
+            response = requests.patch(api_url, headers=headers, data=request.body)
         elif request.method == "DELETE":
             response = requests.delete(api_url, headers=headers)
         else:
             return JsonResponse({'error': 'Método não suportado'}, status=405)
+    except requests.RequestException as e:
+        return JsonResponse({'message': 'Erro ao conectar à API','error':str(e)}, status=500)
+    else:
         if response.status_code == 200 or response.status_code == 204:
             # Retorna o conteúdo da resposta com o mesmo status
             return HttpResponse(response.content, content_type=response.headers.get('Content-Type', 'application/json'), status=response.status_code)
@@ -96,7 +100,5 @@ def proxy_api(request, path):
                 return proxy_api(request, path)
         else:
             # Se a API retornar um erro, repassa o erro
-            return JsonResponse(response.json(), status=response.status_code)
+                return JsonResponse(response.json(), status=response.status_code)
 
-    except requests.RequestException as e:
-        return JsonResponse({'message': 'Erro ao conectar à API','error':str(e)}, status=500)
