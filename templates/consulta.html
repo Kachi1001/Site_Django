@@ -1,9 +1,15 @@
 {%include 'static/imports/bootstrap_tables.html'%} <!-- Bootstrap -->
-
+<script>
+    async function requestTable(params){
+        var url = "tabela/{{resource}}" 
+        res = await apiRequest.get(url, params.data)
+        params.success(res) 
+    }
+</script>
 <table id="table" class="table table-hover table-bordered table-striped table-sm" data-locale="pt-BR"
     data-toggle="table" data-pagination="true" data-page-list="[100, 200, 500, 1000]" data-search="true"
     data-side-pagination="server" data-sortable="true" data-height='{{table_height}}' data-cookie="true"
-    data-show-refresh="true" data-search-time-out="1000" data-url="{{api}}{{app}}/tabela/{{resource}}"
+    data-show-refresh="true" data-search-time-out="1000" data-ajax="requestTable"
     data-cookie-id-table="{{resource}}" data-page-size="100" data-show-export="true" data-search-highlight="true"
     data-searchable="true"
     data-silent-sort="false" >

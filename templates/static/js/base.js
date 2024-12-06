@@ -36,7 +36,9 @@ const apiRequest = {
             },
         })
             .then((response) => {
-                if (!response.ok) {
+                if (response.status === 401) {
+                    page.to('login', {'login':user,'next':window.location.pathname})
+                } else if (!response.ok) {
                     return response.json().then((errorData) => {
                         throw errorData; // Lança os dados de erro
                     });
@@ -48,7 +50,7 @@ const apiRequest = {
                 if (typeof errorCallback === "function") {
                     errorCallback(error); // Chama o callback de erro com os dados de erro
                 } else {
-                    console.error("Erro na requisição GET:", error, url);
+                    console.error("Erro na requisição GET:", error);
                 }
             });
     },
@@ -63,7 +65,9 @@ const apiRequest = {
             body: JSON.stringify(parametro),
         })
             .then((response) => {
-                if (!response.ok) {
+                if (response.status === 401) {
+                    page.to('login', {'login':user,'next':window.location.pathname})
+                } else if (!response.ok) {
                     throw response;
                 }
                 return response.json();
@@ -86,7 +90,9 @@ const apiRequest = {
             body: JSON.stringify(parametro),
         })
             .then((response) => {
-                if (!response.ok) {
+                if (response.status === 401) {
+                    page.to('login', {'login':user,'next':window.location.pathname})
+                } else if (!response.ok) {
                     throw response;
                 }
                 return response.json();
@@ -141,7 +147,9 @@ const apiRequest = {
                 body: JSON.stringify(parametro),
             })
                 .then((response) => {
-                    if (!response.ok) {
+                    if (response.status === 401) {
+                        page.to('login', {'login':user,'next':window.location.pathname})
+                    } else if (!response.ok) {
                         throw response;
                     }
                     console.error(response);
@@ -174,7 +182,9 @@ const apiRequest = {
             }
         })
             .then((response) => {
-                if (!response.ok) {
+                if (response.status === 401) {
+                    page.to('login', {'login':user,'next':window.location.pathname})
+                } else if (!response.ok) {
                     throw response;
                 }
                 console.error(response);
@@ -276,7 +286,31 @@ const page = {
     refresh: function () {
         location.reload();
     },
+    to: function(path, params){
+        let queryString
+        if (typeof params != "undefined") {
+            // Remove parâmetros com valores vazios, nulos ou indefinidos
+            const filteredParams = Object.fromEntries(
+                Object.entries(params).filter(
+                    ([key, value]) =>
+                        value !== "" && value !== null && value !== undefined
+                )
+            );
 
+            // Constrói a query string com encodeURIComponent para lidar com espaços e caracteres especiais
+            queryString = new URLSearchParams(
+                Object.entries(filteredParams).map(([key, value]) => [
+                    key,
+                    encodeURIComponent(value),
+                ])
+            ).toString();
+        }
+        const currentBaseUrl = window.location.origin; // Pega o domínio atual
+        const newUrl = `${currentBaseUrl}/${path}?${queryString}`;
+
+        // Redireciona para a nova URL  
+        window.location.href = newUrl
+    }
     // Exemplo de uso:
 };
 

@@ -1,5 +1,11 @@
 {%include 'static/imports/bootstrap_tables.html'%} <!-- Bootstrap -->
-
+<script>
+    async function requestTable(params){
+        var url = "tabela/{{resource}}" 
+        res = await apiRequest.get(url, params.data)
+        params.success(res) 
+    }
+</script>
 <hr class="mb-0">
 <table 
     id="table" 
@@ -13,7 +19,7 @@
     data-page-list="[25, 50, 100, 200]" 
     data-height='{{table_height}}' 
     data-virtual-scroll="true"
-    data-url="{{api}}{{app}}/tabela/{{resource}}" 
+    data-ajax="requestTable"
     data-cookie-id-table="{{resource}}" 
     data-show-columns="true"
     data-show-columns-toggle-all="true" 

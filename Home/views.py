@@ -57,7 +57,6 @@ def proxy_api(request, path):
 
     token = request.session.get('api_token')  # Recupera o token da sessão
     if not token:
-    
       return JsonResponse({'error': 'Usuário não autenticado'}, status=401)
 
     api_url = f"{config('API_EXTERNAL')}{path}"
@@ -91,14 +90,15 @@ def proxy_api(request, path):
             # Retorna o conteúdo da resposta com o mesmo status
             return HttpResponse(response.content, content_type=response.headers.get('Content-Type', 'application/json'), status=response.status_code)
         elif response.status_code == 401:
-            print(token)
             api_response = requests.post(f"{config('API_EXTERNAL')}/token/refresh", json={
-                'refresh': token['refresh'],
+                'refresh': token.get('refresh', ''),
             })
             if api_response.status_code == 200:
                 request.session['api_token'] = api_response.json()  # Salva o token na sessão
                 return proxy_api(request, path)
+            else:
+                return JsonResponse({'Error': 'redirect'}, status=response.status_code)
         else:
             # Se a API retornar um erro, repassa o erro
-                return JsonResponse(response.json(), status=response.status_code)
+            return HttpResponse(response, status=response.status_code)
 
