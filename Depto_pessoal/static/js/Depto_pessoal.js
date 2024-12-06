@@ -18,58 +18,58 @@ const colaborador = {
     check: ["ativo", "avaliacao_recontratar"], // campos marcaveis
 };
 
-const objFields = {
-    colaborador: colaborador,
-    funcao: {
-        text: ["id"], //campos que pode ser preencher
-        select: ["categoria"], // campos selecionavel
-        check: ["insalubridade"], // campos marcaveis
-    },
-    equipe: {
-        text: ["id"], //campos que pode ser preencher
-        select: [""], // campos selecionavel
-        check: [""], // campos marcaveis
-    },
-    feriasprocessadas: {
-        text: ["id", "dias_processados", "data_inicio"], //campos que pode ser preencher
-        select: ["colaborador", "periodo_aquisitivo"], // campos selecionavel
-        check: ["consumido"], // campos marcaveis
-    },
-    feriasutilizadas: {
-        text: ["id", "dias_utilizados", "data_inicio"], //campos que pode ser preencher
-        select: ["colaborador", "periodo_aquisitivo"], // campos selecionavel
-        check: ["antecipacao_periodo", "consumido"], // campos marcaveis
-    },
-    periodo_aquisitivo: {
-        text: ["id", "colaborador", "adquirido_em", "periodo"], //campos que pode ser preencher
-        select: [""], // campos selecionavel
-        check: ["consumido"], // campos marcaveis
-    },
-    ocupacao: ocupacao,
-    ocupacao_dissidio: ocupacao,
-    ocupacao_alterar: ocupacao,
-    colaborador_desligamento: {
-        text: ["id", "data", "colaborador"], //campos que pode ser preencher
-        select: [""], // campos selecionavel
-        check: [""], // campos marcaveis
-    },
-    lembrete: {
-        text: ["id", "colaborador", "telefone"], //campos que pode ser preencher
-        select: ["padrao"], // campos selecionavel
-        check: [""], // campos marcaveis
-    },
-    feriado: {
-        text: ["id", "descricao"], //campos que pode ser preencher
-        select: [""], // campos selecionavel
-        check: ["recorrente"], // campos marcaveis
-    },
-    tipoavaliacao: {
-        text: ["id", "situacao"], //campos que pode ser preencher
-        select: [""], // campos selecionavel
-        check: [""], // campos marcaveis
-    },
-    avaliacao: colaborador,
-};
+// const objFields = {
+//     colaborador: colaborador,
+//     funcao: {
+//         text: ["id"], //campos que pode ser preencher
+//         select: ["categoria"], // campos selecionavel
+//         check: ["insalubridade"], // campos marcaveis
+//     },
+//     equipe: {
+//         text: ["id"], //campos que pode ser preencher
+//         select: [""], // campos selecionavel
+//         check: [""], // campos marcaveis
+//     },
+//     feriasprocessadas: {
+//         text: ["id", "dias_processados", "data_inicio"], //campos que pode ser preencher
+//         select: ["colaborador", "periodo_aquisitivo"], // campos selecionavel
+//         check: ["consumido"], // campos marcaveis
+//     },
+//     feriasutilizadas: {
+//         text: ["id", "dias_utilizados", "data_inicio"], //campos que pode ser preencher
+//         select: ["colaborador", "periodo_aquisitivo"], // campos selecionavel
+//         check: ["antecipacao_periodo", "consumido"], // campos marcaveis
+//     },
+//     periodo_aquisitivo: {
+//         text: ["id", "colaborador", "adquirido_em", "periodo"], //campos que pode ser preencher
+//         select: [""], // campos selecionavel
+//         check: ["consumido"], // campos marcaveis
+//     },
+//     ocupacao: ocupacao,
+//     ocupacao_dissidio: ocupacao,
+//     ocupacao_alterar: ocupacao,
+//     colaborador_desligamento: {
+//         text: ["id", "data", "colaborador"], //campos que pode ser preencher
+//         select: [""], // campos selecionavel
+//         check: [""], // campos marcaveis
+//     },
+//     lembrete: {
+//         text: ["id", "colaborador", "telefone"], //campos que pode ser preencher
+//         select: ["padrao"], // campos selecionavel
+//         check: [""], // campos marcaveis
+//     },
+//     feriado: {
+//         text: ["id", "descricao"], //campos que pode ser preencher
+//         select: [""], // campos selecionavel
+//         check: ["recorrente"], // campos marcaveis
+//     },
+//     tipoavaliacao: {
+//         text: ["id", "situacao"], //campos que pode ser preencher
+//         select: [""], // campos selecionavel
+//         check: [""], // campos marcaveis
+//     },
+//     avaliacao: colaborador,
+// };
 var loader;
 
 class BaseLoader {
@@ -335,7 +335,11 @@ class Modal extends BaseLoader {
                     loader.refresh = function () {
                         page.redirect("");
                     };
-                    Submit.delete(loader);
+
+                    apiRequest.delete(loader.object + "/" + loader.id, {'data':''}).then(() => {
+                        loader.modal.hide();
+                        loader.refresh();
+                    });
                 } else {
                     toasts("danger", {
                         method: "Desligamento",
@@ -429,8 +433,7 @@ Submit = {
     update: function (loader) {
         apiRequest.update(
             `${loader.object}/${loader.id}`,
-            this.readFields(loader),
-            function () {
+            this.readFields(loader)).then(() => {
                 loader.modal.hide();
                 loader.refresh();
             }
@@ -440,8 +443,8 @@ Submit = {
         try {
             apiRequest.post(
                 loader.object,
-                this.readFields(loader),
-                function () {
+                this.readFields(loader)).then(
+                () => {
                     loader.modal.hide();
                     loader.refresh();
                 }
@@ -452,7 +455,7 @@ Submit = {
     },
     delete: function (loader) {
         console.log(loader);
-        apiRequest.delete(loader.object + "/" + loader.id, () => {
+        apiRequest.delete(loader.object + "/" + loader.id, this.readFields(loader)).then(() => {
             loader.modal.hide();
             loader.refresh();
         });

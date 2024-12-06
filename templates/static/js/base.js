@@ -20,8 +20,7 @@ const apiRequest = {
             // user: user,
         };
     },
-    get: function (endpoint, params = undefined, errorCallback) {
-        console.log(this.createURL(endpoint));
+    get: function (endpoint, params = undefined) {
         const url = new URL(this.createURL(endpoint));
         if (typeof params === "object") {
             Object.keys(params).forEach((key) =>
@@ -54,8 +53,7 @@ const apiRequest = {
                 }
             });
     },
-    post: function (endpoint, parametro, successCallback, errorCallback) {
-        parametro.user = user
+    post: function (endpoint, parametro) {
         return fetch(this.createURL(endpoint), {
             method: "POST",
             headers: {
@@ -79,8 +77,7 @@ const apiRequest = {
                 this.error(error, errorCallback);
             });
     },
-    update: function (endpoint, parametro, successCallback, errorCallback) {
-        parametro.user = user
+    update: function (endpoint, parametro) {
         fetch(this.createURL(endpoint), {
             method: "PATCH",
             headers: {
@@ -104,7 +101,7 @@ const apiRequest = {
                 this.error(error, errorCallback);
             });
     },
-    upload: function (endpoint, formData, successCallback, errorCallback) {
+    upload: function (endpoint, formData) {
         $.ajax({
             url: this.createURL(endpoint),
             type: "POST",
@@ -135,8 +132,7 @@ const apiRequest = {
         });
     },
 
-    delete: function (endpoint, successCallback, errorCallback) {
-        parametro = {'user': user}
+    delete: function (endpoint, parametro) {
         if (confirm("Tem certeza que deseja apagar esse registro?")) {
             fetch(this.createURL(endpoint), {
                 method: "DELETE",
@@ -158,13 +154,13 @@ const apiRequest = {
                             method: "Deletado com êxito!",
                             message: "Registro deletado com sucesso.",
                         },
-                        successCallback
+                        
                     );
                 })
                 .catch((error) => {
                     console.error("Erro:", error);
 
-                    this.error(error, errorCallback);
+                    this.error(error);
                 });
         } else {
             toasts("warning", {
@@ -174,7 +170,7 @@ const apiRequest = {
         }
     },
 
-    touch: function (endpoint, successCallback, errorCallback) {
+    touch: function (endpoint) {
         fetch(this.createURL(endpoint), {
             method: "POST",
             headers: {
