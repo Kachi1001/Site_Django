@@ -179,7 +179,7 @@
         let formData = new FormData();
         formData.append('file', file);
         formData.append('parametro', JSON.stringify(parametro));
-        apiRequest.upload('diario', formData).then(() => {
+        apiRequest.upload('diarioobra', formData).then(() => {
             $("#table").bootstrapTable("refresh");
             if (redirect) {
                 let obra = $('#form_diarioobra_obra').val()

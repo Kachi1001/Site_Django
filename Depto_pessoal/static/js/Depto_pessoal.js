@@ -218,6 +218,7 @@ class Modal extends BaseLoader {
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
         this.modal = new bootstrap.Modal(this.myModal);
+        this.loader = loader
     }
 
     async register() {
@@ -445,7 +446,6 @@ Submit = {
                 loader.object,
                 this.readFields(loader)).then(
                 () => {
-                    loader.modal.hide();
                     loader.refresh();
                 }
             );

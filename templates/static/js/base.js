@@ -46,11 +46,8 @@ const apiRequest = {
                 return response.json(); // Converte a resposta em JSON se a requisição foi bem-sucedida
             })
             .catch((error) => {
-                if (typeof errorCallback === "function") {
-                    errorCallback(error); // Chama o callback de erro com os dados de erro
-                } else {
                     console.error("Erro na requisição GET:", error);
-                }
+                
             });
     },
     post: function (endpoint, parametro) {
@@ -71,14 +68,14 @@ const apiRequest = {
                 return response.json();
             })
             .then(() => {
-                this.success({'method':'Registrado com êxito!','message':'Foi concluído com sucesso a operação.'}, successCallback);
+                this.success({'method':'Registrado com êxito!','message':'Foi concluído com sucesso a operação.'});
             })
             .catch((error) => {
-                this.error(error, errorCallback);
+                this.error(error);
             });
     },
     update: function (endpoint, parametro) {
-        fetch(this.createURL(endpoint), {
+        return fetch(this.createURL(endpoint), {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -98,43 +95,35 @@ const apiRequest = {
                 this.success({'method':'Atualizado com êxito!','message':'Seu registro foi atualizado com sucesso.'}, successCallback);
             })
             .catch((error) => {
-                this.error(error, errorCallback);
+                this.error(error);
             });
     },
     upload: function (endpoint, formData) {
-        $.ajax({
-            url: this.createURL(endpoint),
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-
-            success: (response) => {
-                this.success(response, successCallback);
-            },
-            error: (error) => {
-                error = error.responseJSON
-                Object.keys(error).forEach((key) => {
-                    toasts("danger", {
-                        method: "Registro",
-                        message: `[${key.toLocaleUpperCase()}] ${
-                            error[key]
-                        }`,
-                    });
-                });
-                // Verifica se o callback de erro foi passado e é uma função
-                if (typeof errorCallback === "function") {
-                    errorCallback(error);
-                }
-                // Chama o toast de erro
-                console.error(error);
-            },
+        return fetch(this.createURL(endpoint), {
+            method: 'POST',
+            body: formData, // Use o FormData criado
+            headers: {
+                // O Content-Type é automaticamente configurado pelo FormData
+                'X-CSRFToken': csrftoken // Inclua o CSRF token, se necessário
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Resposta do servidor:', data);
+        })
+        .catch(error => {
+            console.error('Erro:', error);
         });
     },
 
     delete: function (endpoint, parametro) {
-        if (confirm("Tem certeza que deseja apagar esse registro?")) {
-            fetch(this.createURL(endpoint), {
+         if (confirm("Tem certeza que deseja apagar esse registro?")) {
+            return fetch(this.createURL(endpoint), {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -195,24 +184,18 @@ const apiRequest = {
             .catch((error) => {
                 console.error("Erro:", error);
 
-                this.error(error, errorCallback);
+                this.error(error);
             });
     },
 
-    success: function (response, successCallback) {
+    success: function (response) {
         toasts("success", response);
-        // Verifica se o callback de sucesso foi passado e é uma função
-        if (typeof successCallback === "function") {
-            successCallback(response);
-        }
+   
         // Chama o toast de sucesso
     },
-    error: function (error, errorCallback) {
+    error: function (error) {
         // toasts("danger", error);
         // Verifica se o callback de erro foi passado e é uma função
-        if (typeof errorCallback === "function") {
-            errorCallback(error);
-        }
         // Chama o toast de erro
         console.error(error);
 
