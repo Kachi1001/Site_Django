@@ -181,7 +181,7 @@ class BaseLoader {
                         extraBtn.appendChild(removeButton);
                     }
                     if (
-                        this.object != "periodo_aquisitivo" &&
+                        this.object != "periodoaquisitivo" &&
                         this.object != "funcao" &&
                         this.object != "equipe" &&
                         this.object != "feriado" &&
@@ -198,6 +198,7 @@ class BaseLoader {
 
                         editBtn.addEventListener("click", () => {
                             let modal = new Modal(this.object, "update");
+                            modal.refresh = this.refresh
                             modal.open(obj.id);
                         });
                         extraBtn.appendChild(editBtn);
@@ -211,7 +212,7 @@ class BaseLoader {
         }
     }
 }
-
+var modal_open
 class Modal extends BaseLoader {
     constructor(object, type) {
         super(object, type); // Chama o construtor da classe DataManager
@@ -364,7 +365,7 @@ class Modal extends BaseLoader {
     }
 
     refresh() {
-        page.refresh();
+        // page.refresh();
     }
 }
 

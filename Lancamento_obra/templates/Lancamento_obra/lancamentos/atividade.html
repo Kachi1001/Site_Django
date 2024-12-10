@@ -245,7 +245,7 @@
             console.log(dia.val())
             data = dia.val().split('-')
             data = data[2].concat('-', data[1], '-', data[0])
-            apiRequest.get('diario', { 'diario': obra.val().concat('_', data, '_', indice.val()) }).then((data) => {
+            apiRequest.get('diarioobra', { 'diario': obra.val().concat('_', data, '_', indice.val()) }).then((data) => {
                 descricao.val(data[0].descricao);
             })
         }

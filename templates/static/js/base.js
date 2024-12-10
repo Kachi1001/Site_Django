@@ -92,7 +92,7 @@ const apiRequest = {
                 return response.json();
             })
             .then((data) => {
-                this.success({'method':'Atualizado com êxito!','message':'Seu registro foi atualizado com sucesso.'}, successCallback);
+                this.success({'method':'Atualizado com êxito!','message':'Seu registro foi atualizado com sucesso.'});
             })
             .catch((error) => {
                 this.error(error);
@@ -266,7 +266,7 @@ const page = {
         location.reload();
     },
     to: function(path, params){
-        let queryString
+        queryString = ''
         if (typeof params != "undefined") {
             // Remove parâmetros com valores vazios, nulos ou indefinidos
             const filteredParams = Object.fromEntries(

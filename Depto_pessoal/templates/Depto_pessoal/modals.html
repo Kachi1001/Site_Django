@@ -863,50 +863,11 @@
 </div>
 <script>
 
-    function abrirHistorico(resource) {
-        let modal = new Modal(resource, 'historico')
-        modal.open(colab)
-    }
     function abrirRegistro(modal, table = false) {
         let registro = new Modal(modal, 'register')
         registro.open(table)
     }
-    function abrirLancamento(modal) {
-        let data = {}
-        modal = modal.split('_')
-        let registro = new Modal(modal[0], modal[1])
 
-        data = $("#f_ocupacao_id").val()
-        registro.open(data)
-        console.debug(data)
-    }
-    function abrirProcesso(modal) {
-
-        let registro = new Modal(modal, 'processo')
-
-        data = {
-            'colaborador': $("#f_colaborador_id").val(),
-            'periodo_aquisitivo': $("#f_periodoaquisitivo_id").val()
-        }
-
-        registro.open(data)
-
-    }
-    function confirmarAntecipacao() {
-        let field = $("#m_processo-feriasutilizadas_antecipacao")
-        let periodo = $("#m_processo-feriasutilizadas_aquisitivo_id")
-        if (field.prop("checked")) {
-            if (!confirm('Tens certeza que deseja selecionar antecipação?')) {
-                field.prop('checked', false);
-            }
-        }
-        if (field.prop("checked")) {
-            periodo.val('').attr('disabled', true)
-
-        } else {
-            periodo.val($("#m_processo-feriasutilizadas_id").val()).attr('disabled', false)
-        }
-    }
 
 </script>
 </div>

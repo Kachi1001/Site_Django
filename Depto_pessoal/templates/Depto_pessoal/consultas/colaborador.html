@@ -255,9 +255,13 @@
         colab = page.getParam('id')
         carregarDados()
     }
-
+    function refresh () {
+        load()
+        loader.modal.hide()
+    }
     $('#btn-update').click(function () {
         let obj = new Modal('colaborador', 'update')
+        obj.refresh = refresh
         obj.open(colab)
     })
 
@@ -271,9 +275,49 @@
             'value': $("#f_ocupacao_id").val()
         }])
     })
+    function abrirLancamento(modal) {
+        let data = {}
+        modal = modal.split('_')
+        let registro = new Modal(modal[0], modal[1])
 
-    $("#mudar-cargo").click(function () {
+        data = $("#f_ocupacao_id").val()
+        registro.refresh = refresh
+        registro.open(data)
+        console.debug(data)
+    }
+    function abrirProcesso(modal) {
 
-    })
+        let registro = new Modal(modal, 'processo')
+
+        data = {
+            'colaborador': $("#f_colaborador_id").val(),
+            'periodo_aquisitivo': $("#f_periodoaquisitivo_id").val()
+        }
+        registro.refresh = refresh 
+
+        registro.open(data)
+
+    }
+    function confirmarAntecipacao() {
+        let field = $("#m_processo-feriasutilizadas_antecipacao")
+        let periodo = $("#m_processo-feriasutilizadas_aquisitivo_id")
+        if (field.prop("checked")) {
+            if (!confirm('Tens certeza que deseja selecionar antecipação?')) {
+                field.prop('checked', false);
+            }
+        }
+        if (field.prop("checked")) {
+            periodo.val('').attr('disabled', true)
+
+        } else {
+            periodo.val($("#m_processo-feriasutilizadas_id").val()).attr('disabled', false)
+        }
+    }
+    
+    function abrirHistorico(resource) {
+        let modal = new Modal(resource, 'historico')
+        modal.refresh = refresh
+        modal.open(colab)
+    }
 </script>
 {% endblock %}
