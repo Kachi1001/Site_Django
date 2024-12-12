@@ -178,7 +178,10 @@
         parametro['imagem'] = parametro.obra.concat('_', data[2], '-', data[1], '-', data[0]) + '_' + parametro.indice + '.' + filename[(filename.length - 1)]
         let formData = new FormData();
         formData.append('file', file);
-        formData.append('parametro', JSON.stringify(parametro));
+        Object.keys(parametro).forEach((key) =>{
+            formData.append(key, parametro[key])
+        })
+        // formData.append(JSON.stringify(parametro));
         apiRequest.upload('diarioobra', formData).then(() => {
             $("#table").bootstrapTable("refresh");
             if (redirect) {

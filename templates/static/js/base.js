@@ -1,24 +1,15 @@
 const True = true;
 const False = false;
-const date ={
+const date = {
     adicionarZero: function (value) {
-        if (value <= 9)
-            return "0" + value;
-        else
-            return value;
-    }
-}
+        if (value <= 9) return "0" + value;
+        else return value;
+    },
+};
 const apiRequest = {
     baseUrl: api,
     createURL: function (endpoint) {
-        return this.baseUrl + app + "/" + endpoint ;
-    },
-    createDATA: function (metodo, parametro) {
-        return {
-            metodo: metodo,
-            parametro: parametro,
-            // user: user,
-        };
+        return this.baseUrl + app + "/" + endpoint;
     },
     get: function (endpoint, params = undefined) {
         const url = new URL(this.createURL(endpoint));
@@ -36,7 +27,10 @@ const apiRequest = {
         })
             .then((response) => {
                 if (response.status === 401) {
-                    page.to('login', {'login':user,'next':window.location.pathname})
+                    page.to("login", {
+                        login: user,
+                        next: window.location.pathname,
+                    });
                 } else if (!response.ok) {
                     return response.json().then((errorData) => {
                         throw errorData; // Lança os dados de erro
@@ -46,8 +40,7 @@ const apiRequest = {
             })
             .catch((error) => {
                 console.error("Erro na requisição GET:", error);
-                throw error
-                
+                throw error;
             });
     },
     post: function (endpoint, parametro) {
@@ -55,102 +48,108 @@ const apiRequest = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                'X-CSRFToken': csrftoken,
-            },  
+                "X-CSRFToken": csrftoken,
+            },
             body: JSON.stringify(parametro),
         })
             .then((response) => {
                 if (response.status === 401) {
-                    page.to('login', {'login':user,'next':window.location.pathname})
+                    page.to("login", {
+                        login: user,
+                        next: window.location.pathname,
+                    });
                 } else if (!response.ok) {
                     throw response;
                 }
                 return response.json();
             })
             .then(() => {
-                this.success({'method':'Registrado com êxito!','message':'Foi concluído com sucesso a operação.'});
+                this.success({
+                    method: "Registrado com êxito!",
+                    message: "Foi concluído com sucesso a operação.",
+                });
             })
-            .catch((error) => {
-                this.error(error);
-            });
+            .catch(this.error);
     },
     update: function (endpoint, parametro) {
         return fetch(this.createURL(endpoint), {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                'X-CSRFToken': csrftoken,
+                "X-CSRFToken": csrftoken,
             },
             body: JSON.stringify(parametro),
         })
             .then((response) => {
                 if (response.status === 401) {
-                    page.to('login', {'login':user,'next':window.location.pathname})
+                    page.to("login", {
+                        login: user,
+                        next: window.location.pathname,
+                    });
                 } else if (!response.ok) {
                     throw response;
                 }
                 return response.json();
             })
-            .then((data) => {
-                this.success({'method':'Atualizado com êxito!','message':'Seu registro foi atualizado com sucesso.'});
+            .then(() => {
+                this.success({
+                    method: "Atualizado com êxito!",
+                    message: "Seu registro foi atualizado com sucesso.",
+                });
             })
-            .catch((error) => {
-                this.error(error);
-            });
+            .catch(this.error);
     },
     upload: function (endpoint, formData) {
         return fetch(this.createURL(endpoint), {
-            method: 'POST',
+            method: "POST",
             body: formData, // Use o FormData criado
             headers: {
                 // O Content-Type é automaticamente configurado pelo FormData
-                'X-CSRFToken': csrftoken // Inclua o CSRF token, se necessário
-            }
+                "X-CSRFToken": csrftoken, // Inclua o CSRF token, se necessário
+            },
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Resposta do servidor:', data);
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-        });
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then(() => {
+                this.success({
+                    method: "Registrado com êxito!",
+                    message: "Foi concluído com sucesso a operação.",
+                });
+            })
+            .catch(this.error);
     },
 
     delete: function (endpoint, parametro) {
-         if (confirm("Tem certeza que deseja apagar esse registro?")) {
+        if (confirm("Tem certeza que deseja apagar esse registro?")) {
             return fetch(this.createURL(endpoint), {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
-                    'X-CSRFToken': csrftoken,
+                    "X-CSRFToken": csrftoken,
                 },
                 body: JSON.stringify(parametro),
             })
                 .then((response) => {
                     if (response.status === 401) {
-                        page.to('login', {'login':user,'next':window.location.pathname})
+                        page.to("login", {
+                            login: user,
+                            next: window.location.pathname,
+                        });
                     } else if (!response.ok) {
                         throw response;
                     }
-                    console.error(response);
-                    this.success(
-                        {
+                })
+                .then(() =>{
+                        this.success({
                             method: "Deletado com êxito!",
                             message: "Registro deletado com sucesso.",
-                        },
-                        
-                    );
-                })
-                .catch((error) => {
-                    console.error("Erro:", error);
-
-                    this.error(error);
-                });
+                        });
+                    })
+                .catch(this.error);
         } else {
             toasts("warning", {
                 method: "Operação cancelada",
@@ -163,32 +162,29 @@ const apiRequest = {
         fetch(this.createURL(endpoint), {
             method: "POST",
             headers: {
-                'X-CSRFToken': csrftoken,
-            }
+                "X-CSRFToken": csrftoken,
+            },
         })
             .then((response) => {
                 if (response.status === 401) {
-                    page.to('login', {'login':user,'next':window.location.pathname})
+                    page.to("login", {
+                        login: user,
+                        next: window.location.pathname,
+                    });
                 } else if (!response.ok) {
                     throw response;
                 }
-                this.success(
-                    {
-                        method: "Sucesso!",
-                        message: "Função executada com sucesso.",
-                    }
-                );
+                this.success({
+                    method: "Sucesso!",
+                    message: "Função executada com sucesso.",
+                });
             })
-            .catch((error) => {
-                console.error("Erro:", error);
-
-                this.error(error);
-            });
+            .catch(this.error);
     },
 
     success: function (response) {
         toasts("success", response);
-   
+
         // Chama o toast de sucesso
     },
     error: function (error) {
@@ -205,16 +201,15 @@ const apiRequest = {
                 Object.keys(errMessage).forEach((key) => {
                     toasts("danger", {
                         method: "Registro",
-                        message: `[${key.toLocaleUpperCase()}] ${
-                            errMessage[key]
-                        }`,
+                        message: `[${key.toLocaleUpperCase()}] ${errMessage[key]
+                            }`,
                     });
                 });
             })
             .catch(() => {
                 console.error("Erro ao interpretar a resposta de erro.");
                 toasts("warning", {
-                    method: "Ocorreu um erro inesperado!", 
+                    method: "Ocorreu um erro inesperado!",
                     message: "Erro ao interpretar a resposta de erro.",
                 });
             });
@@ -246,7 +241,7 @@ const page = {
         const currentBaseUrl = window.location.origin; // Pega o domínio atual
         const newUrl = `${currentBaseUrl}/${app}/${path}?${queryString}`;
 
-        // Redireciona para a nova URL  
+        // Redireciona para a nova URL
         window.location.href = newUrl;
     },
     getParam: function (param) {
@@ -263,8 +258,8 @@ const page = {
     refresh: function () {
         location.reload();
     },
-    to: function(path, params){
-        queryString = ''
+    to: function (path, params) {
+        queryString = "";
         if (typeof params != "undefined") {
             // Remove parâmetros com valores vazios, nulos ou indefinidos
             const filteredParams = Object.fromEntries(
@@ -285,9 +280,9 @@ const page = {
         const currentBaseUrl = window.location.origin; // Pega o domínio atual
         const newUrl = `${currentBaseUrl}/${path}?${queryString}`;
 
-        // Redireciona para a nova URL  
-        window.location.href = newUrl
-    }
+        // Redireciona para a nova URL
+        window.location.href = newUrl;
+    },
     // Exemplo de uso:
 };
 

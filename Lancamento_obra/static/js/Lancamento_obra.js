@@ -246,7 +246,7 @@ const modal = {
                 $(`#${prefix}del`)
                     .off()
                     .on("click", async () => {
-                        apiRequest.delete(endpoint, () => {
+                        apiRequest.delete(endpoint).then( () => {
                             modal.hide();
                             $("#table").bootstrapTable("refresh");
                         });
@@ -270,10 +270,10 @@ const modal = {
                 modal.show();
                 break
             case 'table':
-                
                 loaded.reload = async function (){
+                    table_data = await apiRequest.get(resource);
                     generics.populate
-                        .table(prefix, resource, { delete: false, edit: false })
+                        .table(prefix, table_data, { delete: false, edit: false })
                         .then(() => {
                             modal.show();
                         });

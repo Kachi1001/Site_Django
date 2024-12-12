@@ -104,12 +104,7 @@ def proxy_api(request, path):
             full_url = f"{api_url}?{urlencode(params)}" if params else api_url
             response = requests.get(full_url, headers=headers)
         elif request.method == "POST":
-            if request.content_type.startswith('multipart/form-data'):
-                files = {key: file for key, file in request.FILES.items()}
-                data = request.POST.dict()
-                response = requests.post(api_url, headers=headers, files=files, data=data)
-            else:
-                response = requests.post(api_url, headers=headers, data=request.body)
+            response = requests.post(api_url, headers=headers, data=request.body)
         elif request.method == "PUT":
             response = requests.put(api_url, headers=headers, data=request.body)
         elif request.method == "PATCH":
