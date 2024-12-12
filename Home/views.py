@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as login_django, logout as logout_django, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from pyautogui import resolution
 from . import models
 
 import requests
