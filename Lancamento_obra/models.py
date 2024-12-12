@@ -30,7 +30,7 @@ class Atividade(models.Model):
     obra = models.ForeignKey('Obra', models.DO_NOTHING, db_column='obra')
     diario = models.CharField(max_length=30, blank=True, null=True)
     meiadiaria = models.BooleanField(blank=True, null=True)
-    supervisor = models.CharField(max_length=100, blank=True, null=True)
+    supervisor = models.ForeignKey('Supervisor', models.DO_NOTHING, db_column='supervisor', blank=True, null=True)
     motivo = models.CharField(max_length=30, blank=True, null=True)
 
     class Meta:

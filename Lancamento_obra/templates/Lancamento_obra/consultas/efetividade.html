@@ -64,7 +64,7 @@
 
             $(`#${prefix}submit`).on('click', async () => {
                 data = await generics.reader.fields(resource, prefix)
-                apiRequest.post('exec/efetividade', data, () => {
+                apiRequest.post('exec/efetividade', data).then(() => {
                     $("#table").bootstrapTable("refresh");
                 })
             })

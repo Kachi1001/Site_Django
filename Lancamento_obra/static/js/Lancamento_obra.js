@@ -258,7 +258,7 @@ const modal = {
                             resource_fields,
                             prefix
                         );
-                        apiRequest.update(endpoint, new_data, () => {
+                        apiRequest.update(endpoint, new_data).then(() => {
                             modal.hide();
                             $("#table").bootstrapTable("refresh");
                         });
@@ -268,6 +268,18 @@ const modal = {
                 image = document.getElementById(`${prefix}imagem`);
                 image.src = `http://10.0.0.139/media/Lancamento_obra/${resource}/${id}.jpeg`;
                 modal.show();
+                break
+            case 'table':
+                
+                loaded.reload = async function (){
+                    generics.populate
+                        .table(prefix, resource, { delete: false, edit: false })
+                        .then(() => {
+                            modal.show();
+                        });
+                }
+
+                loaded.reload()
         }
     },
 };

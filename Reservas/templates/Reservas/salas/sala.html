@@ -19,15 +19,19 @@
         return !isNaN(date.getTime());
     }
     async function load(force) {
-        const response = await apiRequest.get("lastick/agenda_sala")
-        if (response != lastestTick || force) {
-            if (isDate($("#data-picker").val())) {
-                loadReservas('{{sala}}', $("#data-picker").val())
-                lastestTick = response;
-            }
-
-        }
-
+        fetch('{{api_external}}Reservas/lastick/agenda_sala').then((result) => {
+            result.json().then((response) =>{
+                console.log(response)
+                if (response != lastestTick || force) {
+                    if (isDate($("#data-picker").val())) {
+                        loadReservas('{{sala}}', $("#data-picker").val())
+                        lastestTick = response;
+                    }
+                }    
+            })
+        }).catch((err) => {
+           toasts('Danger',{'method':'Carregamento','message':'Erro ao carregar dados!'}) 
+        });
 
     }
 </script>

@@ -42,11 +42,11 @@ const apiRequest = {
                         throw errorData; // Lança os dados de erro
                     });
                 }
-                console.log (response)
                 return response.json(); // Converte a resposta em JSON se a requisição foi bem-sucedida
             })
             .catch((error) => {
-                    console.error("Erro na requisição GET:", error);
+                console.error("Erro na requisição GET:", error);
+                throw error
                 
             });
     },
@@ -172,13 +172,11 @@ const apiRequest = {
                 } else if (!response.ok) {
                     throw response;
                 }
-                console.error(response);
                 this.success(
                     {
                         method: "Sucesso!",
                         message: "Função executada com sucesso.",
-                    },
-                    successCallback
+                    }
                 );
             })
             .catch((error) => {

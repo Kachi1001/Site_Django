@@ -21,6 +21,7 @@ def base(request):
     return {
         # 'ambiente': config('AMBIENTE'),
         'nome': request.user.username,
+        # 'user': request.user,
         'api': config("API"),
         'api_external': config("API_EXTERNAL"),
         'media': media,

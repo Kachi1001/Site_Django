@@ -147,4 +147,12 @@ class Log(models.Model):
     class Meta:
         managed = False
         db_table = 'log'
-        
+
+
+class Pendencia(models.Model):
+    password_change = models.BooleanField(blank=True, null=True)
+    user = models.OneToOneField(AuthUser, models.DO_NOTHING, primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'pendencia'

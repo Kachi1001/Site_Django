@@ -1,7 +1,6 @@
-const urlAPI = api + "/" + app + "/";
-apiRequest.app = "reservas";
+const urlAPI = api_external + "/" + app + "/";
 var loaded;
-
+apiRequest.baseUrl = api_external
 function reload(param) {
     let url = new URL(window.location.href);
     let params = new URLSearchParams(url.search);
@@ -13,7 +12,6 @@ function reload(param) {
     // Atualizar a URL no navegador e recarregar a página
     window.location.href = `${url.pathname}?${params}`;
 }
-
 const horarios = [
     "07:30",
     "08:00",
@@ -92,7 +90,7 @@ function Reserva_rapida() {
                     sala: $("#reserva_rapida-sala").val(),
                 });
             }
-            apiRequest.post("agendasala", { reservas: reservas }, function () {
+            apiRequest.post("agendasala", { reservas: reservas }).then(function () {
                 load(false);
             });
         });
@@ -103,10 +101,9 @@ function reserva_simples(sala) {
     let resp = null;
     let desc = "";
     var loop = horarios;
-    loop.pop()
+    loop.pop();
     loop.forEach((hora) => {
-        hora = hora.replace(":", "\\:")
-        console.log($("#responsavel" + hora).val());
+        hora = hora.replace(":", "\\:");
         if (
             !$("#check" + hora).is(":disabled") &&
             !$("#responsavel" + hora).is(":disabled") &&
@@ -142,13 +139,12 @@ function reserva_simples(sala) {
         });
         return;
     }
-    // registarAJAX(parametro, 'reservar_sala');
-    apiRequest.post("agendasala", { reservas: reservas }, function () {
+    apiRequest.post("agendasala", { reservas: reservas }).then(() => {
         load(true);
     });
 }
 async function loadReservas(sala, data) {
-    manha = await apiRequest.get("agendasala_quadro", {
+    const manha = await apiRequest.get("agendasala_quadro", {
         sala: sala,
         data: data,
         horario: "manha",
@@ -161,21 +157,6 @@ async function loadReservas(sala, data) {
         horario: "tarde",
     });
     populateReservas(tarde.dados, "tarde");
-    // apiRequest.get(
-    //     "get",
-    //     sala,
-    //     JSON.stringify({ data: data, horario: "manha" }),
-    //     function (response) {
-    //     }
-    // );
-    // apiRequest.get(
-    //     "get",
-    //     sala,
-    //     JSON.stringify({ data: data, horario: "tarde" }),
-    //     function (response) {
-    //         populateReservas(response.dados, "tarde");
-    //     }
-    // );
 }
 function populateReservas(response, horario) {
     tabela = $(`#tabela_${horario}`);

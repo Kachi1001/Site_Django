@@ -4,6 +4,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {%include 'static/imports/jquery.html'%} <!-- Jquery -->
 
         <link
             rel="shortcut icon"
@@ -11,8 +12,6 @@
             type="image/x-icon"
         />
         <title>Ferramentas Tecnika</title>
-        {%include 'static/imports/jquery.html'%}
-        <!-- Jquery -->
         {%include 'static/imports/bootstrap.html'%}
         <!-- Bootstrap -->
 
@@ -26,36 +25,34 @@
                 justify-content: center;
                 height: 100%;
             }
-
             p {
                 color: red;
                 padding-top: 5px;
             }
         </style>
     </head>
-
     <body>
         <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray">
-            <div class="card-header">Tela de login</div>
+            <div class="card-header">Tela de redefinição de senha</div>
             <div class="card-body">
-                <form action="{% url 'login'%}" method="post">
+                <form action="{% url 'alterar_senha'%}" method="post">
                     {%csrf_token%}
                     <input type="hidden" name="next" value="{{next}}" />
                     <div class="form-floating mb-3">
                         <input
                             type="name"
                             class="form-control"
-                            id="nome"
                             placeholder="Nome"
                             name="nome"
-                            value="{{login}}"
+                            value="{{user.username}}"
+                            disabled
                         />
                         <label for="floatingInput">Nome</label>
                     </div>
                     <div class="input-group mb-3">
                         <div class="form-floating">
                             <input type="password" class="form-control""
-                            placeholder=" Senha" name="senha" id="senha"
+                            placeholder="Senha" name="senha" id="senha"
                             required>
                             <label for="floatingPassword">Senha</label>
                         </div>
@@ -66,55 +63,68 @@
                             id="senha_view"
                         ></button>
                     </div>
-
+                    <div class="form-floating" style="margin-bottom: 30px">
+                        <input
+                            type="password"
+                            class="form-control"
+                            placeholder="Senha"
+                            name="senha_2"
+                            id="senha_2"
+                            required
+                        />
+                        <label for="floatingPassword">Repita a senha</label>
+                    </div>
                     <input
                         type="submit"
-                        class="btn btn-warning"
-                        value="Complete os campos"
+                        class="btn btn-danger"
+                        value="Escolha uma nova senha"
                         id="btn"
                         disabled
                     />
-                    <p>{%if login != Null%}Nome ou senha incorreto{%endif%}</p>
                 </form>
             </div>
             <div class="card-footer text-body-secondary">
-                É necessário estar logado para ter acesso as ferramentas
+                Redefinição da senha, a partir da confirmação sua senha irá ser
+                alterada para a nova!
             </div>
         </div>
     </body>
     <script>
-        const nome = $("#nome");
-        const senha = $("#senha");
+        // const novaSenha = document.getElementById("senha");
+        const novaSenha = $("#senha");
         // const confirmarSenha = document.getElementById("senha_2");
+        const confirmarSenha = $("#senha_2");
         const view = $("#senha_view");
         var password_visible = false;
         function view_password() {
             if (!password_visible) {
-                senha.attr("type", "text");
+                novaSenha.attr("type", "text");
+                confirmarSenha.attr("type", "text");
                 view.removeClass("bi-eye-slash");
                 view.addClass("bi-eye");
             } else {
                 view.removeClass("bi-eye");
                 view.addClass("bi-eye-slash");
-                senha.attr("type", "password");
+                novaSenha.attr("type", "password");
+                confirmarSenha.attr("type", "password");
             }
             password_visible = !password_visible;
         }
         function live_verify(){
-                const btn = document.getElementById("btn");
+            const btn = document.getElementById("btn");
 
-                if (nome.val() && senha.val()) {
-                    btn.classList = "btn btn-success";
-                    btn.value = "Logar";
-                    btn.disabled = false;
-                } else {
-                    btn.classList = "btn btn-danger";
-                    btn.value = "Falta informação";
-                    btn.disabled = true;
-                }
+            if (novaSenha.val() !== confirmarSenha.val()) {
+                btn.classList = "btn btn-danger";
+                btn.value = "Senha não coincidem";
+                btn.disabled = true;
+            } else {
+                btn.classList = "btn btn-success";
+                btn.value = "Redefinir";
+                btn.disabled = false;
+            }
         }
         document
-            .getElementById("nome")
+            .getElementById("senha_2")
             .addEventListener("input", live_verify)
         document
             .getElementById("senha")

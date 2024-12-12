@@ -16,13 +16,13 @@ def cadastros(request, resource):
 @login_required
 @has_permission_decorator(f'{app}-tabelas')
 def tabelas(request, resource):
-    return render(request, f"{app}/tabelas/{resource}.html", {'table_height': '600','resource':resource})
+    return render(request, f"{app}/tabelas/{resource}.html", {'table_height': '560','resource':resource})
 
 @login_required
 @has_permission_decorator(f'{app}-consultas')
 def consultas(request, resource):
     
-    return render(request, f"{app}/consultas/{resource}.html",{'table_height': '600','resource':resource}) 
+    return render(request, f"{app}/consultas/{resource}.html",{'table_height': '570','resource':resource}) 
 
 @login_required
 @has_permission_decorator(f'{app}-lancamentos')
