@@ -29,7 +29,7 @@ const apiRequest = {
                 if (response.status === 401) {
                     page.to("login", {
                         login: user,
-                        next: window.location.href,
+                        next: `${window.location.pathname}${window.location.search}`,
                     });
                 } else if (!response.ok) {
                     return response.json().then((errorData) => {
