@@ -11,7 +11,8 @@ translate = {
     'Lancamento_obra': 'Lançamento obra',
     'Reservas': 'Reservas',
     'Depto_pessoal': 'Departamento pessoal',
-    'Obra': 'Obra'
+    'Obra': 'Obra',
+    'Curriculos': 'Currículos',
 }
 def base(request):
     modulo_da_view = request.resolver_match.func.__module__

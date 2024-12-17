@@ -9,3 +9,4 @@ class PendenciaAdmin(admin.ModelAdmin):
     name_user.short_description = 'Usuário'
 
 admin.site.register(Pendencia, PendenciaAdmin)
+

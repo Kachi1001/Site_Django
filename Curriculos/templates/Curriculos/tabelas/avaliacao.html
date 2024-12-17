@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+
+{%block 'header'%}
+  <h2>Tabela de Colaborador que já foram desligados</h2>
+  {%include app|add:'/table/'|add:resource|add:'.html'%}
+
+{%endblock%}

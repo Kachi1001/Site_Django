@@ -127,7 +127,7 @@ def proxy_api(request, path):
                 request.session['api_token'] = api_response.json()  # Salva o token na sessão
                 return proxy_api(request, path)
             else:
-                return JsonResponse({'Error': 'redirect'}, status=response.status_code)
+                return JsonResponse({'Error': 'Token invalido, redirecionando para login'}, status=response.status_code)
         else:
             # Se a API retornar um erro, repassa o erro
             return HttpResponse(response, status=response.status_code)

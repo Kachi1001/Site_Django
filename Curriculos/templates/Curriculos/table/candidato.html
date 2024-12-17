@@ -1,0 +1,30 @@
+{%load static%}
+{%include 'tabela.html'%}
+
+    <thead>
+        <th data-field="id" data-sortable="true">ID</th>
+        <th data-field="nome" data-sortable="true">Nome</th>
+        <th data-field="cpf" data-sortable="true">CPF</th>
+        <th data-field="rg" data-sortable="true">RG</th>
+        <th data-field="telefone" data-sortable="true">Telefone 1º</th>
+        <th data-field="telefone2" data-sortable="true">Telefone 2º</th>
+        <th data-field="nascimento"data-sortable="true" data-formatter="dataFormatter">Nascimento</th>
+        <th data-field="estado_civil"data-sortable="true" data-formatter="dataFormatter">Estado civil</th>
+        <th data-field="filho" data-formatter="checkFormatter">Filho?</th>
+        <th data-field="estado_civil"data-sortable="true" data-formatter="dataFormatter">Estado civil</th>
+        <th data-field="endereco" data-sortable="true">Endereço</th>
+        <th data-field="bairro" data-sortable="true">Bairro</th>
+        <th data-field="Cidade" data-sortable="true">Cidade</th>
+        <th data-formatter="editarFormatter" data-events="editarEvents"></th>
+    </thead>
+</table>
+<script>
+    function editarFormatter(value) {
+        return '<div id="viewBtn" class="btn-icon bg-info"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit"></div></div>'
+    }
+    window.editarEvents = {
+        'click #viewBtn': function (e, value, row, index) {
+            page.redirect('consultas/candidato',{id:row['id']})
+        },
+    }
+</script>
