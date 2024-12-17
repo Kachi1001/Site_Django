@@ -277,13 +277,12 @@
     })
     function abrirLancamento(modal) {
         let data = {}
-        modal = modal.split('_')
-        let registro = new Modal(modal[0], modal[1])
+        modal_split = modal.split('_')
+        let registro = new Modal(modal_split[0], modal_split[1])
 
         data = $("#f_ocupacao_id").val()
         registro.refresh = refresh
         registro.open(data)
-        console.debug(data)
     }
     function abrirProcesso(modal) {
 

@@ -1,4 +1,4 @@
-const ocupacao = {
+    const ocupacao = {
     text: ["id", "data_inicio", "data_fim", "remuneracao"], //campos que pode ser preencher
     select: ["equipe", "colaborador", "funcao"], // campos selecionavel
     check: ["continuo"], // campos marcaveis
@@ -18,58 +18,6 @@ const colaborador = {
     check: ["ativo", "avaliacao_recontratar"], // campos marcaveis
 };
 
-// const objFields = {
-//     colaborador: colaborador,
-//     funcao: {
-//         text: ["id"], //campos que pode ser preencher
-//         select: ["categoria"], // campos selecionavel
-//         check: ["insalubridade"], // campos marcaveis
-//     },
-//     equipe: {
-//         text: ["id"], //campos que pode ser preencher
-//         select: [""], // campos selecionavel
-//         check: [""], // campos marcaveis
-//     },
-//     feriasprocessadas: {
-//         text: ["id", "dias_processados", "data_inicio"], //campos que pode ser preencher
-//         select: ["colaborador", "periodo_aquisitivo"], // campos selecionavel
-//         check: ["consumido"], // campos marcaveis
-//     },
-//     feriasutilizadas: {
-//         text: ["id", "dias_utilizados", "data_inicio"], //campos que pode ser preencher
-//         select: ["colaborador", "periodo_aquisitivo"], // campos selecionavel
-//         check: ["antecipacao_periodo", "consumido"], // campos marcaveis
-//     },
-//     periodo_aquisitivo: {
-//         text: ["id", "colaborador", "adquirido_em", "periodo"], //campos que pode ser preencher
-//         select: [""], // campos selecionavel
-//         check: ["consumido"], // campos marcaveis
-//     },
-//     ocupacao: ocupacao,
-//     ocupacao_dissidio: ocupacao,
-//     ocupacao_alterar: ocupacao,
-//     colaborador_desligamento: {
-//         text: ["id", "data", "colaborador"], //campos que pode ser preencher
-//         select: [""], // campos selecionavel
-//         check: [""], // campos marcaveis
-//     },
-//     lembrete: {
-//         text: ["id", "colaborador", "telefone"], //campos que pode ser preencher
-//         select: ["padrao"], // campos selecionavel
-//         check: [""], // campos marcaveis
-//     },
-//     feriado: {
-//         text: ["id", "descricao"], //campos que pode ser preencher
-//         select: [""], // campos selecionavel
-//         check: ["recorrente"], // campos marcaveis
-//     },
-//     tipoavaliacao: {
-//         text: ["id", "situacao"], //campos que pode ser preencher
-//         select: [""], // campos selecionavel
-//         check: [""], // campos marcaveis
-//     },
-//     avaliacao: colaborador,
-// };
 var loader;
 
 class BaseLoader {
@@ -83,6 +31,7 @@ class BaseLoader {
         this.id = id;
         this.inputs = await apiRequest.get(`resource/${this.object}`)
         loader = this;
+
         this[this.type](); // Registra ou atualiza conforme o tipo
     }
     async populateSelect(data = [], field = "") {
@@ -218,6 +167,7 @@ class Modal extends BaseLoader {
         super(object, type); // Chama o construtor da classe DataManager
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
+        console.log (this.prefix.slice(0, -1))
         this.modal = new bootstrap.Modal(this.myModal);
         this.loader = loader
     }
@@ -270,6 +220,7 @@ class Modal extends BaseLoader {
                 $("#" + this.prefix + "submit")
                     .off()
                     .on("click", () => {
+                        this.object = this.object + '_' + this.type
                         Submit.post(this);
                     });
             });
