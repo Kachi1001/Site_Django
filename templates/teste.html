@@ -1,25 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hora Atualizada</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo da Velha</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    #game {
+      text-align: center;
+    }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 5px;
+      margin: 20px auto;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      background-color: white;
+      border: 1px solid #ccc;
+      font-size: 2em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .cell.taken {
+      cursor: not-allowed;
+      color: #555;
+    }
+
+    #status {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+
+    #restart {
+      padding: 10px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+    }
+
+    #restart:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-    <h1>Hora Atual:</h1>
-    <div style="display: flex;">
-        <h2>15:32:</h2>
-        <h2 id="segs"></h2>
-    </div>
-    <script>
-        const segs = document.getElementById('segs');
-        let time = 10
-        segs.textContent = time
+  <div id="game">
+    <h1>Jogo da Velha</h1>
+    <div id="board"></div>
+    <p id="status"></p>
+    <button id="restart">Reiniciar Jogo</button>
+  </div>
+  <script>
+    const board = document.getElementById('board');
+    const statusText = document.getElementById('status');
+    const restartButton = document.getElementById('restart');
 
-        setInterval(function(){
-            segs.textContent = time
-            time ++
-        },1000)
-    </script>
+    let currentPlayer = 'X';
+    let gameBoard = ['', '', '', '', '', '', '', '', ''];
+    let gameActive = true;
+
+    // Winning combinations
+    const winningCombinations = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+      [0, 4, 8], [2, 4, 6]             // Diagonals
+    ];
+
+    // Initialize the game board
+    function createBoard() {
+      board.innerHTML = '';
+      gameBoard.forEach((cell, index) => {
+        const cellElement = document.createElement('div');
+        cellElement.classList.add('cell');
+        cellElement.setAttribute('data-index', index);
+        cellElement.addEventListener('click', handleCellClick);
+        board.appendChild(cellElement);
+      });
+      updateStatus();
+    }
+
+    // Handle a cell click
+    function handleCellClick(e) {
+      const cellIndex = e.target.getAttribute('data-index');
+
+      if (gameBoard[cellIndex] !== '' || !gameActive) return;
+
+      gameBoard[cellIndex] = currentPlayer;
+      e.target.textContent = currentPlayer;
+      e.target.classList.add('taken');
+
+      if (checkWin()) {
+        statusText.textContent = `Jogador ${currentPlayer} venceu!`;
+        gameActive = false;
+        return;
+      }
+
+      if (gameBoard.every(cell => cell !== '')) {
+        statusText.textContent = 'Empate!';
+        gameActive = false;
+        return;
+      }
+
+      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+      updateStatus();
+    }
+
+    // Check for a win
+    function checkWin() {
+      return winningCombinations.some(combination => {
+        return combination.every(index => gameBoard[index] === currentPlayer);
+      });
+    }
+
+    // Update status text
+    function updateStatus() {
+      statusText.textContent = `Vez do jogador ${currentPlayer}`;
+    }
+
+    // Restart the game
+    restartButton.addEventListener('click', () => {
+      currentPlayer = 'X';
+      gameBoard = ['', '', '', '', '', '', '', '', ''];
+      gameActive = true;
+      createBoard();
+    });
+
+    // Start the game
+    createBoard();
+  </script>
 </body>
 </html>
