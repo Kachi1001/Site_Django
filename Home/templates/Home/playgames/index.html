@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+{%block 'style'%}
+{%endblock%}
+
+
+
+{%block 'main'%}
+
+    <div class="row text-center justify-content-center">
+      
+      <div class="col-auto">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Jogo da velha</h5>
+          </div>
+          <div class="card-body">
+            <p>Clique abaixo para selecionar o jogador</p>
+          </div>
+          <div class="card-footer">
+            <a href="/playgames/jogo-x?player=x" class="pe-2">X</a>
+            <a href="/playgames/jogo-x?player=o" class="">O</a>
+          </div>
+        </div>
+      </div>
+{%endblock%}

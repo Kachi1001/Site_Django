@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Velha</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        td {
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            border: 2px solid #333;
+            cursor: pointer;
+            background-color: #fff;
+        }
+        td:hover {
+            background-color: #ddd;
+        }
+        td.taken {
+            cursor: not-allowed;
+            background-color: #f4f4f4;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jogo da Velha Multiplayer</h1>
+    <table>
+        <tr>
+            <td id="cell-0" onclick="makeMove(0)">-</td>
+            <td id="cell-1" onclick="makeMove(1)">-</td>
+            <td id="cell-2" onclick="makeMove(2)">-</td>
+        </tr>
+        <tr>
+            <td id="cell-3" onclick="makeMove(3)">-</td>
+            <td id="cell-4" onclick="makeMove(4)">-</td>
+            <td id="cell-5" onclick="makeMove(5)">-</td>
+        </tr>
+        <tr>
+            <td id="cell-6" onclick="makeMove(6)">-</td>
+            <td id="cell-7" onclick="makeMove(7)">-</td>
+            <td id="cell-8" onclick="makeMove(8)">-</td>
+        </tr>
+    </table>
+    <div id="message">Sua vez: Jogador X</div>
+    <button onclick="resetGame()">Reiniciar Jogo</button>
+
+    <script>
+      function getParam(param) {
+        const params = new URLSearchParams(window.location.search); // Pega a query string da URL
+        const values = {};
+
+        // Itera sobre todos os parâmetros e armazena no objeto values
+        params.forEach((value, key) => {
+            values[key] = value.replaceAll("%20", " ");
+        });
+
+        return values[param];
+        }
+
+        let gameId = getParam('gameId') || 1; // ID do jogo, pode ser gerado no backend
+        let player = getParam('player').toUpperCase();    // Jogador atual, pode ser dinâmico
+
+        async function makeMove(position) {
+            const response = await fetch(`{{api_external}}Home/make_move/${gameId}/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ player, position }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                updateBoard(data.board);
+                if (data.winner) {
+                    document.getElementById("message").textContent = `Jogador ${data.winner} venceu!`;
+                    disableBoard();
+                } else {
+                    document.getElementById("message").textContent = `Sua vez: Jogador ${data.turn}`;
+                }
+            } else {
+                alert(data.error);
+            }
+        }
+
+        async function fetchGameState() {
+            const response = await fetch(`{{api_external}}Home/get_game_state/${gameId}/`);
+            const data = await response.json();
+            updateBoard(data.board);
+            if (data.winner) {
+                document.getElementById("message").textContent = `Jogador ${data.winner} venceu!`;
+                disableBoard();
+            } else {
+                document.getElementById("message").textContent = `Sua vez: Jogador ${data.turn}`;
+            }
+        }
+
+        function updateBoard(board) {
+            for (let i = 0; i < board.length; i++) {
+                const cell = document.getElementById(`cell-${i}`);
+                cell.textContent = board[i];
+                if (board[i] !== "-") {
+                    cell.classList.add("taken");
+                } else {
+                    cell.classList.remove("taken");
+                }
+            }
+        }
+
+        function disableBoard() {
+            for (let i = 0; i < 9; i++) {
+                document.getElementById(`cell-${i}`).classList.add("taken");
+            }
+        }
+
+        function resetGame() {
+            fetch(`{{api_external}}Home/reset_game/${gameId}/`, { method: "POST" })
+                .then(() => {
+                    fetchGameState();
+                    document.getElementById("message").textContent = `Sua vez: Jogador X`;
+                })
+                .catch(err => console.error("Erro ao reiniciar o jogo:", err));
+        }
+
+        // Atualizar o jogo periodicamente
+        setInterval(fetchGameState, 500);
+    </script>
+</body>
+</html>
