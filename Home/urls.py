@@ -7,7 +7,7 @@ urlpatterns = [
     path("teste", views.teste, name='teste'),
     path("status", views.status, name='status'),
     path("teste", views.teste),
-    path("playgames/<str:game>", views.playgames),
+    path("minigames/<str:game>", views.minigames),
     path("alterar_senha", views.alterar_senha, name='alterar_senha'), # type: ignore
     re_path(r'^proxy-api/(?P<path>.*)$', views.proxy_api, name='proxy_api'), # type: ignore
 ]

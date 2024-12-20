@@ -12,7 +12,7 @@
 
 
 <div class="modals">
-    <div class="modal fade" id="m_register-funcao" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_register-profissoes" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -20,83 +20,24 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="input-group mb-2 nowrap">
+                    <div class="input-group input-group-sm mb-2 nowrap ">
                         <label class="input-group-text">Nome:</label>
-                        <input type="text" id="m_register-funcao_id" class="form-control form-control-sm">
+                        <input type="text" id="m_register-profissoes_funcao" class="form-control form-control-sm">
                     </div>
                     <div class="row">
                         <div class="col-auto">
-                            <div class="input-group mb-2 nowrap">
+                            <div class="input-group input-group-sm mb-2 nowrap">
                                 <label class="input-group-text" for="form_colaborador_funcao">Categoria:</label>
-                                <select class="form-select form-control-sm" id="m_register-funcao_categoria">
+                                <select class="form-select form-control-sm" id="m_register-profissoes_grupo">
                                 </select>
                             </div>
                         </div>
-                        <div class="col-auto">
-                            <div class="input-group mb-2 nowrap">
-                                <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="checkbox"
-                                        id="m_register-funcao_insalubridade">
-                                </div>
-                                <span class="input-group-text">Insalubre</span>
-                            </div>
-                        </div>
                     </div>
-                    <button type="button" class="btn btn-primary mb-2" id="m_register-funcao_submit">Cadastrar</button>
-                    <div class="modal_list">
-                        <table class="table table-hover table-bordered table-striped" id="m_register-funcao_table">
-                            <thead>
-                                <tr></tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="m_register-equipe" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5">Cadastro de equipe</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group mb-2 nowrap">
-                        <label class="input-group-text">Nome:</label>
-                        <input type="text" id="m_register-equipe_id" class="form-control form-control-sm">
-                    </div>
-                    <button type="button" class="btn btn-primary mb-2" id="m_register-equipe_submit">Cadastrar</button>
-                    <div class="modal_list">
-                        <table class="table table-hover table-bordered table-striped" id="m_register-equipe_table">
-                            <thead>
-                                <tr></tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="m_register-tipoavaliacao" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5">Cadastro de situação para Avaliações</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group input-group-sm mb-2 nowrap">
-                        <label class="input-group-text">Situação:</label>
-                        <input type="text" id="m_register-tipoavaliacao_situacao" class="form-control form-control-sm">
-                    </div>
-                    <button type="button" class="btn btn-sm btn-primary mb-2"
-                        id="m_register-tipoavaliacao_submit">Cadastrar</button>
+                    <button type="button" class="btn btn-primary mb-2"
+                        id="m_register-profissoes_submit">Cadastrar</button>
                     <div class="modal_list">
                         <table class="table table-hover table-bordered table-striped table-sm"
-                            id="m_register-tipoavaliacao_table">
+                            id="m_register-profissoes_table">
                             <thead>
                                 <tr></tr>
                             </thead>
@@ -107,759 +48,468 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="m_lanc-escolaridade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Formações</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-1">
+                    <div class="modal_list">
+
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_lanc-escolaridade_table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="m_lanc-escolaridade_candidato">
+                    <div class="input-group input-group-sm mb-2 nowrap">
+                        <label class="input-group-text">ESCOLARIDADE:</label>
+                        <select id="m_lanc-escolaridade_escolaridade" class="form-select form-control-sm"></select>
+                    </div>
+                    <div class="input-group input-group-sm mb-2 nowrap">
+                        <label class="input-group-text">DETALHE:</label>
+                        <input type="text" id="m_lanc-escolaridade_detalhe" class="form-control form-control-sm">
+                    </div>
+                    <div class="input-group input-group-sm mb-2 nowrap">
+                        <label class="input-group-text">CONCLUSÃO:</label>
+                        <input type="date" id="m_lanc-escolaridade_conclusao" class="form-control form-control-sm">
+                    </div>
+                    <button type="button" class="btn btn-sm btn-primary mb-2"
+                        id="m_lanc-escolaridade_submit">ADICIONAR</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_lanc-experiencia" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Experiências</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-1">
+                    <div class="modal_list">
+
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_lanc-experiencia_table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="m_lanc-experiencia_candidato">
+                    <div class="row m-0 justify-content-center">
+                        <div class="input-group input-group-sm mb-2 nowrap">
+                            <label class="input-group-text">EMPRESA:</label>
+                            <input type="text" id="m_lanc-experiencia_empresa" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 nowrap">
+                                <label class="input-group-text">PROFISSÃO:</label>
+                                <select id="m_lanc-experiencia_profissao" class="form-select form-control-sm"></select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 nowrap">
+                                <label class="input-group-text">DATA INICIO:</label>
+                                <input type="date" id="m_lanc-experiencia_data_inicio"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 nowrap">
+                                <label class="input-group-text">DATA FIM:</label>
+                                <input type="date" id="m_lanc-experiencia_data_fim"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-primary mb-2"
+                        id="m_lanc-experiencia_submit">ADICIONAR</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal upadate colaborador-->
-    <div class="modal fade" id="m_update-colaborador" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="m_update-questionario" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Edição de colaborador</h1>
+                    <h1 class="modal-title fs-5">Questionário</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-auto">
-                            <div class="input-group mb-2 flex-nowrap">
-                                <label class="input-group-text">ID:</label>
-                                <input type="text" id="m_update-colaborador_id" class="form-control" disabled>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="input-group mb-2 flex-nowrap">
-                                <label class="input-group-text">NOME:</label>
-                                <input type="text" id="m_update-colaborador_nome" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="input-group mb-2 flex-nowrap">
-                                <label class="input-group-text">CPF:</label>
-                                <input type="number" id="m_update-colaborador_cpf" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="input-group mb-2 flex-nowrap">
-                                <label class="input-group-text">RG:</label>
-                                <input type="number" id="m_update-colaborador_rg" class="form-control">
-                            </div>
-                        </div>
+                        <input type="hidden" id="m_update-colaborador_id" class="form-control" disabled>
+                        <input type="hidden" id="m_update-questionario_candidato" class="form-control" disabled>
+                        <div class="col-6">
 
-                        <div class="col-auto">
-                            <div class="input-group mb-2 flex-nowrap">
-                                <label class="input-group-text">NASCIMENTO:</label>
-                                <input type="date" id="m_update-colaborador_nascimento" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="input-group mb-2 flex-nowrap">
-                                <label class="input-group-text">TELEFONE:</label>
-                                <input type="number" id="m_update-colaborador_fone" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-auto">
-                            <div class="input-group mb-2 flex-nowrap">
-                                <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="checkbox"
-                                        id="m_update-colaborador_ativo">
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                    <span class="input-group-text">JÁ TRABALHOU NA EMPRESA:</span>
+                                    <div class="input-group-text">
+                                        <input class="form-check-input mt-0" type="checkbox"
+                                            id="m_update-questionario_funcionario_antigo">
+                                    </div>
                                 </div>
-                                <span class="input-group-text">ATIVO:</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                    <span class="input-group-text">POSSUI DISPONIBILIDADE PARA VIAGENS<br> COM DURAÇÃO
+                                        DE 15 DIAS OU MAIS</span>
+                                    <div class="input-group-text">
+                                        <input class="form-check-input mt-0" type="checkbox"
+                                            id="m_update-questionario_disponibilidade">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                    <span class="input-group-text">É FUMANTE:</span>
+                                    <div class="input-group-text">
+                                        <input class="form-check-input mt-0" type="checkbox"
+                                            id="m_update-questionario_fumante">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-2 nowrap">
+                                    <label class="input-group-text">CONSOME BEBIDA:</label>
+                                    <select id="m_update-questionario_bebidas_freq" class="form-select form-control-sm">
+                                        <option>NÃO</option>
+                                        <option>DIARIAMENTE</option>
+                                        <option>SEMANALMENTE</option>
+                                        <option>QUINZENALMENTE</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                    <label class="input-group-text">FAZ USO DE MEDICAÇÃO:</label>
+                                    <input type="text" id="m_update-questionario_medicacao" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                    <label class="input-group-text">JÁ SOFREU ACIDENTE DE TRABALHO:</label>
+                                    <input type="text" id="m_update-questionario_acidente" class="form-control">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="m_update-colaborador_del">Excluir</button>
-                        <button type="button" class="btn btn-success" id="m_update-colaborador_save">Salvar</button>
+                        <div class="col-6">
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                    <label class="input-group-text">RESPONDEU OU ESTÁ <br>RESPONDENDO PROCESSO
+                                        JUDICIAL:</label>
+                                    <input type="text" id="m_update-questionario_processo" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                    <label class="input-group-text">BOLETIM DE OCORRÊNCIA:</label>
+                                    <input type="text" id="m_update-questionario_bo" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                    <label class="input-group-text">ANTECEDENTES CRIMINAIS:</label>
+                                    <input type="text" id="m_update-questionario_criminais" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                    <label class="input-group-text">ANTECEDENTES POLICIAIS:</label>
+                                    <input type="text" id="m_update-questionario_policiais" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                    <label class="input-group-text">AÇÃO JUDICIAL:</label>
+                                    <input type="text" id="m_update-questionario_judicial" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success"
+                                id="m_update-questionario_save">Salvar</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal upadate colaborador-->
-    <div class="modal fade" id="m_update-avaliacao" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="m_update-percepcao" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Edição de avaliação</h1>
+                    <h1 class="modal-title fs-5"><strong>Percepções</strong></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-auto">
-                            <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">ID:</label>
-                                <input type="text" id="m_update-avaliacao_id" class="form-control" disabled>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">NOME:</label>
-                                <input type="text" id="m_update-avaliacao_nome" class="form-control" disabled>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">CPF:</label>
-                                <input type="number" id="m_update-avaliacao_cpf" class="form-control" disabled>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">RG:</label>
-                                <input type="number" id="m_update-avaliacao_rg" class="form-control" disabled>
-                            </div>
-                        </div>
-
-                        <div class="col-auto">
-                            <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">NASCIMENTO:</label>
-                                <input type="date" id="m_update-avaliacao_nascimento" class="form-control" disabled>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">TELEFONE:</label>
-                                <input type="number" id="m_update-avaliacao_fone" class="form-control">
-                            </div>
-                        </div>
-
+                    <input type="hidden" id="m_update-percepcao_candidato" class="form-control" disabled>
+                    <div class="input-group input-group-sm mb-2 flex-nowrap">
+                        <label class="input-group-text">PERCEPÇÕES:</label>
+                        <textarea type="text" id="m_update-percepcao_percepcao" class="form-control"></textarea>
                     </div>
-                    <hr>
                     <div class="row">
-
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">SITUAÇÃO:</label>
-                                <select class="form-select" id="m_update-avaliacao_avaliacao">
+                                <span class="input-group-text">CONSULTA / PESQUISA RH:</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_update-percepcao_pesquisa_rh">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-2 nowrap">
+                                <label class="input-group-text">ORIGEM:</label>
+                                <select id="m_update-percepcao_origem" class="form-select form-control-sm">
+                                    <option>WHATSAPP</option>
+                                    <option>E-MAIL</option>
+                                    <option>PRESENCIAL</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="checkbox"
-                                        id="m_update-avaliacao_avaliacao_recontratar">
-                                </div>
-                                <span class="input-group-text">RECONTRATAR:</span>
+                                <label class="input-group-text">RECEBIDO:</label>
+                                <input type="date" id="m_update-percepcao_recebido_em" class="form-control">
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group input-group-sm input-group-sm mb-2">
-                            <label class="input-group-text">DESCRIÇÃO:</label>
-                            <textarea type="text" id="m_update-avaliacao_avaliacao_descricao"
-                                class="form-control"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_update-avaliacao_save">Salvar</button>
+                    <button type="button" class="btn btn-success" id="m_update-percepcao_save">Salvar</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Historico -->
-<div class="modal fade" id="m_historico-ocupacao" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Histórico de Ocupação</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-hover table-bordered table-striped" id="m_historico-ocupacao_table">
-                    <thead>
-                        <tr>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Historico -->
-<div class="modal fade" id="m_historico-periodoaquisitivo" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Histórico de Período aquisitivo</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-hover table-bordered table-striped" id="m_historico-periodoaquisitivo_table">
-                    <thead>
-                        <tr>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Historico -->
-<div class="modal fade" id="m_historico-feriasprocessadas" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Histórico de Férias processadas</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-hover table-bordered table-striped" id="m_historico-feriasprocessadas_table">
-                    <thead>
-                        <tr>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Historico -->
-<div class="modal fade" id="m_historico-feriasutilizadas" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Histórico de Férias utilizadas</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-hover table-bordered table-striped" id="m_historico-feriasutilizadas_table">
-                    <thead>
-                        <tr>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Editar cargos -->
-<div class="modal fade" id="m_update-ocupacao" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Mudança de cargos</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">ID:</label>
-                            <input type="text" class="form-control" id="m_update-ocupacao_id" disabled>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">COLABORADOR:</label>
-                            <select class="form-select" id="m_update-ocupacao_colaborador" disabled>
-                            </select>
-                        </div>
-                    </div>
+    <!-- Modal upadate colaborador-->
+    <div class="modal fade" id="m_update-entrevista" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"><strong>Objetivos profissionais</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">FUNÇÃO:</label>
-                            <select class="form-select" id="m_update-ocupacao_funcao">
-                            </select>
+                <div class="modal-body">
+                    <input type="hidden" id="m_update-entrevista_candidato" class="form-control" disabled>
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 nowrap">
+                                <label class="input-group-text">PROFISSÃO:</label>
+                                <select id="m_update-entrevista_profissao" class="form-select form-control-sm">
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">EQUIPE:</label>
-                            <select class="form-select" id="m_update-ocupacao_equipe">
-                            </select>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">SALÁRIO:</label>
+                                <span class="input-group-text">R$</span>
+                                <input type="text" id="m_update-entrevista_pretensao" class="form-control">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">DATA DE INÍCIO:</label>
-                            <input type="date" id="m_update-ocupacao_data_inicio" class="form-control">
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 nowrap">
+                                <label class="input-group-text">SITUAÇÃO:</label>
+                                <select id="m_update-entrevista_banco_talentos" class="form-select form-control-sm">
+                                    <option>Aprovado</option>
+                                    <option>Entrevista Pendente</option>
+                                    <option>Entrevista/Banco de Talentos</option>
+                                    <option>Reprovado</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">DATA DE FIM:</label>
-                            <input type="date" id="m_update-ocupacao_data_fim" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">REMUNERAÇÃO:</label>
-                            <input type="number" id="m_update-ocupacao_remuneracao" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <span class="input-group-text">CONTINUO:</span>
-                            <div class="input-group-text">
-                                <input class="form-check-input mt-0" type="checkbox" id="m_update-ocupacao_continuo">
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">AVALIAÇÃO FINAL:</label>
+                                <textarea type="text" id="m_update-entrevista_avaliacao_final"
+                                    class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="m_update-entrevista_save">Salvar</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="m_update-ocupacao_del">Excluir</button>
-                <button type="button" class="btn btn-success" id="m_update-ocupacao_save">Salvar</button>
+        </div>
+    </div>
+    <!-- Modal upadate colaborador-->
+    <div class="modal fade" id="m_update-candidato" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"><strong>Edição do colaborador</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="m_update-candidato_entrevista_candidato" class="form-control" disabled>
+                    <div class="row">
+                        <input type="hidden" id="m_update-candidato_id" class="form-control">
+                        <div class="col-4">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">NOME:</label>
+                                <input type="text" id="m_update-candidato_nome" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">CPF:</label>
+                                <input type="number" id="m_update-candidato_cpf" class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">RG:</label>
+                                <input type="number" id="m_update-candidato_rg" class="form-control form-control-sm">
+                            </div>
+                        </div>
 
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Mudança cargo -->
-<div class="modal fade" id="m_alterar-ocupacao" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Mudança de cargos</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">ID:</label>
-                            <input type="text" class="form-control" id="m_alterar-ocupacao_id" disabled>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">NASCIMENTO:</label>
+                                <input type="date" id="m_update-candidato_nascimento"
+                                    class="form-control form-control-sm">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">COLABORADOR:</label>
-                            <select class="form-select" id="m_alterar-ocupacao_colaborador" disabled>
-                            </select>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">TELEFONE 1º:</label>
+                                <input type="number" id="m_update-candidato_telefone"
+                                    class="form-control form-control-sm">
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">FUNÇÃO:</label>
-                            <select class="form-select" id="m_alterar-ocupacao_funcao">
-                            </select>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">TELEFONE 2º:</label>
+                                <input type="number" id="m_update-candidato_telefone2"
+                                    class="form-control form-control-sm">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">EQUIPE:</label>
-                            <select class="form-select" id="m_alterar-ocupacao_equipe">
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">DATA DE INÍCIO:</label>
-                            <input type="date" id="m_alterar-ocupacao_data_inicio" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">REMUNERAÇÃO:</label>
-                            <input type="number" id="m_alterar-ocupacao_remuneracao" class="form-control">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="m_alterar-ocupacao_submit">Lançar</button>
 
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Lancar dissidio  -->
-<div class="modal fade" id="m_dissidio-ocupacao" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Lançamento de dissídio</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">ID:</label>
-                            <input type="text" class="form-control" id="m_dissidio-ocupacao_id" disabled>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <span class="input-group-text">FILHOS:</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" id="m_update-candidato_filho">
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">COLABORADOR:</label>
-                            <select class="form-select" id="m_dissidio-ocupacao_colaborador" disabled>
-                            </select>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">CNH:</label>
+                                <select class="form-select" id="m_update-candidato_cnh">
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">FUNÇÃO:</label>
-                            <select class="form-select" id="m_dissidio-ocupacao_funcao" disabled>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">EQUIPE:</label>
-                            <select class="form-select" id="m_dissidio-ocupacao_equipe" disabled>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">DATA DE INÍCIO:</label>
-                            <input type="date" id="m_dissidio-ocupacao_data_inicio" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">REMUNERAÇÃO:</label>
-                            <input type="number" id="m_dissidio-ocupacao_remuneracao" class="form-control">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="m_dissidio-ocupacao_submit">Lançar</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="m_desligamento-colaborador" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Desligamento</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">ID Ocupação:</label>
-                            <input type="text" class="form-control" id="m_desligamento-colaborador_id" disabled>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">ID do colaborador:</label>
-                            <input type="text" class="form-control" id="m_desligamento-colaborador_colaborador"
-                                disabled>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="input-group mb-2 flex-nowrap">
-                        <label class="input-group-text">DATA DA DEMISSÃO:</label>
-                        <input type="date" id="m_desligamento-colaborador_data" class="form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="m_desligamento-colaborador_submit">Demitir</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="m_processo-feriasprocessadas" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Processando férias</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">COLABORADOR:</label>
-                            <select class="form-select" id="m_processo-feriasprocessadas_colaborador" disabled></select>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">PERÍODO AQUISITIVO:</label>
-                            <select class="form-select" id="m_processo-feriasprocessadas_periodo_aquisitivo"></select>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">DATA:</label>
-                            <input type="date" id="m_processo-feriasprocessadas_data_inicio" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">DIAS:</label>
-                            <input type="number" id="m_processo-feriasprocessadas_dias_processados"
-                                class="form-control">
-                        </div>
-                    </div>
-                    <input type="checkbox" style="display: none;" id="m_processo-feriasprocessadas_consumido">
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="m_processo-feriasprocessadas_submit">Lançar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="m_update-feriasprocessadas" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Editando férias processada</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">ID:</label>
-                            <input type="text" id="m_update-feriasprocessadas_id" class="form-control" disabled>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">COLABORADOR:</label>
-                            <select class="form-select" id="m_update-feriasprocessadas_colaborador" disabled></select>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">PERÍODO AQUISITIVO:</label>
-                            <select class="form-select" id="m_update-feriasprocessadas_periodo_aquisitivo"
-                                disabled></select>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">DATA:</label>
-                            <input type="date" id="m_update-feriasprocessadas_data_inicio" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">DIAS:</label>
-                            <input type="number" id="m_update-feriasprocessadas_dias_processados" class="form-control">
-                        </div>
-                    </div>
-                    <input type="checkbox" style="display: none;" id="m_update-feriasprocessadas_consumido">
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="m_update-feriasprocessadas_del">Excluir</button>
-                <button type="button" class="btn btn-success" id="m_update-feriasprocessadas_save">Salvar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="m_processo-feriasutilizadas" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Utilizando férias</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">COLABORADOR:</label>
-                            <select class="form-select" id="m_processo-feriasutilizadas_colaborador" disabled></select>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">PERÍODO AQUISITIVO:</label>
-                            <select class="form-select" id="m_processo-feriasutilizadas_periodo_aquisitivo"></select>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">DATA:</label>
-                            <input type="date" id="m_processo-feriasutilizadas_data_inicio" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">DIAS:</label>
-                            <input type="number" id="m_processo-feriasutilizadas_dias_utilizados" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <span class="input-group-text">ANTECIPADO:</span>
-                            <div class="input-group-text">
-                                <input class="form-check-input mt-0" type="checkbox"
-                                    id="m_processo-feriasutilizadas_antecipacao_periodo"
-                                    onclick="confirmarAntecipacao()">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">ESTADO CIVIL:</label>
+                                <select class="form-select" id="m_update-candidato_estado_civil">
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <input type="checkbox" id="m_processo-feriasutilizadas_consumido" style="display: none;">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="m_processo-feriasutilizadas_submit">Lançar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="m_update-feriasutilizadas" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Editando férias utilizada</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">COLABORADOR:</label>
-                            <select class="form-select" id="m_update-feriasutilizadas_colaborador" disabled></select>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">PERÍODO AQUISITIVO:</label>
-                            <select class="form-select" id="m_update-feriasutilizadas_periodo_aquisitivo"
-                                disabled></select>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">DATA:</label>
-                            <input type="date" id="m_update-feriasutilizadas_data_inicio" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">DIAS:</label>
-                            <input type="number" id="m_update-feriasutilizadas_dias_utilizados" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <span class="input-group-text">ANTECIPADO:</span>
-                            <div class="input-group-text">
-                                <input class="form-check-input mt-0" type="checkbox"
-                                    id="m_update-feriasutilizadas_antecipacao_periodo" disabled>
+                    <h5 class="mb-0 mt-1"><small>Dados de Endereço</small></h5>
+                    <hr class="mt-2">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">ENDEREÇO:</label>
+                                <input type="text" class="form-control form-control-sm"
+                                    id="m_update-candidato_endereco">
                             </div>
                         </div>
-                    </div>
-                    <input type="checkbox" id="m_update-feriasutilizadas_consumido" style="display: none;">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="m_update-feriasutilizadas_del">Excluir</button>
-                <button type="button" class="btn btn-success" id="m_update-feriasutilizadas_save">Salvar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="m_update-ponto" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Editando lembrete</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">ID:</label>
-                            <input type="text" class="form-control" id="m_update-ponto_id" disabled>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">COLABORADOR:</label>
-                            <input type="text" class="form-control" id="m_update-ponto_colaborador">
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">NUMERO:</label>
-                            <input type="tel" id="m_update-ponto_telefone" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">PADRÃO:</label>
-                            <select class="form-select" id="m_update-ponto_padrao"></select>
-                        </div>
-                    </div>
 
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="m_update-ponto_del">Deletar</button>
-                <button type="button" class="btn btn-success" id="m_update-ponto_save">Atualizar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="m_register-feriado" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Lançamento de feriado</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <label class="input-group-text">DATA:</label>
-                            <input type="date" id="m_register-feriado_id" class="form-control">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">BAIRRO:</label>
+                                <input type="text" class="form-control form-control-sm" id="m_update-candidato_bairro">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="input-group mb-2 flex-nowrap">
-                            <span class="input-group-text">RECORRENTE:</span>
-                            <div class="input-group-text">
-                                <input class="form-check-input mt-0" type="checkbox" id="m_register-feriado_recorrente">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">CIDADE:</label>
+                                <input type="text" class="form-control form-control-sm" id="m_update-candidato_cidade">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-auto">
-                    <div class="input-group mb-2 flex-nowrap">
-                        <label class="input-group-text">DESCRIÇÃO:</label>
-                        <input type="text" class="form-control" id="m_register-feriado_descricao">
-                    </div>
-                </div>
-                <button type="button" class="btn btn-primary mb-2" id="m_register-feriado_submit">Registrar</button>
-
-                <div class="modal-list">
-                    <table class="table table-hover table-bordered table-striped" id="m_register-feriado_table">
-                        <thead>
-                            <tr>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="m_update-candidato_save">Salvar</button>
                 </div>
             </div>
         </div>
-
     </div>
-</div>
+    <div class="modal fade" id="m_envio-anexos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"><strong>Envio de anexo</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-2" style="overflow-y: auto; height: 250px;">
+                        <img id="m_envio-anexos_preview_imagem" style="width: 100%;" alt="Pré-visualização do anexo">
+                        <embed id="m_envio-anexos_preview_pdf" type='application/pdf' style="width: 100%; height: 100%; display: none;"> 
+                    </div>
+                        <input type="hidden" id="m_envio-anexos_candidato" class="form-control">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">ARQUIVO:</label>
+                                <input type="file" class="form-control" id="m_envio-anexos_arquivo" accept="image/*,.pdf">
+
+                            </div>
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">NOME PARA O ARQUIVO:</label>
+                                <input type="text" id="m_envio-anexos_nome" class="form-control">
+                            </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="m_envio-anexos_submit">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_file_view-anexos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"><strong id="m_file_view-anexos_nome"></strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                        <img id="m_file_view-anexos_preview_imagem" style="width: 100%; height: 100%;" src="http://tecnikaengenharia.ddns.net/media/icons/file.png">
+                        <embed id="m_file_view-anexos_preview_pdf" type='application/pdf' style="width: 100%; height: 500px; display: none;"> 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="m_file_view-anexos_delete">Deletar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <script>
 

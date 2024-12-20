@@ -28,13 +28,6 @@
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">CNH:</label>
             <select class="form-select" id="f_candidato_cnh">
-                <option>A</option>
-                <option>AB</option>
-                <option>ACC</option>
-                <option>B</option>
-                <option>C</option>
-                <option>D</option>
-                <option>E</option>
             </select>
         </div>
     </div>
@@ -61,10 +54,6 @@
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">ESTADO CIVIL:</label>
             <select class="form-select" id="f_candidato_estado_civil">
-                <option>Solteiro(a)</option>
-                <option>Casado(a)</option>
-                <option>Divorciado(a)</option>
-                <option>Viúvo(a)</option>
             </select>
         </div>
     </div>
@@ -105,7 +94,7 @@
 <div class="row justify-content-end"><div class="col-auto"><button id="f_candidato_submit" class="btn btn-success">Cadastrar</button></div></div>
 <script>
     $(document).ready(function(){
-        loader = new Form('colaborador','register')
+        loader = new Form('candidato','register')
         loader.open()
     })
 </script>

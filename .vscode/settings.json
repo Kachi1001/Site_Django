@@ -7,7 +7,7 @@
         "Rotatividade"
     ],
     "editor.detectIndentation": true,
-    "commentTranslate.hover.enabled": true,
+    "commentTranslate.hover.enabled": false,
     "python.analysis.typeCheckingMode": "basic",
     "python.analysis.autoImportCompletions": true,
     "python.testing.pytestArgs": [

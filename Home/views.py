@@ -132,6 +132,6 @@ def proxy_api(request, path):
             # Se a API retornar um erro, repassa o erro
             return HttpResponse(response, status=response.status_code)
 
-@login_required
-def playgames(request, game):
-    return render(request, f'Home/playgames/{game}.html')
+
+def minigames(request, game):
+    return render(request, f'Home/minigames/{game}.html')

@@ -1,9 +1,10 @@
 {% load permission_tags %}
 {%load static%}
 <div class="sidenav">
-    <a href="/{{app}}/" class="nome_app">{{app_name}}</a>
+    <a href="/{{app}}/" class="nome_app">{{app_name}} </a>
+    
     <div class="accordion accordion-flush" id="accordion">
-        {% if user|can:'Depto_pessoal-colaborador' %}
+        {% if user|can:'Curriculos-candidato' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -13,78 +14,14 @@
             </h2>
             <div id="menu-colaborador" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <a href="{%url app|add:'_cadastros' 'candidato'%}"><i {{icon.form}}></i> Cadastrar</a>
-                <a href="#" onclick="abrirRegistro('funcao')"><i {{icon.modal}}></i> Função</a>
-                <a href="#" onclick="abrirRegistro('equipe')"><i {{icon.modal}}></i> Equipe</a>
-                <a href="{%url app|add:'_tabelas' 'colaborador'%}"><i {{icon.table}}></i> Tabela</a>
+                <a href="#" onclick="abrirRegistro('profissoes')"><i {{icon.modal}}></i> Profissões</a>
+                <!-- <a href="#" onclick="abrirRegistro('equipe')"><i {{icon.modal}}></i> Equipe</a> -->
+                <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Tabela</a>
             </div>
         </div>
         {%endif%}
-        {% if user|can:'Depto_pessoal-ferias' %}
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#menu-ferias" aria-expanded="false">
-                    Férias
-                </button>
-            </h2>
-            <div id="menu-ferias" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_tabelas' 'periodoaquisitivo'%}"><i {{icon.table}}></i> Período aquisitivo</a>
-                <a href="{%url app|add:'_tabelas' 'feriasprocessadas'%}"><i {{icon.table}}></i> Ferias Processadas</a>
-                <a href="{%url app|add:'_tabelas' 'feriasutilizadas'%}"><i {{icon.table}}></i> Ferias Utilizadas</a>
-                <a href="{%url app|add:'_tabelas' 'feriassaldos'%}"><i {{icon.table}}></i> Saldos</a>
-            </div>
-        </div>
-        {%endif%}
-    {% if user|can:'Depto_pessoal-avaliacao' %}
-    <div class="accordion-item">
-        <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#menu-ponto" aria-expanded="false">
-                Avaliações
-            </button>
-        </h2>
-        <div id="menu-ponto" class="accordion-collapse collapse" data-bs-parent="#accordion">
-            <a href="#" onclick="abrirRegistro('tipoavaliacao')"><i {{icon.modal}}></i> Tipo de avaliação</a>
-            <a href="{%url app|add:'_tabelas' 'avaliacao'%}"><i {{icon.table}}></i> Tabela</a>
-        </div>
-    </div>
-    {%endif%}
-        {% if user|can:'Depto_pessoal-lembrete' %}
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#menu-lembretes" aria-expanded="false">
-                    Lembretes
-                </button>
-            </h2>
-            <div id="menu-lembretes" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_cadastros' 'ponto'%}"><i {{icon.table}}></i> Ponto</a>
-                <a href="{%url app|add:'_app'%}"><i {{icon.table}}></i> Painel</a>
-            </div>
-        </div>
-        {%endif%}
-        {% if user|can:'Depto_pessoal-feriado' %}
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <a href="#" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px" onclick="abrirRegistro('feriado')">
-                    Feriados
-                </a>
-            </h2>
-        </div>
-        {%endif%}
-        {% if user|can:'Depto_pessoal-exemplo' %}
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#menu-grafico" aria-expanded="false">
-                    Graficos
-                </button>
-            </h2>
-            <div id="menu-grafico" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_graficos' 'rotatividade'%}"><i {{icon.table}}></i> Rotatividade</a>
-            </div>
-        </div>
-        {%endif%}
+        
+    
     
     </div>
     <script>
