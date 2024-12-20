@@ -26,7 +26,7 @@ def login(request):
             })
             if api_response.status_code == 200:
                 request.session['api_token'] = api_response.json()  # Salva o token na sessão
-                return redirect(request.POST.get('next', '/').replace('%2F','/'))
+                return redirect(request.POST.get('next', '/').replace('%2F','/').replace('%3F', '?').replace('%3D', '='))
             else:
                 return render(request, f'{app}/login.html', {
                     "login": username,
