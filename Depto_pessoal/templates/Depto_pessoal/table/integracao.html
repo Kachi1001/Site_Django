@@ -1,0 +1,25 @@
+{%load static%}
+{%include 'tabela.html'%}
+
+    <thead>
+        <th data-field="id" data-sortable="true">ID</th>
+        <th data-field="colaborador" data-sortable="true">COLABORADOR</th>
+        <th data-field="cr" data-sortable="true">CR</th>
+        <th data-field="validade" data-sortable="true" data-formatter="dataFormatter">Validade</th>
+        <th data-field="observacao" data-sortable="true" data-formatter="dataFormatter">OBSERVAÇÃO</th>
+        <!-- <th data-formatter="editarFormatter" data-events="editarEvents"></th> -->
+    </thead>
+</table>
+<!-- <script>
+    function editarFormatter() {
+        return (
+            '<div class="btn-icon bg-info bi-pencil fs-6 me-1" id="editarBtn" title="Editar"></div>'
+        )
+    }
+    window.editarEvents = {
+        'click #editarBtn': function (e, value, row, index) {
+            let obj = new Modal('avaliacao', 'update')
+            obj.open(row['id'])
+        },
+    }
+</script> -->

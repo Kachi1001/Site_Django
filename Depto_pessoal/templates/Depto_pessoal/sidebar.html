@@ -31,7 +31,22 @@
                 <a href="{%url app|add:'_tabelas' 'periodoaquisitivo'%}"><i {{icon.table}}></i> Período aquisitivo</a>
                 <a href="{%url app|add:'_tabelas' 'feriasprocessadas'%}"><i {{icon.table}}></i> Ferias Processadas</a>
                 <a href="{%url app|add:'_tabelas' 'feriasutilizadas'%}"><i {{icon.table}}></i> Ferias Utilizadas</a>
-                <a href="{%url app|add:'_tabelas' 'feriassaldos'%}"><i {{icon.table}}></i> Saldos</a>
+                <a href="{%url app|add:'_consultas' 'feriassaldos'%}"><i {{icon.table}}></i> Saldos</a>
+            </div>
+        </div>
+        {%endif%}
+        {% if user|can:'Depto_pessoal-integracao' %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#menu-integracao" aria-expanded="false">
+                    Integrações
+                </button>
+            </h2>
+            <div id="menu-integracao" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                <a href="{%url app|add:'_tabelas' 'integracao_epi'%}"><i {{icon.table}}></i> EPI</a>
+                <a href="{%url app|add:'_tabelas' 'integracao_nr'%}"><i {{icon.table}}></i> NR</a>
+                <a href="{%url app|add:'_tabelas' 'integracao'%}"><i {{icon.table}}></i> INTEGRAÇÃO</a>
             </div>
         </div>
         {%endif%}
