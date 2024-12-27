@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Pendencia
+from .models import *
 
 class PendenciaAdmin(admin.ModelAdmin):
     list_display = ('name_user',)  # Corrigido com uma vírgula para tornar uma tupla válida
