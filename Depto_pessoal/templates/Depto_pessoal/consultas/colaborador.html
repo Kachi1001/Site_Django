@@ -10,8 +10,9 @@
     <div class="col-auto">
         <h5 class="mb-0"><small>Cadastro</small></h5>
     </div>
-    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm" id="btn-update">Editar</button></div>
-    <div class="col-auto"><button type="button" class="btn btn-danger btn-sm" id="btn-demissao">Desligamento</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm" onclick="abrirUpdate('colaborador')">Editar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-danger btn-sm" id="btn-demissao">Desligamento</button>
+    </div>
     <hr class="mt-2">
 </div>
 
@@ -63,7 +64,13 @@
         </div>
     </div>
 
-
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">PASTA:</label>
+            <input type="text" id="f_colaborador_pasta_servidor" class="form-control">
+            <button class="input-group-text" style="user-select: none;" onclick="let text = document.getElementById('f_colaborador_pasta_servidor'); text.disabled = false; text.select(); document.execCommand('copy'); text.disabled = true; toasts('success',{'method':'Sucesso!','message':'Copiado com sucesso o caminho.'})">COPIAR</button>
+        </div>
+    </div>
 </div>
 <div class="row align-items-center mt-3">
     <div class="col-auto">
@@ -236,12 +243,124 @@
         </div>
     </div>
 </div>
+<h3 class="mb-2 mt-5"><strong>Integrações</strong></h3>
+
+<div class="row align-items-center">
+    <div class="col-auto">
+        <h5 class="mb-0"><small>NR's</small></h5>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
+        onclick="abrirLancamento_integracao('integracao_nr')">Lançar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('integracao_nr')">Histórico</button></div>
+    <hr class="mt-3">
+</div>
+<div class="row">
+    <input type="hidden" id="f_integracao_nr_id">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">NR:</label>
+            <input type="text" class="form-control form-control-sm" id="f_integracao_nr_nr">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">VALIDADE:</label>
+            <input type="date" class="form-control form-control-sm" id="f_integracao_nr_validade">
+        </div>
+    </div>
+</div>
+<div class="row align-items-center mt-4">
+    <div class="col-auto">
+        <h5 class="mb-0"><small>EPI</small></h5>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
+            onclick="abrirUpdate('integracao_epi')">Editar</button></div>
+    <hr class="mt-3">
+</div>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ASO:</label>
+            <div class="input-group-text">
+                <input type="checkbox" class="form-check-input mt-0" id="f_integracao_epi_aso">
+            </div>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ASO VALIDADE:</label>
+            <input type="date" class="form-control form-control-sm" id="f_integracao_epi_aso_valid">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">EPI:</label>
+            <div class="input-group-text">
+                <input type="checkbox" class="form-check-input mt-0" id="f_integracao_epi_epi">
+            </div>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">EPI VALIDADE:</label>
+            <input type="date" class="form-control form-control-sm" id="f_integracao_epi_epi_valid">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">OS:</label>
+            <div class="input-group-text">
+                <input type="checkbox" class="form-check-input mt-0" id="f_integracao_epi_os">
+            </div>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">OS VALIDADE:</label>
+            <input type="date" class="form-control form-control-sm" id="f_integracao_epi_os_valid">
+        </div>
+    </div>
+    
+</div>
+<div class="row align-items-center mt-4">
+    <div class="col-auto">
+        <h5 class="mb-0"><small>Integração</small></h5>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
+            onclick="abrirLancamento_integracao('integracao')">Lançar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('integracao')">Histórico</button></div>
+
+    <hr class="mt-2">
+</div>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">OBRA:</label>
+            <select class="form-control" id="f_integracao_obra">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">VALIDADE:</label>
+            <input type="date" class="form-control form-control-sm" id="f_integracao_validade">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DESCRIÇÃO:</label>
+            <input type="text" class="form-control form-control-sm" id="f_integracao_descricao">
+        </div>
+    </div>
+</div>
 
 
 <!-- , 'ferias_utilizadas', 'ferias_processadas', 'periodoaquisitivo', 'ocupacao' -->
 <script>
-    var colab
-    var objs = ['periodoaquisitivo','ocupacao', 'feriasutilizadas', 'feriasprocessadas']
+    const colab = page.getParam('id')
+    var objs = ['periodoaquisitivo', 'ocupacao', 'feriasutilizadas', 'feriasprocessadas','integracao_nr','integracao_epi','integracao']
     function carregarDados() {
         let c = new Form('colaborador', 'view', colab)
         c.open(colab)
@@ -251,19 +370,13 @@
             x.open({ 'colaborador': colab })
         }
     }
-    function load () {
-        colab = page.getParam('id')
+    function load() {
         carregarDados()
     }
-    function refresh () {
+    function refresh() {
         load()
         loader.modal.hide()
     }
-    $('#btn-update').click(function () {
-        let obj = new Modal('colaborador', 'update')
-        obj.refresh = refresh
-        obj.open(colab)
-    })
 
     $('#btn-demissao').click(function () {
         let obj = new Modal('colaborador', 'desligamento')
@@ -275,6 +388,11 @@
             'value': $("#f_ocupacao_id").val()
         }])
     })
+    function abrirUpdate(modal){
+        let obj = new Modal(modal, 'update')
+        obj.refresh = refresh
+        obj.open(colab)
+    }
     function abrirLancamento(modal) {
         let data = {}
         modal_split = modal.split('_')
@@ -284,6 +402,14 @@
         registro.refresh = refresh
         registro.open(data)
     }
+    function abrirLancamento_integracao(modal) {
+        let registro = new Modal(modal, 'lancamento')
+
+        registro.refresh = refresh
+        registro.open()
+        console.log("#"+ registro.prefix +"colaborador")
+        $("#"+ registro.prefix +"colaborador").val(colab)
+    }
     function abrirProcesso(modal) {
 
         let registro = new Modal(modal, 'processo')
@@ -292,7 +418,7 @@
             'colaborador': $("#f_colaborador_id").val(),
             'periodo_aquisitivo': $("#f_periodoaquisitivo_id").val()
         }
-        registro.refresh = refresh 
+        registro.refresh = refresh
 
         registro.open(data)
 
@@ -312,7 +438,7 @@
             periodo.val($("#m_processo-feriasutilizadas_id").val()).attr('disabled', false)
         }
     }
-    
+
     function abrirHistorico(resource) {
         let modal = new Modal(resource, 'historico')
         modal.refresh = refresh

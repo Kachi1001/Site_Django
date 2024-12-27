@@ -1,4 +1,4 @@
-    const ocupacao = {
+const ocupacao = {
     text: ["id", "data_inicio", "data_fim", "remuneracao"], //campos que pode ser preencher
     select: ["equipe", "colaborador", "funcao"], // campos selecionavel
     check: ["continuo"], // campos marcaveis
@@ -29,7 +29,7 @@ class BaseLoader {
     }
     async open(id = undefined) {
         this.id = id;
-        this.inputs = await apiRequest.get(`resource/${this.object}`)
+        this.inputs = await apiRequest.get(`resource/${this.object}`);
         loader = this;
 
         this[this.type](); // Registra ou atualiza conforme o tipo
@@ -69,7 +69,7 @@ class BaseLoader {
             this.inputs.text
                 .concat(this.inputs.check, this.inputs.select)
                 .forEach((field) => {
-                    if (this.type == "view" || this.type == 'filter') {
+                    if (this.type == "view" || this.type == "filter") {
                         $("#" + this.prefix + field).attr("disabled", true);
                     }
                 });
@@ -89,6 +89,7 @@ class BaseLoader {
                 keys.forEach((key) => {
                     const th = document.createElement("th");
                     th.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+                    th.textContent = th.textContent.replace("_", " ");
                     thead.appendChild(th);
                 });
 
@@ -107,7 +108,13 @@ class BaseLoader {
                             checkbox.checked = obj[key];
                             cell.appendChild(checkbox);
                         } else {
+                            
                             cell.textContent = obj[key];
+                            if (isValidDate(obj[key])) {
+                                const data = new Date(obj[key]);
+                                cell.textContent =
+                                    data.toLocaleDateString("pt-BR");
+                            }
                         }
                         row.appendChild(cell);
                     });
@@ -147,7 +154,7 @@ class BaseLoader {
 
                         editBtn.addEventListener("click", () => {
                             let modal = new Modal(this.object, "update");
-                            modal.refresh = this.refresh
+                            modal.refresh = this.refresh;
                             modal.open(obj.id);
                         });
                         extraBtn.appendChild(editBtn);
@@ -161,15 +168,15 @@ class BaseLoader {
         }
     }
 }
-var modal_open
+var modal_open;
 class Modal extends BaseLoader {
     constructor(object, type) {
         super(object, type); // Chama o construtor da classe DataManager
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
-        console.log (this.prefix.slice(0, -1))
+        console.log(this.prefix.slice(0, -1));
         this.modal = new bootstrap.Modal(this.myModal);
-        this.loader = loader
+        this.loader = loader;
     }
 
     async register() {
@@ -195,7 +202,6 @@ class Modal extends BaseLoader {
             this.populateData(data).then(() => {
                 this.modal.show();
 
-
                 $("#" + this.prefix + "save")
                     .off()
                     .click(function () {
@@ -220,7 +226,7 @@ class Modal extends BaseLoader {
                 $("#" + this.prefix + "submit")
                     .off()
                     .on("click", () => {
-                        this.object = this.object + '_' + this.type
+                        this.object = this.object + "_" + this.type;
                         Submit.post(this);
                     });
             });
@@ -234,7 +240,19 @@ class Modal extends BaseLoader {
     async alterar() {
         this.lanc();
     }
-
+    async lancamento() {
+        this.inputs.select.forEach(async (field) => {
+            const selects = await apiRequest.get(`select/${field}`);
+            this.populateSelect(selects, field);
+        });
+        this.modal.show();
+        $("#" + this.prefix + "submit")
+                    .off()
+                    .on("click", () => {
+                        this.object = this.object;
+                        Submit.post(this);
+                    });
+    }
     async processo() {
         try {
             apiRequest
@@ -289,10 +307,12 @@ class Modal extends BaseLoader {
                         page.redirect("");
                     };
 
-                    apiRequest.delete(loader.object + "/" + loader.id, {'data':''}).then(() => {
-                        loader.modal.hide();
-                        loader.refresh();
-                    });
+                    apiRequest
+                        .delete(loader.object + "/" + loader.id, { data: "" })
+                        .then(() => {
+                            loader.modal.hide();
+                            loader.refresh();
+                        });
                 } else {
                     toasts("danger", {
                         method: "Desligamento",
@@ -327,7 +347,6 @@ class Form extends BaseLoader {
     }
     // Registro
     register() {
-
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
@@ -342,9 +361,9 @@ class Form extends BaseLoader {
 
     async view() {
         try {
-            apiRequest.get(this.object + "/" + this.id).then((data) =>{
+            apiRequest.get(this.object + "/" + this.id).then((data) => {
                 this.populateData(data);
-            })
+            });
         } catch (error) {
             console.error("Error ao carregar", error);
         }
@@ -367,7 +386,7 @@ class Form extends BaseLoader {
 
 Submit = {
     readFields: function (loader) {
-        console.log(loader)
+        console.log(loader);
         let data = {};
         const inputs = loader.inputs;
         const fields = inputs.text.concat(inputs.select); // Junta os campos de texto e campos de seleção
@@ -378,39 +397,36 @@ Submit = {
             data[field] = val || null;
         });
         inputs.check.forEach((check) => {
-            data[check] = $("#" + loader.prefix + check).prop("checked");
+            data[check] = $("#" + loader.prefix + check).prop("checked") || false;
         });
 
         return data;
     },
     update: function (loader) {
-        apiRequest.update(
-            `${loader.object}/${loader.id}`,
-            this.readFields(loader)).then(() => {
+        apiRequest
+            .update(`${loader.object}/${loader.id}`, this.readFields(loader))
+            .then(() => {
                 loader.modal.hide();
                 loader.refresh();
-            }
-        );
+            });
     },
     post: function (loader) {
         try {
-            apiRequest.post(
-                loader.object,
-                this.readFields(loader)).then(
-                () => {
-                    loader.refresh();
-                }
-            );
+            apiRequest.post(loader.object, this.readFields(loader)).then(() => {
+                loader.refresh();
+            });
         } catch (error) {
             throw error;
         }
     },
     delete: function (loader) {
         console.log(loader);
-        apiRequest.delete(loader.object + "/" + loader.id, this.readFields(loader)).then(() => {
-            loader.modal.hide();
-            loader.refresh();
-        });
+        apiRequest
+            .delete(loader.object + "/" + loader.id, this.readFields(loader))
+            .then(() => {
+                loader.modal.hide();
+                loader.refresh();
+            });
     },
 };
 $(document).ready(async () => {

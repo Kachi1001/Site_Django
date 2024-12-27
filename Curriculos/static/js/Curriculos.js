@@ -117,9 +117,10 @@ class BaseLoader {
                             cell.appendChild(checkbox);
                         } else {
                             cell.textContent = obj[key];
-                            if (cell.textContent.includes("-")) {
-                                let data = cell.textContent.split("-");
-                                cell.textContent = `${data[2]}/${data[1]}/${data[0]}`;
+                            if (isValidDate(obj[key])) {
+                                const data = new Date(obj[key]);
+                                cell.textContent =
+                                    data.toLocaleDateString("pt-BR");
                             }
                         }
                         row.appendChild(cell);
