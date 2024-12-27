@@ -25,6 +25,8 @@ class Cidade(models.Model):
         db_table = 'cidade'
 # Unable to inspect table 'colaborador'
 # The error was: user mapping not found for "dev_front"
+# Unable to inspect table 'colaborador_'
+# The error was: user mapping not found for "dev_front"
 
 
 class CotComposicao(models.Model):
@@ -183,6 +185,34 @@ class MatCategoria(models.Model):
         db_table = 'mat_categoria'
 
 
+class MatEpiCadastro(models.Model):
+    produto = models.ForeignKey('MatProduto', models.DO_NOTHING, db_column='produto')
+    ca = models.CharField()
+    validade = models.DateField()
+    observacao = models.CharField(blank=True, null=True)
+    tamanho = models.CharField()
+    fabricante = models.CharField()
+
+    class Meta:
+        managed = False
+        db_table = 'mat_epi_cadastro'
+
+
+class MatEpiMovimentacao(models.Model):
+    epi = models.ForeignKey('MatProduto', models.DO_NOTHING, db_column='epi')
+    quantidade = models.DecimalField(max_digits=65535, decimal_places=65535)
+    colaborador = models.IntegerField()
+    cr = models.ForeignKey('Obra', models.DO_NOTHING, db_column='cr')
+    data_entrega = models.DateField()
+    baixado = models.BooleanField()
+    data_baixa = models.DateField(blank=True, null=True)
+    devolvido = models.BooleanField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'mat_epi_movimentacao'
+
+
 class MatFornecedor(models.Model):
     nome = models.CharField()
     cnpj = models.CharField(blank=True, null=True)
@@ -196,6 +226,7 @@ class MatProduto(models.Model):
     produto = models.CharField()
     categoria = models.CharField(blank=True, null=True)
     descricao = models.CharField(blank=True, null=True)
+    durabilidade = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
 
     class Meta:
         managed = False
