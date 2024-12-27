@@ -8,15 +8,30 @@
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#menu-colaborador" aria-expanded="false">
+                    data-bs-target="#menu-candidato" aria-expanded="false">
                     Candidato
                 </button>
             </h2>
-            <div id="menu-colaborador" class="accordion-collapse collapse" data-bs-parent="#accordion">
+            <div id="menu-candidato" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <a href="{%url app|add:'_cadastros' 'candidato'%}"><i {{icon.form}}></i> Cadastrar</a>
                 <a href="#" onclick="abrirRegistro('profissoes')"><i {{icon.modal}}></i> Profissões</a>
-                <!-- <a href="#" onclick="abrirRegistro('equipe')"><i {{icon.modal}}></i> Equipe</a> -->
                 <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Tabela</a>
+            </div>
+        </div>
+        {%endif%}
+        {% if user|can:'Curriculos-consultas' %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#menu-consulta" aria-expanded="false">
+                    Consultas
+                </button>
+            </h2>
+            <div id="menu-consulta" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Consultas pendente</a>
+                <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Cargos</a>
+                <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Profissão candidatado</a>
+                <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Entrevistas</a>
             </div>
         </div>
         {%endif%}
