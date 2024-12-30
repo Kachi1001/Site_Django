@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+
+{% block 'header' %}
+{%include 'static/imports/graficos.html'%} <!-- Graficos -->
+{% endblock %}
+
+{% block 'main' %}
+<div class="container">
+    <canvas id="ativos_rotatividade"></canvas>
+    <div class="row">
+        <div class="col-6">
+        </div>
+        <div class="col-6">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block 'script' %}
+<script>
+function load(){  
+    apiRequest.get('grafico/ativos_rotatividade').then((data)=>{
+        const ctx = document.getElementById('ativos_rotatividade');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Ativos', 
+                        data: data,
+                        parsing: {
+                            yAxisKey: 'ativos'
+                        },
+                        type: 'line',
+                        yAxisID: 'y2',
+                        borderColor: color.blue80,
+                        backgroundColor: color.blue,
+
+                      },{
+                        label: 'Admissões', 
+                        data: data,
+                        parsing: {
+                            yAxisKey: 'admissoes'
+                        },
+                        type: 'bar',
+                        backgroundColor: color.green80,
+                        
+                        
+                    },{
+                        label: 'Desligamentos', 
+                        data: data,
+                        parsing: {
+                            yAxisKey: 'desligamentos'
+                        },
+                        type: 'bar',
+                        backgroundColor: color.orange80,
+
+                      }]
+                  },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Gráfico de rotatividade de colaboradores'
+                        }
+                    },
+                    parsing: {
+                        xAxisKey: 'cpt',
+                    },
+                    scales: {
+                        y: {
+                          type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                          position: 'left',
+        
+                        },
+                        y2: {
+                            min: 0,
+                            
+                          type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                          position: 'right',
+                          
+                          grid: {
+                            drawOnChartArea: false // only want the grid lines for one axis to show up
+                          }
+                        }
+                      }
+                    
+                }
+        
+            });
+    })
+}
+    
+</script>
+{% endblock %}

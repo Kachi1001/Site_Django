@@ -1,52 +1,119 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-    <title>Ferramentas Tecnika</title>
-    {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
+        <link
+            rel="shortcut icon"
+            href="{% static 'favicon.ico' %}"
+            type="image/x-icon"
+        />
+        <title>Ferramentas Tecnika</title>
+        {%include 'static/imports/jquery.html'%}
+        <!-- Jquery -->
+        {%include 'static/imports/bootstrap.html'%}
+        <!-- Bootstrap -->
 
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <link rel="stylesheet" href="{% static 'css/base.css' %}" />
 
-<style>
-    body{
-        display: flex;
-        align-items: center;
-        width: 100%;
-        justify-content: center;
-    }
-    p{
-        color: red;
-        padding-top: 5px;
-    }
-</style>
-</head>
-<body>
-    <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray;">
-        <div class="card-header">
-            Tela de login
+        <style>
+            body {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                justify-content: center;
+                height: 100%;
+            }
+
+            p {
+                color: red;
+                padding-top: 5px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray">
+            <div class="card-header">Tela de login</div>
+            <div class="card-body">
+                <form action="{% url 'login'%}" method="post">
+                    {%csrf_token%}
+                    <input type="hidden" name="next" value="{{next}}" />
+                    <div class="form-floating mb-3">
+                        <input
+                            type="name"
+                            class="form-control"
+                            id="nome"
+                            placeholder="Nome"
+                            name="nome"
+                            value="{{login}}"
+                        />
+                        <label for="floatingInput">Nome</label>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="form-floating">
+                            <input type="password" class="form-control""
+                            placeholder=" Senha" name="senha" id="senha"
+                            required>
+                            <label for="floatingPassword">Senha</label>
+                        </div>
+                        <button
+                            class="input-group-text bi-eye-slash"
+                            onclick="view_password()"
+                            type="button"
+                            id="senha_view"
+                        ></button>
+                    </div>
+
+                    <input
+                        type="submit"
+                        class="btn btn-warning"
+                        value="Complete os campos"
+                        id="btn"
+                        disabled
+                    />
+                    <p>{%if login != Null%}Nome ou senha incorreto{%endif%}</p>
+                </form>
+            </div>
+            <div class="card-footer text-body-secondary">
+                É necessário estar logado para ter acesso as ferramentas
+            </div>
         </div>
-        <div class="card-body">
-            <form action="{% url 'login'%}" method="post"> {%csrf_token%}
-                <input type="hidden" name="next" value="{{next}}">
-                <div class="form-floating mb-3">
-                    <input type="name" class="form-control" id="floatingInput" placeholder="Nome" name="nome" value="{{login}}">
-                    <label for="floatingInput">Nome</label>
-                </div>
-                <div class="form-floating" style="margin-bottom: 30px;">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Senha" name="senha" value="{{senha}}">
-                    <label for="floatingPassword">Senha</label>
-                </div>
-                <input type="submit" class="btn btn-outline-success" value="Logar" id="liveAlertBtn">
-                <p>{%if login != Null%}Nome ou senha incorreto{%endif%}</p>
-            </form>   
-        </div>
-        <div class="card-footer text-body-secondary">
-            É necessário estar logado para ter acesso as ferramentas
-        </div>
-    </div>
-</body>
+    </body>
+    <script>
+        const nome = $("#nome");
+        const senha = $("#senha");
+        // const confirmarSenha = document.getElementById("senha_2");
+        const view = $("#senha_view");
+        var password_visible = false;
+        function view_password() {
+            if (!password_visible) {
+                senha.attr("type", "text");
+                view.removeClass("bi-eye-slash");
+                view.addClass("bi-eye");
+            } else {
+                view.removeClass("bi-eye");
+                view.addClass("bi-eye-slash");
+                senha.attr("type", "password");
+            }
+            password_visible = !password_visible;
+        }
+        function live_verify(){
+                const btn = document.getElementById("btn");
+
+                if (nome.val() && senha.val()) {
+                    btn.classList = "btn btn-success";
+                    btn.value = "Logar";
+                    btn.disabled = false;
+                } else {
+                    btn.classList = "btn btn-danger";
+                    btn.value = "Falta informação";
+                    btn.disabled = true;
+                }
+        }
+        document
+            .addEventListener("input", live_verify)
+    </script>
 </html>

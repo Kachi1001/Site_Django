@@ -27,9 +27,8 @@ class app_Depto_pessoal(AbstractUserRole):
         f'{app}': True,
         f'{app}-colaborador': True,
         f'{app}-ferias': True,
-        f'{app}-ponto': True,
         f'{app}-lembrete': True,
-        f'{app}-menu': True,
+        f'{app}-feriado': True,
     }
     role_name=f'app_{app}'
 
@@ -42,3 +41,10 @@ class ambientes(AbstractUserRole):
     }
     role_name=f'app_{app}'
     
+class app_Curriculos(AbstractUserRole):
+    app = 'Curriculos'
+    available_permissions = {
+        f'{app}': True,
+        f'{app}-candidato': True
+    }
+    role_name=f'app_{app}'

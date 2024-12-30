@@ -1,47 +1,80 @@
 <div class="toasts">
-    <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer">
-    </div>
-    <div id="toastTemplate" class="toast mb-2" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
+    <div
+        class="toast-container position-fixed bottom-0 end-0 p-3"
+        id="toastContainer"
+    ></div>
+    <div
+        id="toastTemplate"
+        class="toast mb-2"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        style="display: none"
+    >
         <div class="toast-body">
             <div class="row">
                 <div class="col">
-                    <strong class="toast-method me-auto toast-title"></strong> 
+                    <strong class="toast-method me-auto toast-title"></strong>
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="toast"
+                        aria-label="Close"
+                    ></button>
                 </div>
             </div>
-            <hr class="mb-1 mt-1">
+            <hr class="mb-1 mt-1" />
             <small class="toast-message"></small>
         </div>
     </div>
-    
+
+    <script>
+        // Função para clonar o toast e exibi-lo
+        function toasts(type, response) {
+            // Clona o elemento do template
+            const newToast = $("#toastTemplate")
+                .clone()
+                .removeAttr("id")
+                .css("display", "block");
+
+            // Adiciona o título e o conteúdo
+            newToast
+                .find(".toast-method")
+                .text(
+                    response.method
+                        ? response.method
+                        : type == "danger"
+                        ? "Erro desconhecido"
+                        : "Sucesso!"
+                );
+            newToast
+                .find(".toast-message")
+                .text(
+                    response.message
+                        ? response.message
+                        : type == "danger"
+                        ? "Contate a equipe de TI"
+                        : "Algo deu certo..."
+                );
+
+            // Ajusta a cor de acordo com o tipo (sucesso ou erro)
+            newToast.addClass(`bg-${type} text-white`);
+
+            // Adiciona o toast ao contêiner
+            $("#toastContainer").append(newToast);
+            // Inicializa o toast com Bootstrap e exibe
+            const toastElement = new bootstrap.Toast(newToast[0], {
+                delay:
+                    type == "danger" ? 5000 : type == "warning" ? 3000 : 1500,
+            });
+            toastElement.show();
+
+            // Remove o toast da DOM após ele ser escondido
+            newToast.on("hidden.bs.toast", function () {
+                $(this).remove();
+            });
+        }
+    </script>
 </div>
-<script>
-    // Função para clonar o toast e exibi-lo
-    function toasts(type, response) {
-        // Clona o elemento do template
-        const newToast = $("#toastTemplate").clone().removeAttr('id').css('display', 'block');
-        
-
-        // Adiciona o título e o conteúdo
-        newToast.find('.toast-method').text(response.method ? response.method :  type == 'danger' ? 'Erro desconhecido' : 'Sucesso!');
-        newToast.find('.toast-message').text(response.message ? response.message :  type == 'danger' ? 'Contate a equipe de TI' : 'Algo deu certo...');
-        
-        
-        // Ajusta a cor de acordo com o tipo (sucesso ou erro)
-        newToast.addClass(`bg-${type} text-white`);
-        
-        // Adiciona o toast ao contêiner
-        $("#toastContainer").append(newToast);
-        // Inicializa o toast com Bootstrap e exibe
-        const toastElement = new bootstrap.Toast(newToast[0], { delay: type == 'danger' ? 5000 : type == 'warning' ? 3000 : 1500});
-        toastElement.show();
-    
-        // Remove o toast da DOM após ele ser escondido
-        newToast.on('hidden.bs.toast', function () {
-            $(this).remove();
-        });
-    }
-
-</script>

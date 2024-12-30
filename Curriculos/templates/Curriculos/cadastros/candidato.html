@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'header'%}
+{%endblock%}
+{% block 'main' %}
+<h5>DADOS CADASTRAIS</h5>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">NOME:</label>
+            <input type="text" id="f_candidato_nome" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CPF:</label>
+            <input type="number" id="f_candidato_cpf" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">RG:</label>
+            <input type="number" id="f_candidato_rg" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CNH:</label>
+            <select class="form-select" id="f_candidato_cnh">
+            </select>
+        </div>
+    </div>
+    
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">NASCIMENTO:</label>
+            <input type="date" id="f_candidato_nascimento" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm" >
+            <label class="input-group-text">TELEFONE 1º:</label>
+            <input type="number" id="f_candidato_telefone" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm" >
+            <label class="input-group-text">TELEFONE 2º:</label>
+            <input type="number" id="f_candidato_telefone2" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ESTADO CIVIL:</label>
+            <select class="form-select" id="f_candidato_estado_civil">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        
+        <div class="input-group mb-2 nowrap">
+            <span class="input-group-text">FILHOS?</span>
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox"
+                id="f_candidato_filho">
+        </div>
+    </div>
+</div>
+<h5>DADOS DE ENDEREÇO</h5>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm" >
+            <label class="input-group-text">ENDEREÇOS:</label>
+            <input type="text" id="f_candidato_endereco" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm" >
+            <label class="input-group-text">BAIRRO:</label>
+            <input type="text" id="f_candidato_bairro" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm" >
+            <label class="input-group-text">CIDADE:</label>
+            <input type="text" id="f_candidato_cidade" class="form-control">
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row justify-content-end"><div class="col-auto"><button id="f_candidato_submit" class="btn btn-success">Cadastrar</button></div></div>
+<script>
+    $(document).ready(function(){
+        loader = new Form('candidato','register')
+        loader.open()
+    })
+</script>
+{% endblock %}
+
+{%block 'footer'%}
+<div class="submain">{%include app|add:'/table/'|add:resource|add:'.html'%}</div>
+{%endblock%}

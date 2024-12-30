@@ -1,6 +1,9 @@
 :root{
-    --side-bar_width: 250px
+    --side-bar_width: 250px;
   }
+body {
+  margin-left: var(--side-bar_width);
+}
 .sidenav {
     height: 100%;
     width: var(--side-bar_width);
@@ -37,15 +40,21 @@
 .sidenav .nome_app{
     color: #f1f1f1;
     font-size: larger;
-    padding-bottom: 20px;
-    padding-top: 20px;
+    padding: 20px 10px 20px 10px;
+    /* padding-bottom: 20px;
+    padding-top: 20px; */
     text-align: center;
     margin: 0;
   }
-  @media screen and (max-height: 450px) {
-    .sidenav a {font-size: 18px;}
+
+  @media (max-width: 800px) {
+    .sidenav{
+        display: none;
+    }
+    body {
+      margin-left: 0px;
+    }
   }
-  
   .accordion-header{
     font-size: medium;
     margin: 4px, none ,none, 4px;
@@ -53,9 +62,4 @@
   .accordion-button{
     font-weight: 500;
   }
-  header, main, .submain {
-    margin-left: var(--side-bar_width);
-    padding-left: 50px;
-    padding-right: 50px;
-  }
-  
+

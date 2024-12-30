@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'main' %}
+<h2>Registro de lembrete do ponto</h2>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap">
+            <label class="input-group-text">NOME:</label>
+            <input type="text" id="f_ponto_colaborador" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap" >
+            <label class="input-group-text">TELEFONE:</label>
+            <input type="tel" id="f_ponto_telefone" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap">
+            <label class="input-group-text">PADRÃO:</label>
+            <select class="form-select" id="f_ponto_padrao"></select>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-end"><div class="col-auto"><button id="f_ponto_submit" class="btn btn-success">Cadastrar</button></div></div>
+<script>
+    $(document).ready(function(){
+        loader = new Form('ponto','register')
+        loader.open()
+    })
+</script>
+{% endblock %}
+
+{%block 'footer'%}
+    {%include 'tabela.html'%}
+    
+        <thead>
+            <th data-field="id" data-sortable="true">ID</th>
+            <th data-field="colaborador" data-sortable="true">Nome</th>
+            <th data-field="telefone" data-sortable="true">Telefone</th>
+            <th data-field="padrao" data-sortable="true">Padrão</th>
+            <th data-formatter="editarFormatter" data-events="editarEvents"></th>
+        </thead>
+    </table>
+    <script>
+        modal = {open: function(method, resource, id){
+            let modal = new Modal(resource, method)
+            modal.open(id)
+        }}
+    </script>
+{%endblock%}

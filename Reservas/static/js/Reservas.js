@@ -1,7 +1,6 @@
-const urlAPI = api + '/' + app +'/'
-apiRequest.app = "reservas";
+const urlAPI = api_external + "/" + app + "/";
 var loaded;
-
+apiRequest.baseUrl = api_external
 function reload(param) {
     let url = new URL(window.location.href);
     let params = new URLSearchParams(url.search);
@@ -13,75 +12,6 @@ function reload(param) {
     // Atualizar a URL no navegador e recarregar a página
     window.location.href = `${url.pathname}?${params}`;
 }
-function loadModal(modal, parametro) {
-    if (modal == "reservar_carro") {
-        $.ajax({
-            url: urlAPI + "get", // URL da sua API no Django
-            type: "GET",
-            data: {
-                csrfmiddlewaretoken: csrftoken,
-                parametro: parametro,
-                metodo: "carro",
-            },
-            success: function (data) {
-                $("#placa").val(data.placa);
-                $("#modelo").val(data.modelo);
-                $("#marca").val(data.marca);
-
-                document.getElementById("modal-imagem").src =
-                    getMedia("carros") + data.imagem;
-            },
-            error: function (xhr) {
-                alert(xhr.responseJSON.message);
-            },
-        });
-    } else if (modal == "cadastrar_carro") {
-        if (loaded != modal) {
-            loaded = modal;
-            $("#cadastrar_carro_btn").click(function () {
-                let file = $("#arquivo")[0].files[0];
-                let filename = $("#arquivo")
-                    .val()
-                    .replace("C:\\fakepath\\", "")
-                    .split(".");
-                if (!file) {
-                    alert("Por favor, selecione um arquivo primeiro.");
-                    return;
-                }
-                let parametro = {
-                    placa: $("#cadastro_placa").val(),
-                    modelo: $("#cadastro_modelo").val(),
-                    marca: $("#cadastro_marca").val(),
-                    imagem: $("#cadastro_placa")
-                        .val()
-                        .concat(".", filename[filename.length - 1]),
-                };
-                let formData = new FormData();
-                formData.append("file", file);
-                formData.append("parametro", JSON.stringify(parametro));
-                formData.append("metodo", "carro");
-
-                $.ajax({
-                    url: urlAPI + "register",
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-
-                    success: function (response) {
-                        toasts("Success");
-                        location.reload();
-                    },
-                    error: function (error) {
-                        console.error("Erro:", error);
-                        alert("Erro ao carregar o arquivo.");
-                    },
-                });
-            });
-        }
-    }
-}
-
 const horarios = [
     "07:30",
     "08:00",
@@ -131,51 +61,60 @@ function Reserva_rapida() {
         }
     });
     $("#reserva_rapida-sala").change(function () {
-        document.getElementById("reserva_rapida-img").src = `/static/image/Reservas/${$(
-            "#reserva_rapida-sala"
-        ).val()}.jpg`;
+        document.getElementById(
+            "reserva_rapida-img"
+        ).src = `/static/image/Reservas/${$("#reserva_rapida-sala").val()}.jpg`;
     });
-    $("#reserva_rapida-submit").click(function () {
-        const responsavel = $("#reserva_rapida-responsavel").val()
-        const descricao = $("#reserva_rapida-descricao").val()
-        const data = $("#reserva_rapida-data").val()
-        if (responsavel == '' || data == '') {
-            toasts('warning',{'method':'Reserva','message':'Falta alguma informação revise!!'})
-            return
-        }
-        let reservas = [];
-        let inicio = parseInt($("#reserva_rapida-sel1").val());
-        let fim = parseInt($("#reserva_rapida-sel2").val());
-        for (i = inicio; i < fim; i++) {
-            reservas.push({
-                hora: horarios[i],
-                responsavel: responsavel,
-                descricao: descricao,
+    $("#reserva_rapida-submit")
+        .off()
+        .click(function () {
+            const responsavel = $("#reserva_rapida-responsavel").val();
+            const descricao = $("#reserva_rapida-descricao").val();
+            const data = $("#reserva_rapida-data").val();
+            if (responsavel == "" || data == "") {
+                toasts("warning", {
+                    method: "Reserva",
+                    message: "Falta alguma informação revise!!",
+                });
+                return;
+            }
+            let reservas = [];
+            let inicio = parseInt($("#reserva_rapida-sel1").val());
+            let fim = parseInt($("#reserva_rapida-sel2").val());
+            for (i = inicio; i < fim; i++) {
+                reservas.push({
+                    hora: horarios[i],
+                    responsavel: responsavel,
+                    descricao: descricao,
+                    data: $("#reserva_rapida-data").val(),
+                    sala: $("#reserva_rapida-sala").val(),
+                });
+            }
+            apiRequest.post("agendasala", { reservas: reservas }).then(function () {
+                load(false);
             });
-        }
-        parametro = {
-            reservas: JSON.stringify(reservas),
-            data: $("#reserva_rapida-data").val(),
-            sala: $("#reserva_rapida-sala").val(),
-        };
-        apiRequest.post("register", "reservar_sala", parametro, function(){
-            load(false)
         });
-    });
 }
 
 function reserva_simples(sala) {
     let reservas = [];
     let resp = null;
     let desc = "";
-    for (i = 0; i < horarios.length; i++) {
-        hora = horarios[i].replace(":", "\\:");
+    var loop = horarios;
+    loop.pop();
+    loop.forEach((hora) => {
+        hora = hora.replace(":", "\\:");
         if (
-            $("#check" + hora).is(":checked") &&
-            !$("#check" + hora).is(":disabled")
-        ) {            
+            !$("#check" + hora).is(":disabled") &&
+            !$("#responsavel" + hora).is(":disabled") &&
+            ($("#check" + hora).is(":checked") ||
+                $("#responsavel" + hora).val() != "")
+        ) {
             if (resp == null && $("#responsavel" + hora).val() == "") {
-                toasts('danger',{'method':'Reserva Sala','message':'O registro precisa ter um responsável!'})
+                toasts("danger", {
+                    method: "Reserva Sala",
+                    message: "O registro precisa ter um responsável!",
+                });
                 return;
             } else if ($("#responsavel" + hora).val() != "") {
                 resp = $("#responsavel" + hora).val();
@@ -187,42 +126,38 @@ function reserva_simples(sala) {
                 hora: hora.replace("\\:", ":"),
                 responsavel: resp,
                 descricao: desc,
+                sala: sala,
+                data: $("#data-picker").val(),
             });
         }
-    }
-    parametro = {
-        sala: sala,
-        data: $("#data-picker").val(),
-        reservas: JSON.stringify(reservas),
-    };
+    });
+
     if (reservas.length == 0) {
-        toasts('warning',{'method':'Reserva Sala','message':'Nenhuma reserva salva!!'})
+        toasts("warning", {
+            method: "Reserva Sala",
+            message: "Nenhuma reserva salva!!",
+        });
         return;
     }
-    // registarAJAX(parametro, 'reservar_sala');
-    apiRequest.post("register", "reservar_sala", parametro, function(){
-        load(true)
+    apiRequest.post("agendasala", { reservas: reservas }).then(() => {
+        load(true);
     });
 }
-function loadReservas(sala, data) {
+async function loadReservas(sala, data) {
+    const manha = await apiRequest.get("agendasala_quadro", {
+        sala: sala,
+        data: data,
+        horario: "manha",
+    });
+    populateReservas(manha.dados, "manha");
 
-            apiRequest.get(
-                "get",
-                sala,
-                JSON.stringify({ data: data, horario: "manha" }),
-                function (response) {
-                    populateReservas(response.dados, "manha");
-                }
-            );
-            apiRequest.get(
-                "get",
-                sala,
-                JSON.stringify({ data: data, horario: "tarde" }),
-                function (response) {
-                    populateReservas(response.dados, "tarde");
-                }
-            );
-        }
+    tarde = await apiRequest.get("agendasala_quadro", {
+        sala: sala,
+        data: data,
+        horario: "tarde",
+    });
+    populateReservas(tarde.dados, "tarde");
+}
 function populateReservas(response, horario) {
     tabela = $(`#tabela_${horario}`);
     tabela.empty();
@@ -238,7 +173,10 @@ function populateReservas(response, horario) {
                 `</th>` +
                 `<th scope="row">` +
                 `<div class="input-group input-group-sm">` +
-                `<input type="text" class="form-control" id="responsavel${x.hora}" value="${x.responsavel || ""}" placeholder="Responsável" ${x.reservado
+                `<input type="text" class="form-control" id="responsavel${
+                    x.hora
+                }" value="${x.responsavel || ""}" placeholder="Responsável" ${
+                    x.reservado
                 }>` +
                 `</div>` +
                 `</th>` +

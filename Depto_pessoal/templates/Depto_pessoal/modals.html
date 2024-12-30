@@ -12,7 +12,7 @@
 
 
 <div class="modals">
-    <div class="modal fade" id="m_funcao" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_register-funcao" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -22,31 +22,31 @@
                 <div class="modal-body">
                     <div class="input-group mb-2 nowrap">
                         <label class="input-group-text">Nome:</label>
-                        <input type="text" id="m_funcao_id" class="form-control form-control-sm">
+                        <input type="text" id="m_register-funcao_id" class="form-control form-control-sm">
                     </div>
                     <div class="row">
                         <div class="col-auto">
                             <div class="input-group mb-2 nowrap">
                                 <label class="input-group-text" for="form_colaborador_funcao">Categoria:</label>
-                                <select class="form-select form-control-sm" id="m_funcao_categoria">
+                                <select class="form-select form-control-sm" id="m_register-funcao_categoria">
                                 </select>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 nowrap">
                                 <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="checkbox" id="m_funcao_insalubridade">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_register-funcao_insalubridade">
                                 </div>
                                 <span class="input-group-text">Insalubre</span>
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary mb-2" id="m_funcao_submit">Cadastrar</button>
+                    <button type="button" class="btn btn-primary mb-2" id="m_register-funcao_submit">Cadastrar</button>
                     <div class="modal_list">
-                        <table class="table table-hover table-bordered table-striped" id="m_funcao_table">
+                        <table class="table table-hover table-bordered table-striped" id="m_register-funcao_table">
                             <thead>
-                                <tr>
-                                </tr>
+                                <tr></tr>
                             </thead>
                             <tbody></tbody>
                         </table>
@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_equipe" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_register-equipe" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -65,14 +65,40 @@
                 <div class="modal-body">
                     <div class="input-group mb-2 nowrap">
                         <label class="input-group-text">Nome:</label>
-                        <input type="text" id="m_equipe_id" class="form-control form-control-sm">
+                        <input type="text" id="m_register-equipe_id" class="form-control form-control-sm">
                     </div>
-                    <button type="button" class="btn btn-primary mb-2" id="m_equipe_submit">Cadastrar</button>
+                    <button type="button" class="btn btn-primary mb-2" id="m_register-equipe_submit">Cadastrar</button>
                     <div class="modal_list">
-                        <table class="table table-hover table-bordered table-striped" id="m_equipe_table">
+                        <table class="table table-hover table-bordered table-striped" id="m_register-equipe_table">
                             <thead>
-                                <tr>
-                                </tr>
+                                <tr></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_register-tipoavaliacao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Cadastro de situação para Avaliações</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-sm mb-2 nowrap">
+                        <label class="input-group-text">Situação:</label>
+                        <input type="text" id="m_register-tipoavaliacao_situacao" class="form-control form-control-sm">
+                    </div>
+                    <button type="button" class="btn btn-sm btn-primary mb-2"
+                        id="m_register-tipoavaliacao_submit">Cadastrar</button>
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_register-tipoavaliacao_table">
+                            <thead>
+                                <tr></tr>
                             </thead>
                             <tbody></tbody>
                         </table>
@@ -82,11 +108,12 @@
         </div>
     </div>
     <!-- Modal upadate colaborador-->
-    <div class="modal fade" id="m_colaborador" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="m_update-colaborador" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de colaborador</h1>
+                    <h1 class="modal-title fs-5">Edição de colaborador</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -94,45 +121,46 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">ID:</label>
-                                <input type="text" id="m_colaborador_id" class="form-control" disabled>
+                                <input type="text" id="m_update-colaborador_id" class="form-control" disabled>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">NOME:</label>
-                                <input type="text" id="m_colaborador_nome" class="form-control">
+                                <input type="text" id="m_update-colaborador_nome" class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">CPF:</label>
-                                <input type="number" id="m_colaborador_cpf" class="form-control">
+                                <input type="number" id="m_update-colaborador_cpf" class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">RG:</label>
-                                <input type="number" id="m_colaborador_rg" class="form-control">
+                                <input type="number" id="m_update-colaborador_rg" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">NASCIMENTO:</label>
-                                <input type="date" id="m_colaborador_nascimento" class="form-control">
+                                <input type="date" id="m_update-colaborador_nascimento" class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">TELEFONE:</label>
-                                <input type="number" id="m_colaborador_fone" class="form-control">
+                                <input type="number" id="m_update-colaborador_fone" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="checkbox" id="m_colaborador_ativo">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_update-colaborador_ativo">
                                 </div>
                                 <span class="input-group-text">ATIVO:</span>
                             </div>
@@ -140,16 +168,99 @@
 
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
-                                <label class="input-group-text">EQUIPE:</label>
-                                <select class="form-select" id="m_colaborador_equipe">
-                                </select>
+                                <label class="input-group-text">PASTA:</label>
+                                <input type="text" id="m_update-colaborador_pasta_servidor" class="form-control">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="m_colaborador_submit"
-                            onclick="carregarDados()">Salvar</button>
+                        <button type="button" class="btn btn-danger" id="m_update-colaborador_del">Excluir</button>
+                        <button type="button" class="btn btn-success" id="m_update-colaborador_save">Salvar</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal upadate colaborador-->
+    <div class="modal fade" id="m_update-avaliacao" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Edição de avaliação</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">ID:</label>
+                                <input type="text" id="m_update-avaliacao_id" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">NOME:</label>
+                                <input type="text" id="m_update-avaliacao_nome" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">CPF:</label>
+                                <input type="number" id="m_update-avaliacao_cpf" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">RG:</label>
+                                <input type="number" id="m_update-avaliacao_rg" class="form-control" disabled>
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">NASCIMENTO:</label>
+                                <input type="date" id="m_update-avaliacao_nascimento" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">TELEFONE:</label>
+                                <input type="number" id="m_update-avaliacao_fone" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <div class="row">
+
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">SITUAÇÃO:</label>
+                                <select class="form-select" id="m_update-avaliacao_avaliacao">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_update-avaliacao_avaliacao_recontratar">
+                                </div>
+                                <span class="input-group-text">RECONTRATAR:</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group input-group-sm input-group-sm mb-2">
+                            <label class="input-group-text">DESCRIÇÃO:</label>
+                            <textarea type="text" id="m_update-avaliacao_avaliacao_descricao"
+                                class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="m_update-avaliacao_save">Salvar</button>
                 </div>
             </div>
         </div>
@@ -175,7 +286,7 @@
         </div>
     </div>
     <!-- Historico -->
-    <div class="modal fade" id="m_historico-periodo_aquisitivo" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_historico-periodoaquisitivo" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -184,7 +295,7 @@
                 </div>
                 <div class="modal-body">
                     <table class="table table-hover table-bordered table-striped"
-                        id="m_historico-periodo_aquisitivo_table">
+                        id="m_historico-periodoaquisitivo_table">
                         <thead>
                             <tr>
                             </tr>
@@ -237,8 +348,65 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="m_historico-integracao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Tabela de integrações</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover table-bordered table-striped" id="m_historico-integracao_table">
+                        <thead>
+                            <tr>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_historico-integracao_nr" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Tabela do NR</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover table-bordered table-striped" id="m_historico-integracao_nr_table">
+                        <thead>
+                            <tr>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_historico-integracao_epi" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Tabela de integração de EPI</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover table-bordered table-striped" id="m_historico-integracao_epi_table">
+                        <thead>
+                            <tr>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Editar cargos -->
-    <div class="modal fade" id="m_ocupacao" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_update-ocupacao" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -250,13 +418,13 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">ID:</label>
-                                <input type="text" class="form-control" id="m_ocupacao_id" disabled>
+                                <input type="text" class="form-control" id="m_update-ocupacao_id" disabled>
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">COLABORADOR:</label>
-                                <select class="form-select" id="m_ocupacao_colaborador" disabled>
+                                <select class="form-select" id="m_update-ocupacao_colaborador" disabled>
                                 </select>
                             </div>
                         </div>
@@ -265,47 +433,56 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">FUNÇÃO:</label>
-                                <select class="form-select" id="m_ocupacao_funcao">
+                                <select class="form-select" id="m_update-ocupacao_funcao">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">EQUIPE:</label>
+                                <select class="form-select" id="m_update-ocupacao_equipe">
                                 </select>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DATA DE INÍCIO:</label>
-                                <input type="date" id="m_ocupacao_data_inicio" class="form-control">
+                                <input type="date" id="m_update-ocupacao_data_inicio" class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DATA DE FIM:</label>
-                                <input type="date" id="m_ocupacao_data_fim" class="form-control">
+                                <input type="date" id="m_update-ocupacao_data_fim" class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">REMUNERAÇÃO:</label>
-                                <input type="number" id="m_ocupacao_remuneracao" class="form-control">
+                                <input type="number" id="m_update-ocupacao_remuneracao" class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <span class="input-group-text">CONTINUO:</span>
                                 <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="checkbox" id="m_ocupacao_continuo">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_update-ocupacao_continuo">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_ocupacao_submit">Salvar</button>
+                    <button type="button" class="btn btn-danger" id="m_update-ocupacao_del">Excluir</button>
+                    <button type="button" class="btn btn-success" id="m_update-ocupacao_save">Salvar</button>
 
                 </div>
             </div>
         </div>
     </div>
     <!-- Mudança cargo -->
-    <div class="modal fade" id="m_ocupacao_alterar" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_alterar-ocupacao" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -317,13 +494,13 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">ID:</label>
-                                <input type="text" class="form-control" id="m_ocupacao_alterar_id" disabled>
+                                <input type="text" class="form-control" id="m_alterar-ocupacao_id" disabled>
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">COLABORADOR:</label>
-                                <select class="form-select" id="m_ocupacao_alterar_colaborador" disabled>
+                                <select class="form-select" id="m_alterar-ocupacao_colaborador" disabled>
                                 </select>
                             </div>
                         </div>
@@ -332,33 +509,40 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">FUNÇÃO:</label>
-                                <select class="form-select" id="m_ocupacao_alterar_funcao">
+                                <select class="form-select" id="m_alterar-ocupacao_funcao">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">EQUIPE:</label>
+                                <select class="form-select" id="m_alterar-ocupacao_equipe">
                                 </select>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DATA DE INÍCIO:</label>
-                                <input type="date" id="m_ocupacao_alterar_data_inicio" class="form-control">
+                                <input type="date" id="m_alterar-ocupacao_data_inicio" class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">REMUNERAÇÃO:</label>
-                                <input type="number" id="m_ocupacao_alterar_remuneracao" class="form-control">
+                                <input type="number" id="m_alterar-ocupacao_remuneracao" class="form-control">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_ocupacao_alterar_submit">Lançar</button>
+                    <button type="button" class="btn btn-success" id="m_alterar-ocupacao_submit">Lançar</button>
 
                 </div>
             </div>
         </div>
     </div>
     <!-- Lancar dissidio  -->
-    <div class="modal fade" id="m_ocupacao_dissidio" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_dissidio-ocupacao" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -370,13 +554,13 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">ID:</label>
-                                <input type="text" class="form-control" id="m_ocupacao_dissidio_id" disabled>
+                                <input type="text" class="form-control" id="m_dissidio-ocupacao_id" disabled>
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">COLABORADOR:</label>
-                                <select class="form-select" id="m_ocupacao_dissidio_colaborador" disabled>
+                                <select class="form-select" id="m_dissidio-ocupacao_colaborador" disabled>
                                 </select>
                             </div>
                         </div>
@@ -385,32 +569,39 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">FUNÇÃO:</label>
-                                <select class="form-select" id="m_ocupacao_dissidio_funcao" disabled>
+                                <select class="form-select" id="m_dissidio-ocupacao_funcao" disabled>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">EQUIPE:</label>
+                                <select class="form-select" id="m_dissidio-ocupacao_equipe" disabled>
                                 </select>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DATA DE INÍCIO:</label>
-                                <input type="date" id="m_ocupacao_dissidio_data_inicio" class="form-control">
+                                <input type="date" id="m_dissidio-ocupacao_data_inicio" class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">REMUNERAÇÃO:</label>
-                                <input type="number" id="m_ocupacao_dissidio_remuneracao" class="form-control">
+                                <input type="number" id="m_dissidio-ocupacao_remuneracao" class="form-control">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_ocupacao_dissidio_submit">Lançar</button>
+                    <button type="button" class="btn btn-success" id="m_dissidio-ocupacao_submit">Lançar</button>
 
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_desligamento" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_desligamento-colaborador" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -421,31 +612,32 @@
                     <div class="row">
                         <div class="col">
                             <div class="input-group mb-2 flex-nowrap">
-                                <label class="input-group-text">ID:</label>
-                                <input type="text" class="form-control" id="m_desligamento_id" disabled>
+                                <label class="input-group-text">ID Ocupação:</label>
+                                <input type="text" class="form-control" id="m_desligamento-colaborador_id" disabled>
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-group mb-2 flex-nowrap">
-                                <label class="input-group-text">NOME:</label>
-                                <input type="text" class="form-control" id="m_desligamento_colaborador" disabled>
+                                <label class="input-group-text">ID do colaborador:</label>
+                                <input type="text" class="form-control" id="m_desligamento-colaborador_colaborador"
+                                    disabled>
                             </div>
                         </div>
                     </div>
                     <div class="col-auto">
                         <div class="input-group mb-2 flex-nowrap">
                             <label class="input-group-text">DATA DA DEMISSÃO:</label>
-                            <input type="date" id="m_desligamento_data" class="form-control">
+                            <input type="date" id="m_desligamento-colaborador_data" class="form-control">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_desligamento_submit">Lançar</button>
+                    <button type="button" class="btn btn-danger" id="m_desligamento-colaborador_submit">Demitir</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_feriasprocessadas" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_processo-feriasprocessadas" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -457,38 +649,95 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">COLABORADOR:</label>
-                                <select class="form-select" id="m_feriasprocessadas_colaborador" disabled></select>
+                                <select class="form-select" id="m_processo-feriasprocessadas_colaborador"
+                                    disabled></select>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">PERÍODO AQUISITIVO:</label>
-                                <select class="form-select" id="m_feriasprocessadas_periodo_aquisitivo"></select>
+                                <select class="form-select"
+                                    id="m_processo-feriasprocessadas_periodo_aquisitivo"></select>
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DATA:</label>
-                                <input type="date" id="m_feriasprocessadas_data_inicio" class="form-control">
+                                <input type="date" id="m_processo-feriasprocessadas_data_inicio" class="form-control">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DIAS:</label>
-                                <input type="number" id="m_feriasprocessadas_dias_processados" class="form-control">
+                                <input type="number" id="m_processo-feriasprocessadas_dias_processados"
+                                    class="form-control">
                             </div>
                         </div>
-                        <input type="checkbox" style="display: none;" id="m_feriasprocessadas_consumido">
+                        <input type="checkbox" style="display: none;" id="m_processo-feriasprocessadas_consumido">
 
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_feriasprocessadas_submit">Lançar</button>
+                    <button type="button" class="btn btn-success"
+                        id="m_processo-feriasprocessadas_submit">Lançar</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_feriasutilizadas" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_update-feriasprocessadas" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Editando férias processada</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">ID:</label>
+                                <input type="text" id="m_update-feriasprocessadas_id" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">COLABORADOR:</label>
+                                <select class="form-select" id="m_update-feriasprocessadas_colaborador"
+                                    disabled></select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">PERÍODO AQUISITIVO:</label>
+                                <select class="form-select" id="m_update-feriasprocessadas_periodo_aquisitivo"
+                                    disabled></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_update-feriasprocessadas_data_inicio" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DIAS:</label>
+                                <input type="number" id="m_update-feriasprocessadas_dias_processados"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <input type="checkbox" style="display: none;" id="m_update-feriasprocessadas_consumido">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="m_update-feriasprocessadas_del">Excluir</button>
+                    <button type="button" class="btn btn-success" id="m_update-feriasprocessadas_save">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_processo-feriasutilizadas" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -500,25 +749,28 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">COLABORADOR:</label>
-                                <select class="form-select" id="m_feriasutilizadas_colaborador" disabled></select>
+                                <select class="form-select" id="m_processo-feriasutilizadas_colaborador"
+                                    disabled></select>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">PERÍODO AQUISITIVO:</label>
-                                <select class="form-select" id="m_feriasutilizadas_periodo_aquisitivo"></select>
+                                <select class="form-select"
+                                    id="m_processo-feriasutilizadas_periodo_aquisitivo"></select>
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DATA:</label>
-                                <input type="date" id="m_feriasutilizadas_data_inicio" class="form-control">
+                                <input type="date" id="m_processo-feriasutilizadas_data_inicio" class="form-control">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">DIAS:</label>
-                                <input type="number" id="m_feriasutilizadas_dias_utilizados" class="form-control">
+                                <input type="number" id="m_processo-feriasutilizadas_dias_utilizados"
+                                    class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
@@ -526,20 +778,77 @@
                                 <span class="input-group-text">ANTECIPADO:</span>
                                 <div class="input-group-text">
                                     <input class="form-check-input mt-0" type="checkbox"
-                                        id="m_feriasutilizadas_antecipacao_periodo" onclick="confirmarAntecipacao()">
+                                        id="m_processo-feriasutilizadas_antecipacao_periodo"
+                                        onclick="confirmarAntecipacao()">
                                 </div>
                             </div>
                         </div>
-                            <input type="checkbox" id="m_feriasutilizadas_consumido" style="display: none;">
+                        <input type="checkbox" id="m_processo-feriasutilizadas_consumido" style="display: none;">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_feriasutilizadas_submit">Lançar</button>
+                    <button type="button" class="btn btn-success"
+                        id="m_processo-feriasutilizadas_submit">Lançar</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_lembrete" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_update-feriasutilizadas" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Editando férias utilizada</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">COLABORADOR:</label>
+                                <select class="form-select" id="m_update-feriasutilizadas_colaborador"
+                                    disabled></select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">PERÍODO AQUISITIVO:</label>
+                                <select class="form-select" id="m_update-feriasutilizadas_periodo_aquisitivo"
+                                    disabled></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_update-feriasutilizadas_data_inicio" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DIAS:</label>
+                                <input type="number" id="m_update-feriasutilizadas_dias_utilizados"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <span class="input-group-text">ANTECIPADO:</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_update-feriasutilizadas_antecipacao_periodo" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="checkbox" id="m_update-feriasutilizadas_consumido" style="display: none;">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="m_update-feriasutilizadas_del">Excluir</button>
+                    <button type="button" class="btn btn-success" id="m_update-feriasutilizadas_save">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_update-ponto" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -551,81 +860,306 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">ID:</label>
-                                <input type="text" class="form-control" id="m_lembrete_id" disabled>
+                                <input type="text" class="form-control" id="m_update-ponto_id" disabled>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">COLABORADOR:</label>
-                                <input type="text" class="form-control" id="m_lembrete_colaborador">
+                                <input type="text" class="form-control" id="m_update-ponto_colaborador">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">NUMERO:</label>
-                                <input type="tel" id="m_lembrete_telefone" class="form-control">
+                                <input type="tel" id="m_update-ponto_telefone" class="form-control">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">PADRÃO:</label>
-                                <select class="form-select" id="m_lembrete_padrao"></select>
+                                <select class="form-select" id="m_update-ponto_padrao"></select>
                             </div>
                         </div>
 
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_lembrete_submit">Lançar</button>
+                    <button type="button" class="btn btn-danger" id="m_update-ponto_del">Deletar</button>
+                    <button type="button" class="btn btn-success" id="m_update-ponto_save">Atualizar</button>
                 </div>
             </div>
         </div>
     </div>
-    <script>
 
-        function abrirHistorico(id) {
-            let modal = new Modal('historico-' + id, 'table')
-            modal.open(colab)
-        }
-        function abrirRegistro(modal, table = false) {
-            let registro = new Modal(modal, 'register')
-            registro.open(table)
-        }
-        function abrirLancamento(modal) {
-            let data = {}
-            let registro = new Modal(modal, 'lanc')
+    <div class="modal fade" id="m_register-feriado" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Lançamento de feriado</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_register-feriado_id" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <span class="input-group-text">RECORRENTE:</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_register-feriado_recorrente">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-2 flex-nowrap">
+                            <label class="input-group-text">DESCRIÇÃO:</label>
+                            <input type="text" class="form-control" id="m_register-feriado_descricao">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2" id="m_register-feriado_submit">Registrar</button>
 
-            data = $("#f_ocupacao_id").val()
-            registro.open(data)
-            console.debug(data)
-        }
-        function abrirProcesso(modal) {
+                    <div class="modal-list">
+                        <table class="table table-hover table-bordered table-striped" id="m_register-feriado_table">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-            let registro = new Modal(modal, 'processo')
+        </div>
+    </div>
 
-            data = {
-                'colaborador': $("#f_colaborador_id").val(),
-                'periodo_aquisitivo': $("#f_periodo_aquisitivo_id").val()
-            }
+    <div class="modal fade" id="m_lancamento-integracao_nr" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Lançamento de feriado</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="m_lancamento-integracao_nr_colaborador">
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">NR:</label>
+                                <select class="form-select" id="m_lancamento-integracao_nr_nr"></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_lancamento-integracao_nr_validade" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success"
+                            id="m_lancamento-integracao_nr_submit">Lançar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_lancamento-integracao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Lançamento de feriado</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="m_lancamento-integracao_colaborador">
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">OBRA:</label>
+                                <select class="form-select" id="m_lancamento-integracao_obra"></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_lancamento-integracao_validade" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DESCRIÇÃO:</label>
+                                <input type="text" id="m_lancamento-integracao_descricao" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success"
+                            id="m_lancamento-integracao_submit">Lançar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_update-integracao_epi" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Lançamento de feriado</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="m_update-integracao_epi_colaborador">
+                    <input type="hidden" id="m_update-integracao_epi_id">
+                    <div class="row justify-content-center">
+                        <div class="col-3">
+                            <div class="input-group mb-2 fl ex-nowrap input-group-sm">
+                                <label class="input-group-text">ASO:</label>
+                                <div class="input-group-text">
+                                    <input type="checkbox" class="form-check-input mt-0" id="m_update-integracao_epi_aso">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">ASO VALIDADE:</label>
+                                <input type="date" class="form-control form-control-sm" id="m_update-integracao_epi_aso_valid">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">EPI:</label>
+                                <div class="input-group-text">
+                                    <input type="checkbox" class="form-check-input mt-0" id="m_update-integracao_epi_epi">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">EPI VALIDADE:</label>
+                                <input type="date" class="form-control form-control-sm" id="m_update-integracao_epi_valid">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">OS:</label>
+                                <div class="input-group-text">
+                                    <input type="checkbox" class="form-check-input mt-0" id="m_update-integracao_epi_os">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">OS VALIDADE:</label>
+                                <input type="date" class="form-control form-control-sm" id="m_update-integracao_epi_os_valid">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DESCRIÇÃO:</label>
+                                <input type="text" id="m_update-integracao_epi_descricao" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
 
-            registro.open(data)
+                        <button type="button" class="btn btn-success"
+                            id="m_update-integracao_epi_save">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_update-integracao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Editando</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="m_update-integracao_colaborador">
+                    <input type="hidden" id="m_update-integracao_id">
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">OBRA:</label>
+                                <select class="form-select" id="m_update-integracao_obra"></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_update-integracao_validade" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">DESCRIÇÃO:</label>
+                                <input type="text" id="m_update-integracao_descricao" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="m_update-integracao_del">Deletar</button>
 
-        }
-        function confirmarAntecipacao() {
-            let field = $("#m_ferias_utilizadas_antecipacao")
-            let periodo = $("#m_ferias_utilizadas_periodo_aquisitivo_id")
-            if (field.prop("checked")) {
-                if (!confirm('Tens certeza que deseja selecionar antecipação?')) {
-                    field.prop('checked', false);
-                }
-            }
-            if (field.prop("checked")) {
-                periodo.val('').attr('disabled', true)
+                        <button type="button" class="btn btn-success"
+                            id="m_update-integracao_save">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_update-integracao_nr" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Editando</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="m_update-integracao_nr_colaborador">
+                    <input type="hidden" id="m_update-integracao_nr_id">
+                    <div class="row justify-content-center">
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group mb-2 flex-nowrap">
+                                    <label class="input-group-text">NR:</label>
+                                    <select class="form-select" id="m_update-integracao_nr_nr"></select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-2 flex-nowrap">
+                                    <label class="input-group-text">DATA:</label>
+                                    <input type="date" id="m_update-integracao_nr_validade" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="m_update-integracao_nr_del">Deletar</button>
+                        <button type="button" class="btn btn-success"id="m_update-integracao_nr_save">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            } else {
-                periodo.val($("#f_periodo_aquisitivo_id").val()).attr('disabled', false)
-            }
-        }
+</div>
+<script>
 
-    </script>
+    function abrirRegistro(modal, table = false) {
+        let registro = new Modal(modal, 'register')
+        registro.open(table)
+    }
+
+
+</script>
 </div>

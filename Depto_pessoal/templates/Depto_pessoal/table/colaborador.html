@@ -15,10 +15,10 @@
 </table>
 <script>
     function editarFormatter(value) {
-        return '<a class="editarBtn" href="javascript:void(0)" title="Like"> <div class="btn-icon" style="background-color: skyblue;"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit"></div></div>'
+        return '<div id="viewBtn" class="btn-icon bg-info"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit"></div></div>'
     }
     window.editarEvents = {
-        'click .editarBtn': function (e, value, row, index) {
+        'click #viewBtn': function (e, value, row, index) {
             page.redirect('consultas/colaborador',{id:row['id']})
         },
     }

@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+
+{% block 'script'%}
+<script>
+    const prefix = 'form_programacao_';
+    var linhas = []
+    const arquivo = $('#form_programacao_arquivo');
+    $('#form_programacao_arquivo').change(function () {
+        console.log(arquivo)
+
+        let reader = new FileReader();
+        reader.onload = () => {
+            $('#form_programacao_digitalizacao').attr('src', reader.result);
+            previewModal_img(reader.result)
+        }
+        reader.readAsDataURL(document.getElementById('form_programacao_arquivo').files[0]);
+    });
+
+    $('#register').click(function () {
+        let file = arquivo[0].files[0];
+        let filename = arquivo.val().replace("C:\\fakepath\\", "").split(".")
+        if (!file) {
+            toasts('warning', { 'method': 'Registro', 'message': "Por favor, selecione um arquivo primeiro." })
+            return;
+        }
+        let segunda = $('#form_programacao_data').val()
+        if (!segunda) {
+            toasts('warning', { 'method': 'Registro', 'message': "Por favor, selecione uma segunda-feira." })
+            return
+        }
+        let lanc = [];
+        if (false) {
+            linhas.forEach((linha) => {
+                lanc.push({
+                    'colaborador': $('#' + prefix + 'colaborador_' + linha).val(),
+                    'obra': $('#' + prefix + 'obra_' + linha).val(),
+                    'encarregado': $('#' + prefix + 'encarregado_' + linha).val()
+                })
+            })
+        }
+        for (i = 0; $('#' + prefix + 'obra_' + linhas[i]).val() != undefined; i++) {
+            let obra = $('#' + prefix + 'obra_' + linhas[i]).val();
+            let encarregado = $('#' + prefix + 'encarregado_' + linhas[i]).val();
+            let colaborador = $('#' + prefix + 'colaborador_' + linhas[i]).val()
+
+            lanc.push({
+                'colaborador': colaborador,
+                'obra': obra,
+                'encarregado': encarregado,
+            })
+        }
+        let parametro = {
+            'lanc': JSON.stringify(lanc),
+            'iniciosemana': segunda,
+            'imagem': segunda + '.' + filename[(filename.length - 1)]
+        }
+        let formData = new FormData();
+        formData.append('file', file);
+        formData.append('parametro', JSON.stringify(parametro));
+
+        apiRequest.upload(
+            '{{resource}}',
+            formData
+        )
+    })
+    function addLinha() {
+        $('#linhas').prepend(
+            `<tr id="linha${linha}">` +
+            '<th class="input-group-sm">' +
+            `<select class="form-select " id="${prefix}encarregado_${linha}">` +
+            encarregados +
+            '</select>' +
+            '</th>' +
+            '<th class="input-group-sm">' +
+            `<select class="form-select" id="${prefix}obra_${linha}">` +
+            obras +
+            '</select>' +
+            '</th>' +
+            '<th class="input-group-sm">' +
+            `<select class="form-select" id="${prefix}colaborador_${linha}">` +
+            colaboradores +
+            '</select>' +
+            '</th>' +
+            '<th class="input-group-sm">' +
+            `<button type="button" class="btn btn-danger" onclick="removeLinha(${linha})"><img src="${icon}/trash.svg"></button>` +
+            '</th>' +
+            '</tr>'
+        )
+
+        if (linhas.length != 0) {
+            let ant = linhas.indexOf(linha - 1)
+            $(`#${prefix}obra_${linha}`).val($(`#${prefix}obra_${linhas[ant]}`).val())
+            $(`#${prefix}encarregado_${linha}`).val($(`#${prefix}encarregado_${linhas[ant]}`).val())
+            $('#' + prefix + 'semencarregado_' + linha).attr('checked', $('#' + prefix + 'semencarregado_' + linhas[ant]).prop('checked'))
+        }
+        linhas.push(linha)
+        linha++
+
+    }
+    function removeLinha(id) {
+        $('#linha'.concat(id)).remove()
+        linhas.splice(linhas.indexOf(id), 1)
+    }
+    var obras;
+    var colaboradores;
+    var encarregados;
+    async function loadVar(select) {
+        const data = await apiRequest.get(`${select}`); // Garante que você aguarde os dados serem retornados
+        let result = '';
+
+        for (let i = 0; i < data.length; i++) {
+            if (select === 'obra' && !data[i].finalizada) {
+                result += `<option value="${data[i].id}">${data[i].id} || ${data[i].empresa}</option>`;
+            } else if (select === 'colaborador' && data[i].demissao === null) {
+                result += `<option>${data[i].nome}</option>`;
+            } else if (select === 'select/encarregado') {
+                result += `<option>${data[i].value}</option>`;
+            }
+        }
+        return result; // Retorna o resultado formatado
+    }
+
+    var linha = 0
+    async function load() {
+        try {
+            // Carregando os valores para cada variável
+            obras = await loadVar('obra');
+            colaboradores = await loadVar('colaborador');
+            encarregados = await loadVar('select/encarregado');
+
+            addLinha(); // Chame a função após carregar tudo
+        } catch (error) {
+            console.error('Erro ao carregar dados:', error);
+        }
+    }
+</script>
+
+{% endblock %}
+{% block 'main' %}
+<h2>Lançamento de Programação</h2>
+<div class="row">
+    <div class="col">
+        <div class="input-group mb-2 input-group-sm">
+            <label class="input-group-text">Digitalizado</label>
+            <input type="file" class="form-control" id="form_programacao_arquivo" accept=".jpg">
+        </div>
+
+        <div class="input-group mb-2 input-group-sm">
+            <label class="input-group-text" for="form_programacao_data">Data:</label>
+            <input type="date" id="form_programacao_data" class="form-control">
+        </div>
+
+
+
+
+        <div class="row justify-content-between">
+            <div class="col align-self-end"></div>
+            <div class="col-auto"><button type="button" class="btn btn-sm btn-success mt-2 mb-2"
+                    id="register">Lançar</button>
+            </div>
+        </div>
+        <div div='container text-start' style="border-top: 1px solid lightgray; padding-top: 10px;">
+            <div class="row align-items-center mb-1">
+                <div class="col-auto">
+                    <h5 class="mb-0">Lançamentos</h5>
+                </div>
+                <div class="col align-items-center">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="addLinha()">Adicionar linha</button>
+                </div>
+            </div>
+
+            <table class="table table-striped"
+                style="overflow-y: auto; width: fit-content; overflow-x: hidden; padding-inline: 10px;">
+                <thead>
+                    <tr>
+                        <th>Encarregado</th>
+                        <th>Obra</th>
+                        <th>Colaborador</th>
+                        <th>Excluir</th>
+                    </tr>
+                    </tbody>
+                <tbody id="linhas"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="col-auto">
+        <div class="text-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/104/104090.png" class="img-thumbnail" alt="Digitalização"
+                style="width: 600px; height: 500px; object-fit: contain; " id="form_programacao_digitalizacao"
+                data-bs-toggle="modal" data-bs-target="#view_programacao">
+        </div>
+    </div>
+</div>
+
+{% endblock %}

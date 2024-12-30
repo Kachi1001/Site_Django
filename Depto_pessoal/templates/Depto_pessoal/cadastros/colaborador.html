@@ -49,10 +49,9 @@
     </div>
     
     <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm input-group-sm">
-            <label class="input-group-text">EQUIPE:</label>
-            <select class="form-select" id="f_colaborador_equipe">
-            </select>
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">PASTA:</label>
+            <input type="text" id="f_colaborador_pasta_servidor" class="form-control">
         </div>
     </div>
 </div>
@@ -69,6 +68,6 @@
 </script>
 {% endblock %}
 
-{%block 'submain'%}
+{%block 'footer'%}
 <div class="submain">{%include app|add:'/table/colaborador.html'%}</div>
 {%endblock%}

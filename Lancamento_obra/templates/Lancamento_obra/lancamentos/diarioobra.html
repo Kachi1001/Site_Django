@@ -1,0 +1,201 @@
+{% extends app|add:'/base.html' %}
+
+
+{%block 'header'%}
+<h2>Cadastro de diário</h2>
+{%endblock%}
+
+{% block 'main' %}
+
+<div class="row">
+    <div class="col-7">
+        <div class="input-group input-group-sm mb-2">
+            <label class="input-group-text">Digitalizado</label>
+            <input type="file" class="form-control" id="form_diarioobra_arquivo" accept="image/*">
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="row justify-content-end">
+                    <div class="input-group input-group-sm">
+                        <label class="input-group-text">Obra:</label>
+                        <select class="form-select" id="form_diarioobra_obra"></select>
+                    </div>
+                    <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_finalizadas"
+                        onclick="filtrar('obra')">ocultar finalizadas</a>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group input-group-sm mb-2">
+                    <label class="input-group-text" for="form_diarioobra_indice">Indice:</label>
+                    <input type="number" id="form_diarioobra_indice" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="input-group input-group-sm mb-2">
+                    <label class="input-group-text" for="form_diarioobra_encarregado">Encarregado:</label>
+                    <select class="form-select" id="form_diarioobra_encarregado">
+                    </select>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="input-group input-group-sm mb-1">
+                    <label class="input-group-text" for="form_diarioobra_data">Data:</label>
+                    <input type="date" id="form_diarioobra_data" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="input-group input-group-sm mb-2">
+            <span class="input-group-text">Descrição:</span>
+            <textarea class="form-control" id="form_diarioobra_descricao"></textarea>
+        </div>
+        <div class="col align-self-center">
+            <h4>Climas</h4>
+            <div class="row">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-2">
+                        <label class="input-group-text" for="form_diarioobra_climamanha">Manhã</label>
+                        <select class="form-select" id="form_diarioobra_climamanha">
+                            <option>Sol</option>
+                            <option>Chuva</option>
+                            <option>Nublado</option>
+                            <option selected>Não informado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group input-group-sm mb-2">
+                        <label class="input-group-text" for="form_diarioobra_climatarde">Tarde</label>
+                        <select class="form-select" id="form_diarioobra_climatarde">
+                            <option selected>Sol</option>
+                            <option>Chuva</option>
+                            <option>Nublado</option>
+                            <option selected>Não informado</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-end">
+            <div class="col-auto"><button type="button" class="btn btn-primary mt-2 mb-2"
+                    onclick="register_redirect()">Lançar e Abrir atividade</button></div>
+            <div class="col-auto"><button type="button" class="btn btn-success mt-2 mb-2" id="form_diarioobra_submit"
+                    onclick="registrar()">Lançar</button></div>
+        </div>
+        <div div='row mb-2' style="border-top: 1px solid lightgray;">{%include app|add:'/table/diarioobra.html'%}</div>
+    </div>
+    <div class="col">
+        <div class="text-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/104/104090.png" class="img-thumbnail" alt="Digitalização"
+                style="width: 600px;height: 750px; object-fit: contain; " id="form_diarioobra_digitalização"
+                data-bs-toggle="modal" data-bs-target="#view_diario">
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block 'script' %}
+<script>
+    const prefix = 'form_{{resource}}_'
+    var resource
+
+    const photo = document.getElementById('form_diarioobra_digitalização');
+    const file = document.getElementById('form_diarioobra_arquivo');
+    var filename
+    async function load() {
+        resource = await generics.load.resource('{{resource}}')
+        const urlParams = new URLSearchParams(window.location.search);
+
+        resource.select.forEach((select) => {
+            if (select == 'obra') {
+                filtrar(select)
+            } else {
+                apiRequest.get(`select/${select}`).then((data) => {
+                    generics.populate.select(prefix + select, data)
+                })
+            }
+        })
+
+        $('#form_diarioobra_arquivo').change(function () {
+            filename = $('#form_diarioobra_arquivo').val().replace("C:\\fakepath\\", "").split(".")
+
+            let reader = new FileReader();
+
+            reader.onload = () => {
+                photo.src = reader.result;
+                previewModal_img(reader.result)
+                info = filename[0].split("_")
+                $('#form_diarioobra_obra_id').val(info[0])
+                d = info[1].split("-")
+                d = d[2] + "-" + adicionaZero(parseInt(d[1])) + "-" + adicionaZero(parseInt(d[0]));
+                $('#form_diarioobra_data').val(d)
+                $('#form_diarioobra_indice').val(info[2])
+            }
+            reader.readAsDataURL(file.files[0]);
+        });
+    }
+    async function filtrar() {
+        element = 'obra'
+        legend = $("#mostrar_finalizadas");
+        filter = { "finalizada": 'false' }
+
+        const text = legend.text().split(" ");
+        let data = []
+        if (text[0] == "ocultar") {
+            data = await apiRequest.get(element, filter)
+            legend.text("exibir ".concat(text[1]));
+        } else {
+            data = await apiRequest.get(element)
+            legend.text("ocultar ".concat(text[1]));
+        }
+        let pos_data = []
+        await data.forEach((row) => {
+            pos_data.push({ 'value': row.id, 'text': row.id + ' || ' + row.empresa + ' - ' + row.cidade })
+        })
+        generics.populate.select(prefix + element, pos_data)
+    }
+    function adicionaZero(numero) {
+        if (numero <= 9)
+            return "0" + numero;
+        else
+            return numero;
+    }
+    async function registrar(redirect) {
+        let file = $('#form_diarioobra_arquivo')[0].files[0];
+        if (!file) {
+            toasts('warning', { 'method': 'Registro', 'message': "Por favor, selecione um arquivo primeiro." })
+            return;
+        }
+        if (!$("#form_diarioobra_data").val()) {
+            toasts('warning', { 'method': 'Registro', 'message': "Por favor, selecione uma data primeiro." })
+            return;
+        }
+        
+        var parametro = await generics.reader.fields(resource, prefix)
+        parametro['diario'] = 0
+        data = parametro['data'].split('-')
+        parametro['imagem'] = parametro.obra.concat('_', data[2], '-', data[1], '-', data[0]) + '_' + parametro.indice + '.' + filename[(filename.length - 1)]
+        let formData = new FormData();
+        formData.append('file', file);
+        Object.keys(parametro).forEach((key) =>{
+            formData.append(key, parametro[key])
+        })
+        // formData.append(JSON.stringify(parametro));
+        apiRequest.upload('diarioobra', formData).then(() => {
+            $("#table").bootstrapTable("refresh");
+            if (redirect) {
+                let obra = $('#form_diarioobra_obra').val()
+                let data = $('#form_diarioobra_data').val()
+                let indice = $('#form_diarioobra_indice').val()
+                let desc = $('#form_diarioobra_descricao').val()
+                window.location.href = `${window.location.origin}/Lancamento_obra/lancamentos/atividade?obra=${obra}&data=${data}&indice=${indice}&desc=${desc}`;
+            }
+        })
+
+    }
+    function register_redirect() {
+        registrar(true)
+    }
+</script>
+{% endblock %}

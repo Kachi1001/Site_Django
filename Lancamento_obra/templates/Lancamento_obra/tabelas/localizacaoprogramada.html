@@ -1,0 +1,48 @@
+{% extends app|add:'/base.html' %}
+
+{%load static%}
+
+{%block 'header'%}
+<h2>Consulta de Programação</h2>
+
+{%include 'tabela.html'%}
+
+  <thead>
+    <tr>
+        <th data-field="id" data-sortable="true">ID</th>
+        <th data-field="colaborador" data-sortable="true">Colaborador</th>
+        <th data-field="encarregado" data-sortable="true">Encarregado</th>
+        <th data-field="obra_id" data-sortable="true">Obra</th>
+        <th data-field="iniciosemana" data-sortable="true" data-formatter="dataFormatter">Segunda-feira</th>
+        <th data-field="observacao">Observação</th>
+        <th data-formatter="editarFormatter" data-events="editarEvents"></th>
+    </tr>
+
+  </thead>
+</table> 
+{%endblock%}
+
+
+{% block 'script' %}
+<script>
+    function editarFormatter(value) {
+
+        return (
+            '<div style="margin-left: 0px; display: inline-flex;">'
+            + '<div class="btn-icon bg-info bi-pencil me-1" id="editarBtn" href="javascript:void(0)" title="Editar">'
+            + '</div>'
+            + '<div class="btn-icon bg-success bi-file-earmark-text" id="viewBtn" href="javascript:void(0)" title="Diário">'
+            + '</div>'
+            + '</div>'
+        )
+    }
+    window.editarEvents = {
+        'click #editarBtn': function (e, value, row, index) {
+            modal.open('update','{{resource}}', row['id'])
+        },
+        'click #viewBtn': function (e, value, row, index) {
+            modal.open('image','{{resource}}', row['iniciosemana'])
+        },
+    }
+</script>
+{% endblock %}

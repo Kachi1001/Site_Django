@@ -10,26 +10,26 @@ def index(request):
 
 @login_required
 @has_permission_decorator(app+'-cadastros')
-def cadastros(request, type):
-    return render(request, f"{app}/cadastros/{type}.html", {'table': type}) 
+def cadastros(request, resource):
+    return render(request, f"{app}/cadastros/{resource}.html", {'resource':resource}) 
 
 @login_required
 @has_permission_decorator(f'{app}-tabelas')
-def tabelas(request, table):
-    return render(request, f"{app}/tabelas/{table}.html", {'table_height': '600','table':table})
+def tabelas(request, resource):
+    return render(request, f"{app}/tabelas/{resource}.html", {'table_height': '560','resource':resource})
 
 @login_required
 @has_permission_decorator(f'{app}-consultas')
-def consultas(request, table):
+def consultas(request, resource):
     
-    return render(request, f"{app}/consultas/{table}.html",{'table_height': '600','table':table}) 
+    return render(request, f"{app}/consultas/{resource}.html",{'table_height': '570','resource':resource}) 
 
 @login_required
 @has_permission_decorator(f'{app}-lancamentos')
-def lancamentos(request, type):
-    return render(request, f"{app}/lancamentos/{type}.html", {'table': type})
+def lancamentos(request, resource):
+    return render(request, f"{app}/lancamentos/{resource}.html", {'resource':resource})
 
 @login_required
 @has_permission_decorator(f'{app}-graficos')
-def graficos(request, type):
-    return render(request, f"{app}/grafico/{type}.html",{'table': type})
+def graficos(request, resource):
+    return render(request, f"{app}/graficos/{resource}.html",{'resource':resource})

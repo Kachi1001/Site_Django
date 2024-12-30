@@ -11,7 +11,7 @@
 </div>
 {%endblock%}
 
-{%block 'submain'%}
+{%block 'footer'%}
 <style>
 	.acao {
 		border-radius: 10px;
@@ -33,7 +33,7 @@
 		overflow-y: auto;
 	}
 </style>
-<div class="submain">
+<div class="main">
 	<div class="accordion" id="accordionExample">
 		<div class="accordion-item">
 			<h2 class="accordion-header">
@@ -309,18 +309,17 @@
 </div>
 <script>
 	function deletar(id) {
-		apiRequest.delete('delete','sala',JSON.stringify({'id':id}),function(){
+		apiRequest.delete('agendasala/'+id,function(){
 			$('#'.concat(id)).remove()
 		})
 	}
 	function editar(id) {
 		if (confirm('Deseja editar esse agendamento?')) {
 			parametro = {
-						'id': id,
 						'responsavel': document.getElementById('responsavel'.concat(id))?.value,
 						'descricao': document.getElementById('descricao'.concat(id))?.value,
 					}
-			apiRequest.update('edit','sala',parametro)
+			apiRequest.update('agendasala/'+id ,parametro)
 		}
 	}
 </script>

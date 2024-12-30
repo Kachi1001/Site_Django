@@ -1,0 +1,53 @@
+{% extends app|add:'/base.html' %}
+
+
+{%block 'main'%}
+{%include 'static/imports/graficos.html'%} <!-- Graficos -->
+<canvas id="myChart"></canvas>
+{%endblock%}
+
+
+{%block 'script'%}  
+<script>
+function load(){
+    apiRequest.get('graficos/horas').then((data) => {
+        const ctx = document.getElementById('myChart');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Hora +50%', 
+                    data: data,
+                    parsing: {
+                        yAxisKey: 'hora_50'
+                    },
+                    },{
+                    label: 'Hora +100%', 
+                    data: data,
+                    parsing: {
+                        yAxisKey: 'hora_100'
+                    },
+                    }]
+                },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Gráfico de horas extras'
+                    }
+                },
+                parsing: {
+                    xAxisKey: 'mes',
+                }
+                
+            }
+    
+        });
+    }).catch((err) => {
+        console.error('Erro:', err);
+        alert('Erro ao carregar o grafico.');
+        
+    });
+}
+</script>
+{%endblock%}

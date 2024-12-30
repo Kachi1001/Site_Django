@@ -1,0 +1,71 @@
+{% extends app|add:'/base.html' %}
+
+{%block 'header'%}
+{%include 'static/imports/graficos.html'%} <!-- Graficos -->
+
+<h2>Consulta de Indicadores</h2>
+<div class="row" style="height: 500px;">
+    <div class="col-6">
+        {%include 'consulta.html'%}
+        
+            <thead>
+                <tr>
+                    <th data-field="competencia" data-sortable="true" >Competência</th>
+                    <th data-field="indice" data-sortable="true" >Indice</th>
+                    <th data-field="numeric" data-sortable="true" >Valor</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="col-6" style="height: 500px;">
+            <div class=" input-group mb-2 input-group-sm" >
+                <label class="input-group-text" for="form_colaborador_funcao">Competência:</label>
+                <select class="form-select" id="competencia" >
+                    <option >9/2024</option>
+                    <option>10/2024</option>
+                    <option>11/2024</option>
+                    <option selected>12/2024</option>
+                </select>
+            </div>
+    
+        <canvas id="grafico_pizza" style="height: 400px;"></canvas>
+    </div>
+</div>
+{%endblock%}
+
+{% block 'script' %}
+    <script>
+        const ctx = document.getElementById('grafico_pizza');
+        var datas
+        var pie = new Chart(ctx, {
+            type: 'pie'
+        })
+        function update_graph(comp){
+            var rows = {'labels': [], 'data':[]}
+            datas.forEach((row)=>{
+                if (row['competencia'] == comp){
+                    console.log(row['competencia'])
+                    rows['labels'].push(row['indice'])
+                    rows['data'].push(row['numeric'])
+                }
+            })
+            pie.data = {
+                    datasets: [{
+                        data: rows['data']
+                    }],
+                    labels: rows['labels']
+                }
+            pie.update()
+            pie.resize(400,400)
+        }
+        $('#competencia').on('change',()=>{
+            update_graph($('#competencia').val())
+        })
+        async function load() {
+            datas = await apiRequest.get('tabela/indicadores',{'limit':'100000'})
+            datas = datas['rows']
+            update_graph($('#competencia').val())
+        }
+    </script>
+{% endblock 'script' %}
+    

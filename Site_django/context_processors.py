@@ -1,6 +1,4 @@
 # myapp/context_processors.py
-from math import exp
-from django.utils import timezone
 import time
 
 from decouple import config
@@ -10,29 +8,36 @@ api = str(config("API")) # type: ignore
 timestamp = int(time.time()),
 translate = {
     'Home': 'Inicio',
-    'Lancamento_obra': 'Lancamento obra',
+    'Lancamento_obra': 'Lançamento obra',
     'Reservas': 'Reservas',
     'Depto_pessoal': 'Departamento pessoal',
+    'Obra': 'Obra',
+    'Curriculos': 'Currículos',
 }
 def base(request):
     modulo_da_view = request.resolver_match.func.__module__
     app = modulo_da_view.split('.')[0]
     media = config("MEDIA_URL") + app + '/'
-    
+    token = request.session.get('api_token') or None 
     return {
+        # 'ambiente': config('AMBIENTE'),
         'nome': request.user.username,
+        # 'user': request.user,
         'api': config("API"),
+        'api_external': config("API_EXTERNAL"),
         'media': media,
         'app': app,
         'app_name': translate[app] if app in translate else 'Sem nome',
         'timestamp': timestamp,
         'hojeJS': util.formatarHTML(util.get_hoje()),
-        'icon': '/static/icons',
-        'icon_table': "class=bi-table",
-        'icon_modal': "class=bi-window-stack",
-        'icon_form': 'class=bi-box-arrow-in-right' ,
-        'icon_pencil': 'class=bi-pencil' ,
-        'icon_file': 'class=bi-file-earmark-text',
+        'token': token,
+        'icon': {
+            'table': "class=bi-table",
+            'modal': "class=bi-window-stack",
+            'form': 'class=bi-box-arrow-in-right',
+            'file': 'class=bi-file-earmark-text',
+            'graph': 'class=bi-graph-up-arrow',
+            },
         
         'table_height': '400'
         }

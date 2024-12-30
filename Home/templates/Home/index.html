@@ -3,24 +3,28 @@
 {% load permission_tags %}
 {%block 'style'%}
 <style>
-  body{
-    display: flex;
-    align-items: center;
-  }
   @media (max-width: 800px) {
     body{
       justify-content: flex-start;
+      padding-top: 0px;
+    }
+    main {
+      margin-right: 20px;
+      margin-left: 20px;
     }
   }
   .card{
-    width: 300px;
+    width: 270px;
     margin-bottom: 24px;
   }
 </style>
 {%endblock%}
-{%block 'body'%}
-<div class="container text-center"id='index_body'>
-    <div class="row justify-content-center">
+
+
+
+{%block 'main'%}
+
+    <div class="row text-center justify-content-center">
       {% if user|can:'Lancamento_obra' %}
       <div class="col-auto">
         <div class="card">
@@ -28,7 +32,7 @@
             <h5 class="card-title">Lançamento obra</h5>
           </div>
           <div class="card-body">
-            <h6 class="card-subtitle mb-2 text-body-secondary">Versão 1.0</h6>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Versão 1.2</h6>
             <p class="card-text">Ferramenta de controle de delegação de ações em obra</p>
           </div>
           <div class="card-footer">
@@ -78,11 +82,43 @@
             <h5 class="card-title">Departamento pessoal</h5>
           </div>
           <div class="card-body">
-            <h6 class="card-subtitle mb-2 text-body-secondary">Versão 0.1</h6>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Versão 0.3b</h6>
             <p class="card-text">Administração de recursos do departamento</p>
           </div>
           <div class="card-footer">
             <a href="{%url 'Depto_pessoal'%}" class="stretched-link">Abrir Aplicação</a>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+      {% if user|can:'Obra' %}
+      <div class="col-auto">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Obra</h5>
+          </div>
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-body-secondary">Versão 0.0</h6>
+            <p class="card-text">Administração de recursos relacionado a obra</p>
+          </div>
+          <div class="card-footer">
+            <a href="{%url 'Obra'%}" class="stretched-link">Abrir Aplicação</a>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+      {% if user|can:'Curriculos' %}
+      <div class="col-auto">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Currículos</h5>
+          </div>
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-body-secondary">Versão 0.1</h6>
+            <p class="card-text">App para gerencia banco de talento</p>
+          </div>
+          <div class="card-footer">
+            <a href="{%url 'Curriculos'%}" class="stretched-link">Abrir Aplicação</a>
           </div>
         </div>
       </div>
@@ -118,5 +154,4 @@
       </div>
       {%endif%}
     </div>
-  </div>
 {%endblock%}

@@ -2,46 +2,30 @@
 html{
   height: 100%;
 }
-body{  
+body{ 
   font-family: "Lato", sans-serif;
-  padding-top: 60px;
+  margin-top: var(--navbar_width);
+  margin-left: var(--side_bar_width);
+  padding: 20px 40px 0px 40px;
   /* user-select: none; */
-  height: 100%;
   flex-direction: column;
   justify-content: center;
   background-color: var(--cor3);
-
-}
-header{
-  margin-bottom: 20px;
+  box-sizing: border-box;
 }
 
-.submain {
-  margin-left: calc(var(--side-bar_width) + 50px);
-  /* margin-top: 25px; */
-  /* padding: 20px 25px 0px 25px; */
-  /* border-top: 1px solid lightgray; */
-}
-
-footer {
-  background-color: azure;
-  border-radius: 5px;
-  padding: 5px;
-  position: fixed;
-  margin-right: 20px;
-  display: flex;
-  justify-content: flex-end;
-  bottom: 20px;
-  right: 20px;
-}
 
 .btn-icon {
   border-radius: 10px;
-  padding: 4px;
+  /* padding: 4px; */
   width: 25px;
-  display: flex;
   height: 25px;
-  margin: 2px;
+  display: flex;
+  /* margin: 2px; */
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  font-size: medium;
 }
 
 .btn-icon:hover {
@@ -57,7 +41,7 @@ footer {
   left: 0;
   top: 0;
   width: 100%;
-  height: 50px;
+  height: var(--navbar_width);
 }
 .card{
   box-shadow: 3px 3px 3px lightgray;
@@ -66,13 +50,16 @@ h2{
     margin: 0px;
 }
 td{
+  font-family: Arial, Helvetica, sans-serif;
     font-size: 10px;
+    padding: 1px
 }
 .exibir-ocultar{
     text-align: end;
     font-size: smaller;
 }
 :root{
+  --navbar_width: 50px;
     --cor1: #73beab;
     --cor2: #91DBFA;
     --cor3: #f1f0ee;
