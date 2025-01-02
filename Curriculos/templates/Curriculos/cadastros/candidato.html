@@ -59,7 +59,7 @@
     </div>
     <div class="col-auto">
         
-        <div class="input-group mb-2 nowrap">
+        <div class="input-group mb-2 nowrap input-group-sm">
             <span class="input-group-text">FILHOS?</span>
             <div class="input-group-text">
                 <input class="form-check-input mt-0" type="checkbox"
@@ -96,6 +96,7 @@
     $(document).ready(function(){
         loader = new Form('candidato','register')
         loader.open()
+        $("#f_candidato_nome").focus()
     })
 </script>
 {% endblock %}
