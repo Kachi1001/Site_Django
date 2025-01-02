@@ -210,7 +210,7 @@ const apiRequest = {
                 console.error("Erro ao interpretar a resposta de erro.");
                 toasts("warning", {
                     method: "Ocorreu um erro inesperado!",
-                    message: "Erro ao interpretar a resposta de erro.",
+                    message: "Tente atualizar seu navegador <Ctrl + F5>, caso erro persistir entre em contato WhatsApp encontrado no superior direito",
                 });
             });
     },
