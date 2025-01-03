@@ -59,7 +59,7 @@
     </div>
     <div class="col-auto">
         
-        <div class="input-group mb-2 nowrap">
+        <div class="input-group mb-2 nowrap input-group-sm">
             <span class="input-group-text">FILHOS?</span>
             <div class="input-group-text">
                 <input class="form-check-input mt-0" type="checkbox"
@@ -93,11 +93,17 @@
 
 <div class="row justify-content-end"><div class="col-auto"><button id="f_candidato_submit" class="btn btn-success">Cadastrar</button></div></div>
 <script>
-    $(document).ready(function(){
+    function load() {
         loader = new Form('candidato','register')
-        loader.open()
-    })
-</script>
+        loader.open().then(() => {  
+            $("#f_candidato_nome").focus();
+            setTimeout(()=>{
+                $("#f_candidato_cnh").val('Não informado');
+                $("#f_candidato_estado_civil").val('Não informado');
+            }, 400)
+        })
+        }
+    </script>
 {% endblock %}
 
 {%block 'footer'%}

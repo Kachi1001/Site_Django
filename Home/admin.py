@@ -9,6 +9,17 @@ class PendenciaAdmin(admin.ModelAdmin):
     name_user.short_description = 'Usuário'
 
 admin.site.register(Pendencia, PendenciaAdmin)
+class LogAdmin(admin.ModelAdmin):
+    list_display = ('id','user_name', 'action','resource','app','date','status')  # Corrigido com uma vírgula para tornar uma tupla válida
+    search_fields = ['id','text']
+    actions = None
+    list_filter = ['user_name', 'action','resource','app','date','status']
+    
+    def name_user(self, obj):
+        return f'{obj.user_name}'
+    name_user.short_description = 'Usuário'
+
+admin.site.register(Log, LogAdmin)
 
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin

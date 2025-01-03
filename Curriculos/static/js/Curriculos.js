@@ -1,23 +1,3 @@
-const ocupacao = {
-    text: ["id", "data_inicio", "data_fim", "remuneracao"], //campos que pode ser preencher
-    select: ["equipe", "colaborador", "funcao"], // campos selecionavel
-    check: ["continuo"], // campos marcaveis
-};
-
-const colaborador = {
-    text: [
-        "nome",
-        "id",
-        "cpf",
-        "rg",
-        "nascimento",
-        "fone",
-        "avaliacao_descricao",
-    ], //campos que pode ser preencher
-    select: ["avaliacao"], // campos selecionavel
-    check: ["ativo", "avaliacao_recontratar"], // campos marcaveis
-};
-
 var loader;
 
 class BaseLoader {
