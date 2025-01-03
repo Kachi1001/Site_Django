@@ -126,7 +126,7 @@
                 photo.src = reader.result;
                 // previewModal_img(reader.result)
                 info = filename[0].split("_")
-                $('#form_diarioobra_obra_id').val(info[0])
+                $('#form_diarioobra_obra').val(info[0])
                 d = info[1].split("-")
                 d = d[2] + "-" + adicionaZero(parseInt(d[1])) + "-" + adicionaZero(parseInt(d[0]));
                 $('#form_diarioobra_data').val(d)
