@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'header'%}
+{%endblock%}
+{% block 'main' %}
+<h5>DADOS CADASTRAIS</h5>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">PRODUTO:</label>
+            <select class="form-select" id="f_{{resource}}_produto" onchange="carregarFiltrado()">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">EPI:</label>
+            <select class="form-select" id="f_{{resource}}_epi_cadastro">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">QUANTIDADE:</label>
+            <input type="number" id="f_{{resource}}_quantidade" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">COLABORADOR:</label>
+            <select class="form-select" id="f_{{resource}}_colaborador">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">OBRA:</label>
+            <select class="form-select" id="f_{{resource}}_obra">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+
+        <div class="input-group mb-2 nowrap input-group-sm">
+            <span class="input-group-text">DEVOLVIDO?</span>
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" id="f_{{resource}}_devolvido">
+            </div>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DATA ENTREGA:</label>
+            <input type="date" id="f_{{resource}}_data_entrega" class="form-control" value="{{hojeJS}}">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DATA BAIXA:</label>
+            <input type="date" id="f_{{resource}}_data_baixa" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+
+        <div class="input-group mb-2 nowrap input-group-sm">
+            <span class="input-group-text">BAIXADO?</span>
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" id="f_{{resource}}_baixado">
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="row justify-content-end">
+        <div class="col-auto"><button id="f_{{resource}}_submit" class="btn btn-success">Cadastrar</button></div>
+    </div>
+    <script>
+        var epis = {}
+        var loader
+        function load() {
+            loader = new Form('{{resource}}', 'register')
+            loader.open().then(() => {
+                apiRequest.get('select/epi_cadastro').then((result) => {
+                    epis = result
+                    setTimeout(carregarFiltrado, 500)
+                })
+            })
+        }
+        async function carregarFiltrado() {
+            produto = document.getElementById('f_{{resource}}_produto').value
+            result = []
+            for (const item in epis) {
+                console.log(produto)
+                if (epis[item]['produto'] == produto) {
+                    result.push(epis[item])
+                }
+            }
+            loader.populateSelect(result, 'epi_cadastro')
+        }
+    </script>
+    {% endblock %}
+
+    {%block 'footer'%}
+    <div class="submain">{%include app|add:'/table/'|add:resource|add:'.html'%}</div>
+    {%endblock%}

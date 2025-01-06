@@ -48,3 +48,12 @@ class app_Curriculos(AbstractUserRole):
         f'{app}-candidato': True
     }
     role_name=f'app_{app}'
+
+class app_Almoxarifado(AbstractUserRole):
+    app = 'Almoxarifado'
+    available_permissions = {
+        f'{app}': True,
+        f'{app}-produtos': True,
+        f'{app}-epi': True
+    }
+    role_name=f'app_{app}'

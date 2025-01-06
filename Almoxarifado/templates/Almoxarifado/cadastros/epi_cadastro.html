@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'header'%}
+{%endblock%}
+{% block 'main' %}
+<h5>DADOS CADASTRAIS</h5>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">PRODUTO:</label>
+            <select class="form-select" id="f_{{resource}}_produto">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CA:</label>
+            <input type="number" id="f_{{resource}}_ca" class="form-control">
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">VALIDADE:</label>
+            <input type="date" id="f_{{resource}}_validade" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">OBSERVAÇÃO:</label>
+            <textarea type="number" id="f_{{resource}}_observacao" class="form-control"></textarea>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">TAMANHO:</label>
+            <select class="form-select" id="f_{{resource}}_tamanho">
+                <option>PP</option>
+                <option>P</option>
+                <option>M</option>
+                <option>G</option>
+                <option>GG</option>
+                <option>XG</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">FABRICANTE:</label>
+            <input type="text" id="f_{{resource}}_fabricante" class="form-control">
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row justify-content-end">
+    <div class="col-auto"><button id="f_{{resource}}_submit" class="btn btn-success">Cadastrar</button></div>
+</div>
+<script>
+    function load() {
+        loader = new Form('{{resource}}', 'register')
+        loader.open()
+        $("#f_candidato_nome").focus()
+    }
+</script>
+{% endblock %}
+
+{%block 'footer'%}
+<div class="submain">{%include app|add:'/table/'|add:resource|add:'.html'%}</div>
+{%endblock%}
