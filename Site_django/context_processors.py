@@ -14,6 +14,7 @@ translate = {
     'Obra': 'Obra',
     'Curriculos': 'Currículos',
     'Almoxarifado':'Almoxarifado',
+    'Ti': 'Ti',
 }
 def base(request):
     modulo_da_view = request.resolver_match.func.__module__

@@ -45,7 +45,8 @@ class app_Curriculos(AbstractUserRole):
     app = 'Curriculos'
     available_permissions = {
         f'{app}': True,
-        f'{app}-candidato': True
+        f'{app}-candidato': True,
+        f'{app}-consultas': True,
     }
     role_name=f'app_{app}'
 

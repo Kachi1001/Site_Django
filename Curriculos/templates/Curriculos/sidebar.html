@@ -28,10 +28,14 @@
                 </button>
             </h2>
             <div id="menu-consulta" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                <a href="{%url app|add:'_consultas' 'resumo'%}"><i {{icon.table}}></i> Resumo</a>
+                
+                {% comment %}
                 <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Consultas pendente</a>
                 <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Cargos</a>
                 <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Profissão candidatado</a>
                 <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Entrevistas</a>
+                {% endcomment %}
             </div>
         </div>
         {%endif%}

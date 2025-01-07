@@ -24,9 +24,6 @@
 <!-- Extensão refresh -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/extensions/auto-refresh/bootstrap-table-auto-refresh.min.js"></script>
 
-<!-- Extensão multiSorts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
-
 <!-- Extensão advancedSearch -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/extensions/toolbar/bootstrap-table-toolbar.min.js"></script>
 
@@ -60,8 +57,10 @@
     }
     function dataFormatter(value) {
         if (value != null) {
-            data = value.split("-");
-            return data[2].concat("/", data[1], "/", data[0]);
+            const data = new Date(value);
+            return data.toLocaleDateString("pt-BR", { timeZone: "UTC" });
+           // data = value.split("-");
+           // return data[2].concat("/", data[1], "/", data[0]);
         } else {
             return "";
         }
