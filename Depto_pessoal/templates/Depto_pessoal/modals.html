@@ -673,6 +673,12 @@
                                     class="form-control">
                             </div>
                         </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">OBSERVAÇÃO:</label>
+                                <textarea id="m_processo-feriasprocessadas_obeservacao" class="form-control"></textarea>
+                            </div>
+                        </div>
                         <input type="checkbox" style="display: none;" id="m_processo-feriasprocessadas_consumido">
 
                     </div>
@@ -778,9 +784,15 @@
                                 <span class="input-group-text">ANTECIPADO:</span>
                                 <div class="input-group-text">
                                     <input class="form-check-input mt-0" type="checkbox"
-                                        id="m_processo-feriasutilizadas_antecipacao_periodo"
-                                        onclick="confirmarAntecipacao()">
+                                    id="m_processo-feriasutilizadas_antecipacao_periodo"
+                                    onclick="confirmarCheck(this.id)">
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">OBSERVAÇÃO:</label>
+                                <textarea id="m_processo-feriasutilizadas_obeservacao" class="form-control"></textarea>
                             </div>
                         </div>
                         <input type="checkbox" id="m_processo-feriasutilizadas_consumido" style="display: none;">
