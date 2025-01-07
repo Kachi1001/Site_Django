@@ -1,6 +1,10 @@
+{%load static%}
+
 {%include 'consulta.html'%}
 
     <thead>
+        <th data-searchable="false" data-formatter="editarFormatter" data-events="editarEvents"></th>
+
         <th data-field="id" data-sortable="true">ID</th>
         <th data-field="nome" data-sortable="true">Nome</th>
         <th data-field="funcao_pretendida" data-sortable="true">Função</th>
@@ -15,15 +19,12 @@
     </thead>
 </table>
 <script>
-    function editarFormatter() {
-        return (
-            '<div class="btn-icon bg-info bi-pencil fs-6 me-1" id="editarBtn" title="Editar"></div>'
-        )
+    function editarFormatter(value) {
+        return '<div id="viewBtn" class="btn-icon bg-info"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit" title="Abrir detalhe"></div></div>'
     }
     window.editarEvents = {
-        'click #editarBtn': function (e, value, row, index) {
-            let obj = new Modal('avaliacao', 'update')
-            obj.open(row['id'])
+        'click #viewBtn': function (e, value, row, index) {
+            page.redirect('consultas/candidato',{id:row['id']})
         },
     }
 </script>
