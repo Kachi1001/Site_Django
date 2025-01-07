@@ -27,8 +27,11 @@ class app_Depto_pessoal(AbstractUserRole):
         f'{app}': True,
         f'{app}-colaborador': True,
         f'{app}-ferias': True,
+        f'{app}-integracao': True,
+        f'{app}-avaliacao': True,
         f'{app}-lembrete': True,
         f'{app}-feriado': True,
+        f'{app}-exemplo': True,
     }
     role_name=f'app_{app}'
 
