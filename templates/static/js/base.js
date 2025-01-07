@@ -298,3 +298,12 @@ function isValidDate(dateString) {
     let pattern = /^\d{4}-\d{2}-\d{2}$/;
     return pattern.test(dateString);
 }
+
+function confirmarCheck(field) {
+    campo = $('#'+field)
+    if (campo.prop("checked")) {
+        if (!confirm('Tem certeza da ação precedida??')) {
+            campo.prop('checked', false);
+        }
+    }
+}
