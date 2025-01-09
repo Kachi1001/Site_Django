@@ -71,6 +71,14 @@
             <button class="input-group-text" style="user-select: none;" onclick="let text = document.getElementById('f_colaborador_pasta_servidor'); text.disabled = false; text.select(); document.execCommand('copy'); text.disabled = true; toasts('success',{'method':'Sucesso!','message':'Copiado com sucesso o caminho.'})">COPIAR</button>
         </div>
     </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <span class="input-group-text">MENSAGEM PONTO:</span>
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" id="f_colaborador_aviso_ponto">
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row align-items-center mt-3">
     <div class="col-auto">

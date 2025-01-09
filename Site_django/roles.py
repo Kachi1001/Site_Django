@@ -31,7 +31,7 @@ class app_Depto_pessoal(AbstractUserRole):
         f'{app}-avaliacao': True,
         f'{app}-lembrete': True,
         f'{app}-feriado': True,
-        f'{app}-exemplo': True,
+        f'{app}-graficos': True,
     }
     role_name=f'app_{app}'
 

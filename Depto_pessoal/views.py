@@ -40,8 +40,3 @@ def lancamentos(request, resource):
 @has_permission_decorator(app)
 def graficos(request, resource):
     return render(request, f"{app}/graficos/{resource}.html", {'resource': resource})
-
-@login_required
-@has_permission_decorator(app+'-menu')
-def app_menu(request):
-    return render(request, f"{app}/app.html")

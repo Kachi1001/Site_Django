@@ -64,30 +64,7 @@
         </div>
     </div>
     {%endif%}
-        {% if user|can:'Depto_pessoal-lembrete' %}
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#menu-lembretes" aria-expanded="false">
-                    Lembretes
-                </button>
-            </h2>
-            <div id="menu-lembretes" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_cadastros' 'ponto'%}"><i {{icon.table}}></i> Ponto</a>
-                <a href="{%url app|add:'_app'%}"><i {{icon.table}}></i> Painel</a>
-            </div>
-        </div>
-        {%endif%}
-        {% if user|can:'Depto_pessoal-feriado' %}
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <a href="#" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px" onclick="abrirRegistro('feriado')">
-                    Feriados
-                </a>
-            </h2>
-        </div>
-        {%endif%}
-        {% if user|can:'Depto_pessoal-exemplo' %}
+    {% if user|can:'Depto_pessoal-graficos' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -100,6 +77,25 @@
             </div>
         </div>
         {%endif%}
+        {% if user|can:'Depto_pessoal-lembrete' %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+
+                <a href="{%url app|add:'_consultas' 'app'%}" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px"><i {{icon.table}}></i> Painel</a>
+            </h2>
+
+        </div>
+        {%endif%}
+        {% if user|can:'Depto_pessoal-feriado' %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <a href="#" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px" onclick="abrirRegistro('feriado')"><i {{icon.modal}}></i>
+                    Feriados
+                </a>
+            </h2>
+        </div>
+        {%endif%}
+        
     
     </div>
     <script>
