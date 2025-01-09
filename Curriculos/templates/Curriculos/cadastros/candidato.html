@@ -91,6 +91,13 @@
             <input type="text" id="f_candidato_cidade" class="form-control">
         </div>
     </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ESTADO:</label>
+            <select class="form-select" id="f_candidato_estado">
+            </select>
+        </div>
+    </div>
 </div>
 
 
@@ -107,6 +114,7 @@
             setTimeout(() => {
                 $("#f_candidato_cnh").val('Não informado');
                 $("#f_candidato_estado_civil").val('Não informado');
+                $("#f_candidato_estado").val('N/A');
             }, 400)
         })
     }
