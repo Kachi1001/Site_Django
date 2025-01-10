@@ -80,6 +80,36 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="m_register-insalubridade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Cadastro de equipe</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-2 nowrap">
+                        <label class="input-group-text">Inicio:</label>
+                        <input type="date" id="m_register-insalubridade_id" class="form-control form-control-sm">
+                    </div>
+                    <div class="input-group mb-2 nowrap">
+                        <label class="input-group-text">Valor:</label>
+                        <input type="number" id="m_register-insalubridade_valor" class="form-control form-control-sm">
+                        <label class="input-group-text">R$</label>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2" id="m_register-insalubridade_submit">Cadastrar</button>
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped" id="m_register-insalubridade_table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="m_register-tipoavaliacao" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -152,7 +182,7 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">TELEFONE:</label>
-                                <input type="number" id="m_update-colaborador_fone" class="form-control">
+                                <input type="text" id="m_update-colaborador_fone" class="form-control">
                             </div>
                         </div>
 

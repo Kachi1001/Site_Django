@@ -87,6 +87,15 @@ class BaseLoader {
                             checkbox.disabled = true;
                             checkbox.checked = obj[key];
                             cell.appendChild(checkbox);
+                            if (this.object == "funcao") {     
+                                checkbox.disabled = false;
+                                checkbox.addEventListener("click", () => {
+                                    obj[key] = !obj[key]
+                                    apiRequest.update(this.object + "/" + obj.id, obj).then(() =>{
+                                        this.refresh();
+                                    })
+                                });
+                            }
                         } else {
                             
                             cell.textContent = obj[key];
@@ -121,7 +130,8 @@ class BaseLoader {
                         this.object != "funcao" &&
                         this.object != "equipe" &&
                         this.object != "feriado" &&
-                        this.object != "tipoavaliacao"
+                        this.object != "tipoavaliacao" &&
+                        this.object != "insalubridade"
                     ) {
                         const editBtn = document.createElement("i");
                         editBtn.classList.add(
@@ -139,6 +149,8 @@ class BaseLoader {
                         });
                         extraBtn.appendChild(editBtn);
                     }
+                    
+                    
                     row.appendChild(extraBtn);
                     tbody.appendChild(row);
                 });
@@ -317,6 +329,7 @@ class Modal extends BaseLoader {
 
     refresh() {
         // page.refresh();
+        this.modal.hide();
     }
 }
 
