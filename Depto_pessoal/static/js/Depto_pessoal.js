@@ -102,7 +102,8 @@ class BaseLoader {
                             if (isValidDate(obj[key])) {
                                 const data = new Date(obj[key]);
                                 cell.textContent =
-                                    data.toLocaleDateString("pt-BR");
+                                    data.toLocaleDateString("pt-BR", { timeZone: "UTC" });
+
                             }
                         }
                         row.appendChild(cell);
