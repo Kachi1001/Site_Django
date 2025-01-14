@@ -1,0 +1,60 @@
+{% extends app|add:'/base.html' %}
+
+{%load static%}
+
+{%block 'header'%}
+<h2>Consulta de Descontos</h2>
+{%include 'consulta.html'%}
+<thead>
+    <tr>
+        <th colspan="3">Obra</th>
+        <th colspan="4">Horas</th>
+        <th colspan="4">Valores</th>
+        <th rowspan="2" data-field="nomes" data-sortable="true" data-formatter='listFormatter'>Sem valor da Hora</th>
+    </tr>
+    <tr>
+        <th data-field="obra" data-sortable="true" data-searchable="true">CR</th>
+        <th data-field="orcamento" data-sortable="true">Orç</th>
+        <th data-field="descricao" data-sortable="false">Descrição</th>
+        <th data-field="horas_normais" data-sortable="true" data-formatter="intervalFormatter">Normais</th>
+        <th data-field="horas_extra_50" data-sortable="true" data-formatter="intervalFormatter">+50%</th>
+        <th data-field="horas_extra_100" data-sortable="true" data-formatter="intervalFormatter">+100%</th>
+        <th data-field="total_horas" data-sortable="true" data-formatter="intervalFormatter">Total</th>
+        <th data-field="valor_normal" data-sortable="true" data-formatter="realFormatter">Normal</th>
+        <th data-field="valor_extra_50" data-sortable="true" data-formatter="realFormatter">+50%</th>
+        <th data-field="valor_extra_100" data-sortable="true" data-formatter="realFormatter">+100%</th>
+        <th data-field="total_rs" data-sortable="true" data-formatter="realFormatter">Total</th>
+    </tr>
+</thead>
+</table>
+<script>
+    function load() {
+        setTimeout(() =>{
+            apiRequest.post('exec/fechamento_tabela').then(() => {
+                $("#table").bootstrapTable("refresh");
+            })
+        }, 400) 
+    }
+
+    function editarFormatter(value) {
+
+        return (
+            '<div style="margin-left: 0px; display: inline-flex;">'
+            + '<div class="btn-icon bg-info bi-pencil me-1" id="editarBtn" href="javascript:void(0)" title="Editar">'
+            + '</div>'
+            + '<div class="btn-icon bg-success bi-file-earmark-text" id="viewBtn" href="javascript:void(0)" title="Diário">'
+            + '</div>'
+            + '</div>'
+        )
+    }
+    window.editarEvents = {
+        'click #editarBtn': function (e, value, row, index) {
+            modal.open('update','atividade', row['id'])
+        },
+        'click #viewBtn': function (e, value, row, index) {
+            modal.open('image','diarioobra', row['diario'])
+        },
+    }
+    
+</script>
+{%endblock%}
