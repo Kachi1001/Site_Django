@@ -9,7 +9,11 @@ class BaseLoader {
     }
     async open(id = undefined) {
         this.id = id;
-        this.inputs = await apiRequest.get(`resource/${this.object}`);
+        try {
+            this.inputs = await apiRequest.get(`resource/${this.object}`);
+        } catch(error) {
+            console.error('Erro ao baixar o resource',error)
+        } 
         loader = this;
 
         this[this.type](); // Registra ou atualiza conforme o tipo
@@ -328,6 +332,16 @@ class Modal extends BaseLoader {
         }
     }
 
+    async import() {
+        this.modal.show();
+
+        $("#" + this.prefix + "submit")
+            .off()
+            .on("click", () => {
+                Submit.upload(this);
+            });
+    }
+
     refresh() {
         // page.refresh();
         this.modal.hide();
@@ -422,6 +436,16 @@ Submit = {
                 loader.refresh();
             });
     },
+    upload: function (loader) {
+        console.log(loader);
+        const file = $('#' + loader.prefix + 'file')[0].files[0]
+        const formData = new FormData();
+        formData.append('file',file)
+        apiRequest.upload(loader.object +'_'+ loader.type , formData).then(() =>{
+            loader.modal.hide()
+            loader.refresh()
+        })
+    }
 };
 $(document).ready(async () => {
     try {

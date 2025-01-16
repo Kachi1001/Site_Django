@@ -1240,7 +1240,25 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="m_import-horas_ponto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Importar horas ponto de PONTO MAIS</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-sm mb-2">
+                        <label class="input-group-text">Arquivos Excel</label>
+                        <input type="file" class="form-control" id="m_import-horas_ponto_file" accept=".xlsx">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary mb-2" id="m_import-horas_ponto_submit">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 
@@ -1249,6 +1267,9 @@
         registro.open(table)
     }
 
-
+    function abrirImport(modal){
+        let load = new Modal(modal,'import')
+        load.open()
+    }
 </script>
 </div>
