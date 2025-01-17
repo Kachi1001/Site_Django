@@ -27,8 +27,11 @@ class app_Depto_pessoal(AbstractUserRole):
         f'{app}': True,
         f'{app}-colaborador': True,
         f'{app}-ferias': True,
+        f'{app}-integracao': True,
+        f'{app}-avaliacao': True,
         f'{app}-lembrete': True,
         f'{app}-feriado': True,
+        f'{app}-graficos': True,
     }
     role_name=f'app_{app}'
 
@@ -45,6 +48,17 @@ class app_Curriculos(AbstractUserRole):
     app = 'Curriculos'
     available_permissions = {
         f'{app}': True,
-        f'{app}-candidato': True
+        f'{app}-candidato': True,
+        f'{app}-cadastros': True,
+        f'{app}-consultas': True,
+    }
+    role_name=f'app_{app}'
+
+class app_Almoxarifado(AbstractUserRole):
+    app = 'Almoxarifado'
+    available_permissions = {
+        f'{app}': True,
+        f'{app}-produtos': True,
+        f'{app}-epi': True
     }
     role_name=f'app_{app}'

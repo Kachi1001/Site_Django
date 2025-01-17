@@ -80,6 +80,36 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="m_register-insalubridade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Cadastro de equipe</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-2 nowrap">
+                        <label class="input-group-text">Inicio:</label>
+                        <input type="date" id="m_register-insalubridade_id" class="form-control form-control-sm">
+                    </div>
+                    <div class="input-group mb-2 nowrap">
+                        <label class="input-group-text">Valor:</label>
+                        <input type="number" id="m_register-insalubridade_valor" class="form-control form-control-sm">
+                        <label class="input-group-text">R$</label>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2" id="m_register-insalubridade_submit">Cadastrar</button>
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped" id="m_register-insalubridade_table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="m_register-tipoavaliacao" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -152,7 +182,7 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">TELEFONE:</label>
-                                <input type="number" id="m_update-colaborador_fone" class="form-control">
+                                <input type="text" id="m_update-colaborador_fone" class="form-control">
                             </div>
                         </div>
 
@@ -170,6 +200,14 @@
                             <div class="input-group mb-2 flex-nowrap">
                                 <label class="input-group-text">PASTA:</label>
                                 <input type="text" id="m_update-colaborador_pasta_servidor" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" id="m_update-colaborador_aviso_ponto">
+                                </div>
+                                <span class="input-group-text">MENSAGEM PONTO:</span>
                             </div>
                         </div>
                     </div>
@@ -471,6 +509,15 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <span class="input-group-text">TERCEIRO:</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_update-ocupacao_terceiro">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -522,7 +569,16 @@
                         </div>
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap">
-                                <label class="input-group-text">DATA DE INÍCIO:</label>
+                                <span class="input-group-text">TERCEIRO:</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_alterar-ocupacao_terceiro">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">INÍCIO:</label>
                                 <input type="date" id="m_alterar-ocupacao_data_inicio" class="form-control">
                             </div>
                         </div>
@@ -618,7 +674,7 @@
                         </div>
                         <div class="col">
                             <div class="input-group mb-2 flex-nowrap">
-                                <label class="input-group-text">ID do colaborador:</label>
+                                <label class="input-group-text">ID colaborador:</label>
                                 <input type="text" class="form-control" id="m_desligamento-colaborador_colaborador"
                                     disabled>
                             </div>
@@ -671,6 +727,21 @@
                                 <label class="input-group-text">DIAS:</label>
                                 <input type="number" id="m_processo-feriasprocessadas_dias_processados"
                                     class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">OBSERVAÇÃO:</label>
+                                <textarea id="m_processo-feriasprocessadas_observacao" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <span class="input-group-text">UTILIZAR?</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_processo-feriasprocessadas_utilizar">
+                                </div>
                             </div>
                         </div>
                         <input type="checkbox" style="display: none;" id="m_processo-feriasprocessadas_consumido">
@@ -726,6 +797,12 @@
                                     class="form-control">
                             </div>
                         </div>
+                        <div class="col">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">OBSERVAÇÃO:</label>
+                                <textarea id="m_update-feriasprocessadas_observacao" class="form-control"></textarea>
+                            </div>
+                        </div>
                         <input type="checkbox" style="display: none;" id="m_update-feriasprocessadas_consumido">
 
                     </div>
@@ -778,9 +855,15 @@
                                 <span class="input-group-text">ANTECIPADO:</span>
                                 <div class="input-group-text">
                                     <input class="form-check-input mt-0" type="checkbox"
-                                        id="m_processo-feriasutilizadas_antecipacao_periodo"
-                                        onclick="confirmarAntecipacao()">
+                                    id="m_processo-feriasutilizadas_antecipacao_periodo"
+                                    onclick="confirmarCheck(this.id)">
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">OBSERVAÇÃO:</label>
+                                <textarea id="m_processo-feriasutilizadas_observacao" class="form-control"></textarea>
                             </div>
                         </div>
                         <input type="checkbox" id="m_processo-feriasutilizadas_consumido" style="display: none;">
@@ -836,6 +919,12 @@
                                     <input class="form-check-input mt-0" type="checkbox"
                                         id="m_update-feriasutilizadas_antecipacao_periodo" disabled>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2 flex-nowrap">
+                                <label class="input-group-text">OBSERVAÇÃO:</label>
+                                <textarea id="m_update-feriasutilizadas_observacao" class="form-control"></textarea>
                             </div>
                         </div>
                         <input type="checkbox" id="m_update-feriasutilizadas_consumido" style="display: none;">
@@ -1151,7 +1240,25 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="m_import-horas_ponto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Importar horas ponto de PONTO MAIS</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-sm mb-2">
+                        <label class="input-group-text">Arquivos Excel</label>
+                        <input type="file" class="form-control" id="m_import-horas_ponto_file" accept=".xlsx">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary mb-2" id="m_import-horas_ponto_submit">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 
@@ -1160,6 +1267,9 @@
         registro.open(table)
     }
 
-
+    function abrirImport(modal){
+        let load = new Modal(modal,'import')
+        load.open()
+    }
 </script>
 </div>

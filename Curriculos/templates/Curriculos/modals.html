@@ -27,17 +27,71 @@
                     <div class="row">
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 nowrap">
-                                <label class="input-group-text" for="form_colaborador_funcao">Categoria:</label>
-                                <select class="form-select form-control-sm" id="m_register-profissoes_grupo">
+                                <label class="input-group-text">Categoria:</label>
+                                <select class="form-select form-control-sm" id="m_register-profissoes_setor">
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary mb-2"
+                    <button type="button" class="btn btn-primary mb-2" btn-sm
                         id="m_register-profissoes_submit">Cadastrar</button>
                     <div class="modal_list">
                         <table class="table table-hover table-bordered table-striped table-sm"
                             id="m_register-profissoes_table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_register-setor" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Cadastro de Setor</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-sm mb-2 nowrap ">
+                        <label class="input-group-text">Nome:</label>
+                        <input type="text" id="m_register-setor_setor" class="form-control form-control-sm">
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2" btn-sm
+                        id="m_register-setor_submit">Cadastrar</button>
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_register-setor_table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_register-area_atuacao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Cadastro de área de atuação</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-sm mb-2 nowrap ">
+                        <label class="input-group-text">Área:</label>
+                        <input type="text" id="m_register-area_atuacao_area" class="form-control form-control-sm">
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2 btn-sm"
+                        id="m_register-area_atuacao_submit">Cadastrar</button>
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_register-area_atuacao_table">
                             <thead>
                                 <tr></tr>
                             </thead>
@@ -123,22 +177,82 @@
                             </div>
                         </div>
                         <div class="col">
-                            <div class="input-group input-group-sm mb-2 nowrap">
+                            <div class="input-group input-group-sm nowrap">
                                 <label class="input-group-text">DATA INICIO:</label>
                                 <input type="date" id="m_lanc-experiencia_data_inicio"
                                     class="form-control form-control-sm">
                             </div>
                         </div>
                         <div class="col">
-                            <div class="input-group input-group-sm mb-2 nowrap">
+                            <div class="input-group input-group-sm nowrap">
                                 <label class="input-group-text">DATA FIM:</label>
                                 <input type="date" id="m_lanc-experiencia_data_fim"
                                     class="form-control form-control-sm">
                             </div>
                         </div>
+                        <div class="col-auto align-content-center">
+                            <small>ou</small>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group input-group-sm nowrap">
+                                <label class="input-group-text">TEMPO:</label>
+                                <input type="number" class="form-control form-control-sm"
+                                    id="m_lanc-experiencia_tempo_anos">
+                                <label class="input-group-text">ANOS</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-primary m-2"
+                        id="m_lanc-experiencia_submit">ADICIONAR</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_lanc-classificacao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Classificações</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-1">
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_lanc-classificacao_table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="m_lanc-classificacao_candidato">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group input-group-sm mb-2 nowrap">
+                                <label class="input-group-text">AREA DE ATUAÇÃO:</label>
+                                <select id="m_lanc-classificacao_area_atuacao"
+                                    class="form-select form-control-sm"></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-2 nowrap">
+                                <label class="input-group-text">SETOR:</label>
+                                <select id="m_lanc-classificacao_setor" class="form-select form-control-sm"></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group-sm nowrap">
+                                <label class="input-group-text">PONTOS:</label>
+                                <input type="number" id="m_lanc-classificacao_pontos"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
                     </div>
                     <button type="button" class="btn btn-sm btn-primary mb-2"
-                        id="m_lanc-experiencia_submit">ADICIONAR</button>
+                        id="m_lanc-classificacao_submit">ADICIONAR</button>
 
                 </div>
             </div>
@@ -191,7 +305,7 @@
                             <div class="col-auto">
                                 <div class="input-group input-group-sm mb-2 nowrap">
                                     <label class="input-group-text">CONSOME BEBIDA:</label>
-                                    <select id="m_update-questionario_bebidas_freq" class="form-select form-control-sm">
+                                    <select id="m_update-questionario_bebidas" class="form-select form-control-sm">
                                         <option>NÃO</option>
                                         <option>DIARIAMENTE</option>
                                         <option>SEMANALMENTE</option>
@@ -269,10 +383,10 @@
                         <label class="input-group-text">PERCEPÇÕES:</label>
                         <textarea type="text" id="m_update-percepcao_percepcao" class="form-control"></textarea>
                     </div>
-                        <div class="input-group input-group-sm mb-2 flex-nowrap">
-                            <label class="input-group-text">CONSULTA / PESQUISA RH:</label>
-                            <textarea type="text" id="m_update-percepcao_consulta" class="form-control"></textarea>
-                        </div>
+                    <div class="input-group input-group-sm mb-2 flex-nowrap">
+                        <label class="input-group-text">CONSULTA / PESQUISA RH:</label>
+                        <textarea type="text" id="m_update-percepcao_consulta" class="form-control"></textarea>
+                    </div>
                     <div class="row">
                         <div class="col">
                             <div class="input-group input-group-sm mb-2 nowrap">
@@ -426,6 +540,13 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">INDICAÇÃO:</label>
+                                <input class="form-control" list="m_update-candidato_indicacao">
+                            </div>
+                            <datalist id="m_update-candidato_indicacao"></datalist>
+                        </div>
                     </div>
                     <h5 class="mb-0 mt-1"><small>Dados de Endereço</small></h5>
                     <hr class="mt-2">
@@ -448,6 +569,13 @@
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">CIDADE:</label>
                                 <input type="text" class="form-control form-control-sm" id="m_update-candidato_cidade">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">ESTADO:</label>
+                                <select class="form-select" id="m_update-candidato_estado">
+                                </select>
                             </div>
                         </div>
                     </div>

@@ -210,7 +210,7 @@ const apiRequest = {
                 console.error("Erro ao interpretar a resposta de erro.");
                 toasts("warning", {
                     method: "Ocorreu um erro inesperado!",
-                    message: "Erro ao interpretar a resposta de erro.",
+                    message: "Tente atualizar seu navegador <Ctrl + F5>, caso erro persistir entre em contato WhatsApp encontrado no superior direito",
                 });
             });
     },
@@ -297,4 +297,13 @@ const populate = {};
 function isValidDate(dateString) {
     let pattern = /^\d{4}-\d{2}-\d{2}$/;
     return pattern.test(dateString);
+}
+
+function confirmarCheck(field) {
+    campo = $('#'+field)
+    if (campo.prop("checked")) {
+        if (!confirm('Tem certeza da ação precedida??')) {
+            campo.prop('checked', false);
+        }
+    }
 }

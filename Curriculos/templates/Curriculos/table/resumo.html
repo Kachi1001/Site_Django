@@ -1,0 +1,30 @@
+{%load static%}
+
+{%include 'consulta.html'%}
+
+    <thead>
+        <th data-searchable="false" data-formatter="editarFormatter" data-events="editarEvents"></th>
+
+        <th data-field="id" data-sortable="true">ID</th>
+        <th data-field="nome" data-sortable="true">Nome</th>
+        <th data-field="funcao_pretendida" data-sortable="true">Função</th>
+        <th data-field="pretensao" data-sortable="true">Salário</th>
+        <th data-field="banco_talentos" data-sortable="true">Situação</th>
+        <th data-field="experiencia">Experiência</th>
+        <th data-field="anos_exp" data-sortable="true">Tempo</th>
+        <th data-field="avaliacao_final">Avaliação</th>
+        <th data-field="ficha" data-sortable="true" data-formatter="checkFormatter">Ficha</th>
+        <th data-field="disponibilidade" data-sortable="true" data-formatter="checkFormatter">Viagem</th>
+        <th data-field="revisar_dp" data-sortable="true"data-formatter="checkFormatter">revisar_dp</th>
+    </thead>
+</table>
+<script>
+    function editarFormatter(value) {
+        return '<div id="viewBtn" class="btn-icon bg-info"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit" title="Abrir detalhe"></div></div>'
+    }
+    window.editarEvents = {
+        'click #viewBtn': function (e, value, row, index) {
+            page.redirect('consultas/candidato',{id:row['id']})
+        },
+    }
+</script>

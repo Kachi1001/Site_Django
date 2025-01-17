@@ -71,7 +71,7 @@
                 <div class="input-group mb-2 input-group-sm">
                     <span class="input-group-text">Plantão</span>
                     <div class="input-group-text">
-                        <input class="form-check-input" type="checkbox" id="form_atividade_diaseguinte" tabindex="10">
+                        <input class="form-check-input m-0" type="checkbox" id="form_atividade_diaseguinte" tabindex="10">
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                 <div class="input-group mb-2 input-group-sm">
                     <span class="input-group-text">Meia diária</span>
                     <div class="input-group-text">
-                        <input class="form-check-input" type="checkbox" id="form_atividade_meiadiaria" tabindex="11"
+                        <input class="form-check-input m-0" type="checkbox" id="form_atividade_meiadiaria" tabindex="11"
                             onclick="confirmMeiaDiaria()">
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                         <thead>
                             <tr>
                                 <th rowspan="2" data-field="id">ID</th>
-                                <th rowspan="2" data-field="obra_id">Obra</th>
+                                <th rowspan="2" data-field="obra">Obra</th>
                                 <th rowspan="2" data-field="dia" data-formatter="dataFormatter">Dia</th>
                                 <th colspan="6">Horas</th>
                             </tr>
@@ -193,7 +193,7 @@
 
         $('#modalTable').on('shown.bs.modal', function () {
             $("#lanc_dia").bootstrapTable('refreshOptions', {
-                url: `{{api}}/Lancamento_obra/get_data?metodo=lanc_dia&colaborador=${colaborador.val()}&dia=${dia.val()}`,
+                url: `{{api}}Lancamento_obra/atividade?colaborador=${colaborador.val()}&dia=${dia.val()}`,
             })
         })
 

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{%block 'header'%}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">Tabelas</li>
+    <li class="breadcrumb-item active" aria-current="page">{{resource|title}}</li>
+  </ol>  
+  {%include 'tabela.html'%}
+  
+  <thead>
+      <th data-field="id" data-sortable="true">ID</th>
+      <th data-field="colaborador" data-sortable="true">Nome</th>
+      <th data-field="tipo" data-sortable="true">tipo</th>
+      <th data-field="emitido" data-formatter="checkFormatter" data-sortable="true">emitido</th>
+      <th data-field="validade" data-formatter="dataFormatter" data-sortable="true">validade</th>
+      <th data-field="observacao"data-sortable="true">observacao</th>
+      <th data-formatter="editarFormatter" data-events="editarEvents"></th>
+    </thead>
+</table>
+<script>
+    function editarFormatter(value) {
+        return '<div id="viewBtn" class="btn-icon bg-info"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit"></div></div>'
+    }
+    window.editarEvents = {
+        'click #viewBtn': function (e, value, row, index) {
+            page.redirect('consultas/colaborador',{id:row['id']})
+        },
+    }
+</script>
+{%endblock%}

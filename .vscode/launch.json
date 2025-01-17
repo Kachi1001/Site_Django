@@ -16,7 +16,6 @@
             ],
             "django": true,
             "program": "${workspaceFolder}\\manage.py",
-            "autoReload": {"enable": false},
         }
     ]
 }

@@ -78,6 +78,12 @@
             </select>
         </div>
     </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">INDICAÇÃO:</label>
+            <input type="text" class="form-control" id="f_{{resource}}_indicacao">
+        </div>
+    </div>
 </div>
 <h5 class="mb-0 mt-1"><small>Dados de Endereço</small></h5>
 <hr class="mt-2">
@@ -99,6 +105,13 @@
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">CIDADE:</label>
             <input type="text" class="form-control form-control-sm" id="f_candidato_cidade">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ESTADO:</label>
+            <select class="form-select" id="f_candidato_estado">
+            </select>
         </div>
     </div>
 </div>
@@ -135,6 +148,13 @@
         <div class="card-body">
             <h5 class="card-title">Entrevista</h5>
             <button type="button" class="btn btn-primary btn-sm" onclick="abrirEdit('entrevista')">Abrir</button>
+        </div>
+    </div>
+    <div class="card text-center mb-3 me-3" style="width: auto;">
+        <div class="card-body">
+            <h5 class="card-title">Classificação</h5>
+            <button type="button" class="btn btn-secondary btn-sm"
+                onclick="abrirLanc('classificacao')">Visualizar</button>
         </div>
     </div>
 </div>

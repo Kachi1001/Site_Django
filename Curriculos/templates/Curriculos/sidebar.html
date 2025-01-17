@@ -12,13 +12,28 @@
                     Candidato
                 </button>
             </h2>
-            <div id="menu-candidato" class="accordion-collapse collapse" data-bs-parent="#accordion">
+            <div id="menu-candidato" class="accordion-collapse collapse show" data-bs-parent="#accordion">
                 <a href="{%url app|add:'_cadastros' 'candidato'%}"><i {{icon.form}}></i> Cadastrar</a>
-                <a href="#" onclick="abrirRegistro('profissoes')"><i {{icon.modal}}></i> Profissões</a>
                 <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Tabela</a>
             </div>
         </div>
         {%endif%}
+        {% if user|can:'Curriculos-cadastros' %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#menu-cadastros" aria-expanded="false">
+                    Cadastros
+                </button>
+            </h2>
+            <div id="menu-cadastros" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                <a href="#" onclick="abrirRegistro('profissoes')"><i {{icon.modal}}></i> Profissões</a>
+                <a href="#" onclick="abrirRegistro('setor')"><i {{icon.modal}}></i> Setor</a>
+                <a href="#" onclick="abrirRegistro('area_atuacao')"><i {{icon.modal}}></i> Área atuação</a>
+            </div>
+        </div>
+        {%endif%}
+
         {% if user|can:'Curriculos-consultas' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -28,10 +43,15 @@
                 </button>
             </h2>
             <div id="menu-consulta" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                <a href="{%url app|add:'_consultas' 'resumo'%}"><i {{icon.table}}></i> Resumo</a>
+                <a href="{%url app|add:'_consultas' 'pontuacao_experiencias'%}"><i {{icon.table}}></i> Classificação</a>
+                
+                {% comment %}
                 <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Consultas pendente</a>
                 <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Cargos</a>
                 <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Profissão candidatado</a>
                 <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Entrevistas</a>
+                {% endcomment %}
             </div>
         </div>
         {%endif%}

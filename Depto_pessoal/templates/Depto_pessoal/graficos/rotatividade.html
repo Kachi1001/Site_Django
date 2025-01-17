@@ -21,7 +21,7 @@
 {% block 'script' %}
 <script>
 function load(){  
-    apiRequest.get('grafico/ativos_rotatividade').then((data)=>{
+    apiRequest.get('grafico/{{resource}}').then((data)=>{
         const ctx = document.getElementById('ativos_rotatividade');
             new Chart(ctx, {
                 type: 'line',

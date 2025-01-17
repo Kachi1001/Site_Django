@@ -1,23 +1,3 @@
-const ocupacao = {
-    text: ["id", "data_inicio", "data_fim", "remuneracao"], //campos que pode ser preencher
-    select: ["equipe", "colaborador", "funcao"], // campos selecionavel
-    check: ["continuo"], // campos marcaveis
-};
-
-const colaborador = {
-    text: [
-        "nome",
-        "id",
-        "cpf",
-        "rg",
-        "nascimento",
-        "fone",
-        "avaliacao_descricao",
-    ], //campos que pode ser preencher
-    select: ["avaliacao"], // campos selecionavel
-    check: ["ativo", "avaliacao_recontratar"], // campos marcaveis
-};
-
 var loader;
 
 class BaseLoader {
@@ -29,7 +9,11 @@ class BaseLoader {
     }
     async open(id = undefined) {
         this.id = id;
-        this.inputs = await apiRequest.get(`resource/${this.object}`);
+        try {
+            this.inputs = await apiRequest.get(`resource/${this.object}`);
+        } catch(error) {
+            console.error('Erro ao baixar o resource',error)
+        } 
         loader = this;
 
         this[this.type](); // Registra ou atualiza conforme o tipo
@@ -107,13 +91,23 @@ class BaseLoader {
                             checkbox.disabled = true;
                             checkbox.checked = obj[key];
                             cell.appendChild(checkbox);
+                            if (this.object == "funcao") {     
+                                checkbox.disabled = false;
+                                checkbox.addEventListener("click", () => {
+                                    obj[key] = !obj[key]
+                                    apiRequest.update(this.object + "/" + obj.id, obj).then(() =>{
+                                        this.refresh();
+                                    })
+                                });
+                            }
                         } else {
                             
                             cell.textContent = obj[key];
                             if (isValidDate(obj[key])) {
                                 const data = new Date(obj[key]);
                                 cell.textContent =
-                                    data.toLocaleDateString("pt-BR");
+                                    data.toLocaleDateString("pt-BR", { timeZone: "UTC" });
+
                             }
                         }
                         row.appendChild(cell);
@@ -141,7 +135,8 @@ class BaseLoader {
                         this.object != "funcao" &&
                         this.object != "equipe" &&
                         this.object != "feriado" &&
-                        this.object != "tipoavaliacao"
+                        this.object != "tipoavaliacao" &&
+                        this.object != "insalubridade"
                     ) {
                         const editBtn = document.createElement("i");
                         editBtn.classList.add(
@@ -159,6 +154,8 @@ class BaseLoader {
                         });
                         extraBtn.appendChild(editBtn);
                     }
+                    
+                    
                     row.appendChild(extraBtn);
                     tbody.appendChild(row);
                 });
@@ -335,8 +332,19 @@ class Modal extends BaseLoader {
         }
     }
 
+    async import() {
+        this.modal.show();
+
+        $("#" + this.prefix + "submit")
+            .off()
+            .on("click", () => {
+                Submit.upload(this);
+            });
+    }
+
     refresh() {
         // page.refresh();
+        this.modal.hide();
     }
 }
 
@@ -427,7 +435,17 @@ Submit = {
                 loader.modal.hide();
                 loader.refresh();
             });
-    },
+    },  
+    upload: function (loader) {
+        console.log(loader);
+        const file = $('#' + loader.prefix + 'file')[0].files[0]
+        const formData = new FormData();
+        formData.append('file',file)
+        apiRequest.upload(loader.object +'_'+ loader.type , formData).then(() =>{
+            loader.modal.hide()
+            loader.refresh()
+        })
+    }
 };
 $(document).ready(async () => {
     try {

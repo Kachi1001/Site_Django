@@ -11,8 +11,8 @@ var loaded = {'resource':'','reload':'function'}
 $(document).ready(async () => {
     try {
         load();
-    } catch {
-        console.log("Tela sem inicializador");
+    } catch (error) {
+        console.error("Tela sem inicializador", error);
     }
 });
 
@@ -211,7 +211,7 @@ const modal = {
             case "register":
                 if (resource_fields.select != undefined) {
                     resource_fields.select.forEach(async (select) => {
-                        data = await apiRequest.get(`select/${select}`);
+                        let data = await apiRequest.get(`select/${select}`);
                         generics.populate.select(prefix + select, data);
                     });
                 }

@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'header'%}
+{%endblock%}
+{% block 'main' %}
+
+<h3 class="mb-2"><strong>Candidato</strong></h3>
+<div class="row align-items-center">
+    <div class="col-auto">
+        <h5 class="mb-0"><small>Cadastro geral</small></h5>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-success btn-sm" id="btn-contratar">Contratar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-danger btn-sm" id="btn-deletar">Deletar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm" id="btn-update">Editar</button></div>
+</div>
+<hr class="mt-2">
+
+<div class="row">
+    <input type="hidden" id="f_candidato_id" class="form-control">
+    <div class="col-4">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">NOME:</label>
+            <input type="text" id="f_candidato_nome" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CPF:</label>
+            <input type="number" id="f_candidato_cpf" class="form-control form-control-sm">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">RG:</label>
+            <input type="number" id="f_candidato_rg" class="form-control form-control-sm">
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">NASCIMENTO:</label>
+            <input type="date" id="f_candidato_nascimento" class="form-control form-control-sm">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">TELEFONE 1º:</label>
+            <input type="number" id="f_candidato_telefone" class="form-control form-control-sm">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">TELEFONE 2º:</label>
+            <input type="number" id="f_candidato_telefone2" class="form-control form-control-sm">
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <span class="input-group-text">FILHOS:</span>
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" id="f_candidato_filho">
+            </div>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CNH:</label>
+            <select class="form-select" id="f_candidato_cnh">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ESTADO CIVIL:</label>
+            <select class="form-select" id="f_candidato_estado_civil">
+            </select>
+        </div>
+    </div>
+</div>
+<h5 class="mb-0 mt-1"><small>Dados de Endereço</small></h5>
+<hr class="mt-2">
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ENDEREÇO:</label>
+            <input type="text" class="form-control form-control-sm" id="f_candidato_endereco">
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">BAIRRO:</label>
+            <input type="text" class="form-control form-control-sm" id="f_candidato_bairro">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CIDADE:</label>
+            <input type="text" class="form-control form-control-sm" id="f_candidato_cidade">
+        </div>
+    </div>
+</div>
+<h5 class="mb-0 mt-1"><small>Informações</small></h5>
+<hr class="mt-2">
+<div class="row justify-content-center">
+    <div class="card text-center mb-3 me-3" style="width: auto;">
+        <div class="card-body">
+            <h5 class="card-title">Formações</h5>
+            <button type="button" class="btn btn-secondary btn-sm"
+                onclick="abrirLanc('escolaridade')">Visualizar</button>
+        </div>
+    </div>
+    <div class="card text-center mb-3 me-3" style="width: auto;">
+        <div class="card-body">
+            <h5 class="card-title">Experiências</h5>
+            <button type="button" class="btn btn-secondary btn-sm"
+                onclick="abrirLanc('experiencia')">Visualizar</button>
+        </div>
+    </div>
+    <div class="card text-center mb-3 me-3" style="width: auto;">
+        <div class="card-body">
+            <h5 class="card-title">Questionário</h5>
+            <button type="button" class="btn btn-primary btn-sm" onclick="abrirEdit('questionario')">Abrir</button>
+        </div>
+    </div>
+    <div class="card text-center mb-3 me-3" style="width: auto;">
+        <div class="card-body">
+            <h5 class="card-title">Percepções</h5>
+            <button type="button" class="btn btn-primary btn-sm" onclick="abrirEdit('percepcao')">Abrir</button>
+        </div>
+    </div>
+    <div class="card text-center mb-3 me-3" style="width: auto;">
+        <div class="card-body">
+            <h5 class="card-title">Entrevista</h5>
+            <button type="button" class="btn btn-primary btn-sm" onclick="abrirEdit('entrevista')">Abrir</button>
+        </div>
+    </div>
+</div>
+<div class="row align-items-center">
+    <div class="col-auto">
+        <h5 class="mb-0 mt-1"><small>Anexos</small></h5>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-success btn-sm" id="btn-adicioar">Adicionar</button>
+    </div>
+</div>
+<hr class="mt-2">
+<div class="row justify-content-center"  id="f_anexos_list">
+    
+</div>
+<script>
+    var candidato
+
+    function carregarDados() {
+        let c = new Form('candidato', 'view')
+        c.open(candidato)
+        
+        let f = new Form('anexos', 'files')
+        f.open(candidato)
+    }
+    function load() {
+        candidato = page.getParam('id')
+        carregarDados()
+    }
+    function refresh() {
+        carregarDados()
+        loader.modal.hide()
+    }
+    $('#btn-update').click(function () {
+        let obj = new Modal('candidato', 'update')
+        obj.refresh = refresh
+        obj.open(candidato)
+    })
+
+    $('#btn-deletar').click(function () {
+        toasts("warning", {
+            method: "Em desenvolvimento!",
+            message: "Logo estará disponível",
+        });
+    })
+    $('#btn-contratar').click(function () {
+        toasts("warning", {
+            method: "Em desenvolvimento!",
+            message: "Logo estará disponível",
+        });
+    })
+    $('#btn-adicioar').click(function () {
+        let load = new Modal('anexos','envio')
+        load.refresh = refresh
+        load.open(candidato)
+        $('#' + load.prefix + 'candidato').val(candidato)
+    })
+    function abrirLanc(modal) {
+        let registro = new Modal(modal, 'lanc')
+        registro.refresh = () => {registro.open(candidato)}
+        registro.open(candidato)
+        $('#' + registro.prefix + 'candidato').val(candidato)
+    }
+    function abrirEdit(modal) {
+        let registro = new Modal(modal, 'update')
+        registro.refresh = () => {registro.open(candidato)}
+        registro.open(candidato)
+    }
+
+    function abrirTabela(resource) {
+        let modal = new Modal(resource, 'tabela')
+        modal.refresh = () => {modal.open(candidato)}
+        modal.open(colab)
+    }
+    function abrirFile(id) {
+        let modal = new Modal('anexos' ,'file_view')
+        modal.refresh = () => {modal.modal.hide(); load()}
+
+        modal.open(id)
+    }
+</script>
+{% endblock %}

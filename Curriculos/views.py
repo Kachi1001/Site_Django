@@ -22,8 +22,10 @@ def tabelas(request, resource):
 @login_required
 @has_permission_decorator(app)
 def consultas(request, resource):
-    
-    return render(request, f"{app}/consultas/{resource}.html", {'table_height': '600','resource':resource}) 
+    try:
+        return render(request, f"{app}/consultas/{resource}.html", {'table_height': '600','resource':resource})
+    except:
+        return render(request, f"{app}/consultas/generic.html", {'table_height': '600','resource':resource})
 
 @login_required
 @has_permission_decorator(app)

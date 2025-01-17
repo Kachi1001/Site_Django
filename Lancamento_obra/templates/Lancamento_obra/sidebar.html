@@ -15,8 +15,8 @@
                 <a href="{%url app|add:'-cadastros' 'colaborador'%}"><i {{icon.form}}></i> Colaborador</a>
                 <a href="{%url app|add:'-cadastros' 'obra'%}"><i {{icon.form}}></i> Obra</a>
                 <a href="#" onclick="modal.open('register', 'funcao')"><i {{icon.modal}}></i> Função</a>
-                <a href="#" onclick="modal.open('register', 'supervisor')"><i {{icon.modal}}></i>
-                    Supervisor</a>
+                <a href="#" onclick="modal.open('register', 'supervisor')"><i {{icon.modal}}></i> Supervisor</a>
+                <a href="#" onclick="modal.open('register', 'valor_hora')"><i {{icon.modal}}></i> Valor hora</a>
             </div>
         </div>
         {%endif%}
@@ -62,13 +62,14 @@
             </h2>
             <div id="menu-consultas" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <a href="{%url app|add:'-consultas' 'incompletos'%}"><i {{icon.table}}></i> Incompletos</a>
-                <a href="{%url app|add:'-consultas' 'hora_mes'%}"><i {{icon.table}}></i> Horas por mês</a>
+                <a href="{%url app|add:'-consultas' 'horas_mes'%}"><i {{icon.table}}></i> Horas por mês</a>
                 <a href="{%url app|add:'-consultas' 'efetividade'%}"><i {{icon.table}}></i> Efetividade</a>
-                <a href="{%url app|add:'-consultas' 'descontosresumo'%}"><i {{icon.table}}></i> Descontos</a>
-                <a href="{%url app|add:'-consultas' 'diarias'%}"><i {{icon.table}}></i> Diárias</a>
+                <a href="{%url app|add:'-consultas' 'descontos_resumo'%}"><i {{icon.table}}></i> Descontos</a>
+                <a href="{%url app|add:'-consultas' 'diarias_ok'%}"><i {{icon.table}}></i> Diárias</a>
                 <a href="{%url app|add:'-consultas' 'tecnicon'%}"><i {{icon.table}}></i> Fechados</a>
                 <a href="{%url app|add:'-consultas' 'alocacoes'%}"><i {{icon.table}}></i> Alocações</a>
                 <a href="{%url app|add:'-consultas' 'indicadores'%}"><i {{icon.table}}></i> Indicadores</a>
+                <a href="{%url app|add:'-consultas' 'fechamento'%}"><i {{icon.table}}></i> Fechamento</a>
                 <a href="#" onclick="modal.open('table', 'dia')"><i {{icon.modal}}></i> Feriado</a>
             </div>
         </div>
