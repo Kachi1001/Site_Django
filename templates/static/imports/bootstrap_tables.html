@@ -82,6 +82,9 @@
         } else { return ''}
     }
     function intervalFormatter(value) {
+        if (!value) {
+            return '00:00:00'
+        } 
         const regex = /P(?:(\d+)D)?T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/;
         const matches = value.match(regex);
         
