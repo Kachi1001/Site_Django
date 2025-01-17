@@ -28,8 +28,8 @@
             </h2>
             <div id="menu-cadastros" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <a href="#" onclick="abrirRegistro('profissoes')"><i {{icon.modal}}></i> Profissões</a>
-                <a href="#" onclick="abrirRegistro('grupo')"><i {{icon.modal}}></i> Grupo</a>
-                <a href="#" onclick="abrirRegistro('area_atuacao')"><i {{icon.modal}}></i> Area atuação</a>
+                <a href="#" onclick="abrirRegistro('setor')"><i {{icon.modal}}></i> Setor</a>
+                <a href="#" onclick="abrirRegistro('area_atuacao')"><i {{icon.modal}}></i> Área atuação</a>
             </div>
         </div>
         {%endif%}
@@ -44,6 +44,7 @@
             </h2>
             <div id="menu-consulta" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <a href="{%url app|add:'_consultas' 'resumo'%}"><i {{icon.table}}></i> Resumo</a>
+                <a href="{%url app|add:'_consultas' 'pontuacao_experiencias'%}"><i {{icon.table}}></i> Classificação</a>
                 
                 {% comment %}
                 <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i> Consultas pendente</a>

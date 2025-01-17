@@ -435,7 +435,7 @@ Submit = {
                 loader.modal.hide();
                 loader.refresh();
             });
-    },
+    },  
     upload: function (loader) {
         console.log(loader);
         const file = $('#' + loader.prefix + 'file')[0].files[0]

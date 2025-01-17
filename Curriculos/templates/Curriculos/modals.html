@@ -28,7 +28,7 @@
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 nowrap">
                                 <label class="input-group-text">Categoria:</label>
-                                <select class="form-select form-control-sm" id="m_register-profissoes_grupo">
+                                <select class="form-select form-control-sm" id="m_register-profissoes_setor">
                                 </select>
                             </div>
                         </div>
@@ -48,23 +48,23 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_register-grupo" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_register-setor" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Cadastro de Grupo</h1>
+                    <h1 class="modal-title fs-5">Cadastro de Setor</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="input-group input-group-sm mb-2 nowrap ">
                         <label class="input-group-text">Nome:</label>
-                        <input type="text" id="m_register-grupo_grupo" class="form-control form-control-sm">
+                        <input type="text" id="m_register-setor_setor" class="form-control form-control-sm">
                     </div>
                     <button type="button" class="btn btn-primary mb-2" btn-sm
-                        id="m_register-grupo_submit">Cadastrar</button>
+                        id="m_register-setor_submit">Cadastrar</button>
                     <div class="modal_list">
                         <table class="table table-hover table-bordered table-striped table-sm"
-                            id="m_register-grupo_table">
+                            id="m_register-setor_table">
                             <thead>
                                 <tr></tr>
                             </thead>
@@ -79,12 +79,12 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Cadastro de area de atuação</h1>
+                    <h1 class="modal-title fs-5">Cadastro de área de atuação</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="input-group input-group-sm mb-2 nowrap ">
-                        <label class="input-group-text">Area:</label>
+                        <label class="input-group-text">Área:</label>
                         <input type="text" id="m_register-area_atuacao_area" class="form-control form-control-sm">
                     </div>
                     <button type="button" class="btn btn-primary mb-2 btn-sm"
@@ -196,7 +196,8 @@
                         <div class="col-4">
                             <div class="input-group input-group-sm nowrap">
                                 <label class="input-group-text">TEMPO:</label>
-                                <input type="number" class="form-control form-control-sm" id="m_lanc-experiencia_tempo_anos">
+                                <input type="number" class="form-control form-control-sm"
+                                    id="m_lanc-experiencia_tempo_anos">
                                 <label class="input-group-text">ANOS</label>
                             </div>
                         </div>
@@ -228,13 +229,27 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" id="m_lanc-classificacao_candidato">
-                    <div class="input-group input-group-sm mb-2 nowrap">
-                        <label class="input-group-text">AREA DE ATUAÇÃO:</label>
-                        <select id="m_lanc-classificacao_area_atuacao" class="form-select form-control-sm"></select>
-                    </div>
-                    <div class="input-group input-group-sm mb-2 nowrap">
-                        <label class="input-group-text">GRUPO:</label>
-                        <select id="m_lanc-classificacao_grupo" class="form-select form-control-sm"></select>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group input-group-sm mb-2 nowrap">
+                                <label class="input-group-text">AREA DE ATUAÇÃO:</label>
+                                <select id="m_lanc-classificacao_area_atuacao"
+                                    class="form-select form-control-sm"></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group-sm mb-2 nowrap">
+                                <label class="input-group-text">SETOR:</label>
+                                <select id="m_lanc-classificacao_setor" class="form-select form-control-sm"></select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group input-group-sm nowrap">
+                                <label class="input-group-text">PONTOS:</label>
+                                <input type="number" id="m_lanc-classificacao_pontos"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
                     </div>
                     <button type="button" class="btn btn-sm btn-primary mb-2"
                         id="m_lanc-classificacao_submit">ADICIONAR</button>
@@ -368,10 +383,10 @@
                         <label class="input-group-text">PERCEPÇÕES:</label>
                         <textarea type="text" id="m_update-percepcao_percepcao" class="form-control"></textarea>
                     </div>
-                        <div class="input-group input-group-sm mb-2 flex-nowrap">
-                            <label class="input-group-text">CONSULTA / PESQUISA RH:</label>
-                            <textarea type="text" id="m_update-percepcao_consulta" class="form-control"></textarea>
-                        </div>
+                    <div class="input-group input-group-sm mb-2 flex-nowrap">
+                        <label class="input-group-text">CONSULTA / PESQUISA RH:</label>
+                        <textarea type="text" id="m_update-percepcao_consulta" class="form-control"></textarea>
+                    </div>
                     <div class="row">
                         <div class="col">
                             <div class="input-group input-group-sm mb-2 nowrap">
@@ -528,7 +543,7 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">INDICAÇÃO:</label>
-                                <input class="form-control" list="m_update-candidato_indicacao" >
+                                <input class="form-control" list="m_update-candidato_indicacao">
                             </div>
                             <datalist id="m_update-candidato_indicacao"></datalist>
                         </div>
