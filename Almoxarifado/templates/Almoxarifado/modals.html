@@ -16,7 +16,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Cadastro de produto</h1>
+                    <h1 class="modal-title fs-5">Produtos</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -31,13 +31,105 @@
                     <div class="input-group input-group-sm mb-2 nowrap ">
                         <label class="input-group-text">Durabilidade:</label>
                         <input type="number" id="m_register-produto_durabilidade" class="form-control form-control-sm">
-                        <label class="input-group-text">Anos</label>
+                        <label class="input-group-text">Dias</label>
                     </div>
                     <button type="button" class="btn btn-primary mb-2 btn-sm"
                         id="m_register-produto_submit">Cadastrar</button>
                     <div class="modal_list">
                         <table class="table table-hover table-bordered table-striped table-sm"
                             id="m_register-produto_table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_register-numeracao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Numeração</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" id="m_register-numeracao_id" value="-1">
+                        <div class="col-12">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">NOME:</label>
+                                <select class="form-select" id="m_register-numeracao_colaborador">
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-6">
+
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">BOTA:</label>
+                                <input type="number" id="m_register-numeracao_bota"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-6">
+
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">BOTINA:</label>
+                                <input type="number" id="m_register-numeracao_botina"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">LUVA:</label>
+                                <select class="form-select" id="m_register-numeracao_luva">
+                                    <option>PP</option>
+                                    <option>P</option>
+                                    <option>M</option>
+                                    <option>G</option>
+                                    <option>GG</option>
+                                    <option>XG</option>
+                                    <option>U</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">CAMISA:</label>
+                                <select class="form-select" id="m_register-numeracao_camisa">
+                                    <option>PP</option>
+                                    <option>P</option>
+                                    <option>M</option>
+                                    <option>G</option>
+                                    <option>GG</option>
+                                    <option>XG</option>
+                                    <option>U</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">CALÇA:</label>
+                                <select class="form-select" id="m_register-numeracao_calca">
+                                    <option>PP</option>
+                                    <option>P</option>
+                                    <option>M</option>
+                                    <option>G</option>
+                                    <option>GG</option>
+                                    <option>XG</option>
+                                    <option>U</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2 btn-sm"
+                        id="m_register-numeracao_submit">Cadastrar</button>
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_register-numeracao_table">
                             <thead>
                                 <tr></tr>
                             </thead>
@@ -269,10 +361,10 @@
                         <label class="input-group-text">PERCEPÇÕES:</label>
                         <textarea type="text" id="m_update-percepcao_percepcao" class="form-control"></textarea>
                     </div>
-                        <div class="input-group input-group-sm mb-2 flex-nowrap">
-                            <label class="input-group-text">CONSULTA / PESQUISA RH:</label>
-                            <textarea type="text" id="m_update-percepcao_consulta" class="form-control"></textarea>
-                        </div>
+                    <div class="input-group input-group-sm mb-2 flex-nowrap">
+                        <label class="input-group-text">CONSULTA / PESQUISA RH:</label>
+                        <textarea type="text" id="m_update-percepcao_consulta" class="form-control"></textarea>
+                    </div>
                     <div class="row">
                         <div class="col">
                             <div class="input-group input-group-sm mb-2 nowrap">

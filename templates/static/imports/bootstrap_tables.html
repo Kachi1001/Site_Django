@@ -89,7 +89,7 @@
         const matches = value.match(regex);
         
         if (!matches) {
-            throw new Error("Formato inválido");
+            return "Formato inválido";
         }
     
         const days = parseInt(matches[1] || 0, 10);

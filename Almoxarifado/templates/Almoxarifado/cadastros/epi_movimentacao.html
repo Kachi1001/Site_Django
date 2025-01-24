@@ -29,8 +29,12 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">COLABORADOR:</label>
-            <select class="form-select" id="f_{{resource}}_colaborador">
+            <select class="form-select" id="f_{{resource}}_colaborador" onchange="getNumeracao()">
             </select>
+            <label class="input-group-text" id="numeracao" data-bs-toggle="tooltip" data-bs-placement="right"
+                data-bs-html="true" data-bs-title="sem">
+                Numeração
+            </label>
         </div>
     </div>
     <div class="col-auto">
@@ -55,21 +59,6 @@
             <input type="date" id="f_{{resource}}_data_entrega" class="form-control" value="{{hojeJS}}">
         </div>
     </div>
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">DATA BAIXA:</label>
-            <input type="date" id="f_{{resource}}_data_baixa" class="form-control">
-        </div>
-    </div>
-    <div class="col-auto">
-
-        <div class="input-group mb-2 nowrap input-group-sm">
-            <span class="input-group-text">BAIXADO?</span>
-            <div class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" id="f_{{resource}}_baixado">
-            </div>
-        </div>
-    </div>
 
 
 
@@ -80,20 +69,53 @@
     <script>
         var epis = {}
         var loader
+    
+        function getNumeracao() {
+            apiRequest.get('numeracao/' + $('#f_{{resource}}_colaborador').val()).then((response) => {
+                var keys = Object.keys(response)
+                keys.splice(keys.indexOf('colaborador'), 1);
+                keys.splice(keys.indexOf('id'), 1);
+                var text = ''
+                keys.forEach((key) => {
+                    if (key == 'calca') {text += 'Calça: ' + response[key] + '<br>';}
+                    else {text += key[0].toUpperCase() + key.substring(1) + ': ' + response[key] + '<br>'}
+                    
+                })
+                const tooltip = bootstrap.Tooltip.getInstance('#numeracao') // Returns a Bootstrap tooltip instance
+
+                // setContent example
+                tooltip.setContent({ '.tooltip-inner': text })
+            }).catch((err) => {
+                const tooltip = bootstrap.Tooltip.getInstance('#numeracao') // Returns a Bootstrap tooltip instance
+
+                // setContent example
+                tooltip.setContent({ '.tooltip-inner': 'Não cadastrado' })
+            });
+        }
         function load() {
             loader = new Form('{{resource}}', 'register')
             loader.open().then(() => {
                 apiRequest.get('select/epi_cadastro').then((result) => {
                     epis = result
-                    setTimeout(carregarFiltrado, 500)
+                    setTimeout(pos_load, 500);
+
                 })
+
             })
+        }
+        function pos_load() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('produto')) {
+                $('#f_{{resource}}_produto').val(urlParams.get("produto"))
+                $('#f_{{resource}}_colaborador').val(urlParams.get("colaborador"))
+            }
+            carregarFiltrado()
+            getNumeracao()
         }
         async function carregarFiltrado() {
             produto = document.getElementById('f_{{resource}}_produto').value
             result = []
             for (const item in epis) {
-                console.log(produto)
                 if (epis[item]['produto'] == produto) {
                     result.push(epis[item])
                 }

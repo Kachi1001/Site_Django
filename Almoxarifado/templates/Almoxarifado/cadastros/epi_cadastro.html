@@ -6,6 +6,11 @@
 {% block 'main' %}
 <h5>DADOS CADASTRAIS</h5>
 <div class="row">
+    <div class="auto">
+
+        
+        
+    </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">PRODUTO:</label>
@@ -35,15 +40,17 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">TAMANHO:</label>
-            <select class="form-select" id="f_{{resource}}_tamanho">
-                <option>PP</option>
-                <option>P</option>
-                <option>M</option>
-                <option>G</option>
-                <option>GG</option>
-                <option>XG</option>
-            </select>
+            <input class="form-control" list="f_{{resource}}_tamanho" >
         </div>
+        <datalist id="f_{{resource}}_tamanho">
+            <option>PP</option>
+            <option>P</option>
+            <option>M</option>
+            <option>G</option>
+            <option>GG</option>
+            <option>XG</option>
+            <option>U</option>
+        </datalist>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
@@ -65,6 +72,7 @@
         loader.open()
         $("#f_candidato_nome").focus()
     }
+    
 </script>
 {% endblock %}
 

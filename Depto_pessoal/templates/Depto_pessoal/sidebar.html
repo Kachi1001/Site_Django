@@ -36,11 +36,18 @@
             </div>
         </div>
         {%endif%}
-        {% if user|can:'Depto_pessoal-integracao' %}
+        {% if user|can:'Depto_pessoal-tabelas' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
-                <a href="{%url app|add:'_consultas' 'epi_nr'%}" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px"><i {{icon.table}}></i> Integrações</a>
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#menu-tabelas" aria-expanded="false">
+                    Tabelas
+                </button>
             </h2>
+            <div id="menu-tabelas" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                <a href="{%url app|add:'_consultas' 'epi_nr'%}"><i {{icon.table}}></i> Integrações</a>
+                <a href="{%url app|add:'_tabelas' 'fechamentomensal'%}"><i {{icon.table}}></i> Fechamento</a>
+            </div>
         </div>
         {%endif%}
     {% if user|can:'Depto_pessoal-avaliacao' %}
@@ -67,16 +74,8 @@
             </h2>
             <div id="menu-grafico" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <a href="{%url app|add:'_graficos' 'rotatividade'%}"><i {{icon.table}}></i> Rotatividade</a>
+                <a href="{%url app|add:'_graficos' 'fechamentomensal'%}"><i {{icon.table}}></i> Fechamento</a>
             </div>
-        </div>
-        {%endif%}
-        {% if user|can:'Depto_pessoal-lembrete' %}
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-
-                <a href="{%url app|add:'_consultas' 'app'%}" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px"><i {{icon.table}}></i> Painel</a>
-            </h2>
-
         </div>
         {%endif%}
         {% if user|can:'Depto_pessoal-feriado' %}

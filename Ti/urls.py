@@ -8,5 +8,6 @@ urlpatterns = [
     path('estoque/<str:subpage>', views.estoque, name='estoque'),
     path('servicos/<str:subpage>', views.servicos, name='servicos'),
     path('app', views.app_menu, name=f'{views.app}_app'),
+    path("graficos/<str:resource>", views.graficos, name=views.app+"_graficos"),
     
 ]  

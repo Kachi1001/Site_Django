@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+
+
+{%block 'main'%}
+{%include 'static/imports/graficos.html'%} <!-- Graficos -->
+<div class="row">
+    <div class="col-4">
+        <canvas id="grafico_1"></canvas>
+    </div>
+    <div class="col-8">
+        <canvas id="grafico_2"></canvas>    
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-8">
+        <canvas id="grafico_3"></canvas>    
+    </div>
+    <div class="col-4">
+        <canvas id="grafico_4"></canvas>    
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-4">
+        <canvas id="grafico_5"></canvas>    
+    </div>
+</div>
+{%endblock%}
+
+
+{%block 'script'%}
+<script>
+    function load() {
+        apiRequest.get('log').then((data) => {
+            var values = {}
+            for (const key in data) {
+                if (values[data[key].action] == undefined) { values[data[key].action] = 0 }
+                values[data[key].action] += 1
+            }
+
+            new Chart(document.getElementById('grafico_1'), {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(values),
+                    datasets: [{
+                        data: Object.values(values),
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Total de interação ate hoje'
+                        }
+                    },
+                }
+            })
+
+            values = {}
+            for (const key in data) {
+                let date = data[key].date.split('T')[0]
+                if (values[date] == undefined) { values[date] = { 'POST': 0, 'PATCH': 0, 'DELETE': 0 } }
+                values[date][data[key].action] += 1
+            }
+            seila = []
+            for (const date in values) {
+                seila.push({ 'date': date, 'post': values[date]['POST'], 'delete': values[date]['DELETE'], 'patch': values[date]['PATCH'] })
+            }
+
+            new Chart(document.getElementById('grafico_2'), {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'POST', 
+                        data: seila,
+                        parsing: {
+                            yAxisKey: 'post'
+                        },
+                        type: 'bar',
+
+                        backgroundColor: color.green80,    
+                    },{
+                        label: 'PATCH', 
+                        data: seila,
+                        parsing: {
+                            yAxisKey: 'patch'
+                        },
+                        type: 'bar',
+
+                        backgroundColor: color.orange80,    
+                    },{
+                        label: 'DELETE', 
+                        data: seila,
+                        parsing: {
+                            yAxisKey: 'delete'
+                        },
+                        type: 'bar',
+
+                        backgroundColor: color.red80,
+
+                      }]
+                  },
+                options: {
+                    parsing: {
+                        xAxisKey: 'date',
+                      },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Interação por data'
+                        }
+                    },
+                }
+        
+            });
+
+            values = {}
+            for (const key in data) {
+                let user = data[key].user_name
+                if (values[user] == undefined) { values[user] = { 'POST': 0, 'PATCH': 0, 'DELETE': 0 } }
+                values[user][data[key].action] += 1
+            }
+            seila = []
+            for (const key in values) {
+                seila.push({ 'user': key, 'post': values[key]['POST'], 'delete': values[key]['DELETE'], 'patch': values[key]['PATCH'] })
+            }
+            new Chart(document.getElementById('grafico_3'), {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'POST', 
+                        data: seila,
+                        parsing: {
+                            yAxisKey: 'post'
+                        },
+                        type: 'bar',
+
+                        backgroundColor: color.green80,    
+                    },{
+                        label: 'PATCH', 
+                        data: seila,
+                        parsing: {
+                            yAxisKey: 'patch'
+                        },
+                        type: 'bar',
+
+                        backgroundColor: color.orange80,    
+                    },{
+                        label: 'DELETE', 
+                        data: seila,
+                        parsing: {
+                            yAxisKey: 'delete'
+                        },
+                        type: 'bar',
+
+                        backgroundColor: color.red80,
+
+                      }]
+                  },
+                options: {
+                    parsing: {
+                        xAxisKey: 'user',
+                      },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Interação por usuário'
+                        }
+                    },
+                }
+        
+            });
+            values = {}
+            for (const key in data) {
+                let app = data[key].app
+                if (values[app] == undefined) { values[app] = 0 }
+                values[app] += 1
+            }
+            new Chart(document.getElementById('grafico_4'), {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(values),
+                    datasets: [{
+                        data: Object.values(values),
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Total de interação em cada APP'
+                        }
+                    },
+                }
+            })
+            values = {}
+            for (const key in data) {
+                let app = data[key].status
+                if (values[app] == undefined) { values[app] = 0 }
+                values[app] += 1
+            }
+            new Chart(document.getElementById('grafico_5'), {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(values),
+                    datasets: [{
+                        data: Object.values(values),
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Total de interação'
+                        }
+                    },
+                }
+            })
+        }).catch((err) => {
+            console.error('Erro:', err);
+            alert('Erro ao carregar o grafico.');
+
+        });
+    }
+</script>
+{%endblock%}

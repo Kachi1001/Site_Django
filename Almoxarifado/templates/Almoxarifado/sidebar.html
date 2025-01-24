@@ -8,7 +8,16 @@
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <a href="#" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px" onclick="abrirRegistro('produto')">
-                    Produtos
+                    <i {{icon.modal}}></i> Produtos
+                </a>
+            </h2>
+        </div>
+        {%endif%}
+        {% if user|can:'Almoxarifado-numeracao' %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <a href="#" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px" onclick="abrirRegistro('numeracao')">
+                    <i {{icon.modal}}></i> Numeração
                 </a>
             </h2>
         </div>

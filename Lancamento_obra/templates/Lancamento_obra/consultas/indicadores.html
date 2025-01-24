@@ -20,12 +20,7 @@
     <div class="col-6" style="height: 500px;">
             <div class=" input-group mb-2 input-group-sm" >
                 <label class="input-group-text" for="form_colaborador_funcao">Competência:</label>
-                <select class="form-select" id="competencia" >
-                    <option >9/2024</option>
-                    <option>10/2024</option>
-                    <option>11/2024</option>
-                    <option selected>12/2024</option>
-                </select>
+                <input type="month" id="competencia" class='form-control' value="2024-10">
             </div>
     
         <canvas id="grafico_pizza" style="height: 400px;"></canvas>
@@ -41,6 +36,9 @@
             type: 'pie'
         })
         function update_graph(comp){
+            comp = comp.split('-')
+            comp = parseInt(comp[1]) + '/' + comp[0]
+            console.log(comp)
             var rows = {'labels': [], 'data':[]}
             datas.forEach((row)=>{
                 if (row['competencia'] == comp){

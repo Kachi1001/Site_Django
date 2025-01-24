@@ -66,7 +66,6 @@ class BaseLoader {
             tbody.innerHTML = "";
             if (response.length > 0) {
                 var keys = Object.keys(response[0]);
-                console.log(keys);
                 not.forEach((key) => {
                     let index = keys.indexOf(key);
                     if (index > -1) {
@@ -178,7 +177,7 @@ class Modal extends BaseLoader {
             .click(function () {
                 loader.refresh = async () => {
                     const table = await apiRequest.get(loader.object);
-                    loader.populateTable(table, undefined, ["id"]);
+                    loader.populateTable(table, "delete", ["id"]);
                 };
                 Submit.post(loader);
             });

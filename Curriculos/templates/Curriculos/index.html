@@ -1,9 +1,46 @@
 {% extends 'base.html' %}
 
 {%block 'header'%}
-  <h2>{{app_name}}</h2>
+{%include 'static/imports/graficos.html'%} <!-- Graficos -->
+
+<h2>{{app_name}}</h2>
 {%endblock%}
 
 {% block 'main' %}
+<div class="row">
+  <div class="col-3 justify-content-center">
+    <canvas id="grafico_1"></canvas>
+    <script>
+      function load() {
+        apiRequest.get('entrevista').then((data) => {
+          var values = {}
+          for (const key in data) {
+            if (values[data[key].banco_talentos] == undefined) { values[data[key].banco_talentos] = 0 }
+            values[data[key].banco_talentos] += 1
+          }
+          console.log(values)
+          const ctx = document.getElementById('grafico_1');
+          new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: Object.keys(values),
+              datasets: [{
+                data: Object.values(values),
+              }]
+            },
+            options: {
+              plugins: {
+                title: {
+                  display: true,
+                  text: 'Gráfico da situação da entrevista'
+                }
+              },
+            }
+
+          });
+        })
+      }
+    </script>
+  </div>
+</div>
 {% endblock %}
-  

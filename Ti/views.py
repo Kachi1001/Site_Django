@@ -1,5 +1,7 @@
-from pickletools import read_uint1
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from rolepermissions.decorators import has_permission_decorator
+
 from .models import *
 app = __name__.split('.')[0]
 
@@ -21,3 +23,8 @@ def servicos(request, subpage):
 
 def app_menu(request):
     return render(request, f'{app}/app.html')
+
+@login_required
+@has_permission_decorator(f'{app}-graficos')
+def graficos(request, resource):
+    return render(request, f"{app}/graficos/{resource}.html",{'resource':resource})

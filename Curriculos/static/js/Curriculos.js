@@ -178,7 +178,7 @@ class Modal extends BaseLoader {
             .click(function () {
                 loader.refresh = async () => {
                     const table = await apiRequest.get(loader.object);
-                    loader.populateTable(table, undefined, ["id"]);
+                    loader.populateTable(table, "delete", ["id"]);
                 };
                 Submit.post(loader);
             });

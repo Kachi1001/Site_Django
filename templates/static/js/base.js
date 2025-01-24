@@ -1,5 +1,11 @@
 const True = true;
 const False = false;
+
+$(document).ready(() =>{
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+}) 
+    
 const date = {
     adicionarZero: function (value) {
         if (value <= 9) return "0" + value;
