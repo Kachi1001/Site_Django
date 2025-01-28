@@ -138,6 +138,7 @@ class BaseLoader {
                             );
 
                             editBtn.addEventListener("click", () => {
+                                this.modal.toggle();
                                 let modal = new Modal(this.object, "update");
                                 modal.refresh = this.refresh;
                                 modal.open(obj.id);
@@ -190,9 +191,9 @@ class Modal extends BaseLoader {
         try {
             const data = await apiRequest.get(this.object + "/" + this.id);
             this.populateData(data).then(() => {
-                if (loader.last.modal.hide) {
-                    loader.last.modal.hide();
+                if (loader.last.modal) {
                     loader.myModal.addEventListener('hidden.bs.modal', event => {
+                        this.modal.dispose()
                         const candidato = page.getParam("id");
                         let registro = new Modal(loader.last.object, "lanc");
                         registro.refresh = () => {
