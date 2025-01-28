@@ -9,19 +9,12 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">COLABORADOR:</label>
-            <select class="form-select" id="f_{{resource}}_colaborador" onchange="colab_chance()">
+            <select class="form-select" id="f_{{resource}}_colaborador" onchange="getNumeracao()">
             </select>
             <label class="input-group-text" id="numeracao" data-bs-toggle="tooltip" data-bs-placement="right"
                 data-bs-html="true" data-bs-title="sem">
                 Numeração
             </label>
-        </div>
-    </div>
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">FICHA:</label>
-            <select class="form-select" id="f_{{resource}}_ficha">
-            </select>
         </div>
     </div>
     <div class="col-auto">
@@ -86,25 +79,9 @@
     <script>
         var epis = {}
         var loader
-        var fichas = {}
-        
-        function colab_chance() {
-            const ficha_field = $('#f_{{resource}}_ficha');
-            const colab = $('#f_{{resource}}_colaborador').val()
-            try {
-                ficha_field.empty();
-                fichas.forEach((option) => {
-                    if (option.colaborador == colab) {
-                        let opt = document.createElement("option");
-                        opt.value = option.value || option.id;
-                        opt.text = option.text || opt.value;
-                        ficha_field.append(opt);
-                    }
-                });
-            } catch (error) {
-                console.error(error);
-            }
-            apiRequest.get('numeracao/' + colab).then((response) => {
+
+        function getNumeracao() {
+            apiRequest.get('numeracao/' + $('#f_{{resource}}_colaborador').val()).then((response) => {
                 var keys = Object.keys(response)
                 keys.splice(keys.indexOf('colaborador'), 1);
                 keys.splice(keys.indexOf('id'), 1);
@@ -124,10 +101,8 @@
                 // setContent example
                 tooltip.setContent({ '.tooltip-inner': 'Não cadastrado' })
             });
-            
         }
-        async function load() {
-            fichas = await apiRequest.get('select/ficha')
+        function load() {
             loader = new Form('{{resource}}', 'register')
             loader.open().then(() => {
                 apiRequest.get('select/epi_cadastro').then((result) => {
@@ -135,7 +110,18 @@
                     setTimeout(pos_load, 500);
 
                 })
+
             })
+        }
+        function pos_load() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('produto')) {
+                $('#f_{{resource}}_produto').val(urlParams.get("produto"))
+                $('#f_{{resource}}_colaborador').val(urlParams.get("colaborador"))
+                $('#f_{{resource}}_devolvido').val(urlParams.get("devolvido"))
+            }
+            carregarFiltrado()
+            getNumeracao()
         }
         async function carregarFiltrado() {
             produto = document.getElementById('f_{{resource}}_produto').value
@@ -146,28 +132,6 @@
                 }
             }
             loader.populateSelect(result, 'epi_cadastro')
-        }
-        async function getFicha(carregado) {
-            field = document.getElementById('f_{{resource}}_ficha')
-            if (carregado) {
-
-            }
-            for (const item in epis) {
-                if (epis[item]['produto'] == produto) {
-                    result.push(epis[item])
-                }
-            }
-            loader.populateSelect(result, 'epi_cadastro')
-        }
-        function pos_load() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('produto')) {
-                $('#f_{{resource}}_produto').val(urlParams.get("produto"))
-                $('#f_{{resource}}_colaborador').val(urlParams.get("colaborador"))
-                $('#f_{{resource}}_devolvido').val(urlParams.get("devolvido"))
-            }
-            colab_chance()
-            carregarFiltrado()
         }
     </script>
     {% endblock %}

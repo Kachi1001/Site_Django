@@ -2,12 +2,10 @@ var loader;
 
 class BaseLoader {
     constructor(object, type) {
-        this.last = loader;
         this.object = object; // Nome do objeto (colaborador, equipe, etc.)
         this.type = type; // Tipo do loader (post, view, update, etc...)
         this.prefix = object + "_"; // Prefixo para os campos (modal/form)
         this.id = undefined; // ID de registro, se necessário
-        console.log(this);
     }
     async open(id = undefined) {
         this.id = id;
@@ -61,6 +59,7 @@ class BaseLoader {
     async populateTable(response, feature = undefined, not = []) {
         try {
             const tabela = document.getElementById(this.prefix + "table");
+            console.log(tabela);
             const thead = tabela.querySelector("thead tr");
             thead.innerHTML = "";
             const tbody = tabela.querySelector("tbody");
@@ -99,26 +98,21 @@ class BaseLoader {
                             cell.textContent = obj[key];
                             if (isValidDate(obj[key])) {
                                 const data = new Date(obj[key]);
-                                cell.textContent = data.toLocaleDateString(
-                                    "pt-BR",
-                                    { timeZone: "UTC" }
-                                );
+                                cell.textContent =
+                                    data.toLocaleDateString("pt-BR");
                             }
                         }
                         row.appendChild(cell);
                     });
-                    if (this.object == "experiencia") {
-                        feature = ["delete", "edit"];
-                    }
                     if (feature) {
                         const extraBtn = document.createElement("td");
-                        extraBtn.classList.add("d-inline-flex");
                         if (feature.includes("delete")) {
                             const removeButton = document.createElement("i");
                             removeButton.classList.add(
                                 "btn-icon",
                                 "bg-danger",
                                 "bi-trash3",
+                                "fs-6",
                                 "me-1"
                             );
 
@@ -134,6 +128,7 @@ class BaseLoader {
                                 "btn-icon",
                                 "bg-primary",
                                 "bi-pencil",
+                                "fs-6",
                                 "me-1"
                             );
 
@@ -162,6 +157,7 @@ class Modal extends BaseLoader {
         super(object, type); // Chama o construtor da classe DataManager
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
+        console.log(this.prefix.slice(0, -1));
         this.modal = new bootstrap.Modal(this.myModal);
         this.loader = loader;
     }
@@ -190,18 +186,6 @@ class Modal extends BaseLoader {
         try {
             const data = await apiRequest.get(this.object + "/" + this.id);
             this.populateData(data).then(() => {
-                if (loader.last.modal.hide) {
-                    loader.last.modal.hide();
-                    loader.myModal.addEventListener('hidden.bs.modal', event => {
-                        const candidato = page.getParam("id");
-                        let registro = new Modal(loader.last.object, "lanc");
-                        registro.refresh = () => {
-                            registro.open(candidato);
-                        };
-                        registro.open(candidato);
-                        $("#" + registro.prefix + "candidato").val(candidato);
-                      })
-                }
                 this.modal.show();
 
                 $("#" + this.prefix + "save")
@@ -262,6 +246,7 @@ class Modal extends BaseLoader {
                 var filename = file.value
                     .replace("C:\\fakepath\\", "")
                     .split(".");
+                console.log(filename);
                 reader.onload = () => {
                     if (filename[filename.length - 1] == "pdf") {
                         pdf.src = reader.result;
@@ -284,6 +269,7 @@ class Modal extends BaseLoader {
                     Object.keys(fields).forEach((key) => {
                         data.append(key, fields[key]);
                     });
+                    console.log(data);
                     apiRequest
                         .upload("anexos", data)
                         .then(this.refresh)
@@ -319,10 +305,12 @@ class Modal extends BaseLoader {
             pdf.style.display = "none";
         }
         $("#" + this.prefix + "delete")
-            .off()
-            .on("click", () => {
-                apiRequest.delete("anexos/" + data.id).then(this.refresh);
-            });
+                .off()
+                .on("click", () => {
+                    apiRequest
+                        .delete("anexos/"+data.id)
+                        .then(this.refresh)
+                });
         this.modal.show();
     }
 
@@ -378,6 +366,7 @@ class Form extends BaseLoader {
             const data = await apiRequest.get(this.object, {
                 candidato: this.id,
             });
+            console.log(data);
             const list = document.getElementById(this.prefix + "list");
             list.innerHTML = "";
             data.forEach((data) => {
@@ -437,6 +426,7 @@ Submit = {
         }
     },
     delete: function (loader) {
+        console.log(loader);
         apiRequest
             .delete(loader.object + "/" + loader.id, this.readFields(loader))
             .then(() => {

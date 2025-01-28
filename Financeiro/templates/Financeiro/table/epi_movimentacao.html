@@ -1,0 +1,35 @@
+{%load static%}
+{%include 'tabela.html'%}
+
+    <thead>
+        <!-- <th data-searchable="false" data-formatter="editarFormatter" data-events="editarEvents"></th> -->
+        <th data-field="id" data-sortable="true">ID</th>
+        <th data-field="colaborador"  data-sortable="true" data-searchable="true" data-formatter="colaboradorFormatter">Colaborador</th>
+        <th data-field="obra" data-sortable="true" data-searchable="true">CR</th>
+        <th data-field="data_baixa" data-sortable="true" data-formatter="dataFormatter">Data baixa</th>
+        <th data-field="data_entrega" data-sortable="true" data-formatter="dataFormatter">Data entrega</th>
+        <th data-field="devolvido" data-sortable="true" data-formatter="checkFormatter">Devolvido?</th>
+        <th data-field="epi_cadastro.produto.produto" data-searchable="false" data-sortable="false">PRODUTO</th>
+        <th data-field="epi_cadastro.ca" data-searchable="false" data-sortable="false">CA</th>
+        <th data-field="quantidade" data-sortable="true">Quantidade</th>
+    </thead>
+</table>
+<script>
+    colabs = {}
+    apiRequest.get('select/colaborador').then((result) => {
+        for (const item of result) {
+            colabs[item.value] = item.text
+        }  
+    });
+    function colaboradorFormatter(value){
+        return colabs[value]
+    }
+    function editarFormatter(value) {
+        return '<div id="viewBtn" class="btn-icon bg-info"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit" title="Abrir detalhe"></div></div>'
+    }
+    window.editarEvents = {
+        'click #viewBtn': function (e, value, row, index) {
+            page.redirect('consultas/candidato',{id:row['id']})
+        },
+    }
+</script>

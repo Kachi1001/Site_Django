@@ -1,0 +1,26 @@
+{%load static%}
+{%include 'tabela.html'%}
+
+    <thead>
+        <!-- <th data-searchable="false" data-formatter="editarFormatter" data-events="editarEvents"></th> -->
+        <th data-field="id" data-sortable="true">ID</th>
+        <th data-field="produto.produto"  data-sortable="false" data-searchable="false">Produto</th>
+        <th data-field="ca" data-sortable="true" data-searchable="true">CA</th>
+        <th data-field="validade" data-sortable="true" data-formatter="dataFormatter">Validade</th>
+        <th data-field="observacao" data-searchable="true" data-sortable="true">Observação</th>
+        <th data-field="tamanho" data-searchable="true" data-sortable="true">Tamanho</th>
+        <th data-field="fabricante" data-searchable="true" data-sortable="true">Fabricante</th>
+    </thead>
+</table>
+<script>
+    
+
+    function editarFormatter(value) {
+        return '<div id="viewBtn" class="btn-icon bg-info"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit" title="Abrir detalhe"></div></div>'
+    }
+    window.editarEvents = {
+        'click #viewBtn': function (e, value, row, index) {
+            page.redirect('consultas/candidato',{id:row['id']})
+        },
+    }
+</script>

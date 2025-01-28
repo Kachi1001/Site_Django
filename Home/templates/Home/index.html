@@ -132,6 +132,22 @@
         </div>
       </div>
       {%endif%}
+      
+      {% if user|can:'Financeiro' %}
+      <div class="col-auto">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Financeiro</h5>
+          </div>
+          <div class="card-body"> 
+            <p class="card-text">App para auxiliar Financeiro</p>
+          </div>
+          <div class="card-footer">
+            <a href="{%url 'Financeiro'%}" class="stretched-link">Abrir Aplicação</a>
+          </div>
+        </div>
+      </div>
+      {%endif%}
 
 
 
