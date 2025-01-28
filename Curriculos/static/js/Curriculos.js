@@ -14,7 +14,10 @@ class BaseLoader {
         this.inputs = await apiRequest.get(`resource/${this.object}`);
         loader = this;
 
-        this[this.type](); // Registra ou atualiza conforme o tipo
+        this[this.type]().then(() => {
+            if (this.modal) {this.modal.show()}
+        }); // Registra ou atualiza conforme o tipo
+
     }
     async populateSelect(data = [], field = "") {
         try {
@@ -107,7 +110,7 @@ class BaseLoader {
                         }
                         row.appendChild(cell);
                     });
-                    if (this.object == "experiencia") {
+                    if (this.object == "experiencia" || this.object == 'escolaridade') {
                         feature = ["delete", "edit"];
                     }
                     if (feature) {
@@ -138,9 +141,8 @@ class BaseLoader {
                             );
 
                             editBtn.addEventListener("click", () => {
-                                this.modal.toggle();
+                                this.modal.hide()
                                 let modal = new Modal(this.object, "update");
-                                modal.refresh = this.refresh;
                                 modal.open(obj.id);
                             });
                             extraBtn.appendChild(editBtn);
@@ -164,6 +166,7 @@ class Modal extends BaseLoader {
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
         this.modal = new bootstrap.Modal(this.myModal);
+        loader = this
         this.loader = loader;
     }
 
@@ -173,10 +176,7 @@ class Modal extends BaseLoader {
             this.populateSelect(data, select);
         });
         const table = await apiRequest.get(this.object);
-        this.populateTable(table, "delete", ["id"]).then(() => {
-            this.modal.show();
-        });
-
+        this.populateTable(table, "delete", ["id"])
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
@@ -193,7 +193,7 @@ class Modal extends BaseLoader {
             this.populateData(data).then(() => {
                 if (loader.last.modal) {
                     loader.myModal.addEventListener('hidden.bs.modal', event => {
-                        this.modal.dispose()
+                        loader.modal.dispose()
                         const candidato = page.getParam("id");
                         let registro = new Modal(loader.last.object, "lanc");
                         registro.refresh = () => {
@@ -203,18 +203,17 @@ class Modal extends BaseLoader {
                         $("#" + registro.prefix + "candidato").val(candidato);
                       })
                 }
-                this.modal.show();
-
+                
                 $("#" + this.prefix + "save")
-                    .off()
-                    .click(function () {
-                        Submit.update(loader);
-                    });
+                .off()
+                .click(function () {
+                    Submit.update(loader);
+                });
                 $("#" + this.prefix + "del")
-                    .off()
-                    .click(function () {
-                        Submit.delete(loader);
-                    });
+                .off()
+                .click(function () {
+                    Submit.delete(loader);
+                });
             });
         } catch (error) {
             console.error("Error ao carregar", error);
@@ -231,14 +230,12 @@ class Modal extends BaseLoader {
                     const data = await apiRequest.get(`select/${select}`);
                     this.populateSelect(data, select);
                 });
-                this.modal.show();
                 $("#" + this.prefix + "submit")
-                    .off()
-                    .on("click", () => {
-                        Submit.post(this);
-                    });
+                .off()
+                .on("click", () => {
+                    Submit.post(this);
+                });
             });
-            1;
         } catch (error) {
             console.error("Error ao carregar", error);
         }
@@ -250,7 +247,6 @@ class Modal extends BaseLoader {
                 const data = await apiRequest.get(`select/${select}`);
                 this.populateSelect(data, select);
             });
-            this.modal.show();
 
             const file = document.getElementById(this.prefix + "arquivo");
 
@@ -324,7 +320,6 @@ class Modal extends BaseLoader {
             .on("click", () => {
                 apiRequest.delete("anexos/" + data.id).then(this.refresh);
             });
-        this.modal.show();
     }
 
     load() {
@@ -336,6 +331,7 @@ class Modal extends BaseLoader {
     }
 
     refresh() {
+        this.modal.toggle()
         // page.refresh();
     }
 }
