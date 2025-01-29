@@ -52,7 +52,7 @@
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">TELEFONE:</label>
             <input type="text" id="f_colaborador_fone" class="form-control form-control-sm">
-            <label class="input-group-text" onclick="abrirWhats('f_colaborador_fone')" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para abrir no WhatsApp!">WhatsApp</label>
+            <label class="input-group-text bg-success-subtle" onclick="abrirWhats('f_colaborador_fone')" style="user-select: none;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para abrir no WhatsApp!">WhatsApp</label>
         </div>
     </div>
 
@@ -69,7 +69,7 @@
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">PASTA:</label>
             <input type="text" id="f_colaborador_pasta_servidor" class="form-control">
-            <button class="input-group-text" style="user-select: none;" onclick="let text = document.getElementById('f_colaborador_pasta_servidor'); text.disabled = false; text.select(); document.execCommand('copy'); text.disabled = true; toasts('success',{'method':'Sucesso!','message':'Copiado com sucesso o caminho.'})">COPIAR</button>
+            <button class="input-group-text bg-secondary-subtle" style="user-select: none;" onclick="let text = document.getElementById('f_colaborador_pasta_servidor'); text.disabled = false; text.select(); document.execCommand('copy'); text.disabled = true; toasts('success',{'method':'Sucesso!','message':'Copiado com sucesso o caminho.'})" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para copiar o caminho no servidor!">Copiar</button>
         </div>
     </div>
     <div class="col-auto">
