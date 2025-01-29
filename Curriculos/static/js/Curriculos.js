@@ -112,9 +112,7 @@ class BaseLoader {
                         }
                         row.appendChild(cell);
                     });
-                    if (this.object == "experiencia" || this.object == 'escolaridade') {
-                        feature = ["delete", "edit"];
-                    }
+                    
                     if (feature) {
                         const extraBtn = document.createElement("td");
                         extraBtn.classList.add("d-inline-flex",'col-12');
@@ -178,6 +176,10 @@ class Modal extends BaseLoader {
             this.populateSelect(data, select);
         });
         const table = await apiRequest.get(this.object);
+        var feature = ['delete']
+        if (this.object == "experiencia" || this.object == 'escolaridade') {
+            feature = ["delete", "edit"];
+        }
         this.populateTable(table, "delete", ["id"])
         $("#" + this.prefix + "submit")
             .off()

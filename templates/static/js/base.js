@@ -289,6 +289,9 @@ const page = {
         // Redireciona para a nova URL
         window.location.href = newUrl;
     },
+    new: function (url) {
+        window.open(url, '_blank')
+    }
     // Exemplo de uso:
 };
 

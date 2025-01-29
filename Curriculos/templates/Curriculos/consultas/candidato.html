@@ -46,13 +46,15 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">TELEFONE 1º:</label>
-            <input type="number" id="f_candidato_telefone" class="form-control form-control-sm">
+            <input type="text" id="f_candidato_telefone" class="form-control form-control-sm" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para chamar no WhatsApp!" >
+            <label class="input-group-text" onclick="abrirWhats('')">ABRIR WP:</label>
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">TELEFONE 2º:</label>
-            <input type="number" id="f_candidato_telefone2" class="form-control form-control-sm">
+            <input type="text" id="f_candidato_telefone2" class="form-control form-control-sm" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para chamar no WhatsApp!" onclick="abrirWhats('2')" enable>
+            <label class="input-group-text" onclick="abrirWhats('2')">ABRIR WP:</label>
         </div>
     </div>
 
@@ -233,6 +235,16 @@
         modal.refresh = () => {modal.modal.hide(); load()}
 
         modal.open(id)
+    }
+    function abrirWhats(index) {
+        var number = $('#f_candidato_telefone' + index).val()
+        if (!number) {
+            toasts('warning', {'method':'Sem número cadastrado!','message':'Cadastre um número antes de tentar chama-lo no whatsapp'})
+        } else {
+            number = number.replace('(','').replace(')','').replace('-','').replace(' ','')
+            url = `https://wa.me/55${number}?text=Ol%C3%A1%21%20Tudo%20bem%3F%0ASomos%20da%20Tecnika%20Engenharia%20Especializada.%0AAgradecemos%20seu%20contato%2C%20para%20anexarmos%20seu%20curr%C3%ADculo%20em%20nosso%20banco%20de%20talentos%20vamos%20precisar%20das%20seguintes%20informa%C3%A7%C3%B5es%3A%0A-%20Nome%20completo%3A%0A-%20CPF%3A%0A-%20Vaga%C2%A0de%C2%A0interesse%3A`
+            page.new(url)
+        }
     }
 </script>
 {% endblock %}
