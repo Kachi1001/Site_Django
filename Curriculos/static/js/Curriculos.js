@@ -117,7 +117,7 @@ class BaseLoader {
                     }
                     if (feature) {
                         const extraBtn = document.createElement("td");
-                        extraBtn.classList.add("d-inline-flex");
+                        extraBtn.classList.add("d-inline-flex",'col-12');
                         if (feature.includes("delete")) {
                             const removeButton = document.createElement("i");
                             removeButton.classList.add(
