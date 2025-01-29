@@ -47,14 +47,14 @@
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">TELEFONE 1º:</label>
             <input type="text" id="f_candidato_telefone" class="form-control form-control-sm" >
-            <label class="input-group-text" onclick="abrirWhats('')" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para abrir no WhatsApp!">WhatsApp</label>
+            <label class="input-group-text" onclick="abrirWhats('f_candidato_telefone')" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para abrir no WhatsApp!">WhatsApp</label>
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">TELEFONE 2º:</label>
             <input type="text" id="f_candidato_telefone2" class="form-control form-control-sm">
-            <label class="input-group-text" onclick="abrirWhats('2')"  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para abrir no WhatsApp!">WhatsApp</label>
+            <label class="input-group-text" onclick="abrirWhats('f_candidato_telefone2')"  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para abrir no WhatsApp!">WhatsApp</label>
         </div>
     </div>
 
@@ -236,15 +236,6 @@
 
         modal.open(id)
     }
-    function abrirWhats(index) {
-        var number = $('#f_candidato_telefone' + index).val()
-        if (!number) {
-            toasts('warning', {'method':'Sem número cadastrado!','message':'Cadastre um número antes de tentar chama-lo no whatsapp'})
-        } else {
-            number = number.replace('(','').replace(')','').replace('-','').replace(' ','')
-            url = `https://wa.me/55${number}`
-            page.new(url)
-        }
-    }
+    
 </script>
 {% endblock %}

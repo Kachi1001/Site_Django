@@ -316,3 +316,13 @@ function confirmarCheck(field) {
         }
     }
 }
+function abrirWhats(id) {
+    var number = $('#'+id).val()
+    if (!number) {
+        toasts('warning', {'method':'Sem número cadastrado!','message':'Cadastre um número antes de tentar chama-lo no whatsapp'})
+    } else {
+        number = number.replaceAll('(','').replaceAll(')','').replaceAll('-','').replaceAll(' ','').replaceAll('+','')
+        url = `https://wa.me/${number}`
+        page.new(url)
+    }
+}
