@@ -193,8 +193,8 @@ class Modal extends BaseLoader {
         try {
             const data = await apiRequest.get(this.object + "/" + this.id);
             this.populateData(data).then(() => {
-                if (loader.last.modal) {
-                    loader.myModal.addEventListener('hidden.bs.modal', event => {
+                if (loader.last.modal && loader.last.type == 'lanc') {
+                    loader.myModal.off().addEventListener('hidden.bs.modal', event => {
                         loader.modal.dispose()
                         const candidato = page.getParam("id");
                         let registro = new Modal(loader.last.object, "lanc");
