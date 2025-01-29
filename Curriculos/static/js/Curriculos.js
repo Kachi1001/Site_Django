@@ -14,9 +14,11 @@ class BaseLoader {
         this.inputs = await apiRequest.get(`resource/${this.object}`);
         loader = this;
 
-        this[this.type]().then(() => {
-            if (this.modal) {this.modal.show()}
-        }); // Registra ou atualiza conforme o tipo
+        if (this.modal) {
+                this[this.type]().then(() => {
+                this.modal.show()
+            }); // Registra ou atualiza conforme o tipo
+        } else {this[this.type]()}
 
     }
     async populateSelect(data = [], field = "") {
