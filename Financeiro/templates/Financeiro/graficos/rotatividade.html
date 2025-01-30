@@ -6,14 +6,22 @@
 {% endblock %}
 
 {% block 'main' %}
+<div class="container">
     <canvas id="ativos_rotatividade"></canvas>
+    <div class="row">
+        <div class="col-6">
+        </div>
+        <div class="col-6">
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 
 {% block 'script' %}
 <script>
 function load(){  
-    apiRequest.get('grafico/{{resource}}').then((data)=>{
+    apiRequest.get('grafico/ativos_rotatividade').then((data)=>{
         const ctx = document.getElementById('ativos_rotatividade');
             new Chart(ctx, {
                 type: 'line',

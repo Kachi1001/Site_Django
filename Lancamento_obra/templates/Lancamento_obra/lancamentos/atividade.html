@@ -141,7 +141,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
@@ -191,15 +191,15 @@
             })
         })
 
-        $('#modalTable').on('shown.bs.modal', function () {
-            $("#lanc_dia").bootstrapTable('refreshOptions', {
-                url: `{{api}}Lancamento_obra/atividade?colaborador=${colaborador.val()}&dia=${dia.val()}`,
-            })
-        })
-
-
+        
+        
     }
-
+    $('#modalTable').on('shown.bs.modal', function () {
+        $("#lanc_dia").bootstrapTable('refreshOptions', {
+            url: `{{api}}Lancamento_obra/atividade?colaborador=${colaborador.val()}&dia=${dia.val()}`,
+        })
+    })
+    
     async function filtrar(element) {
         let legend
         let filter

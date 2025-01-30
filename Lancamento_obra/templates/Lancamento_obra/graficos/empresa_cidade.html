@@ -10,7 +10,7 @@
 {%block 'script'%}  
 <script>
 function load(){
-    apiRequest.get('graficos/horas').then((data) => {
+    apiRequest.get('graficos/{{resource}}').then((data) => {
         const ctx = document.getElementById('myChart');
         new Chart(ctx, {
             type: 'line',

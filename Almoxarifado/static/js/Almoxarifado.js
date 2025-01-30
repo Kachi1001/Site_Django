@@ -56,96 +56,100 @@ class BaseLoader {
         }
     }
 
-    async populateTable(response, feature = undefined, not = []) {
+    async populateTable(
+        response = [{ Tabelas: "Sem registro" }],
+        feature = undefined,
+        not = []
+    ) {
         try {
+            if (response.length == 0) {
+                response = [{ Tabela: "Sem registro" }];
+                feature = undefined;
+            }
             const tabela = document.getElementById(this.prefix + "table");
             console.log(tabela);
             const thead = tabela.querySelector("thead tr");
             thead.innerHTML = "";
             const tbody = tabela.querySelector("tbody");
             tbody.innerHTML = "";
-            if (response.length > 0) {
-                var keys = Object.keys(response[0]);
-                console.log(keys);
-                not.forEach((key) => {
-                    let index = keys.indexOf(key);
-                    if (index > -1) {
-                        keys.splice(index, 1);
-                    }
-                });
+            var keys = Object.keys(response[0]);
+            not.forEach((key) => {
+                let index = keys.indexOf(key);
+                if (index > -1) {
+                    keys.splice(index, 1);
+                }
+            });
+            keys.forEach((key) => {
+                const th = document.createElement("th");
+                th.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+                th.textContent = th.textContent.replace("_", " ");
+                thead.appendChild(th);
+            });
+            if (feature) {
+                const thExtra = document.createElement("th");
+                thExtra.textContent = "Ações";
+                thead.appendChild(thExtra);
+            }
+
+            response.forEach((obj) => {
+                const row = document.createElement("tr");
                 keys.forEach((key) => {
-                    const th = document.createElement("th");
-                    th.textContent = key.charAt(0).toUpperCase() + key.slice(1);
-                    th.textContent = th.textContent.replace("_", " ");
-                    thead.appendChild(th);
+                    const cell = document.createElement("td");
+                    if (typeof obj[key] === "boolean") {
+                        const checkbox = document.createElement("input");
+                        checkbox.type = "checkbox";
+                        checkbox.disabled = true;
+                        checkbox.checked = obj[key];
+                        cell.appendChild(checkbox);
+                    } else {
+                        cell.textContent = obj[key];
+                        if (isValidDate(obj[key])) {
+                            const data = new Date(obj[key]);
+                            cell.textContent = data.toLocaleDateString("pt-BR");
+                        }
+                    }
+                    row.appendChild(cell);
                 });
                 if (feature) {
-                    const thExtra = document.createElement("th");
-                    thExtra.textContent = "Ações";
-                    thead.appendChild(thExtra);
-                }
+                    const extraBtn = document.createElement("td");
+                    if (feature.includes("delete")) {
+                        const removeButton = document.createElement("i");
+                        removeButton.classList.add(
+                            "btn-icon",
+                            "bg-danger",
+                            "bi-trash3",
+                            "fs-6",
+                            "me-1"
+                        );
 
-                response.forEach((obj) => {
-                    const row = document.createElement("tr");
-                    keys.forEach((key) => {
-                        const cell = document.createElement("td");
-                        if (typeof obj[key] === "boolean") {
-                            const checkbox = document.createElement("input");
-                            checkbox.type = "checkbox";
-                            checkbox.disabled = true;
-                            checkbox.checked = obj[key];
-                            cell.appendChild(checkbox);
-                        } else {
-                            cell.textContent = obj[key];
-                            if (isValidDate(obj[key])) {
-                                const data = new Date(obj[key]);
-                                cell.textContent =
-                                    data.toLocaleDateString("pt-BR");
-                            }
-                        }
-                        row.appendChild(cell);
-                    });
-                    if (feature) {
-                        const extraBtn = document.createElement("td");
-                        if (feature.includes("delete")) {
-                            const removeButton = document.createElement("i");
-                            removeButton.classList.add(
-                                "btn-icon",
-                                "bg-danger",
-                                "bi-trash3",
-                                "fs-6",
-                                "me-1"
-                            );
-
-                            removeButton.addEventListener("click", () => {
-                                loader.id = obj.id;
-                                Submit.delete(loader);
-                            });
-                            extraBtn.appendChild(removeButton);
-                        }
-                        if (feature.includes("edit")) {
-                            const editBtn = document.createElement("i");
-                            editBtn.classList.add(
-                                "btn-icon",
-                                "bg-primary",
-                                "bi-pencil",
-                                "fs-6",
-                                "me-1"
-                            );
-
-                            editBtn.addEventListener("click", () => {
-                                let modal = new Modal(this.object, "update");
-                                modal.refresh = this.refresh;
-                                modal.open(obj.id);
-                            });
-                            extraBtn.appendChild(editBtn);
-                        }
-
-                        row.appendChild(extraBtn);
+                        removeButton.addEventListener("click", () => {
+                            loader.id = obj.id;
+                            Submit.delete(loader);
+                        });
+                        extraBtn.appendChild(removeButton);
                     }
-                    tbody.appendChild(row);
-                });
-            }
+                    if (feature.includes("edit")) {
+                        const editBtn = document.createElement("i");
+                        editBtn.classList.add(
+                            "btn-icon",
+                            "bg-primary",
+                            "bi-pencil",
+                            "fs-6",
+                            "me-1"
+                        );
+
+                        editBtn.addEventListener("click", () => {
+                            let modal = new Modal(this.object, "update");
+                            modal.refresh = this.refresh;
+                            modal.open(obj.id);
+                        });
+                        extraBtn.appendChild(editBtn);
+                    }
+
+                    row.appendChild(extraBtn);
+                }
+                tbody.appendChild(row);
+            });
         } catch (error) {
             console.error("Error ao criar tabela", error);
             throw error;
@@ -172,16 +176,19 @@ class Modal extends BaseLoader {
         this.populateTable(table, "delete", ["id"]).then(() => {
             this.modal.show();
         });
-
+        if (this.object in Pos_load){ Pos_load[this.object]( loader ) }
+        
         $("#" + this.prefix + "submit")
-            .off()
-            .click(function () {
-                loader.refresh = async () => {
-                    const table = await apiRequest.get(loader.object);
-                    loader.populateTable(table, undefined, ["id"]);
-                };
-                Submit.post(loader);
-            });
+        .off()
+        .click(function () {
+            loader.refresh = async () => {
+                const table = await apiRequest.get(loader.object);
+                loader.populateTable(table, "delete", ["id"]);
+            };
+            Submit.post(loader);
+        });
+
+        
     }
     async update() {
         try {
@@ -306,12 +313,10 @@ class Modal extends BaseLoader {
             pdf.style.display = "none";
         }
         $("#" + this.prefix + "delete")
-                .off()
-                .on("click", () => {
-                    apiRequest
-                        .delete("anexos/"+data.id)
-                        .then(this.refresh)
-                });
+            .off()
+            .on("click", () => {
+                apiRequest.delete("anexos/" + data.id).then(this.refresh);
+            });
         this.modal.show();
     }
 
@@ -391,7 +396,37 @@ class Form extends BaseLoader {
         }
     }
 }
-
+Pos_load = {
+    ficha: (loader) => {
+        const colaborador = $('#' + loader.prefix + 'colaborador') 
+        const pagina = $('#' + loader.prefix + 'pagina') 
+        function getFicha(){
+            apiRequest.get('ficha?colaborador='+colaborador.val()).then((response) =>{
+                pag = 1
+                response.forEach((row) => {
+                    if (row.pagina >= pag) {pag = row.pagina}
+                })
+                pagina.val(pag)
+            })    
+        }
+        colaborador.change(getFicha)
+        getFicha()
+        const mudar = $('#' + loader.prefix + 'mudar')
+        mudar.on('click',() =>{
+            if (pagina.attr('disabled')) {
+                if (confirm('Não garantimos funcionalidade total ao alterar manualmente')) {
+                    pagina.attr('disabled', !pagina.attr('disabled'))
+                    mudar.textContent('Deixar automático')
+                }
+            } else {
+                pagina.attr('disabled', !pagina.attr('disabled'))                
+                mudar.textContent = 'Alterar manualmente' 
+                getFicha()
+            }
+    
+        })
+    }
+};
 Submit = {
     readFields: function (loader) {
         let data = {};

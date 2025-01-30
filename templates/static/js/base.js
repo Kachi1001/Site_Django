@@ -1,5 +1,11 @@
 const True = true;
 const False = false;
+
+$(document).ready(() =>{
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+}) 
+    
 const date = {
     adicionarZero: function (value) {
         if (value <= 9) return "0" + value;
@@ -283,6 +289,9 @@ const page = {
         // Redireciona para a nova URL
         window.location.href = newUrl;
     },
+    new: function (url) {
+        window.open(url, '_blank')
+    }
     // Exemplo de uso:
 };
 
@@ -305,5 +314,15 @@ function confirmarCheck(field) {
         if (!confirm('Tem certeza da ação precedida??')) {
             campo.prop('checked', false);
         }
+    }
+}
+function abrirWhats(id) {
+    var number = $('#'+id).val()
+    if (!number) {
+        toasts('warning', {'method':'Sem número cadastrado!','message':'Cadastre um número antes de tentar chama-lo no whatsapp'})
+    } else {
+        number = number.replaceAll('(','').replaceAll(')','').replaceAll('-','').replaceAll(' ','').replaceAll('+','')
+        url = `https://wa.me/${number}`
+        page.new(url)
     }
 }
