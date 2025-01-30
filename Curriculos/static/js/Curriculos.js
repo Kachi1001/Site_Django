@@ -114,6 +114,7 @@ class BaseLoader {
                     });
                     
                     if (feature) {
+                        
                         const extraBtn = document.createElement("td");
                         extraBtn.classList.add("d-inline-flex",'col-12');
                         if (feature.includes("delete")) {
@@ -169,18 +170,15 @@ class Modal extends BaseLoader {
         loader = this
         this.loader = loader;
     }
-
+    
     async register() {
         this.inputs.select.forEach(async (select) => {
             const data = await apiRequest.get(`select/${select}`);
             this.populateSelect(data, select);
         });
         const table = await apiRequest.get(this.object);
-        var feature = ['delete']
-        if (this.object == "experiencia" || this.object == 'escolaridade') {
-            feature = ["delete", "edit"];
-        }
-        this.populateTable(table, "delete", ["id"])
+        
+        this.populateTable(table, ['delete'], ["id"])
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
@@ -229,7 +227,11 @@ class Modal extends BaseLoader {
             const data = await apiRequest.get(this.object, {
                 candidato: this.id,
             });
-            this.populateTable(data, "delete", ["id", "candidato"]).then(() => {
+            var feature = ['delete']
+            if (this.object == "experiencia" || this.object == 'escolaridade') {
+                feature.push("edit");
+            } 
+            this.populateTable(data, feature, ["id", "candidato"]).then(() => {
                 this.inputs.select.forEach(async (select) => {
                     const data = await apiRequest.get(`select/${select}`);
                     this.populateSelect(data, select);
