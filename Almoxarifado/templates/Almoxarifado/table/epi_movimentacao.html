@@ -12,6 +12,7 @@
         <th data-field="epi_cadastro.produto.produto" data-searchable="false" data-sortable="false">PRODUTO</th>
         <th data-field="epi_cadastro.ca" data-searchable="false" data-sortable="false">CA</th>
         <th data-field="quantidade" data-sortable="true">Quantidade</th>
+        <th data-formatter="editarFormatter" data-events="editarEvents">Ação</th>
     </thead>
 </table>
 <script>
@@ -24,12 +25,5 @@
     function colaboradorFormatter(value){
         return colabs[value]
     }
-    function editarFormatter(value) {
-        return '<div id="viewBtn" class="btn-icon bg-info"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit" title="Abrir detalhe"></div></div>'
-    }
-    window.editarEvents = {
-        'click #viewBtn': function (e, value, row, index) {
-            page.redirect('consultas/candidato',{id:row['id']})
-        },
-    }
+    
 </script>

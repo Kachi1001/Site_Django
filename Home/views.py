@@ -38,6 +38,7 @@ def login(request):
 
 @login_required
 def index(request):
+    
     retorno = render(request, f"{app}/index.html")
     resource = models.Pendencia
     try:
