@@ -396,7 +396,7 @@
                         </div>
 
 
-                        <div class="col-auto">
+                        <!-- <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 nowrap">
                                 <label class="input-group-text">CONSOME BEBIDA:</label>
                                 <select id="m_update-questionario_bebidas" class="form-select form-control-sm">
@@ -406,50 +406,57 @@
                                     <option>QUINZENALMENTE</option>
                                 </select>
                             </div>
+                        </div> -->
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <span class="input-group-text">CONSOME BEBIDA:</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_update-questionario_consome_alcool">
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="col-auto">
-                            <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">MEDICAÇÃO:</label>
-                                <input type="text" id="m_update-questionario_medicacao" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">ACIDENTE DE TRABALHO:</label>
-                                <input type="text" id="m_update-questionario_acidente" class="form-control">
-                            </div>
-                        </div>
                     </div>
+                    
                     <div class="col-7">
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">PROCESSO JUDICIAL:</label>
-                                <input type="text" id="m_update-questionario_processo" class="form-control">
+                                <label class="input-group-text">MEDICAÇÃO:</label>
+                                <input class="form-control" list="m_update-questionario_toma_medicacao">
+                                <datalist id="m_update-questionario_toma_medicacao">
+                                    <option>Cardíaco</option>
+                                    <option>Asma</option>
+                                    <option>Diabetes</option>
+                                    <option>Diabetes</option>
+                                </datalist>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">BOLETIM DE OCORRÊNCIA:</label>
-                                <input type="text" id="m_update-questionario_bo" class="form-control">
+                                <span class="input-group-text">PROCESSO TRABALHISTA:</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_update-questionario_possui_criminal">
+                                </div>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">ANTECEDENTES CRIMINAIS:</label>
-                                <input type="text" id="m_update-questionario_criminais" class="form-control">
+                                <span class="input-group-text">PROCESSO CRIMINAL:</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_update-questionario_possui_trabalhista">
+                                </div>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">ANTECEDENTES POLICIAIS:</label>
-                                <input type="text" id="m_update-questionario_policiais" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">AÇÃO JUDICIAL:</label>
-                                <input type="text" id="m_update-questionario_judicial" class="form-control">
+                                <span class="input-group-text">ACIDENTE DE TRABALHO:</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_update-questionario_possui_criminal">
+                                </div>
                             </div>
                         </div>
                     </div>
