@@ -8,7 +8,7 @@ class PendenciaAdmin(admin.ModelAdmin):
         return f'{obj.user.username}'
     name_user.short_description = 'Usuário'
 
-admin.site.register(Pendencia, PendenciaAdmin)
+# admin.site.register(Pendencia, PendenciaAdmin)
 class LogAdmin(admin.ModelAdmin):
     list_display = ('id','user_name', 'action','resource','app','date','status')  # Corrigido com uma vírgula para tornar uma tupla válida
     search_fields = ['id','text']

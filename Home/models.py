@@ -131,7 +131,7 @@ class Historico(models.Model):
     context = models.CharField(max_length=255)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'historico'
 
 
@@ -145,7 +145,7 @@ class Log(models.Model):
     app = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'log'
 
 
@@ -161,14 +161,14 @@ class LogEntry(models.Model):
     version = models.CharField(max_length=255)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'log_entry'
 
 
-class Pendencia(models.Model):
-    password_change = models.BooleanField(blank=True, null=True)
-    user = models.OneToOneField(AuthUser, models.DO_NOTHING, primary_key=True)
+# class Pendencia(models.Model):
+#     password_change = models.BooleanField(blank=True, null=True)
+#     user = models.OneToOneField(AuthUser, models.DO_NOTHING, primary_key=True)
 
-    class Meta:
-        managed = False
-        db_table = 'pendencia'
+#     class Meta:
+#         managed = True
+#         db_table = 'pendencia'

@@ -40,14 +40,14 @@ def login(request):
 def index(request):
     
     retorno = render(request, f"{app}/index.html")
-    resource = models.Pendencia
-    try:
-        queryset = resource.objects.get(pk=request.user.id)
-    except:
-        queryset = resource.objects.create(pk=request.user.id)
+    # resource = models.Pendencia
+    # try:
+        # queryset = resource.objects.get(pk=request.user.id)
+    # except:
+        # queryset = resource.objects.create(pk=request.user.id)
         
-    if not queryset.password_change:
-        retorno = redirect('alterar_senha')
+    # if not queryset.password_change:
+        # retorno = redirect('alterar_senha')
     return retorno
 
 @login_required
@@ -69,9 +69,9 @@ def alterar_senha(request):
             
             # Atualiza a sessão para evitar logout após mudança de senha
             update_session_auth_hash(request, user)
-            queryset = models.Pendencia.objects.get(pk=user.id)
-            queryset.password_change = True
-            queryset.save()
+            # queryset = models.Pendencia.objects.get(pk=user.id)
+            # queryset.password_change = True
+            # queryset.save()
             return redirect('home')
 
 from django.http import HttpResponse
