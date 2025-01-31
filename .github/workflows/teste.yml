@@ -57,7 +57,7 @@ jobs:
       run: sudo bash django-stop.sh $branch $app #Fecha os serviços do django
 
     - name: Atualizando arquivos
-      run: sudo git pull origin $branch
+      run: sudo git pull origin $branch --force
       
     - name: Baixando bibliotecas
       run: |
