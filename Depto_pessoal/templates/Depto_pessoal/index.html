@@ -32,12 +32,10 @@
         <h5 class="card-title">Férias</h5>
       </div>
       <div class="card-body">
-        <p class="card-text">Envio automatizado de mensagem, lembrete de férias<br><small style="font-style: italic;">Os
-            dados para envio é feito automático</small></p>
+        <p class="card-text">Todo dia é programado mensagem de lembrete de retorno das ferias<br> Envio as 08:00 e as 15:00 de todos dias</small></p>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Ativo: <span id='Depto_pessoal:app:ferias:toggle'></span></li>
-        <li class="list-group-item">Rodando: <span id='Depto_pessoal:app:ferias:run'></span></li>
       </ul>
       <div class="card-body">
         <button type="button" class="btn btn-primary" onclick="apiRequest.touch('app/ferias')">Alterar</button>
@@ -55,7 +53,7 @@
 <script>
   fields = {
     'ponto': ['Depto_pessoal:app:ponto:run', 'Depto_pessoal:app:ponto:toggle', 'Depto_pessoal:app:ponto:updated'],
-    'ferias': ['Depto_pessoal:app:ferias:run', 'Depto_pessoal:app:ferias:toggle']
+    'ferias': ['Depto_pessoal:app:ferias:toggle']
   }
   function carregar_all() {
     carregar('ponto')
