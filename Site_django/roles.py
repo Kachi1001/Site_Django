@@ -32,6 +32,7 @@ class app_Depto_pessoal(AbstractUserRole):
         f'{app}-lembrete': True,
         f'{app}-feriado': True,
         f'{app}-graficos': True,
+        f'{app}-import': True,
     }
     role_name=f'app_{app}'
 

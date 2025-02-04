@@ -194,16 +194,16 @@
                 <div class="modal-footer">
                     <input type="hidden" id="m_lanc-experiencia_candidato">
                     <div class="row m-0 justify-content-center">
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="input-group input-group-sm mb-2 nowrap">
                                 <label class="input-group-text">EMPRESA:</label>
                                 <input type="text" id="m_lanc-experiencia_empresa" class="form-control form-control-sm">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 d-none">
                             <div class="input-group input-group-sm mb-2 nowrap">
                                 <label class="input-group-text">PROFISSÃO:</label>
-                                <select id="m_lanc-experiencia_profissao" class="form-select form-control-sm"></select>
+                                <input type="text" id="m_lanc-experiencia_profissao" class="form-control form-control-sm" value='1'></input>
                             </div>
                         </div>
                         <div class="col-6">
@@ -264,7 +264,7 @@
                     <div class="col-6">
                         <div class="input-group input-group-sm mb-2 nowrap">
                             <label class="input-group-text">PROFISSÃO:</label>
-                            <select id="m_update-experiencia_profissao" class="form-select form-control-sm"></select>
+                            <input type="text d-none" id="m_update-experiencia_profissao" class="form-control form-control-sm" value='CADASTRO'></input>
                         </div>
                     </div>
                     <div class="col-6">
@@ -428,7 +428,7 @@
                                     <option>Cardíaco</option>
                                     <option>Asma</option>
                                     <option>Diabetes</option>
-                                    <option>Diabetes</option>
+                                    <option>Outros...</option>
                                 </datalist>
                             </div>
                         </div>
@@ -529,13 +529,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-auto">
-                        <div class="input-group input-group-sm mb-2 nowrap">
-                            <label class="input-group-text">VAGA TECNIKA:</label>
-                            <select id="m_update-entrevista_area_atuacao" class="form-select form-control-sm">
-                            </select>
-                        </div>
-                    </div>
+                    
                     <div class="col-auto">
                         <div class="input-group input-group-sm mb-2 flex-nowrap">
                             <label class="input-group-text">SALÁRIO:</label>

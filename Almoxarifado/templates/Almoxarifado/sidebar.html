@@ -31,15 +31,6 @@
             </h2>
         </div>
         {%endif%}
-        {% if user|can:'Almoxarifado-movimentar' %}
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <a href="{%url app|add:'_cadastros' 'epi_movimentacao'%}" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px">
-                    <i {{icon.form}}></i> Movimentar EPI
-                </a>
-            </h2>
-        </div>
-        {%endif%}
         {% if user|can:'Almoxarifado-cadastra_epi' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -50,8 +41,27 @@
         </div>
         {%endif%}
         
+        {% if user|can:'Almoxarifado-movimentar' %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <a href="{%url app|add:'_cadastros' 'epi_movimentacao'%}" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px">
+                    <i {{icon.form}}></i> Movimentar EPI
+                </a>
+            </h2>
+        </div>
+        {%endif%}
+        
+        {% if user|can:'Almoxarifado-colaborador' %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <a href="{%url app|add:'_tabelas' 'colaborador'%}" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px">
+                    <i {{icon.table}}></i> Colaboradores
+                </a>
+            </h2>
+        </div>
+        {%endif%}
         {% comment %}
-            
+        
         
         {% if user|can:'Curriculos-consultas' %}
         <div class="accordion-item">

@@ -19,7 +19,18 @@ class LogAdmin(admin.ModelAdmin):
         return f'{obj.user_name}'
     name_user.short_description = 'Usuário'
 
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = ('username','endpoint','method','timestamp','status_code','server','version')  # Corrigido com uma vírgula para tornar uma tupla válida
+    search_fields = ['id','username']
+    actions = None
+    list_filter = ['username','timestamp','status_code','server','version','method']
+    
+    def name_user(self, obj):
+        return f'{obj.user_name}'
+    name_user.short_description = 'Usuário'
+
 admin.site.register(Log, LogAdmin)
+admin.site.register(LogEntry, LogEntryAdmin)
 
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
