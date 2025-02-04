@@ -157,7 +157,6 @@ class LogEntry(models.Model):
     method = models.CharField(max_length=10, blank=True, null=True)
     status_code = models.IntegerField(blank=True, null=True)
     response_time = models.FloatField(blank=True, null=True)
-    app = models.CharField(max_length=50, blank=True, null=True)
     server = models.CharField(max_length=5, blank=True, null=True)
     version = models.CharField(max_length=5, blank=True, null=True)
     response = models.CharField(max_length=255000, blank=True, null=True)

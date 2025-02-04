@@ -10,9 +10,8 @@ logger = logging.getLogger(__name__)
 
 class RequestLoggingMiddleware(MiddlewareMixin):
     SAFE_METHODS = ('GET', 'HEAD', 'OPTIONS')
-    MAX_BODY_LENGTH = 500
-    MAX_RESPONSE_LENGTH = 1000
-
+    EXCLUDE_PATH = ('/login','/admin','/alterar_senha')
+    
     def process_request(self, request):
         request.start_time = time.monotonic()
         
@@ -32,7 +31,8 @@ class RequestLoggingMiddleware(MiddlewareMixin):
             'body': self._safe_body_content(request)
         }
     def process_response(self, request, response):
-        if not hasattr(request, 'start_time') or not hasattr(request, 'log_data'):
+        if not hasattr(request, 'start_time') or not hasattr(request, 'log_data') or any(request.path.startswith(path) for path in self.EXCLUDE_PATH):
+            print('não salvando')
             return response
 
         duration = time.monotonic() - request.start_time
@@ -56,7 +56,7 @@ class RequestLoggingMiddleware(MiddlewareMixin):
             'server': config('DJ_SERVER', default='api'),
             'version': config('DJ_VERSION', default='dev'),
             'timestamp': timezone.now(),
-            'response_content': self._safe_response_content(response),
+            'response_content': self._safe_response_content(response) if response.status_code > 300 else '',
         })
 
     def _safe_response_content(self, response):
@@ -65,7 +65,7 @@ class RequestLoggingMiddleware(MiddlewareMixin):
         
         try:
             content = response.content.decode('utf-8', errors='replace')
-            return content[:self.MAX_RESPONSE_LENGTH]
+            return content
         except (UnicodeDecodeError, AttributeError):
             return '[Binary Content]'
 
@@ -82,7 +82,7 @@ class RequestLoggingMiddleware(MiddlewareMixin):
             path_parts = request.path.strip('/').split('/')
             app = path_parts[1] if len(path_parts) > 1 else 'unknown'
             resource = path_parts[2] if len(path_parts) > 2 else 'unknown'
-            item_id = path_parts[2] if len(path_parts) > 2 else ''
+            item_id = path_parts[3] if len(path_parts) > 3 else ''
 
             body_content = self._safe_body_content(request)
             
@@ -106,9 +106,9 @@ class RequestLoggingMiddleware(MiddlewareMixin):
             
             # Verifica se é binário (ex: upload de arquivo)
             if isinstance(body, bytes):
-                return body[:self.MAX_BODY_LENGTH].decode('utf-8', errors='replace')
+                return body.decode('utf-8', errors='replace')
             
-            return str(body)[:self.MAX_BODY_LENGTH]
+            return str(body)
         except Exception as e:
             logger.error(f"Error processing body content: {str(e)}")
             return '[Unreadable Content]'
