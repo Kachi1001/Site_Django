@@ -4,11 +4,12 @@ const False = false;
 $(document).ready(() =>{
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-
-    $('html').attr ('data-bs-theme', localStorage.getItem('theme'))
+    set_theme()
     // $('html').attr ('data-bs-theme', page.getParam('theme'))
 }) 
-    
+function set_theme() {
+    $('html').attr ('data-bs-theme', localStorage.getItem('theme'))
+}
 const date = {
     adicionarZero: function (value) {
         if (value <= 9) return "0" + value;
