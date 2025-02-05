@@ -9,7 +9,7 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">COLABORADOR:</label>
-            <select class="form-select" id="f_{{resource}}_colaborador" onchange="colab_chance()">
+            <select class="form-select" id="f_{{resource}}_colaborador" onchange="colab_chance();" tabindex="1">
             </select>
             <label class="input-group-text bg-secondary-subtle" id="numeracao" data-bs-toggle="tooltip" data-bs-placement="right"
                 data-bs-html="true" data-bs-title="Carregando...">
@@ -20,14 +20,14 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">FICHA:</label>
-            <select class="form-select" id="f_{{resource}}_ficha">
+            <select class="form-select" id="f_{{resource}}_ficha" tabindex="2">
             </select>
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">OBRA:</label>
-            <select class="form-select" id="f_{{resource}}_obra">
+            <select class="form-select" id="f_{{resource}}_obra" tabindex="3">
             </select>
         </div>
     </div>
@@ -36,21 +36,21 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">PRODUTO:</label>
-            <select class="form-select" id="f_{{resource}}_produto" onchange="carregarFiltrado()">
+            <select class="form-select" id="f_{{resource}}_produto" onchange="carregarFiltrado()" tabindex="4">
             </select>
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">EPI:</label>
-            <select class="form-select" id="f_{{resource}}_epi_cadastro">
+            <select class="form-select" id="f_{{resource}}_epi_cadastro" tabindex="5">
             </select>
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">QUANTIDADE:</label>
-            <input type="number" id="f_{{resource}}_quantidade" class="form-control">
+            <input type="number" id="f_{{resource}}_quantidade" class="form-control" tabindex="6">
         </div>
     </div>
 </div>
@@ -72,7 +72,7 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">DATA ENTREGA:</label>
-            <input type="date" id="f_{{resource}}_data_entrega" class="form-control" value="{{hojeJS}}">
+            <input type="date" id="f_{{resource}}_data_entrega" class="form-control" value="{{hojeJS}}" tabindex="7">
         </div>
     </div>
 
@@ -80,7 +80,7 @@
 
 
     <div class="row justify-content-end">
-        <div class="col-auto"><button id="f_{{resource}}_submit" class="btn btn-success">Cadastrar</button></div>
+        <div class="col-auto"><button id="f_{{resource}}_submit" class="btn btn-success" tabindex="8" onclick="document.getElementById('f_{{resource}}_colaborador').focus()">Cadastrar</button></div>
     </div>
     <script>
         var epis = {}

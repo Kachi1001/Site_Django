@@ -402,25 +402,25 @@ Pos_load = {
         const pagina = $('#' + loader.prefix + 'pagina') 
         function getFicha(){
             apiRequest.get('ficha?colaborador='+colaborador.val()).then((response) =>{
-                pag = 1
+                pag = 0
                 response.forEach((row) => {
                     if (row.pagina >= pag) {pag = row.pagina}
                 })
-                pagina.val(pag)
+                pagina.val(pag +1)
             })    
         }
         colaborador.change(getFicha)
         getFicha()
         const mudar = $('#' + loader.prefix + 'mudar')
-        mudar.on('click',() =>{
+        mudar.off().on('click',() =>{
             if (pagina.attr('disabled')) {
                 if (confirm('Não garantimos funcionalidade total ao alterar manualmente')) {
                     pagina.attr('disabled', !pagina.attr('disabled'))
-                    mudar.textContent('Deixar automático')
+                    mudar.text('Deixar automático')
                 }
             } else {
                 pagina.attr('disabled', !pagina.attr('disabled'))                
-                mudar.textContent = 'Alterar manualmente' 
+                mudar.text('Alterar manualmente') 
                 getFicha()
             }
     

@@ -21,13 +21,12 @@
             onclick="change_ambiente('teste')">Ambiente Teste</a></li>{%endif%}
         {% if user|can:'ambiente-dev' %}<li><a class="dropdown-item" href="#" onclick="change_ambiente('dev')">Ambiente
             Desenvolvimento</a></li>{%endif%}
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-        <li><a class="dropdown-item" href="#" onclick="change_theme()">Mudar tema</a></li>
-        <li><a class="dropdown-item" href="https://wa.me/555596238751" target="_blank">Ajuda</a></li>
+        <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" href="/alterar_senha">Trocar senha</a></li>
         <li><a class="dropdown-item" href="/login">Desconectar</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#" onclick="change_theme()">Mudar tema</a></li>
+        <li><a class="dropdown-item" href="https://wa.me/555596238751" target="_blank">Ajuda</a></li>
       </ul>
     </div>
   </div>

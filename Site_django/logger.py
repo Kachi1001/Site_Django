@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class RequestLoggingMiddleware(MiddlewareMixin):
     SAFE_METHODS = ('GET', 'HEAD', 'OPTIONS')
-    EXCLUDE_PATH = ('/login','/admin','/alterar_senha')
+    EXCLUDE_PATH = ('/login','/admin','/alterar_senha','/status')
     
     def process_request(self, request):
         request.start_time = time.monotonic()

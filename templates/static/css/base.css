@@ -2,6 +2,13 @@
 html{
   height: 100%;
 }
+[data-bs-theme="light"] body {
+  background-color: var(--cor3);
+}
+[data-bs-theme="dark"] body {
+  background-color: #2f3131;
+}
+
 body{ 
   font-family: "Lato", sans-serif;
   margin-top: var(--navbar_width);
@@ -77,4 +84,11 @@ td{
 }
 nav {
   background-color: var(--cor1);
+}
+
+.form-check-input {
+  height: 15px;
+  width: 15px;
+  box-shadow: 2px 2px 3px rgba(90, 90, 90, 0.45);
+  margin-top: 0px;
 }
