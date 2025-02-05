@@ -2,7 +2,7 @@
 {% load permission_tags %}
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" data-bs-theme="{{light}}">
 
 <head>
     <title>{{app_name}}</title>
@@ -33,21 +33,24 @@
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
     {%endif%}
 
+    {% block 'style' %}{% endblock %}
     <link rel="stylesheet" href="{% static 'css/'|add:app|add:'.css' %}?v={{ timestamp }}">
 </head>
 
 
 
-{% block 'style' %}{% endblock %}
 
 
 
 <body>
     {%block 'body'%}{%endblock%}
+    
     {%include 'navbar.html'%}
+    
     {%if app != 'Home'%}
     {%include app|add:'/sidebar.html'%}
     {%endif%}
+    
     <header>
         {%block 'header'%}{%endblock%}
     </header>

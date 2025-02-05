@@ -4,6 +4,9 @@ const False = false;
 $(document).ready(() =>{
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+    $('html').attr ('data-bs-theme', localStorage.getItem('theme'))
+    // $('html').attr ('data-bs-theme', page.getParam('theme'))
 }) 
     
 const date = {
@@ -249,6 +252,25 @@ const page = {
 
         // Redireciona para a nova URL
         window.location.href = newUrl;
+    },
+    setParam: function (param, value) {
+        const params = new URLSearchParams(window.location.search); // Pega a query string da URL
+        const values = {};
+
+        // Itera sobre todos os parâmetros e armazena no objeto values
+        result = '?'
+        params.forEach((value, key) => {
+            values[key] = value.replaceAll("%20", " ");
+        });
+        values[param] = value
+
+        for (x in values) {
+            result += `${x}=${values[x]}&`
+        }
+        console.log(result)
+
+
+        location.search = result
     },
     getParam: function (param) {
         const params = new URLSearchParams(window.location.search); // Pega a query string da URL

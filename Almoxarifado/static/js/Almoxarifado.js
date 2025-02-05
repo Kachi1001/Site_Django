@@ -478,3 +478,10 @@ $(document).ready(() => {
         console.log("Tela sem inicializador", error);
     }
 });
+
+modal = {
+    open: function(type, object, id) {
+        const obj = new Modal(object,type)
+        obj.open(id)
+    }
+}

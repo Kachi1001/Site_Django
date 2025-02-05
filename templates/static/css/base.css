@@ -10,7 +10,7 @@ body{
   /* user-select: none; */
   flex-direction: column;
   justify-content: center;
-  background-color: var(--cor3);
+  background-color: var(	--bs-body-bg);
   box-sizing: border-box;
 }
 

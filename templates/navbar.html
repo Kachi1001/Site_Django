@@ -24,6 +24,7 @@
         <li>
           <hr class="dropdown-divider">
         </li>
+        <li><a class="dropdown-item" href="#" onclick="change_theme()">Mudar tema</a></li>
         <li><a class="dropdown-item" href="https://wa.me/555596238751" target="_blank">Ajuda</a></li>
         <li><a class="dropdown-item" href="/alterar_senha">Trocar senha</a></li>
         <li><a class="dropdown-item" href="/login">Desconectar</a></li>
@@ -53,6 +54,14 @@
       }
       window.location.href = window.location.protocol + '//' + ambientes[ambiente] + window.location.pathname + window.location.search
       console.error();
+    }
+    function change_theme(){
+      if (localStorage.getItem('theme') != 'dark') {
+        localStorage.setItem('theme', 'dark')
+      } else {
+        localStorage.setItem('theme', 'light')
+      }
+      $('html').attr ('data-bs-theme', localStorage.getItem('theme'))
     }
   </script>
 </nav>
