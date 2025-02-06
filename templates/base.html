@@ -16,7 +16,14 @@
     
     {%include 'static/imports/jquery.html'%} <!-- Jquery -->
     {%include 'static/imports/bootstrap.html'%} <!-- Bootstrap -->
+    
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {%if app != 'Home'%}
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    {%endif%}
+    {% block 'style' %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/'|add:app|add:'.css' %}?v={{ timestamp }}">
+    
     
     <script>
         const api = '{{api}}'
@@ -28,13 +35,7 @@
         const icon = "/static/icons";
     </script> <!--Routers de Tag -->
     <script src="{%static 'js/base.js'%}"></script>
-
-    {%if app != 'Home'%}
-    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
-    {%endif%}
-
-    {% block 'style' %}{% endblock %}
-    <link rel="stylesheet" href="{% static 'css/'|add:app|add:'.css' %}?v={{ timestamp }}">
+    
 </head>
 
 

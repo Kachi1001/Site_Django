@@ -72,7 +72,7 @@
 </div>
 <div class="row">
     <div class="col-auto">
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 19rem;">
             <div class="card-header">
                 <strong>Numeração</strong>
             </div>
@@ -80,15 +80,15 @@
                 <div class="row">
                     <div class="col-6">
                         <ul class="list-group list-group-flush">
-                            <input type="text" class="list-group-item" id="" readonly value="Bota: 39">
-                            <input type="text" class="list-group-item" id="" readonly value="Bota: 39">
-                            <input type="text" class="list-group-item" id="" readonly value="Bota: 39">
+                            <input type="text" class="list-group-item" id="numeracao_bota" readonly value="Bota: null">
+                            <input type="text" class="list-group-item" id="numeracao_botina" readonly value="Botina: null">
+                            <input type="text" class="list-group-item" id="numeracao_luva" readonly value="Luva: null">
                         </ul>
                     </div>
                     <div class="col-6">
                         <ul class="list-group list-group-flush">
-                            <input type="text" class="list-group-item" id="" readonly value="Bota: 39">
-                            <input type="text" class="list-group-item" id="" readonly value="Bota: 39">
+                            <input type="text" class="list-group-item" id="numeracao_camisa" readonly value="Camisa: null">
+                            <input type="text" class="list-group-item" id="numeracao_calca" readonly value="Calça: null">
                         </ul>
 
                     </div>
@@ -126,16 +126,18 @@
 </div>
 <div class="row">
     <div class="col-12">
-            <table data-toggle="table" data-locale="pt-BR" data-url="{{api}}Almoxarifado/tabela/repor"
+            <table id="tabela_epis_validos" data-toggle="table" data-locale="pt-BR"
         class="table table-hover table-bordered table-striped table-sm">
         <thead>
           <tr>
-            <th data-field="id_colab">ID</th>
-            <th data-field="nome">Produto</th>
-            <th data-field="funcao">CA</th>
-            <th data-field="id_produto">Data entrega</th>
-            <th data-field="situacao">Reposição</th>
-          </tr>
+            <th data-field="id_produto" rowspan="2">ID</th>
+            <th data-field="produto" rowspan="2">Produto</th>
+            <th data-field="ca" rowspan="2">CA</th>
+            <th data-field="tamanho" rowspan="2">Tamanho</th>
+                <th colspan="2" >Validades</th>
+            </tr>
+            <th data-field="validade_uso" data-formatter="dataFormatter">USO</th>
+            <th data-field="validade_ca" data-formatter="dataFormatter">CA</th>
         </thead>
       </table>
     </div>
@@ -333,7 +335,9 @@
     function carregarDados() {
         let c = new Form('colaborador', 'view', colab)
         c.open(colab)
-
+        $("#tabela_epis_validos").bootstrapTable('refreshOptions', {
+            url: `{{api}}Almoxarifado/epis_validos?id_colab=${colab}`,
+        })
         //for (x in objs) {
         //    x = new Form(objs[x], 'filter')
         //    x.open({ 'colaborador': colab })

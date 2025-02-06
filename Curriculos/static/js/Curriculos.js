@@ -7,7 +7,6 @@ class BaseLoader {
         this.type = type; // Tipo do loader (post, view, update, etc...)
         this.prefix = object + "_"; // Prefixo para os campos (modal/form)
         this.id = undefined; // ID de registro, se necessário
-        console.log(this);
     }
     async open(id = undefined) {
         this.id = id;
@@ -63,7 +62,7 @@ class BaseLoader {
         }
     }
 
-    async populateTable(response, feature = undefined, not = []) {
+    async populateTable(response= [{ Tabelas: "Sem registro" }], feature = undefined, not = []) {
         try {
             const tabela = document.getElementById(this.prefix + "table");
             const thead = tabela.querySelector("thead tr");
