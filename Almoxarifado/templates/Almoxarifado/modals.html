@@ -446,28 +446,28 @@
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">PRODUTO:</label>
-                                <select class="form-select" id="m_update-epi_movimentacao_produto" onchange="carregarFiltrado()" disabled>
+                                <select class="form-select" id="m_update-epi_movimentacao_produto" disabled>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">EPI:</label>
+                                <select class="form-select" id="m_update-epi_movimentacao_epi_cadastro" disabled>
                                 </select>
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="input-group mb-2 flex-nowrap input-group-sm">
-                                <label class="input-group-text">EPI:</label>
-                                <select class="form-select" id="m_update-epi_movimentacao_epi_cadastro">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">QUANTIDADE:</label>
                                 <input type="number" id="m_update-epi_movimentacao_quantidade" class="form-control">
                             </div>
                         </div>
                     
-                        <div class="col-auto">
+                        <div class="col-6">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">TAMANHO:</label>
                                 <input class="form-control" list="f_tamanho" id="m_update-epi_movimentacao_tamanho">
@@ -506,9 +506,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success mb-2 btn-sm"
-                        id="m_update-epi_movimentacao_submit">Salvar</button>
+                <div class="modal-footer mb-2">
+                    <button type="button" class="btn btn-danger btn-sm"id="m_update-epi_movimentacao_del">Deletar</button>
+                    <button type="button" class="btn btn-success btn-sm"id="m_update-epi_movimentacao_submit">Salvar</button>
                 </div>
             </div>
         </div>

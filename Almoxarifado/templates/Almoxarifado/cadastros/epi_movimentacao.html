@@ -11,10 +11,10 @@
             <label class="input-group-text">COLABORADOR:</label>
             <select class="form-select" id="f_{{resource}}_colaborador" tabindex="1">
             </select>
-            <label class="input-group-text bg-secondary-subtle" id="numeracao" data-bs-toggle="tooltip"
+            <button class="input-group-text text-bg-secondary" id="numeracao" data-bs-toggle="tooltip"
                 data-bs-placement="right" data-bs-html="true" data-bs-title="Carregando...">
                 Numeração
-            </label>
+            </button>
         </div>
     </div>
     <div class="col-auto">
@@ -22,6 +22,7 @@
             <label class="input-group-text">FICHA:</label>
             <select class="form-select" id="f_{{resource}}_ficha" tabindex="2">
             </select>
+            <button class="input-group-text text-bg-secondary" onclick="colab_chance(); toasts('primary',{'method':'Atualizando','message':'Aguarde alguns instante!'})"><i class="bi bi-arrow-clockwise"></i></button>
         </div>
     </div>
 </div>

@@ -462,24 +462,6 @@ Pos_load = {
             }
         });
     },
-    
-    epi_movimentacao: (loader) => {
-        
-        async function carregarFiltrado() {
-            produto = document.getElementById('#' + loader.prefix + 'produto').value
-            result = []
-            for (const item in epis) {
-                if (epis[item]['produto'] == produto) {
-                    result.push(epis[item])
-                }
-            }
-            loader.populateSelect(result, 'epi_cadastro')
-        }
-        apiRequest.get('select/epi_cadastro').then((result) => {
-            epis = result
-            setTimeout(() => {carregarFiltrado()}, 500);
-        })
-    }
 };
 Submit = {
     readFields: function (loader) {
