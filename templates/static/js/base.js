@@ -4,12 +4,12 @@ const False = false;
 $(document).ready(() =>{
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    set_theme()
     // $('html').attr ('data-bs-theme', page.getParam('theme'))
 }) 
 function set_theme() {
-    $('html').attr ('data-bs-theme', localStorage.getItem('theme'))
+    $('html').attr ('data-bs-theme', localStorage.getItem('theme') || 'light')
 }
+set_theme()
 const date = {
     adicionarZero: function (value) {
         if (value <= 9) return "0" + value;
@@ -356,3 +356,15 @@ function debounce(func, timeout = 300){
       timer = setTimeout(() => { func.apply(this, args); }, timeout);
     };
   }
+
+  function removeFromArray(array, value) {
+    if (!Array.isArray(array)) {
+        throw new Error("O primeiro argumento deve ser um array.");
+    }
+
+    const valuesToRemove = new Set(
+        Array.isArray(value) ? value : [value]
+    );
+
+    return array.filter(item => !valuesToRemove.has(item));
+}
