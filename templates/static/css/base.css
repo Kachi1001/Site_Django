@@ -51,6 +51,7 @@ body{
   height: var(--navbar_width);
 }
 .card{
+  border: none;
   box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.264);
 }
 h2{
