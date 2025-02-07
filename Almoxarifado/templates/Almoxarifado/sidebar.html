@@ -4,6 +4,24 @@
     <a href="/{{app}}/" class="nome_app">{{app_name}} </a>
     
     <div class="accordion accordion-flush" id="accordion">
+        {% if user|can:'Almoxarifado-fichas' %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#menu-fichas" aria-expanded="false">
+                    Fichas
+                </button>
+            </h2>
+            <div id="menu-fichas" class="accordion-collapse collapse" data-bs-parent="#accordion">                
+                {% if user|can:'Almoxarifado-ficha_padrao' %}
+                <a href="#" onclick="abrirRegistro('ficha_padrao')"><i {{icon.modal}}></i> Ficha padrão</a>
+                {%endif%}
+                <a href="#" onclick="abrirRegistro('ficha')"><i {{icon.modal}}></i> Fichas</a>
+                <a href="#" onclick="modal('imprimir_ficha')"><i {{icon.modal}}></i> Imprimir ficha</a>
+            </div>
+        </div>
+        {%endif%}
+        
         {% if user|can:'Almoxarifado-produto' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -13,23 +31,6 @@
             </h2>
         </div>
         {%endif%}
-        {% if user|can:'Almoxarifado-ficha' %}
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#menu-fichas" aria-expanded="false">
-                    Fichas
-                </button>
-            </h2>
-            <div id="menu-cadastros" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <!-- <a href="#" onclick="abrirRegistro('profissoes')"><i {{icon.modal}}></i> Profissões</a> -->
-                <a href="#" onclick="abrirRegistro('ficha_padrao')"><i {{icon.modal}}></i> Setor</a>
-                <a href="#" onclick="abrirRegistro('ficha')"><i {{icon.modal}}></i> Área atuação</a>
-                <a href="#" onclick="modal('imprimir_ficha')"><i {{icon.modal}}></i> Área atuação</a>
-            </div>
-        </div>
-        {%endif%}
-
         {% if user|can:'Almoxarifado-numeracao' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -39,15 +40,7 @@
             </h2>
         </div>
         {%endif%}
-        {% if user|can:'Almoxarifado-ficha' %}
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <a href="#" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px" onclick="abrirRegistro('ficha')">
-                    <i {{icon.modal}}></i> Ficha de EPI
-                </a>
-            </h2>
-        </div>
-        {%endif%}
+    
         {% if user|can:'Almoxarifado-cadastra_epi' %}
         <div class="accordion-item">
             <h2 class="accordion-header">

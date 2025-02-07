@@ -1,13 +1,21 @@
 <style>
     .modal_list {
-        height: 200px;
-        overflow: auto;
-        border-top: 1px solid #dee2e6;
+        width: 100%;
+            max-height: 200px; /* Ajuste conforme necessário */
+            overflow-y: auto; /* Habilita o scroll vertical */
+    }
+    thead {
+        padding-top: 5px;
+    }
+    thead tr {
+        position: sticky;
+        top: 0;
+        background-color: white; /* Cor de fundo para cobrir o conteúdo */
+        z-index: 1; /* Garante que o cabeçalho fique acima do corpo */
+        border-top: 0px;
+        border-bottom: 1px solid gray; /* Borda inferior para separar do conteúdo */
     }
 
-    th {
-        font-size: small;
-    }
 </style>
 
 
@@ -16,7 +24,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Produtos</h1>
+                    <h1 class="modal-title fs-5"><strong>Produtos</strong></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -52,25 +60,25 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Itens padrão da ficha</h1>
+                    <h1 class="modal-title fs-5"><strong>Itens padrão da ficha</strong></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="input-group input-group-sm mb-2 nowrap ">
-                        <label class="input-group-text">Produto:</label>
-                        <select id="m_register-ficha_padrao_produto" class="form-select form-select-sm"></select>
-                    </div>
-                    <button type="button" class="btn btn-primary mb-2 btn-sm"
-                        id="m_register-ficha_padrao_submit">Cadastrar</button>
                     <div class="modal_list">
                         <table class="table table-hover table-bordered table-striped table-sm"
                             id="m_register-ficha_padrao_table">
                             <thead>
                                 <tr></tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody style="height: 150px; overflow: auto;"></tbody>
                         </table>
                     </div>
+                <div class="modal-footer">
+                    <div class="input-group input-group-sm mb-2 nowrap ">
+                        <label class="input-group-text">Produto:</label>
+                        <select id="m_register-ficha_padrao_produto" class="form-select form-select-sm"></select>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2 btn-sm"
+                        id="m_register-ficha_padrao_submit">Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -123,7 +131,8 @@
                     <input type="hidden" id="m_register-ficha_id" value="1">
                     <input type="hidden" id="m_register-ficha_completa" value="false">
 
-                    <button type="button" class="btn btn-primary mb-2 btn-sm" id="m_register-ficha_submit">Cadastrar</button>
+                    <button type="button" class="btn btn-primary mb-2 btn-sm"
+                        id="m_register-ficha_submit">Cadastrar</button>
                     <div class="modal_list">
                         <table class="table table-hover table-bordered table-striped table-sm"
                             id="m_register-ficha_table">
@@ -468,9 +477,11 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">COLABORADOR:</label>
-                                <select class="form-select" id="m_update-epi_movimentacao_colaborador" disabled></select >
-                                <label class="input-group-text bg-secondary-subtle" id="numeracao" data-bs-toggle="tooltip"
-                                    data-bs-placement="right" data-bs-html="true" data-bs-title="Carregando...">
+                                <select class="form-select" id="m_update-epi_movimentacao_colaborador"
+                                    disabled></select>
+                                <label class="input-group-text bg-secondary-subtle" id="numeracao"
+                                    data-bs-toggle="tooltip" data-bs-placement="right" data-bs-html="true"
+                                    data-bs-title="Carregando...">
                                     Numeração
                                 </label>
                             </div>
@@ -513,7 +524,7 @@
                                 <input type="number" id="m_update-epi_movimentacao_quantidade" class="form-control">
                             </div>
                         </div>
-                    
+
                         <div class="col-6">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">TAMANHO:</label>
@@ -531,7 +542,7 @@
                         </div>
                     </div>
                     <div class="row mb-2">
-                    
+
                         <div class="col-auto">
                             <div class="input-group mb-2 nowrap input-group-sm">
                                 <label class="input-group-text">REPOSIÇÃO?</label>
@@ -554,8 +565,10 @@
                     </div>
                 </div>
                 <div class="modal-footer mb-2">
-                    <button type="button" class="btn btn-danger btn-sm"id="m_update-epi_movimentacao_del">Deletar</button>
-                    <button type="button" class="btn btn-success btn-sm"id="m_update-epi_movimentacao_submit">Salvar</button>
+                    <button type="button" class="btn btn-danger btn-sm"
+                        id="m_update-epi_movimentacao_del">Deletar</button>
+                    <button type="button" class="btn btn-success btn-sm"
+                        id="m_update-epi_movimentacao_submit">Salvar</button>
                 </div>
             </div>
         </div>

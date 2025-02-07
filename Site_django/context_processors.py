@@ -15,6 +15,7 @@ translate = {
     'Curriculos': 'Currículos',
     'Almoxarifado':'Almoxarifado',
     'Ti': 'Ti',
+    'Financeiro': 'Financeiro',
 }
 def base(request):
     modulo_da_view = request.resolver_match.func.__module__
