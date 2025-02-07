@@ -12,14 +12,14 @@ class BaseLoader {
         this.id = id;
         this.inputs = await apiRequest.get(`resource/${this.object}`);
         loader = this;
-
-        if (this.modal) {
+        return new Promise((resolve, reject) => {
             this[this.type]().then(() => {
-                this.modal.show();
-            }); // Registra ou atualiza conforme o tipo
-        } else {
-            this[this.type]();
-        }
+                if (this.modal) {
+                    this.modal.show();
+                }
+                resolve();
+            });
+        });
     }
     async populateSelect(data = [], field = "") {
         try {
@@ -112,8 +112,10 @@ class BaseLoader {
                         cell.textContent = obj[key];
                         if (isValidDate(obj[key])) {
                             const data = new Date(obj[key]);
-                            cell.textContent = data.toLocaleDateString("pt-BR",
-                                    { timeZone: "UTC" });
+                            cell.textContent = data.toLocaleDateString(
+                                "pt-BR",
+                                { timeZone: "UTC" }
+                            );
                         }
                     }
                     row.appendChild(cell);
@@ -162,6 +164,11 @@ class BaseLoader {
             throw error;
         }
     }
+    async set(field, value, locked = false) {
+        const html = $("#" + this.prefix + field);
+        html.val(value);
+        html.attr("disabled", locked);
+    }
 }
 var modal_open;
 class Modal extends BaseLoader {
@@ -171,6 +178,7 @@ class Modal extends BaseLoader {
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
         console.log(this.prefix.slice(0, -1));
         this.modal = new bootstrap.Modal(this.myModal);
+        this.refresh;
         this.loader = loader;
     }
 
@@ -194,15 +202,16 @@ class Modal extends BaseLoader {
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
-                loader.refresh = async () => {
-                    const table = await apiRequest.get(loader.object);
-                    loader.populateTable(table, "delete", ["id"]);
-                };
+                if (loader.refresh == undefined) {
+                    loader.refresh = async () => {
+                        const table = await apiRequest.get(loader.object);
+                        loader.populateTable(table, "delete", ["id"]);
+                    };
+                }
                 Submit.post(loader);
             });
     }
     async update() {
-        
         try {
             const data = await apiRequest.get(this.object + "/" + this.id);
             this.populateData(data).then(() => {
@@ -211,16 +220,24 @@ class Modal extends BaseLoader {
                     this.last.object == this.object &&
                     this.last.type == "register"
                 ) {
-                    loader.myModal.addEventListener("hidden.bs.modal", (event) => {
-                        loader.modal.dispose();
-                        const candidato = page.getParam("id");
-                        let registro = new Modal(loader.last.object, this.last.type);
-                        registro.refresh = () => {
+                    loader.myModal.addEventListener(
+                        "hidden.bs.modal",
+                        (event) => {
+                            loader.modal.dispose();
+                            const candidato = page.getParam("id");
+                            let registro = new Modal(
+                                loader.last.object,
+                                this.last.type
+                            );
+                            registro.refresh = () => {
+                                registro.open(candidato);
+                            };
                             registro.open(candidato);
-                        };
-                        registro.open(candidato);
-                        $("#" + registro.prefix + "candidato").val(candidato);
-                    });
+                            $("#" + registro.prefix + "candidato").val(
+                                candidato
+                            );
+                        }
+                    );
                 }
                 if (this.object in Pos_load) {
                     Pos_load[this.object](loader);
@@ -356,10 +373,6 @@ class Modal extends BaseLoader {
             });
         }
     }
-
-    refresh() {
-        // page.refresh();
-    }
 }
 
 class Form extends BaseLoader {
@@ -429,20 +442,8 @@ Pos_load = {
     ficha: (loader) => {
         const colaborador = $("#" + loader.prefix + "colaborador");
         const pagina = $("#" + loader.prefix + "pagina");
-        function getFicha() {
-            apiRequest
-                .get("ficha?colaborador=" + colaborador.val())
-                .then((response) => {
-                    pag = 0;
-                    response.forEach((row) => {
-                        if (row.pagina >= pag) {
-                            pag = row.pagina;
-                        }
-                    });
-                    pagina.val(pag + 1);
-                });
-        }
-        colaborador.change(getFicha);
+        
+        colaborador.on('change',getFicha);
         getFicha();
         const mudar = $("#" + loader.prefix + "mudar");
         mudar.off().on("click", () => {
