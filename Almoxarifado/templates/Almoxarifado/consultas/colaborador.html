@@ -71,7 +71,7 @@
     <hr class="mt-2">
 </div>
 <div class="row">
-    <div class="col-auto">
+    <div class="col-auto mb-2">
         <div class="card" style="width: 19rem;">
             <div class="card-header">
                 <strong>Numeração</strong>
@@ -119,8 +119,8 @@
         </div>
     </div>
 </div>
-<div class="row align-items-center mb-2">
-    <h3 class="mb-2 mt-5"><strong>Epi's</strong></h3>
+<div class="row align-items-center">
+    <h3 class="mb-2 mt-3"><strong>Epi's</strong></h3>
     <!-- <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
             onclick="abrirHistorico('periodoaquisitivo')">Movimentar</button></div> -->
     <hr class="mt-3">
@@ -136,10 +136,26 @@
             </tr>
             <th data-field="validade_uso" data-formatter="dataFormatter">USO</th>
             <th data-field="validade_ca" data-formatter="dataFormatter">CA</th>
-            <th data-field="situacao">SITUAÇÃO</th>
+            <th data-field="situacao" data-formatter="situacaoFormatter">SITUAÇÃO</th>
         </thead>
     </table>
-
+    <script>
+        function situacaoFormatter(value) {
+            let cl = ''
+            switch (value) {
+                case 'Ok':
+                    cl = 'bg-success'
+                    break
+                case 'Durabilidade não cadastrada':
+                    cl = 'bg-warning'
+                    break
+                default:
+                    cl = 'bg-danger'
+                    break
+            }
+            return `<h6 class='m-0'><span class="badge ${cl} text-uppercase">${value}</span></h6>`
+        }
+    </script>
 </div>
 <!-- <div class="row align-items-center mt-4">
     <div class="col-auto">

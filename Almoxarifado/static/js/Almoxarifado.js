@@ -14,11 +14,11 @@ class BaseLoader {
         loader = this;
         return new Promise((resolve, reject) => {
             this[this.type]().then(() => {
-                if (this.modal) {
+                    if (this.modal) {
                     this.modal.show();
-                }
-                resolve();
-            });
+                    }
+                    resolve();
+                });
         });
     }
     async populateSelect(data = [], field = "") {
@@ -381,7 +381,7 @@ class Form extends BaseLoader {
         this.prefix = "f_" + this.prefix; // Prefixo de modal
     }
     // Registro
-    register() {
+    async register() {
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
@@ -404,7 +404,7 @@ class Form extends BaseLoader {
         }
     }
 
-    refresh() {
+    async refresh() {
         $("#table").bootstrapTable("refresh");
         carregarDados();
     }
@@ -442,8 +442,8 @@ Pos_load = {
     ficha: (loader) => {
         const colaborador = $("#" + loader.prefix + "colaborador");
         const pagina = $("#" + loader.prefix + "pagina");
-        
-        colaborador.on('change',getFicha);
+
+        colaborador.on("change", getFicha);
         getFicha();
         const mudar = $("#" + loader.prefix + "mudar");
         mudar.off().on("click", () => {
@@ -522,3 +522,6 @@ modal = {
         obj.open(id);
     },
 };
+function abrir_site(ca) {
+    page.new(`https://consultaca.com/${ca}`);
+}
