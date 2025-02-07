@@ -189,7 +189,7 @@ class Modal extends BaseLoader {
         });
         const table = await apiRequest.get(this.object);
         let feature = ["delete", "edit"];
-        if (this.object == "ficha") {
+        if (this.object == "ficha" || this.object == "ficha_padrao") {
             feature = "delete";
         }
         this.populateTable(table, feature, ["id"]).then(() => {
@@ -343,21 +343,14 @@ class Modal extends BaseLoader {
         }
     }
 
-    async file_view() {
-        const data = await apiRequest.get("anexos/" + this.id);
-        const imagem = document.getElementById(this.prefix + "preview_imagem");
+    async ficha() {
+        const data = await apiRequest.get("imprimir_ficha/" + this.id);
         const pdf = document.getElementById(this.prefix + "preview_pdf");
         $("#" + this.prefix + "nome").text(data.nome);
 
-        if (data.tipo == "pdf") {
             pdf.src = data.link;
             pdf.style.display = "block";
             imagem.style.display = "none";
-        } else {
-            imagem.src = data.link;
-            imagem.style.display = "block";
-            pdf.style.display = "none";
-        }
         $("#" + this.prefix + "delete")
             .off()
             .on("click", () => {

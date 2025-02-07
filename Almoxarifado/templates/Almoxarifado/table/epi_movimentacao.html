@@ -3,7 +3,8 @@
 
     <thead>
         <th data-field="id" data-sortable="true">ID</th>
-        <th data-field="colaborador" data-sortable="true" data-searchable="true" data-formatter="colaboradorFormatter">Colaborador</th>
+        <th data-field="colaborador.nome" data-sortable="true" data-searchable="true">Colaborador</th>
+        <th data-field="ficha" data-sortable="true" data-searchable="false">Ficha</th>
         <th data-field="obra" data-sortable="true" data-searchable="true">CR</th>
         <th data-field="data_entrega" data-sortable="true" data-formatter="dataFormatter">Data entrega</th>
         <th data-field="reposicao" data-sortable="true">Motivo</th>
@@ -15,14 +16,4 @@
     </thead>
 </table>
 <script>
-    colabs = {}
-    apiRequest.get('select/colaborador').then((result) => {
-        for (const item of result) {
-            colabs[item.value] = item.text
-        }  
-    });
-    function colaboradorFormatter(value){
-        return colabs[value]
-    }
-    
 </script>
