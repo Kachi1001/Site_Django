@@ -27,7 +27,6 @@ body {
     display: block; 
     border: none;
     background: none;
-    width: 100%;
     text-align: left;
     cursor: pointer;
     outline: none;
@@ -66,3 +65,8 @@ body {
     font-weight: 500;
   }
 
+  .accordion-collapse a{
+    padding-left: 15px;
+    border-left: 1px solid #bdc0c3;
+    margin-left: 15px;
+  }

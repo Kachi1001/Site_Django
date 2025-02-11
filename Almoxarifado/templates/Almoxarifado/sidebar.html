@@ -25,6 +25,15 @@
         {% if user|can:'Almoxarifado-produto' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
+                <a href="#" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px" onclick="abrirRegistro('erros')">
+                    <i {{icon.modal}}></i> Relatar erro
+                </a>
+            </h2>
+        </div>
+        {%endif%}
+        {% if user|can:'Almoxarifado-produto' %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
                 <a href="#" class="a-inicio" style="padding: 16px 20px 16px 20px; font-size: 16px" onclick="abrirRegistro('produto')">
                     <i {{icon.modal}}></i> Produtos
                 </a>

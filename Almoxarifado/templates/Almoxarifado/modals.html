@@ -1,24 +1,3 @@
-<style>
-    .modal_list {
-        width: 100%;
-            max-height: 200px; /* Ajuste conforme necessário */
-            overflow-y: auto; /* Habilita o scroll vertical */
-    }
-    thead {
-        padding-top: 5px;
-    }
-    thead tr {
-        position: sticky;
-        top: 0;
-        background-color: white; /* Cor de fundo para cobrir o conteúdo */
-        z-index: 1; /* Garante que o cabeçalho fique acima do corpo */
-        border-top: 0px;
-        border-bottom: 1px solid gray; /* Borda inferior para separar do conteúdo */
-    }
-
-</style>
-
-
 <div class="modals">
     <div class="modal fade" id="m_register-produto" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -56,6 +35,34 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="m_register-erros" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"><strong>Itens padrão da ficha</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_register-erros_table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    
+                <div class="modal-footer">
+                    <div class="input-group input-group-sm mb-2 nowrap ">
+                        <label class="input-group-text">Descrição:</label>
+                        <textarea id="m_register-erros_texto" class="form-control form-control-sm"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2 btn-sm"
+                        id="m_register-erros_submit">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="m_register-ficha_padrao" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -66,12 +73,13 @@
                     <div class="modal_list">
                         <table class="table table-hover table-bordered table-striped table-sm"
                             id="m_register-ficha_padrao_table">
-                            <thead>
+                            <thead class="table-secondary">
                                 <tr></tr>
                             </thead>
-                            <tbody style="height: 150px; overflow: auto;"></tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
+                    
                 <div class="modal-footer">
                     <div class="input-group input-group-sm mb-2 nowrap ">
                         <label class="input-group-text">Produto:</label>

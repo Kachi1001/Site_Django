@@ -189,7 +189,7 @@ class Modal extends BaseLoader {
         });
         const table = await apiRequest.get(this.object);
         let feature = ["delete", "edit"];
-        if (this.object == "ficha" || this.object == "ficha_padrao") {
+        if (this.object == "ficha" || this.object == "ficha_padrao" || this.object == "erros") {
             feature = "delete";
         }
         this.populateTable(table, feature, ["id"]).then(() => {
