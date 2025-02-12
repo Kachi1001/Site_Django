@@ -59,12 +59,12 @@
                 <div class="modal-body">
                     <div class="input-group input-group-sm mb-2 nowrap ">
                         <label class="input-group-text">Área de atuação:</label>
-                        <select id="m_register-area_atuacao_sub_area_atuacao"
+                        <select id="m_register-area_atuacao_area_atuacao_sub_atuacao"
                             class="form-select form-control-sm"></select>
                     </div>
                     <div class="input-group input-group-sm mb-2 nowrap ">
                         <label class="input-group-text">Sub área:</label>
-                        <input type="text" id="m_register-area_atuacao_sub_sub_area"
+                        <input type="text" id="m_register-area_atuacao_sub_area_atuacao_sub"
                             class="form-control form-control-sm">
                     </div>
                     <button type="button" class="btn btn-primary mb-2" btn-sm
@@ -246,7 +246,7 @@
                         <div class="col-6">
                             <div class="input-group input-group-sm mb-2 nowrap">
                                 <label class="input-group-text">SUB ÁREA:</label>
-                                <select id="m_lanc-experiencia_sub_area" class="form-select form-control-sm"></select>
+                                <select id="m_lanc-experiencia_area_atuacao_sub" class="form-select form-control-sm"></select>
                             </div>
                         </div>
                         <div class="col">
@@ -310,7 +310,7 @@
                     <div class="col-6">
                         <div class="input-group input-group-sm mb-2 nowrap">
                             <label class="input-group-text">SUB ÁREA:</label>
-                            <select id="m_update-experiencia_sub_area" class="form-select form-control-sm"></select>
+                            <select id="m_update-experiencia_area_atuacao_sub" class="form-select form-control-sm"></select>
                         </div>
                     </div>
                     <div class="col">
@@ -797,21 +797,7 @@
 
 </div>
 <script>
-    function chance_area(prefix, area = document.getElementById(prefix + 'area_atuacao').value) {
-        apiRequest.get('area_atuacao_sub', {
-            area_atuacao: area
-        }).then(data => {
-            let select = document.getElementById(prefix + 'sub_area');
-            select.innerHTML = '';
-            data.forEach(sub_area => {
-                let option = document.createElement('option');
-                option.value = sub_area.id;
-                option.innerHTML = sub_area.sub_area;
-                select.appendChild(option);
-            });
-            select.disabled = false;
-        });
-    }
+    
     function abrirRegistro(modal, table = false) {
         let registro = new Modal(modal, 'register')
         registro.open(table)

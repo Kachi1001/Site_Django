@@ -15,13 +15,13 @@ class BaseLoader {
         return new Promise((resolve, reject) => {
             this[this.type]().then(() => {
                 if (this.modal) {
-                }
-                try {
-                    customActions[this.type][this.object](this).then(() =>{
+                    try {
+                        customActions[this.type][this.object](this).then(() =>{
+                            this.modal.show();
+                        });
+                    } catch{
                         this.modal.show();
-                    });
-                } catch{
-                    this.modal.show();
+                    }
                 }
                 resolve();
             });
@@ -370,12 +370,16 @@ class Modal extends BaseLoader {
 const customActions = {
     lanc: {
         experiencia: async function (loader) {
+            setTimeout(() => {
             chance_area(loader.prefix, 1);
+            }, 300);
         },
     },
     update: {
         experiencia: async function (loader) {
+            setTimeout(() => {
             chance_area(loader.prefix, 1);
+            }, 300);
         },
     },
 };
@@ -385,7 +389,7 @@ class Form extends BaseLoader {
         this.prefix = "f_" + this.prefix; // Prefixo de modal
     }
     // Registro
-    register() {
+    async register() {
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
@@ -408,7 +412,7 @@ class Form extends BaseLoader {
         }
     }
 
-    refresh() {
+    async refresh() {
         $("#table").bootstrapTable("refresh");
         carregarDados();
     }
@@ -492,3 +496,18 @@ $(document).ready(() => {
         console.log("Tela sem inicializador", error);
     }
 });
+function chance_area(prefix, area = document.getElementById(prefix + 'area_atuacao').value) {
+    apiRequest.get('area_atuacao_sub', {
+        area_atuacao: area
+    }).then(data => {
+        let select = document.getElementById(prefix + 'area_atuacao_sub');
+        select.innerHTML = '';
+        data.forEach(sub_area => {
+            let option = document.createElement('option');
+            option.value = sub_area.id;
+            option.innerHTML = sub_area.sub_area;
+            select.appendChild(option);
+        });
+        select.disabled = false;
+    });
+}

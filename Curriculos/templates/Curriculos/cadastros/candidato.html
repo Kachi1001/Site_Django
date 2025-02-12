@@ -75,14 +75,14 @@
     <div class="col-auto">
         <div class="input-group input-group-sm mb-2 nowrap">
             <label class="input-group-text">VAGA TECNIKA:</label>
-            <select id="f_{{resource}}_area_atuacao" class="form-select form-control-sm">
+            <select id="f_{{resource}}_area_atuacao" class="form-select form-control-sm" onchange="chance_area('f_{{resource}}_')">
             </select>
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group input-group-sm mb-2 nowrap">
             <label class="input-group-text">SUB ÁREA:</label>
-            <select id="f_{{resource}}_sub" class="form-select form-control-sm">
+            <select id="f_{{resource}}_area_atuacao_sub" class="form-select form-control-sm">
             </select>
         </div>
     </div>
@@ -125,6 +125,8 @@
         loader = new Form('candidato', 'register')
         loader.open().then(() => {
             $("#f_candidato_nome").focus();
+            chance_area(loader.prefix, 1);
+
             setTimeout(() => {
                 $("#f_candidato_cnh").val('Não informado');
                 $("#f_candidato_estado_civil").val('Não informado');
