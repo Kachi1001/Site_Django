@@ -176,7 +176,7 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Experiências</h1>
+                    <h1 class="modal-title fs-5"><strong>Experiências</strong></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-1">
@@ -194,23 +194,25 @@
                 <div class="modal-footer">
                     <input type="hidden" id="m_lanc-experiencia_candidato">
                     <div class="row m-0 justify-content-center">
-                        <div class="col-6">
+                        <input type="hidden" id="m_lanc-experiencia_profissao" value='1'></input>
+                        <div class="col-12">
                             <div class="input-group input-group-sm mb-2 nowrap">
                                 <label class="input-group-text">EMPRESA:</label>
                                 <input type="text" id="m_lanc-experiencia_empresa" class="form-control form-control-sm">
                             </div>
                         </div>
-                        <div class="col-6 d-none">
+
+                        <div class="col-6">
                             <div class="input-group input-group-sm mb-2 nowrap">
-                                <label class="input-group-text">PROFISSÃO:</label>
-                                <input type="text" id="m_lanc-experiencia_profissao" class="form-control form-control-sm" value='1'></input>
+                                <label class="input-group-text">ÁREA DE ATUAÇÃO:</label>
+                                <select id="m_lanc-experiencia_area_atuacao" class="form-select form-control-sm"
+                                    onselect="chance_area('m_lanc-experiencia')"></select>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="input-group input-group-sm mb-2 nowrap">
-                                <label class="input-group-text">ÁREA DE ATUAÇÃO:</label>
-                                <select id="m_lanc-experiencia_area_atuacao"
-                                    class="form-select form-control-sm"></select>
+                                <label class="input-group-text">SUB ÁREA:</label>
+                                <select id="m_lanc-experiencia_sub_area" class="form-select form-control-sm" disabled></select>
                             </div>
                         </div>
                         <div class="col">
@@ -243,8 +245,27 @@
                         id="m_lanc-experiencia_submit">ADICIONAR</button>
 
                 </div>
+
             </div>
         </div>
+        <script>
+            function chance_area(prefix) {
+                let area = document.getElementById(prefix + '_area_atuacao').value;
+                apiRequest.get('area_atuacao_sub', {
+                    area_atuacao: area
+                }).then(data => {
+                    let select = document.getElementById(prefix + '_sub_area');
+                    select.innerHTML = '';
+                    data.forEach(sub_area => {
+                        let option = document.createElement('option');
+                        option.value = sub_area.id;
+                        option.innerHTML = sub_area.sub_area;
+                        select.appendChild(option);
+                    });
+                    select.disabled = false;
+                });
+            }   
+        </script>
     </div>
     <div class="modal fade" id="m_update-experiencia" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -255,6 +276,7 @@
                 </div>
                 <input type="hidden" id="m_update-experiencia_candidato">
                 <div class="row m-1 justify-content-center">
+                    <input type="hidden" id="m_update-experiencia_profissao" value='1'></input>
                     <div class="col-12">
                         <div class="input-group input-group-sm mb-2 nowrap">
                             <label class="input-group-text">EMPRESA:</label>
@@ -263,14 +285,14 @@
                     </div>
                     <div class="col-6">
                         <div class="input-group input-group-sm mb-2 nowrap">
-                            <label class="input-group-text">PROFISSÃO:</label>
-                            <input type="text d-none" id="m_update-experiencia_profissao" class="form-control form-control-sm" value='CADASTRO'></input>
+                            <label class="input-group-text">ÁREA DE ATUAÇÃO:</label>
+                            <select id="m_update-experiencia_area_atuacao" class="form-select form-control-sm" onselect="chance_area('m_update-experiencia')" on="chance_area('m_update-experiencia')"></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="input-group input-group-sm mb-2 nowrap">
-                            <label class="input-group-text">ÁREA DE ATUAÇÃO:</label>
-                            <select id="m_update-experiencia_area_atuacao" class="form-select form-control-sm"></select>
+                            <label class="input-group-text">SUB ÁREA:</label>
+                            <select id="m_update-experiencia_sub_area" class="form-select form-control-sm" disabled></select>
                         </div>
                     </div>
                     <div class="col">
@@ -299,12 +321,13 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-success m-2" id="m_update-experiencia_save">SALVAR</button>
+                    <button type="button" class="btn btn-sm btn-success m-2"
+                        id="m_update-experiencia_save">SALVAR</button>
                 </div>
 
+            </div>
         </div>
     </div>
-</div>
 </div>
 <div class="modal fade" id="m_lanc-classificacao" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -418,7 +441,7 @@
                         </div>
 
                     </div>
-                    
+
                     <div class="col-7">
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
@@ -529,7 +552,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="col-auto">
                         <div class="input-group input-group-sm mb-2 flex-nowrap">
                             <label class="input-group-text">SALÁRIO:</label>
@@ -717,7 +740,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="m_file_view-anexos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="m_file_view-ficha_epi" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -725,9 +748,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <img id="m_file_view-anexos_preview_imagem" style="width: 100%; height: 100%;"
-                    src="http://tecnikaengenharia.ddns.net/media/icons/file.png">
-                <embed id="m_file_view-anexos_preview_pdf" type='application/pdf'
+                <embed id="m_file_view-ficha_epi_preview_pdf" type='application/pdf'
                     style="width: 100%; height: 500px; display: none;">
             </div>
             <div class="modal-footer">

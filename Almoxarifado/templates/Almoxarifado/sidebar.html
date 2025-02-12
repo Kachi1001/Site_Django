@@ -17,7 +17,7 @@
                 <a href="#" onclick="abrirRegistro('ficha_padrao')"><i {{icon.modal}}></i> Ficha padrão</a>
                 {%endif%}
                 <a href="#" onclick="abrirRegistro('ficha')"><i {{icon.modal}}></i> Fichas</a>
-                <a href="#" onclick="modal('imprimir_ficha')"><i {{icon.modal}}></i> Imprimir ficha</a>
+                <a href="#" onclick="obj = new Modal('ficha', 'select'); obj.open()"><i {{icon.modal}}></i> Imprimir ficha</a>
             </div>
         </div>
         {%endif%}

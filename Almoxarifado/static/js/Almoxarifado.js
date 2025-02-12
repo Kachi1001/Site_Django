@@ -14,11 +14,11 @@ class BaseLoader {
         loader = this;
         return new Promise((resolve, reject) => {
             this[this.type]().then(() => {
-                    if (this.modal) {
+                if (this.modal) {
                     this.modal.show();
-                    }
-                    resolve();
-                });
+                }
+                resolve();
+            });
         });
     }
     async populateSelect(data = [], field = "") {
@@ -154,6 +154,22 @@ class BaseLoader {
                         });
                         extraBtn.appendChild(editBtn);
                     }
+                    if (feature.includes("view")) {
+                        const editBtn = document.createElement("i");
+                        editBtn.classList.add(
+                            "btn-icon",
+                            "bg-success",
+                            "bi-file-earmark",
+                            "me-1"
+                        );
+
+                        editBtn.addEventListener("click", () => {
+                            this.modal.hide();
+                            let modal = new Modal(this.object, "view");
+                            modal.open(obj.id);
+                        });
+                        extraBtn.appendChild(editBtn);
+                    }
 
                     row.appendChild(extraBtn);
                 }
@@ -189,7 +205,11 @@ class Modal extends BaseLoader {
         });
         const table = await apiRequest.get(this.object);
         let feature = ["delete", "edit"];
-        if (this.object == "ficha" || this.object == "ficha_padrao" || this.object == "erros") {
+        if (
+            this.object == "ficha" ||
+            this.object == "ficha_padrao" ||
+            this.object == "erros"
+        ) {
             feature = "delete";
         }
         this.populateTable(table, feature, ["id"]).then(() => {
@@ -342,20 +362,24 @@ class Modal extends BaseLoader {
             console.error("Error ao carregar", error);
         }
     }
-
-    async ficha() {
-        const data = await apiRequest.get("imprimir_ficha/" + this.id);
+    async select() {
+        const data = await apiRequest.get(this.object);
+        this.populateTable(data, ['view'], ["id"]).then(() => {
+        this.modal.show();
+        })
+    }
+    async view() {
+        const data = await apiRequest.get("ficha_impressao/" + this.id);
         const pdf = document.getElementById(this.prefix + "preview_pdf");
-        $("#" + this.prefix + "nome").text(data.nome);
+        pdf.src = data.pdf_path;
+        pdf.style.display = "block";
+        imagem.style.display = "none";
 
-            pdf.src = data.link;
-            pdf.style.display = "block";
-            imagem.style.display = "none";
-        $("#" + this.prefix + "delete")
-            .off()
-            .on("click", () => {
-                apiRequest.delete("anexos/" + data.id).then(this.refresh);
-            });
+        // $("#" + this.prefix + "delete")
+        //     .off()
+        //     .on("click", () => {
+        //         apiRequest.delete("anexos/" + data.id).then(this.refresh);
+        //     });
         this.modal.show();
     }
 
