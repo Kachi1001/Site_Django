@@ -383,7 +383,7 @@ const customActions = {
         },
         candidato: async function (loader) {
             setTimeout(() => {
-            chance_area(loader.prefix, 1);
+            chance_area(loader.prefix);
             }, 300);
         }
     },
