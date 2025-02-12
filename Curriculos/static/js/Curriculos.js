@@ -12,13 +12,21 @@ class BaseLoader {
         this.id = id;
         this.inputs = await apiRequest.get(`resource/${this.object}`);
         loader = this;
-
-        if (this.modal) {
-                this[this.type]().then(() => {
-                this.modal.show()
-            }); // Registra ou atualiza conforme o tipo
-        } else {this[this.type]()}
-
+        return new Promise((resolve, reject) => {
+            this[this.type]().then(() => {
+                if (this.modal) {
+                }
+                if (
+                    customActions[this.type] &&
+                    customActions[this.type][this.object]
+                ) {
+                    customActions[this.type][this.object](this).then(() =>{
+                        this.modal.show();
+                    });
+                }
+                resolve();
+            });
+        });
     }
     async populateSelect(data = [], field = "") {
         try {
@@ -62,7 +70,11 @@ class BaseLoader {
         }
     }
 
-    async populateTable(response= [{ Tabelas: "Sem registro" }], feature = undefined, not = []) {
+    async populateTable(
+        response = [{ Tabelas: "Sem registro" }],
+        feature = undefined,
+        not = []
+    ) {
         try {
             const tabela = document.getElementById(this.prefix + "table");
             const thead = tabela.querySelector("thead tr");
@@ -111,11 +123,10 @@ class BaseLoader {
                         }
                         row.appendChild(cell);
                     });
-                    
+
                     if (feature) {
-                        
                         const extraBtn = document.createElement("td");
-                        extraBtn.classList.add("d-inline-flex",'col-12');
+                        extraBtn.classList.add("d-inline-flex", "col-12");
                         if (feature.includes("delete")) {
                             const removeButton = document.createElement("i");
                             removeButton.classList.add(
@@ -141,7 +152,7 @@ class BaseLoader {
                             );
 
                             editBtn.addEventListener("click", () => {
-                                this.modal.hide()
+                                this.modal.hide();
                                 let modal = new Modal(this.object, "update");
                                 modal.open(obj.id);
                             });
@@ -158,26 +169,31 @@ class BaseLoader {
             throw error;
         }
     }
+    async set(field, value, locked = false) {
+        const html = $("#" + this.prefix + field);
+        html.val(value);
+        html.attr("disabled", locked);
+    }
 }
 var modal_open;
 class Modal extends BaseLoader {
     constructor(object, type) {
-        super(object, type); // Chama o construtor da classe DataManager
+        super(object, type);
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
         this.modal = new bootstrap.Modal(this.myModal);
-        loader = this
+        loader = this;
         this.loader = loader;
     }
-    
+
     async register() {
         this.inputs.select.forEach(async (select) => {
             const data = await apiRequest.get(`select/${select}`);
             this.populateSelect(data, select);
         });
         const table = await apiRequest.get(this.object);
-        
-        this.populateTable(table, ['delete'], ["id"])
+
+        this.populateTable(table, ["delete"], ["id"]);
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
@@ -192,29 +208,41 @@ class Modal extends BaseLoader {
         try {
             const data = await apiRequest.get(this.object + "/" + this.id);
             this.populateData(data).then(() => {
-                if (this.last.modal && this.last.object == this.object && this.last.type == 'lanc') {
-                    loader.myModal.addEventListener('hidden.bs.modal', event => {
-                        loader.modal.dispose()
-                        const candidato = page.getParam("id");
-                        let registro = new Modal(loader.last.object, "lanc");
-                        registro.refresh = () => {
+                if (
+                    this.last.modal &&
+                    this.last.object == this.object &&
+                    this.last.type == "lanc"
+                ) {
+                    loader.myModal.addEventListener(
+                        "hidden.bs.modal",
+                        (event) => {
+                            loader.modal.dispose();
+                            const candidato = page.getParam("id");
+                            let registro = new Modal(
+                                loader.last.object,
+                                "lanc"
+                            );
+                            registro.refresh = () => {
+                                registro.open(candidato);
+                            };
                             registro.open(candidato);
-                        };
-                        registro.open(candidato);
-                        $("#" + registro.prefix + "candidato").val(candidato);
-                      })
+                            $("#" + registro.prefix + "candidato").val(
+                                candidato
+                            );
+                        }
+                    );
                 }
-                
+
                 $("#" + this.prefix + "save")
-                .off()
-                .click(function () {
-                    Submit.update(loader);
-                });
+                    .off()
+                    .click(function () {
+                        Submit.update(loader);
+                    });
                 $("#" + this.prefix + "del")
-                .off()
-                .click(function () {
-                    Submit.delete(loader);
-                });
+                    .off()
+                    .click(function () {
+                        Submit.delete(loader);
+                    });
             });
         } catch (error) {
             console.error("Error ao carregar", error);
@@ -226,20 +254,20 @@ class Modal extends BaseLoader {
             const data = await apiRequest.get(this.object, {
                 candidato: this.id,
             });
-            var feature = ['delete']
-            if (this.object == "experiencia" || this.object == 'escolaridade') {
+            var feature = ["delete"];
+            if (this.object == "experiencia" || this.object == "escolaridade") {
                 feature.push("edit");
-            } 
+            }
             this.populateTable(data, feature, ["id", "candidato"]).then(() => {
                 this.inputs.select.forEach(async (select) => {
                     const data = await apiRequest.get(`select/${select}`);
                     this.populateSelect(data, select);
                 });
                 $("#" + this.prefix + "submit")
-                .off()
-                .on("click", () => {
-                    Submit.post(this);
-                });
+                    .off()
+                    .on("click", () => {
+                        Submit.post(this);
+                    });
             });
         } catch (error) {
             console.error("Error ao carregar", error);
@@ -336,11 +364,22 @@ class Modal extends BaseLoader {
     }
 
     refresh() {
-        this.modal.toggle()
+        this.modal.toggle();
         // page.refresh();
     }
 }
-
+const customActions = {
+    lanc: {
+        experiencia: async function (loader) {
+            chance_area(loader.prefix);
+        },
+    },
+    update: {
+        experiencia: async function (loader) {
+            chance_area(loader.prefix);
+        },
+    },
+};
 class Form extends BaseLoader {
     constructor(object, type) {
         super(object, type); // Chama o construtor da classe DataManager
