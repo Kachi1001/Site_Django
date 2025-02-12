@@ -6,7 +6,10 @@ $(document).ready(() =>{
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }) 
 function set_theme() {
-    $('html').attr ('data-bs-theme', localStorage.getItem('theme') || window.matchMedia('(prefers-color-scheme: dark)') ? 'dark' : 'light')
+    if (!localStorage.getItem('theme')) {
+        localStorage.setItem('theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    }
+    $('html').attr ('data-bs-theme', localStorage.getItem('theme'))
 }
 set_theme()
 const date = {

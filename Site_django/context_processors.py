@@ -1,4 +1,5 @@
 # myapp/context_processors.py
+from datetime import date
 import time
 
 from decouple import config
@@ -32,7 +33,9 @@ def base(request):
         'app': app,
         'app_name': translate[app] if app in translate else 'Sem nome',
         'timestamp': timestamp,
-        'hojeJS': util.formatarHTML(util.get_hoje()),
+        'hojeJS': date.today().strftime('%Y-%m-%d'),
+        'hoje': date.today().strftime('%Y-%m-%d'),
+        'competencia': date.today().strftime('%Y-%m'),
         'token': token,
         'icon': {
             'table': "class=bi-table",
