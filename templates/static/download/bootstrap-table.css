@@ -151,9 +151,7 @@
 .bootstrap-table .fixed-table-container .table.table-sm .th-inner {
   padding: 0.25rem;
 }
-.bootstrap-table .fixed-table-container.fixed-height:not(.has-footer) {
-  border-bottom: 1px solid #dee2e6;
-}
+
 .bootstrap-table .fixed-table-container.fixed-height.has-card-view {
   border-top: 1px solid #dee2e6;
   border-bottom: 1px solid #dee2e6;
@@ -161,9 +159,6 @@
 .bootstrap-table .fixed-table-container.fixed-height .fixed-table-border {
   border-left: 1px solid #dee2e6;
   border-right: 1px solid #dee2e6;
-}
-.bootstrap-table .fixed-table-container.fixed-height .table thead th {
-  border-bottom: 1px solid #dee2e6;
 }
 .bootstrap-table .fixed-table-container.fixed-height .table-dark thead th {
   border-bottom: 1px solid #32383e;
