@@ -661,14 +661,6 @@
                                     class="form-control form-control-sm">
                             </div>
                         </div>
-                        <div class="col-5">
-                            <div class="input-group mb-2 flex-nowrap input-group-sm">
-                                <label class="input-group-text">TELEFONE 2º:</label>
-                                <input type="number" id="m_update-candidato_telefone2"
-                                    class="form-control form-control-sm">
-                            </div>
-                        </div>
-
                         <div class="col-2">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <span class="input-group-text">FILHOS:</span>
@@ -677,6 +669,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-5">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">TELEFONE 2º:</label>
+                                <input type="number" id="m_update-candidato_telefone2"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+
                         <div class="col-3">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">CNH:</label>
@@ -684,15 +684,13 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">ESTADO CIVIL:</label>
                                 <select class="form-select" id="m_update-candidato_estado_civil">
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-5">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">INDICAÇÃO:</label>
@@ -700,10 +698,17 @@
                             </div>
                             <datalist id="m_update-candidato_indicacao"></datalist>
                         </div>
-                        <div class="col-7">
+                        <div class="col-6">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">VAGA TECNIKA:</label>
-                                <select class="form-select" id="m_update-candidato_area_atuacao">
+                                <select class="form-select" id="m_update-candidato_area_atuacao" onchange="chance_area('m_update-candidato_')">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">SUB ÁREA:</label>
+                                <select class="form-select" id="m_update-candidato_area_atuacao_sub">
                                 </select>
                             </div>
                         </div>

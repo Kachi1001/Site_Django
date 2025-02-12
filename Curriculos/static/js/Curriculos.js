@@ -381,6 +381,11 @@ const customActions = {
             chance_area(loader.prefix, 1);
             }, 300);
         },
+        candidato: async function (loader) {
+            setTimeout(() => {
+            chance_area(loader.prefix, 1);
+            }, 300);
+        }
     },
 };
 class Form extends BaseLoader {
