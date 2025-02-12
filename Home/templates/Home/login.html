@@ -35,24 +35,26 @@
     </head>
 
     <body>
-        <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray">
-            <div class="card-header">Tela de login</div>
-            <div class="card-body">
-                <form action="{% url 'login'%}" method="post">
-                    {%csrf_token%}
-                    <input type="hidden" name="next" value="{{next}}" />
-                    <div class="form-floating mb-3">
-                        <input
+        <main>
+
+            <div class="card" style="width: 18rem">
+                <div class="card-header">Tela de login</div>
+                <div class="card-body">
+                    <form action="{% url 'login'%}" method="post">
+                        {%csrf_token%}
+                        <input type="hidden" name="next" value="{{next}}" />
+                        <div class="form-floating mb-3">
+                            <input
                             type="name"
                             class="form-control"
                             id="nome"
                             placeholder="Nome"
                             name="nome"
                             value="{{login}}"
-                        />
-                        <label for="floatingInput">Nome</label>
-                    </div>
-                    <div class="input-group mb-3">
+                            />
+                            <label for="floatingInput">Nome</label>
+                        </div>
+                        <div class="input-group mb-3">
                         <div class="form-floating">
                             <input type="password" class="form-control""
                             placeholder=" Senha" name="senha" id="senha"
@@ -60,8 +62,8 @@
                             <label for="floatingPassword">Senha</label>
                         </div>
                         <button
-                            class="input-group-text bi-eye-slash"
-                            onclick="view_password()"
+                        class="input-group-text bi-eye-slash"
+                        onclick="view_password()"
                             type="button"
                             id="senha_view"
                         ></button>
@@ -81,8 +83,10 @@
                 É necessário estar logado para ter acesso as ferramentas
             </div>
         </div>
+    </main>
     </body>
     <script>
+        $('html').attr ('data-bs-theme', localStorage.getItem('theme') || window.matchMedia('(prefers-color-scheme: dark)') ? 'dark' : 'light')
         const nome = $("#nome");
         const senha = $("#senha");
         // const confirmarSenha = document.getElementById("senha_2");
