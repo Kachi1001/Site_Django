@@ -16,13 +16,12 @@ class BaseLoader {
             this[this.type]().then(() => {
                 if (this.modal) {
                 }
-                if (
-                    customActions[this.type] &&
-                    customActions[this.type][this.object]
-                ) {
+                try {
                     customActions[this.type][this.object](this).then(() =>{
                         this.modal.show();
                     });
+                } catch{
+                    this.modal.show();
                 }
                 resolve();
             });
@@ -371,12 +370,12 @@ class Modal extends BaseLoader {
 const customActions = {
     lanc: {
         experiencia: async function (loader) {
-            chance_area(loader.prefix);
+            chance_area(loader.prefix, 1);
         },
     },
     update: {
         experiencia: async function (loader) {
-            chance_area(loader.prefix);
+            chance_area(loader.prefix, 1);
         },
     },
 };

@@ -2,6 +2,7 @@ var loader;
 
 class BaseLoader {
     constructor(object, type) {
+        this.last = loader;
         this.object = object; // Nome do objeto (colaborador, equipe, etc.)
         this.type = type; // Tipo do loader (post, view, update, etc...)
         this.prefix = object + "_"; // Prefixo para os campos (modal/form)
@@ -11,8 +12,14 @@ class BaseLoader {
         this.id = id;
         this.inputs = await apiRequest.get(`resource/${this.object}`);
         loader = this;
-
-        this[this.type](); // Registra ou atualiza conforme o tipo
+        return new Promise((resolve, reject) => {
+            this[this.type]().then(() => {
+                if (this.modal) {
+                    this.modal.show();
+                }
+                resolve();
+            });
+        });
     }
     async populateSelect(data = [], field = "") {
         try {
@@ -56,99 +63,127 @@ class BaseLoader {
         }
     }
 
-    async populateTable(response, feature = undefined, not = []) {
+    async populateTable(
+        response = [{ Tabelas: "Sem registro" }],
+        feature = undefined,
+        not = []
+    ) {
         try {
+            if (response.length == 0) {
+                response = [{ Tabela: "Sem registro" }];
+                feature = undefined;
+            }
             const tabela = document.getElementById(this.prefix + "table");
             console.log(tabela);
             const thead = tabela.querySelector("thead tr");
             thead.innerHTML = "";
             const tbody = tabela.querySelector("tbody");
             tbody.innerHTML = "";
-            if (response.length > 0) {
-                var keys = Object.keys(response[0]);
-                not.forEach((key) => {
-                    let index = keys.indexOf(key);
-                    if (index > -1) {
-                        keys.splice(index, 1);
-                    }
-                });
+            var keys = Object.keys(response[0]);
+            not.forEach((key) => {
+                let index = keys.indexOf(key);
+                if (index > -1) {
+                    keys.splice(index, 1);
+                }
+            });
+            keys.forEach((key) => {
+                const th = document.createElement("th");
+                th.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+                th.textContent = th.textContent.replace("_", " ");
+                thead.appendChild(th);
+            });
+            if (feature) {
+                const thExtra = document.createElement("th");
+                thExtra.textContent = "Ações";
+                thead.appendChild(thExtra);
+            }
+
+            response.forEach((obj) => {
+                const row = document.createElement("tr");
                 keys.forEach((key) => {
-                    const th = document.createElement("th");
-                    th.textContent = key.charAt(0).toUpperCase() + key.slice(1);
-                    th.textContent = th.textContent.replace("_", " ");
-                    thead.appendChild(th);
+                    const cell = document.createElement("td");
+                    if (typeof obj[key] === "boolean") {
+                        const checkbox = document.createElement("input");
+                        checkbox.type = "checkbox";
+                        checkbox.disabled = true;
+                        checkbox.checked = obj[key];
+                        cell.appendChild(checkbox);
+                    } else {
+                        cell.textContent = obj[key];
+                        if (isValidDate(obj[key])) {
+                            const data = new Date(obj[key]);
+                            cell.textContent = data.toLocaleDateString(
+                                "pt-BR",
+                                { timeZone: "UTC" }
+                            );
+                        }
+                    }
+                    row.appendChild(cell);
                 });
                 if (feature) {
-                    const thExtra = document.createElement("th");
-                    thExtra.textContent = "Ações";
-                    thead.appendChild(thExtra);
-                }
+                    const extraBtn = document.createElement("td");
+                    extraBtn.classList.add("d-inline-flex", "col-12");
+                    if (feature.includes("delete")) {
+                        const removeButton = document.createElement("i");
+                        removeButton.classList.add(
+                            "btn-icon",
+                            "bg-danger",
+                            "bi-trash3",
+                            "me-1"
+                        );
 
-                response.forEach((obj) => {
-                    const row = document.createElement("tr");
-                    keys.forEach((key) => {
-                        const cell = document.createElement("td");
-                        if (typeof obj[key] === "boolean") {
-                            const checkbox = document.createElement("input");
-                            checkbox.type = "checkbox";
-                            checkbox.disabled = true;
-                            checkbox.checked = obj[key];
-                            cell.appendChild(checkbox);
-                        } else {
-                            cell.textContent = obj[key];
-                            if (isValidDate(obj[key])) {
-                                const data = new Date(obj[key]);
-                                cell.textContent =
-                                    data.toLocaleDateString("pt-BR");
-                            }
-                        }
-                        row.appendChild(cell);
-                    });
-                    if (feature) {
-                        const extraBtn = document.createElement("td");
-                        if (feature.includes("delete")) {
-                            const removeButton = document.createElement("i");
-                            removeButton.classList.add(
-                                "btn-icon",
-                                "bg-danger",
-                                "bi-trash3",
-                                "fs-6",
-                                "me-1"
-                            );
-
-                            removeButton.addEventListener("click", () => {
-                                loader.id = obj.id;
-                                Submit.delete(loader);
-                            });
-                            extraBtn.appendChild(removeButton);
-                        }
-                        if (feature.includes("edit")) {
-                            const editBtn = document.createElement("i");
-                            editBtn.classList.add(
-                                "btn-icon",
-                                "bg-primary",
-                                "bi-pencil",
-                                "fs-6",
-                                "me-1"
-                            );
-
-                            editBtn.addEventListener("click", () => {
-                                let modal = new Modal(this.object, "update");
-                                modal.refresh = this.refresh;
-                                modal.open(obj.id);
-                            });
-                            extraBtn.appendChild(editBtn);
-                        }
-
-                        row.appendChild(extraBtn);
+                        removeButton.addEventListener("click", () => {
+                            loader.id = obj.id;
+                            Submit.delete(loader);
+                        });
+                        extraBtn.appendChild(removeButton);
                     }
-                    tbody.appendChild(row);
-                });
-            }
+                    if (feature.includes("edit")) {
+                        const editBtn = document.createElement("i");
+                        editBtn.classList.add(
+                            "btn-icon",
+                            "bg-primary",
+                            "bi-pencil",
+                            "me-1"
+                        );
+
+                        editBtn.addEventListener("click", () => {
+                            this.modal.hide();
+                            let modal = new Modal(this.object, "update");
+                            modal.open(obj.id);
+                        });
+                        extraBtn.appendChild(editBtn);
+                    }
+                    if (feature.includes("view")) {
+                        const btn = document.createElement("i");
+                        btn.classList.add(
+                            "btn-icon",
+                            "bg-success",
+                            "bi-file-earmark",
+                            "me-1"
+                        );
+
+                        btn.addEventListener("click", () => {
+                            this.modal.hide();
+                            let modal = new Modal(this.object, "view");
+                            modal.open(obj.id);
+                        });
+                        extraBtn.appendChild(btn);
+                    }
+
+                    row.appendChild(extraBtn);
+                }
+                tbody.appendChild(row);
+            });
         } catch (error) {
             console.error("Error ao criar tabela", error);
             throw error;
         }
+    }
+    async set(field, value, locked = false) {
+        const html = $("#" + this.prefix + field);
+        html.val(value);
+        html.attr("disabled", locked);
     }
 }
 var modal_open;
@@ -159,6 +194,7 @@ class Modal extends BaseLoader {
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
         console.log(this.prefix.slice(0, -1));
         this.modal = new bootstrap.Modal(this.myModal);
+        this.refresh;
         this.loader = loader;
     }
 
@@ -168,17 +204,30 @@ class Modal extends BaseLoader {
             this.populateSelect(data, select);
         });
         const table = await apiRequest.get(this.object);
-        this.populateTable(table, "delete", ["id"]).then(() => {
+        let feature = ["delete", "edit"];
+        if (
+            this.object == "ficha" ||
+            this.object == "ficha_padrao" ||
+            this.object == "erros"
+        ) {
+            feature = "delete";
+        }
+        this.populateTable(table, feature, ["id"]).then(() => {
             this.modal.show();
         });
+        if (this.object in Pos_load) {
+            Pos_load[this.object](loader);
+        }
 
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
-                loader.refresh = async () => {
-                    const table = await apiRequest.get(loader.object);
-                    loader.populateTable(table, "delete", ["id"]);
-                };
+                if (loader.refresh == undefined) {
+                    loader.refresh = async () => {
+                        const table = await apiRequest.get(loader.object);
+                        loader.populateTable(table, "delete", ["id"]);
+                    };
+                }
                 Submit.post(loader);
             });
     }
@@ -186,9 +235,34 @@ class Modal extends BaseLoader {
         try {
             const data = await apiRequest.get(this.object + "/" + this.id);
             this.populateData(data).then(() => {
-                this.modal.show();
-
-                $("#" + this.prefix + "save")
+                if (
+                    this.last.modal &&
+                    this.last.object == this.object &&
+                    this.last.type == "register"
+                ) {
+                    loader.myModal.addEventListener(
+                        "hidden.bs.modal",
+                        (event) => {
+                            loader.modal.dispose();
+                            const candidato = page.getParam("id");
+                            let registro = new Modal(
+                                loader.last.object,
+                                this.last.type
+                            );
+                            registro.refresh = () => {
+                                registro.open(candidato);
+                            };
+                            registro.open(candidato);
+                            $("#" + registro.prefix + "candidato").val(
+                                candidato
+                            );
+                        }
+                    );
+                }
+                if (this.object in Pos_load) {
+                    Pos_load[this.object](loader);
+                }
+                $("#" + this.prefix + "submit")
                     .off()
                     .click(function () {
                         Submit.update(loader);
@@ -288,29 +362,24 @@ class Modal extends BaseLoader {
             console.error("Error ao carregar", error);
         }
     }
-
-    async file_view() {
-        const data = await apiRequest.get("anexos/" + this.id);
-        const imagem = document.getElementById(this.prefix + "preview_imagem");
+    async select() {
+        const data = await apiRequest.get(this.object);
+        this.populateTable(data, ['view'], ["id"]).then(() => {
+        this.modal.show();
+        })
+    }
+    async view() {
+        const data = await apiRequest.get("ficha_impressao/" + this.id);
         const pdf = document.getElementById(this.prefix + "preview_pdf");
-        $("#" + this.prefix + "nome").text(data.nome);
+        pdf.src = data.pdf_path;
+        pdf.style.display = "block";
+        imagem.style.display = "none";
 
-        if (data.tipo == "pdf") {
-            pdf.src = data.link;
-            pdf.style.display = "block";
-            imagem.style.display = "none";
-        } else {
-            imagem.src = data.link;
-            imagem.style.display = "block";
-            pdf.style.display = "none";
-        }
-        $("#" + this.prefix + "delete")
-                .off()
-                .on("click", () => {
-                    apiRequest
-                        .delete("anexos/"+data.id)
-                        .then(this.refresh)
-                });
+        // $("#" + this.prefix + "delete")
+        //     .off()
+        //     .on("click", () => {
+        //         apiRequest.delete("anexos/" + data.id).then(this.refresh);
+        //     });
         this.modal.show();
     }
 
@@ -321,10 +390,6 @@ class Modal extends BaseLoader {
             });
         }
     }
-
-    refresh() {
-        // page.refresh();
-    }
 }
 
 class Form extends BaseLoader {
@@ -333,7 +398,7 @@ class Form extends BaseLoader {
         this.prefix = "f_" + this.prefix; // Prefixo de modal
     }
     // Registro
-    register() {
+    async register() {
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
@@ -356,7 +421,7 @@ class Form extends BaseLoader {
         }
     }
 
-    refresh() {
+    async refresh() {
         $("#table").bootstrapTable("refresh");
         carregarDados();
     }
@@ -390,7 +455,32 @@ class Form extends BaseLoader {
         }
     }
 }
+Pos_load = {
+    ficha: (loader) => {
+        const colaborador = $("#" + loader.prefix + "colaborador");
+        const pagina = $("#" + loader.prefix + "pagina");
 
+        colaborador.on("change", getFicha);
+        getFicha();
+        const mudar = $("#" + loader.prefix + "mudar");
+        mudar.off().on("click", () => {
+            if (pagina.attr("disabled")) {
+                if (
+                    confirm(
+                        "Não garantimos funcionalidade total ao alterar manualmente"
+                    )
+                ) {
+                    pagina.attr("disabled", !pagina.attr("disabled"));
+                    mudar.text("Deixar automático");
+                }
+            } else {
+                pagina.attr("disabled", !pagina.attr("disabled"));
+                mudar.text("Alterar manualmente");
+                getFicha();
+            }
+        });
+    },
+};
 Submit = {
     readFields: function (loader) {
         let data = {};
@@ -442,3 +532,13 @@ $(document).ready(() => {
         console.log("Tela sem inicializador", error);
     }
 });
+
+modal = {
+    open: function (type, object, id) {
+        const obj = new Modal(object, type);
+        obj.open(id);
+    },
+};
+function abrir_site(ca) {
+    page.new(`https://consultaca.com/${ca}`);
+}
