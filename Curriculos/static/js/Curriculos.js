@@ -91,7 +91,7 @@ class BaseLoader {
                 keys.forEach((key) => {
                     const th = document.createElement("th");
                     th.textContent = key.charAt(0).toUpperCase() + key.slice(1);
-                    th.textContent = th.textContent.replace("_", " ");
+                    th.textContent = th.textContent.replaceAll("_", " ").replaceAll("cao", "ção");
                     thead.appendChild(th);
                 });
                 if (feature) {
