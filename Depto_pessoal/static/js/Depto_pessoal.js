@@ -114,13 +114,13 @@ class BaseLoader {
                     });
 
                     const extraBtn = document.createElement("td");
+                    extraBtn.classList.add("d-inline-flex", "col-12");
                     if (this.type != "historico") {
                         const removeButton = document.createElement("i");
                         removeButton.classList.add(
                             "btn-icon",
                             "bg-danger",
                             "bi-trash3",
-                            "fs-6",
                             "me-1"
                         );
 
@@ -143,7 +143,6 @@ class BaseLoader {
                             "btn-icon",
                             "bg-primary",
                             "bi-pencil",
-                            "fs-6",
                             "me-1"
                         );
 

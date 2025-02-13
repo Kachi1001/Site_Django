@@ -29,10 +29,10 @@
                 </button>
             </h2>
             <div id="menu-ferias" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_tabelas' 'periodoaquisitivo'%}"><i {{icon.table}}></i> Período aquisitivo</a>
-                <a href="{%url app|add:'_tabelas' 'feriasprocessadas'%}"><i {{icon.table}}></i> Ferias Processadas</a>
-                <a href="{%url app|add:'_tabelas' 'feriasutilizadas'%}"><i {{icon.table}}></i> Ferias Utilizadas</a>
-                <a href="{%url app|add:'_consultas' 'feriassaldos'%}"><i {{icon.table}}></i> Saldos</a>
+                <a href="{%url app|add:'_tabelas' 'periodo_aquisitivo'%}"><i {{icon.table}}></i> Período aquisitivo</a>
+                <a href="{%url app|add:'_tabelas' 'ferias_processadas'%}"><i {{icon.table}}></i> Ferias Processadas</a>
+                <a href="{%url app|add:'_tabelas' 'ferias_utilizadas'%}"><i {{icon.table}}></i> Ferias Utilizadas</a>
+                <a href="{%url app|add:'_consultas' 'ferias_saldos'%}"><i {{icon.table}}></i> Saldos</a>
             </div>
         </div>
         {%endif%}
@@ -46,24 +46,29 @@
             </h2>
             <div id="menu-tabelas" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <a href="{%url app|add:'_consultas' 'epi_nr'%}"><i {{icon.table}}></i> Integrações</a>
-                <a href="{%url app|add:'_tabelas' 'fechamentomensal'%}"><i {{icon.table}}></i> Fechamento</a>
+                <a href="{%url app|add:'_tabelas' 'fechamento_mensal'%}"><i {{icon.table}}></i> Fechamento</a>
             </div>
         </div>
         {%endif%}
-    {% if user|can:'Depto_pessoal-avaliacao' %}
-    <div class="accordion-item">
+        
+        {% comment %}
+            
+        
+        {% if user|can:'Depto_pessoal-avaliacao' %}
+        <div class="accordion-item">
         <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#menu-ponto" aria-expanded="false">
-                Avaliações
-            </button>
-        </h2>
+            data-bs-target="#menu-ponto" aria-expanded="false">
+            Avaliações
+        </button>
+    </h2>
         <div id="menu-ponto" class="accordion-collapse collapse" data-bs-parent="#accordion">
             <a href="#" onclick="abrirRegistro('tipoavaliacao')"><i {{icon.modal}}></i> Tipo de avaliação</a>
             <a href="{%url app|add:'_tabelas' 'avaliacao'%}"><i {{icon.table}}></i> Tabela</a>
         </div>
     </div>
     {%endif%}
+    {% endcomment %}
     {% if user|can:'Depto_pessoal-graficos' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
