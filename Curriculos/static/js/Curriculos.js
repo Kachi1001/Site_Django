@@ -180,6 +180,7 @@ class Modal extends BaseLoader {
         super(object, type);
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
+        console.log(this)
         this.modal = new bootstrap.Modal(this.myModal);
         loader = this;
         this.loader = loader;

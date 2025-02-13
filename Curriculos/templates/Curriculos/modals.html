@@ -637,7 +637,7 @@
                         <div class="col-auto">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">RG:</label>
-                                <input type="text" id="m_update-candidato_rg" class="form-control form-control-sm">
+                                <input type="number" id="m_update-candidato_rg" class="form-control form-control-sm">
                             </div>
                         </div>
                         
@@ -775,8 +775,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_file_view-ficha_epi" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="m_file_view-anexos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -784,7 +783,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <embed id="m_file_view-ficha_epi_preview_pdf" type='application/pdf'
+                    <img id="m_file_view-anexos_preview_imagem" style="width: 100%; height: 100%;"
+                        src="http://tecnikaengenharia.ddns.net/media/icons/file.png">
+                    <embed id="m_file_view-anexos_preview_pdf" type='application/pdf'
                         style="width: 100%; height: 500px; display: none;">
                 </div>
                 <div class="modal-footer">
@@ -792,8 +793,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
 </div>
 <script>
    
