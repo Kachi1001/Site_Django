@@ -13,7 +13,7 @@
 {% block 'script' %}
 <script>
 function load(){  
-    apiRequest.get('tabela/fechamentomensal?sort=competencia&order=asc').then((data)=>{
+    apiRequest.get('tabela/fechamento_mensal?sort=competencia&order=asc').then((data)=>{
         data = data['rows']
         var values = {}
           for (const key in data) {
