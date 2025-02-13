@@ -368,6 +368,15 @@ class Modal extends BaseLoader {
     }
 }
 const customActions = {
+    register: {
+        area_atuacao_sub: async function (loader) {
+            console.log(loader)
+            $("#" + loader.prefix + "area_atuacao").change(async function () {
+                const data = await apiRequest.get("area_atuacao_sub", {'area_atuacao': this.value});
+                loader.populateTable(data, ["delete"], ["id"]);
+            });
+        },
+    },
     lanc: {
         experiencia: async function (loader) {
             setTimeout(() => {
@@ -378,7 +387,7 @@ const customActions = {
     update: {
         experiencia: async function (loader) {
             setTimeout(() => {
-            chance_area(loader.prefix, 1);
+            chance_area(loader.prefix);
             }, 300);
         },
         candidato: async function (loader) {
