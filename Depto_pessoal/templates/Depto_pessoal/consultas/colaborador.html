@@ -182,8 +182,7 @@
                 </button>
             </h2>
             <div id="menu-periodoaquisitivo" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
-                <table data-toggle="table" data-locale="pt-BR"
-                    data-url="{{api}}Depto_pessoal/periodo_aquisitivo?colaborador=22"
+                <table data-toggle="table" data-locale="pt-BR" id="tabela_periodo_aquisitivo"
                     class="table table-hover table-bordered table-striped table-sm">
                     <thead>
                         <tr>
@@ -215,7 +214,6 @@
         </h2>
         <div id="menu-feriasprocessadas" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
             <table data-toggle="table" data-locale="pt-BR" id="tabela_ferias_processadas"
-                data-url="{{api}}Depto_pessoal/ferias_processadas?colaborador=22"
                 class="table table-hover table-bordered table-striped table-sm">
                 <thead>
                     <tr>
@@ -251,7 +249,6 @@
         </h2>
         <div id="menu-feriasutilizadas" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
             <table data-toggle="table" data-locale="pt-BR" id="tabela_ferias_utilizadas"
-                data-url="{{api}}Depto_pessoal/ferias_utilizadas?colaborador=22"
                 class="table table-hover table-bordered table-striped table-sm">
                 <thead>
                     <tr>
@@ -414,8 +411,8 @@
         },
       }
     const colab = page.getParam('id')
-    var objs = ['ocupacao', 'feriasutilizadas', 'feriasprocessadas', 'integracao_nr', 'integracao_epi', 'integracao', 'periodoaquisitivo']
     var objs = ['ocupacao']
+    const tabelas = ['ferias_utilizadas','ferias_processadas','periodo_aquisitivo']
     function carregarDados() {
         let c = new Form('colaborador', 'view', colab)
         c.open(colab)
@@ -424,9 +421,14 @@
             x = new Form(objs[x], 'filter')
             x.open({ 'colaborador': colab })
         }
+        for (x in tabelas)
+        $("#tabela_" +tabelas[x]).bootstrapTable('refreshOptions', {
+            url: `{{api}}Depto_pessoal/${tabelas[x]}?colaborador=${colab}`,
+        })
     }
     function load() {
         carregarDados()
+        
     }
     function refresh() {
         load()
