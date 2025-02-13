@@ -177,11 +177,11 @@
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#menu-periodoaquisitivo" aria-expanded="false">
+                    data-bs-target="#menu-periodo_aquisitivo" aria-expanded="false">
                     Histórico
                 </button>
             </h2>
-            <div id="menu-periodoaquisitivo" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
+            <div id="menu-periodo_aquisitivo" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
                 <table data-toggle="table" data-locale="pt-BR" id="tabela_periodo_aquisitivo"
                     class="table table-hover table-bordered table-striped table-sm">
                     <thead>
@@ -201,7 +201,7 @@
         <h5 class="mb-0"><small>Férias processadas</small></h5>
     </div>
     <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
-            onclick="abrirProcesso('feriasprocessadas')">Processar</button></div>
+            onclick="abrirProcesso('ferias_processadas')">Processar</button></div>
     <hr class="mt-3">
 </div>
 <div class="accordion">
@@ -235,7 +235,7 @@
         <h5 class="mb-0"><small>Férias utilizadas</small></h5>
     </div>
     <div class="col-auto"><button type="button" class="btn btn-success btn-sm"
-            onclick="abrirProcesso('feriasutilizadas')">Consumir</button></div>
+            onclick="abrirProcesso('ferias_utilizadas')">Consumir</button></div>
 
     <hr class="mt-2">
 </div>
@@ -243,11 +243,11 @@
     <div class="accordion-item">
         <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#menu-feriasutilizadas" aria-expanded="false">
+                data-bs-target="#menu-ferias_utilizadas" aria-expanded="false">
                 Histórico
             </button>
         </h2>
-        <div id="menu-feriasutilizadas" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
+        <div id="menu-ferias_utilizadas" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
             <table data-toggle="table" data-locale="pt-BR" id="tabela_ferias_utilizadas"
                 class="table table-hover table-bordered table-striped table-sm">
                 <thead>
@@ -381,7 +381,7 @@
 </div>
 
 
-<!-- , 'ferias_utilizadas', 'ferias_processadas', 'periodoaquisitivo', 'ocupacao' -->
+<!-- , 'ferias_utilizadas', 'ferias_processadas', 'periodo_aquisitivo', 'ocupacao' -->
 <script>
     function processadas(value) {
         return (
@@ -473,7 +473,7 @@
 
         data = {
             'colaborador': $("#f_colaborador_id").val(),
-            'periodo_aquisitivo': $("#f_periodoaquisitivo_id").val()
+            'periodo_aquisitivo': $("#f_periodo_aquisitivo_id").val()
         }
         registro.refresh = refresh
 
@@ -481,8 +481,8 @@
 
     }
     function confirmarAntecipacao() {
-        let field = $("#m_processo-feriasutilizadas_antecipacao")
-        let periodo = $("#m_processo-feriasutilizadas_aquisitivo_id")
+        let field = $("#m_processo-ferias_utilizadas_antecipacao")
+        let periodo = $("#m_processo-ferias_utilizadas_aquisitivo_id")
         if (field.prop("checked")) {
             if (!confirm('Tens certeza que deseja selecionar antecipação?')) {
                 field.prop('checked', false);
@@ -492,7 +492,7 @@
             periodo.val('').attr('disabled', true)
 
         } else {
-            periodo.val($("#m_processo-feriasutilizadas_id").val()).attr('disabled', false)
+            periodo.val($("#m_processo-ferias_utilizadas_id").val()).attr('disabled', false)
         }
     }
 

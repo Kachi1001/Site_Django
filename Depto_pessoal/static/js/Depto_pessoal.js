@@ -131,7 +131,7 @@ class BaseLoader {
                         extraBtn.appendChild(removeButton);
                     }
                     if (
-                        this.object != "periodoaquisitivo" &&
+                        this.object != "periodo_aquisitivo" &&
                         this.object != "funcao" &&
                         this.object != "equipe" &&
                         this.object != "feriado" &&
@@ -252,7 +252,7 @@ class Modal extends BaseLoader {
     async processo() {
         try {
             apiRequest
-                .get("periodoaquisitivo", { colaborador: this.id.colaborador })
+                .get("periodo_aquisitivo", { colaborador: this.id.colaborador })
                 .then((data) => {
                     this.populateSelect(data, "periodo_aquisitivo").then(() => {
                         $("#" + this.prefix + "periodo_aquisitivo").val(
