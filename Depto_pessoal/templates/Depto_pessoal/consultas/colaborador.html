@@ -284,7 +284,7 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">NR:</label>
-            <input type="text" class="form-control form-control-sm" id="f_integracao_nr_nr">
+            <input type="text" class="form-control form-control-sm" id="f_integracao_nr_integracao_nr_tipo">
         </div>
     </div>
     <div class="col-auto">
@@ -411,7 +411,7 @@
         },
       }
     const colab = page.getParam('id')
-    var objs = ['ocupacao']
+    var objs = ['ocupacao', 'integracao_nr','integracao_epi','integracao']
     const tabelas = ['ferias_utilizadas','ferias_processadas','periodo_aquisitivo']
     function carregarDados() {
         let c = new Form('colaborador', 'view', colab)

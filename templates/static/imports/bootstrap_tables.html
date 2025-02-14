@@ -63,6 +63,7 @@
         }
     }
     function dataFormatter(value) {
+        return value
         if (value != null) {
             const data = new Date(value);
             return data.toLocaleDateString("pt-BR", { timeZone: "UTC" });

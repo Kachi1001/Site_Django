@@ -5,44 +5,43 @@
 
 {% block 'main' %}
 <h2>Lançamento de Atividade</h2>
-<div class="row justify-content-end">
-    <div class="col">
+<div class="row">
+    <div class="col-6">
         <div class="row justify-content-end">
-            <div class="input-group input-group-sm">
+            <div class="input-group mb-1 input-group-sm">
                 <label class="input-group-text">Colaborador:</label>
                 <select class="form-select" id="form_atividade_colaborador" tabindex="1"></select>
+                <label class="input-group-text text-bg-primary" id="mostrar_demitidos" onclick="filtrar('colaborador')"
+                style="user-select: none;">ocultar demitidos</label>
             </div>
-            <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_demitidos" onclick="filtrar('colaborador')"
-                tabindex="-1">ocultar demitidos</a>
         </div>
     </div>
-    <div class="col">
+    <div class="col-6">
         <div class="row justify-content-end">
-            <div class="input-group input-group-sm">
+            <div class="input-group mb-1 input-group-sm">
                 <label class="input-group-text">Obra:</label>
                 <select class="form-select" id="form_atividade_obra" onchange="changeObra()" tabindex="2"></select>
+                <label class="input-group-text text-bg-primary" id="mostrar_finalizadas" onclick="filtrar('obra')"
+                style="user-select: none;">ocultar finalizadas</label>
             </div>
-            <a href="#" class="exibir-ocultar mb-2 me-2" id="mostrar_finalizadas" onclick="filtrar('obra')"
-                tabindex="-1">ocultar finalizadas</a>
         </div>
     </div>
-</div>
-
-<div class="row">
-    <div class="col border p-2">
+    <div class="col-4 border p-2">
         <p style="font-size: smaller ; text-align: center; margin-bottom: 5px;">Hora Inicial / Hora final / Etapa</p>
-        <div class="input-group mb-2 input-group-sm">
+        <div class="input-group mb-1 input-group-sm">
             <label class="input-group-text">Manhã</label>
             <input type="time" id="form_atividade_horaini1" class="form-control" value="07:30" tabindex="3">
             <input type="time" id="form_atividade_horafim1" class="form-control" value="11:48" tabindex="4">
-            <input type="number" id="form_atividade_etapa1"  class="input-group-text" style="width: 60px;" title="Etapa 1"  placeholder="ETP">
+            <input type="number" id="form_atividade_etapa1" class="input-group-text" style="width: 60px;"
+                title="Etapa 1" placeholder="ETP">
         </div>
 
-        <div class="input-group mb-2 input-group-sm">
+        <div class="input-group mb-1 input-group-sm">
             <label class="input-group-text">Tarde</label>
             <input type="time" id="form_atividade_horaini2" class="form-control" value="13:30" tabindex="5">
             <input type="time" id="form_atividade_horafim2" class="form-control" value="18:00" tabindex="6">
-            <input type="number" id="form_atividade_etapa2" class="input-group-text"  style="width: 60px;"  title="Etapa 2" placeholder="ETP">
+            <input type="number" id="form_atividade_etapa2" class="input-group-text" style="width: 60px;"
+                title="Etapa 2" placeholder="ETP">
             <a href="#" class="align-items-center text-bg-danger input-group-text" onclick="limparHora('2')"><i
                     class="bi bi-x-circle"></i></a>
 
@@ -51,32 +50,36 @@
             <label class="input-group-text">Noite</label>
             <input type="time" id="form_atividade_horaini3" class="form-control" tabindex="7">
             <input type="time" id="form_atividade_horafim3" class="form-control" tabindex="8">
-            <input type="number" id="form_atividade_etapa3" class="input-group-text"  style="width: 60px;" title="Etapa 3"  placeholder="ETP">
+            <input type="number" id="form_atividade_etapa3" class="input-group-text" style="width: 60px;"
+                title="Etapa 3" placeholder="ETP">
             <a href="#" class="align-items-center text-bg-danger input-group-text" onclick="limparHora('3')"><i
                     class="bi bi-x-circle"></i></a>
 
         </div>
     </div>
-    <div class="col">
-        <div class="input-group mb-2 input-group-sm">
+    <div class="col-3">
+        <div class="input-group mb-1 input-group-sm">
             <label class="input-group-text">Data de realização:</label>
             <input type="date" id="form_atividade_dia" class="form-control" value="{{hojeJS}}" tabindex="8">
         </div>
-        <div class="input-group mb-2 input-group-sm">
+
+        <div class="input-group mb-1 input-group-sm">
             <label class="input-group-text">Índice do diário:</label>
             <input type="number" class="form-control" id="form_atividade_indice" value="1" tabindex="9">
         </div>
+
         <div class="row">
-            <div class="col">
-                <div class="input-group mb-2 input-group-sm">
+            <div class="col-auto">
+                <div class="input-group mb-1 input-group-sm">
                     <span class="input-group-text">Plantão</span>
                     <div class="input-group-text">
-                        <input class="form-check-input m-0" type="checkbox" id="form_atividade_diaseguinte" tabindex="10">
+                        <input class="form-check-input m-0" type="checkbox" id="form_atividade_diaseguinte"
+                            tabindex="10">
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="input-group mb-2 input-group-sm">
+            <div class="col-auto">
+                <div class="input-group mb-1 input-group-sm">
                     <span class="input-group-text">Meia diária</span>
                     <div class="input-group-text">
                         <input class="form-check-input m-0" type="checkbox" id="form_atividade_meiadiaria" tabindex="11"
@@ -85,67 +88,77 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="input-group mb-2 input-group-sm">
+
+        <div class="input-group mb-1 input-group-sm">
             <label class="input-group-text">Atividade:</label>
             <select class="form-select" id="form_atividade_atividade" tabindex="12"></select>
         </div>
-        <div class="input-group mb-2 input-group-sm">
-            <label class="input-group-text">Responsável:</label>
-            <select class="form-select" id="form_atividade_supervisor" disabled tabindex="13"></select>
-        </div>
-        <div class="input-group mb-2 input-group-sm">
-            <label class="input-group-text">Motivo:</label>
-            <input type="text" class="form-control" id="form_atividade_motivo" disabled tabindex="14">
-        </div>
     </div>
-
-    <div class="input-group">
-        <span class="input-group-text">Descrição:</span>
-        <textarea class="form-control" id="form_atividade_descricao" tabindex="15"></textarea>
-    </div>
-    <a href="#" class="exibir-ocultar mb-2" onclick="get_desc()">puxar do diario</a>
-
-    <div class="mt-3" style="justify-content: flex-end; display: flex;">
-        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
-            data-bs-target="#modalTable">Visualizar dia</button>
-        <button type="button" class="btn btn-success" id="form_atividade_submit" tabindex="16"
-            onclick="$('#form_atividade_colaborador').focus()">Lançar</button>
-    </div>
-    <div id="modalTable" class="modal fade" tabindex="2" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Lançamentos do mesmo dia</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="col-5">
+        <div class="row">
+            <div class="col-6">
+                <div class="input-group mb-1 input-group-sm">
+                    <label class="input-group-text">Responsável:</label>
+                    <select class="form-select" id="form_atividade_supervisor" disabled tabindex="13"></select>
                 </div>
-                <div class="modal-body">
-                    <table id="lanc_dia" data-toggle="table" data-height="345" data-locale="pt-BR">
-                        <thead>
-                            <tr>
-                                <th rowspan="2" data-field="id">ID</th>
-                                <th rowspan="2" data-field="obra">Obra</th>
-                                <th rowspan="2" data-field="dia" data-formatter="dataFormatter">Dia</th>
-                                <th colspan="6">Horas</th>
-                            </tr>
-                            <tr>
-                                <th data-field="horaini1">Inicio 1</th>
-                                <th data-field="horafim1">Fim 1</th>
-                                <th data-field="horaini2">Inicio 2</th>
-                                <th data-field="horafim2">Fim 2</th>
-                                <th data-field="horaini3">Inicio 3</th>
-                                <th data-field="horafim3">Fim 3</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+            <div class="col-6">
+                <div class="input-group mb-1 input-group-sm">
+                    <label class="input-group-text">Motivo:</label>
+                    <input type="text" class="form-control" id="form_atividade_motivo" disabled tabindex="14">
                 </div>
             </div>
         </div>
+        <div class="col-12">
+            <div class="input-group">
+                <span class="input-group-text">Descrição:</span>
+                <textarea class="form-control" id="form_atividade_descricao" tabindex="15"></textarea>
+            </div>
+            <a href="#" class="exibir-ocultar mb-1" onclick="get_desc()">puxar do diario</a>
+        </div>
     </div>
+</div>
+
+<div style="justify-content: flex-end; display: flex;">
+    <button type="button" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal"
+        data-bs-target="#modalTable">Visualizar
+        dia</button>
+    <button type="button" class="btn btn-sm btn-success" id="form_atividade_submit" tabindex="16"
+        onclick="$('#form_atividade_colaborador').focus()">Lançar</button>
+</div>
+<div id="modalTable" class="modal fade" tabindex="2" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Lançamentos do mesmo dia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="lanc_dia" data-toggle="table" data-height="345" data-locale="pt-BR">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" data-field="id">ID</th>
+                            <th rowspan="2" data-field="obra">Obra</th>
+                            <th rowspan="2" data-field="dia" data-formatter="dataFormatter">Dia</th>
+                            <th colspan="6">Horas</th>
+                        </tr>
+                        <tr>
+                            <th data-field="horaini1">Inicio 1</th>
+                            <th data-field="horafim1">Fim 1</th>
+                            <th data-field="horaini2">Inicio 2</th>
+                            <th data-field="horafim2">Fim 2</th>
+                            <th data-field="horaini3">Inicio 3</th>
+                            <th data-field="horafim3">Fim 3</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 {%endblock%}
@@ -191,15 +204,15 @@
             })
         })
 
-        
-        
+
+
     }
     $('#modalTable').on('shown.bs.modal', function () {
         $("#lanc_dia").bootstrapTable('refreshOptions', {
             url: `{{api}}Lancamento_obra/atividade?colaborador=${colaborador.val()}&dia=${dia.val()}`,
         })
     })
-    
+
     async function filtrar(element) {
         let legend
         let filter
@@ -221,8 +234,8 @@
             legend.text("ocultar ".concat(text[1]));
         }
         let pos_data = []
-        await data.forEach((row)=>{
-            pos_data.push({'value':row.nome || row.id, 'text':row.nome || row.id + ' || ' + row.empresa + ' - ' + row.cidade})
+        await data.forEach((row) => {
+            pos_data.push({ 'value': row.nome || row.id, 'text': row.nome || row.id + ' || ' + row.empresa + ' - ' + row.cidade })
         })
         generics.populate.select(prefix + element, pos_data)
     }
@@ -255,8 +268,8 @@
         $('#form_atividade_horafim' + hora).val('')
     }
     function changeObra() {
-        const att = ["ATESTADO","DISPENSA","FALTA","FOLGA","FÉRIAS","TREINAMENTO","ATIVIDADE OBRA"];
-    
+        const att = ["ATESTADO", "DISPENSA", "FALTA", "FOLGA", "FÉRIAS", "TREINAMENTO", "ATIVIDADE OBRA"];
+
         if (obra.val() >= 7) {
             atividade.val(att[6]);
         } else {
@@ -272,13 +285,13 @@
         } else {
             desativado = false;
         }
-        campos1.forEach((campo)=>{
+        campos1.forEach((campo) => {
             $(`#${prefix}${campo}`).attr("disabled", desativado);
         })
-        campos2.forEach((campo)=>{
+        campos2.forEach((campo) => {
             $(`#${prefix}${campo}`).attr("disabled", !desativado);
         })
-        
+
     }
 </script>
 

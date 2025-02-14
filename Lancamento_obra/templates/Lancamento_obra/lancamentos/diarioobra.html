@@ -6,15 +6,16 @@
 {%endblock%}
 
 {% block 'main' %}
-
 <div class="row">
-    <div class="col-7">
-        <div class="input-group input-group-sm mb-2">
-            <label class="input-group-text">Digitalizado</label>
-            <input type="file" class="form-control" id="form_diarioobra_arquivo" accept="image/*; capture" >
-        </div>
+    <div class="col-8">
         <div class="row">
-            <div class="col">
+            <div class="col-12">
+                <div class="input-group input-group-sm mb-2">
+                    <label class="input-group-text">Digitalizado</label>
+                    <input type="file" class="form-control" id="form_diarioobra_arquivo" accept="image/*; capture">
+                </div>
+            </div>
+            <div class="col-5">
                 <div class="row justify-content-end">
                     <div class="input-group input-group-sm">
                         <label class="input-group-text">Obra:</label>
@@ -26,69 +27,67 @@
             </div>
             <div class="col-4">
                 <div class="input-group input-group-sm mb-2">
-                    <label class="input-group-text" for="form_diarioobra_indice">Indice:</label>
-                    <input type="number" id="form_diarioobra_indice" class="form-control">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="input-group input-group-sm mb-2">
                     <label class="input-group-text" for="form_diarioobra_encarregado">Encarregado:</label>
                     <select class="form-select" id="form_diarioobra_encarregado">
                     </select>
                 </div>
             </div>
-            <div class="col-5">
+            <div class="col-3">
                 <div class="input-group input-group-sm mb-1">
                     <label class="input-group-text" for="form_diarioobra_data">Data:</label>
                     <input type="date" id="form_diarioobra_data" class="form-control">
                 </div>
             </div>
-        </div>
-        <div class="input-group input-group-sm mb-2">
-            <span class="input-group-text">Descrição:</span>
-            <textarea class="form-control" id="form_diarioobra_descricao"></textarea>
-        </div>
-        <div class="col align-self-center">
-            <h4>Climas</h4>
-            <div class="row">
-                <div class="col">
-                    <div class="input-group input-group-sm mb-2">
-                        <label class="input-group-text" for="form_diarioobra_climamanha">Manhã</label>
-                        <select class="form-select" id="form_diarioobra_climamanha">
-                            <option>Sol</option>
-                            <option>Chuva</option>
-                            <option>Nublado</option>
-                            <option selected>Não informado</option>
-                        </select>
-                    </div>
+            <div class="col-3">
+                <div class="input-group input-group-sm mb-2">
+                    <label class="input-group-text" for="form_diarioobra_indice">Indice:</label>
+                    <input type="number" id="form_diarioobra_indice" class="form-control">
                 </div>
-                <div class="col">
-                    <div class="input-group input-group-sm mb-2">
-                        <label class="input-group-text" for="form_diarioobra_climatarde">Tarde</label>
-                        <select class="form-select" id="form_diarioobra_climatarde">
-                            <option selected>Sol</option>
-                            <option>Chuva</option>
-                            <option>Nublado</option>
-                            <option selected>Não informado</option>
-                        </select>
+            </div>
+            <div class="col-5">
+                <div class="input-group input-group-sm mb-2">
+                    <span class="input-group-text">Descrição:</span>
+                    <textarea class="form-control" id="form_diarioobra_descricao"></textarea>
+                </div>
+            </div>
+            <div class="col-4">
+                    <div class="col nowrap">
+                        <div class="input-group input-group-sm mb-2">
+                            <label class="input-group-text" for="form_diarioobra_climamanha">Clima Manhã</label>
+                            <select class="form-select" id="form_diarioobra_climamanha">
+                                <option>Sol</option>
+                                <option>Chuva</option>
+                                <option>Nublado</option>
+                                <option selected>Não informado</option>
+                            </select>
+                        </div>
                     </div>
+                    <div class="col nowrap">
+                        <div class="input-group input-group-sm mb-2">
+                            <label class="input-group-text" for="form_diarioobra_climatarde">Clima Tarde</label>
+                            <select class="form-select" id="form_diarioobra_climatarde">
+                                <option selected>Sol</option>
+                                <option>Chuva</option>
+                                <option>Nublado</option>
+                                <option selected>Não informado</option>
+                            </select>
+                        </div>
+
                 </div>
             </div>
         </div>
         <div class="row justify-content-end">
-            <div class="col-auto"><button type="button" class="btn btn-primary mt-2 mb-2"
+            <div class="col-auto"><button type="button" class="btn btn-primary btn-sm mt-2"
                     onclick="register_redirect()">Lançar e Abrir atividade</button></div>
-            <div class="col-auto"><button type="button" class="btn btn-success mt-2 mb-2" id="form_diarioobra_submit"
+            <div class="col-auto"><button type="button" class="btn btn-success btn-sm mt-2" id="form_diarioobra_submit"
                     onclick="registrar()">Lançar</button></div>
         </div>
-        <div div='row mb-2' style="border-top: 1px solid lightgray;">{%include app|add:'/table/diarioobra.html'%}</div>
+        <div div='row mb-2'>{%include app|add:'/table/diarioobra.html'%}</div>
     </div>
     <div class="col">
         <div class="text-center">
             <img src="https://cdn-icons-png.flaticon.com/512/104/104090.png" class="img-thumbnail" alt="Digitalização"
-                style="width: 600px;height: 750px; object-fit: contain; " id="form_diarioobra_digitalização"
+                style="width: 600px;height: 600px; object-fit: contain; " id="form_diarioobra_digitalização"
                 data-bs-toggle="modal" data-bs-target="#view_diario">
         </div>
     </div>
@@ -171,14 +170,14 @@
             toasts('warning', { 'method': 'Registro', 'message': "Por favor, selecione uma data primeiro." })
             return;
         }
-        
+
         var parametro = await generics.reader.fields(resource, prefix)
         parametro['diario'] = 0
         data = parametro['data'].split('-')
         parametro['imagem'] = parametro.obra.concat('_', data[2], '-', data[1], '-', data[0]) + '_' + parametro.indice + '.' + filename[(filename.length - 1)]
         let formData = new FormData();
         formData.append('file', file);
-        Object.keys(parametro).forEach((key) =>{
+        Object.keys(parametro).forEach((key) => {
             formData.append(key, parametro[key])
         })
         // formData.append(JSON.stringify(parametro));
