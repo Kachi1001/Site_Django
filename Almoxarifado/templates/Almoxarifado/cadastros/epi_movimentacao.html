@@ -5,9 +5,9 @@
 {%endblock%}
 {% block 'main' %}
 <h5>DADOS CADASTRAIS</h5>
-<div class="row mb-2">
+<div class="row mb-1">
     <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">COLABORADOR:</label>
             <select class="form-select" id="f_{{resource}}_colaborador" tabindex="1">
             </select>
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">FICHA:</label>
             <select class="form-select" id="f_{{resource}}_ficha" tabindex="2">
             </select>
@@ -26,39 +26,39 @@
         </div>
     </div>
 </div>
-<div class="row mb-2">
+<div class="row mb-1">
     <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">OBRA:</label>
             <select class="form-select" id="f_{{resource}}_obra" tabindex="3">
             </select>
         </div>
     </div>
 </div>
-<div class="row mb-2">
+<div class="row mb-1">
     <div class="col-6">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">PRODUTO:</label>
             <select class="form-select" id="f_{{resource}}_produto" onchange="carregarFiltrado()" tabindex="4">
             </select>
         </div>
     </div>
     <div class="col-6">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">EPI:</label>
             <select class="form-select" id="f_{{resource}}_epi_cadastro" tabindex="5">
             </select>
         </div>
     </div>
     <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">QUANTIDADE:</label>
             <input type="number" id="f_{{resource}}_quantidade" class="form-control" tabindex="6">
         </div>
     </div>
 
     <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">TAMANHO:</label>
             <input class="form-control" list="f_tamanho" id="f_{{resource}}_tamanho" tabindex="6" value="U">
         </div>
@@ -75,10 +75,10 @@
         </datalist>
     </div>
 </div>
-<div class="row mb-2">
+<div class="row mb-1">
 
     <div class="col-auto">
-        <div class="input-group mb-2 nowrap input-group-sm">
+        <div class="input-group mb-1 nowrap input-group-sm">
             <label class="input-group-text">REPOSIÇÃO?</label>
             <select class="form-select" id="f_{{resource}}_reposicao" tabindex="7">
                 <option value="A">A - Acidente</option>
@@ -91,7 +91,7 @@
         </div>
     </div>
     <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">DATA ENTREGA:</label>
             <input type="date" id="f_{{resource}}_data_entrega" class="form-control" value="{{hojeJS}}" tabindex="8">
         </div>

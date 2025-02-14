@@ -16,3 +16,16 @@
         <th data-searchable="false" data-formatter="editarFormatter" data-events="editarEvents">Ação</th>
     </thead>
 </table>
+<script>
+    window.editarEvents = {
+        'click #editarBtn': function (e, value, row, index) {
+            modal.open('update','epi_movimentacao', row['id'])
+        },
+    }
+    function editarFormatter(value) {
+
+        return (
+            '<i class="btn-icon bg-info bi-pencil fs-6 me-1" id="editarBtn" href="javascript:void(0)" title="Editar">'
+        )
+    }
+</script>
