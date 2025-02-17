@@ -25,7 +25,6 @@
       for (const comp in values) {
         data.push({ 'competencia': comp, 'salario_insalub': values[comp]['salario_insalub'], 'horas_totais': values[comp]['horas_totais'], 'total_folha': values[comp]['horas_totais'] + values[comp]['salario_insalub'] })
       }
-      console.log(data)
       const ctx = document.getElementById('grafico_1');
       new Chart(ctx, {
         type: 'line',
