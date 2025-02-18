@@ -136,7 +136,8 @@ class BaseLoader {
                         this.object != "equipe" &&
                         this.object != "feriado" &&
                         this.object != "tipoavaliacao" &&
-                        this.object != "insalubridade"
+                        this.object != "integracao_nr_tipo" &&
+                        this.object != "insalubridade" 
                     ) {
                         const editBtn = document.createElement("i");
                         editBtn.classList.add(

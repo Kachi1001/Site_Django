@@ -961,37 +961,40 @@
 
         </div>
     </div>
-
-    <div class="modal fade" id="m_lancamento-integracao_nr" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_register-integracao_nr_tipo" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Lançamento de feriado</h1>
+                    <h1 class="modal-title fs-5">Lançamento de NR</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="m_lancamento-integracao_nr_colaborador">
                     <div class="row">
                         <div class="col">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">NR:</label>
-                                <select class="form-select" id="m_lancamento-integracao_nr_integracao_nr_tipo"></select>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">DATA:</label>
-                                <input type="date" id="m_lancamento-integracao_nr_validade" class="form-control form-control-sm">
+                                <input type="text" id="m_register-integracao_nr_tipo_id" class="form-control form-control-sm">
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success"
-                            id="m_lancamento-integracao_nr_submit">Lançar</button>
+                    <button type="button" class="btn btn-sm btn-primary mb-2" id="m_register-integracao_nr_tipo_submit">Registrar</button>
+
+                    <div class="modal-list">
+                        <table class="table table-hover table-bordered table-striped table-sm" id="m_register-integracao_nr_tipo_table">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+
         </div>
+    </div>
+
+        
     </div>
     <div class="modal fade" id="m_lancamento-integracao" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
