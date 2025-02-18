@@ -3,7 +3,7 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
-    {% if not user|can:ambiente %}
+    {% if not user|can:ambiente and ambiente != 'ambiente-prod' %}
     <script>location.href = 'http://tecnikaengenharia.ddns.net'</script>
     {%endif%}
 

@@ -31,7 +31,7 @@ class RequestLoggingMiddleware(MiddlewareMixin):
             'body': self._safe_body_content(request)
         }
     def process_response(self, request, response):
-        if not hasattr(request, 'start_time') or not hasattr(request, 'log_data') or any(request.path.startswith(path) for path in self.EXCLUDE_PATH):
+        if not hasattr(request, 'start_time') or not hasattr(request, 'log_data') or any(request.path.startswith(path) for path in self.EXCLUDE_PATH) or config('AMBIENTE_PERM') == 'ambiente-dev':
             return response
 
         duration = time.monotonic() - request.start_time
