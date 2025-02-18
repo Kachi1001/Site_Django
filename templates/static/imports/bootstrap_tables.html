@@ -55,6 +55,11 @@
             '<i class="btn-icon bg-info bi-pencil fs-6 me-1" id="editarBtn" href="javascript:void(0)" title="Editar">'
         )
     }
+    function urlFormatter(value) {
+        return (
+        `<a href="${value}" target='_blank'>Abrir</a>`
+        )
+    }
     function checkFormatter(value) {
         if (value) {
             return '<input class="form-check-input mt-0" type="checkbox" checked disabled>';
