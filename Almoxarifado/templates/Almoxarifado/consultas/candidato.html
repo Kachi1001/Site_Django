@@ -10,7 +10,8 @@
     <div class="col-auto">
         <h5 class="mb-0"><small>Cadastro geral</small></h5>
     </div>
-    <div class="col-auto"><button type="button" class="btn btn-success btn-sm" id="btn-contratar">Contratar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-success btn-sm" id="btn-contratar">Contratar</button>
+    </div>
     <div class="col-auto"><button type="button" class="btn btn-danger btn-sm" id="btn-deletar">Deletar</button></div>
     <div class="col-auto"><button type="button" class="btn btn-primary btn-sm" id="btn-update">Editar</button></div>
 </div>
@@ -146,8 +147,8 @@
     </div>
 </div>
 <hr class="mt-2">
-<div class="row justify-content-center"  id="f_anexos_list">
-    
+<div class="row justify-content-center" id="f_anexos_list">
+
 </div>
 <script>
     var candidato
@@ -183,31 +184,31 @@
         });
     })
     $('#btn-adicioar').click(function () {
-        let load = new Modal('anexos','envio')
+        let load = new Modal('anexos', 'envio')
         load.refresh = refresh
         load.open(candidato)
         $('#' + load.prefix + 'candidato').val(candidato)
     })
     function abrirLanc(modal) {
         let registro = new Modal(modal, 'lanc')
-        registro.refresh = () => {registro.open(candidato)}
+        registro.refresh = () => { registro.open(candidato) }
         registro.open(candidato)
         $('#' + registro.prefix + 'candidato').val(candidato)
     }
     function abrirEdit(modal) {
         let registro = new Modal(modal, 'update')
-        registro.refresh = () => {registro.open(candidato)}
+        registro.refresh = () => { registro.open(candidato) }
         registro.open(candidato)
     }
 
     function abrirTabela(resource) {
         let modal = new Modal(resource, 'tabela')
-        modal.refresh = () => {modal.open(candidato)}
+        modal.refresh = () => { modal.open(candidato) }
         modal.open(colab)
     }
     function abrirFile(id) {
-        let modal = new Modal('anexos' ,'file_view')
-        modal.refresh = () => {modal.modal.hide(); load()}
+        let modal = new Modal('anexos', 'file_view')
+        modal.refresh = () => { modal.modal.hide(); load() }
 
         modal.open(id)
     }

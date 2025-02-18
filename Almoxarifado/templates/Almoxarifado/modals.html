@@ -42,16 +42,15 @@
                     <h1 class="modal-title fs-5"><strong>Erros encontrado nas fichas físicas</strong></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                    <div class="modal_list">
-                        <table class="table table-hover table-bordered table-striped table-sm"
-                            id="m_register-erros_table">
-                            <thead>
-                                <tr></tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    
+                <div class="modal_list">
+                    <table class="table table-hover table-bordered table-striped table-sm" id="m_register-erros_table">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
                 <div class="modal-footer">
                     <div class="input-group input-group-sm mb-2 nowrap ">
                         <label class="input-group-text">Descrição:</label>
@@ -70,14 +69,14 @@
                     <h1 class="modal-title fs-5"><strong>Itens padrão da ficha</strong></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                    <div class="modal-body">
-                        <div class="input-group input-group-sm mb-2 nowrap ">
-                            <label class="input-group-text">Produto:</label>
-                            <select id="m_register-ficha_padrao_produto" class="form-select form-select-sm"></select>
-                        </div>
-                        <button type="button" class="btn btn-primary mb-2 btn-sm"
-                            id="m_register-ficha_padrao_submit">Cadastrar</button>
+                <div class="modal-body">
+                    <div class="input-group input-group-sm mb-2 nowrap ">
+                        <label class="input-group-text">Produto:</label>
+                        <select id="m_register-ficha_padrao_produto" class="form-select form-select-sm"></select>
                     </div>
+                    <button type="button" class="btn btn-primary mb-2 btn-sm"
+                        id="m_register-ficha_padrao_submit">Cadastrar</button>
+                </div>
                 <div class="modal-footer">
                     <div class="modal_list">
                         <table class="table table-hover table-bordered table-striped table-sm"
@@ -88,7 +87,7 @@
                             <tbody></tbody>
                         </table>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -983,40 +982,128 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_file_view-anexos" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+    <div class="modal fade" id="m_ficha-ficha" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5"><strong id="m_file_view-anexos_nome"></strong></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img id="m_file_view-anexos_preview_imagem" style="width: 100%; height: 100%;"
-                        src="http://tecnikaengenharia.ddns.net/media/icons/file.png">
-                    <embed id="m_file_view-anexos_preview_pdf" type='application/pdf'
-                        style="width: 100%; height: 500px; display: none;">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="m_file_view-anexos_delete">Deletar</button>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
+                                aria-selected="true">Home</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                data-bs-target="#profile-tab-pane" type="button" role="tab"
+                                aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                            aria-labelledby="home-tab" tabindex="0">
+                            <embed id="m_ficha-ficha_digital" type='application/pdf' style="width: 100%; height: 500px;">
+                        </div>
+                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+                            tabindex="0">
+                            <div style="overflow-y: auto; height: 500px;">
+                                <img id="m_ficha-ficha_digitalizado" style="width: 100%;"
+                                src="/static/icons/file-earmark-excel.svg">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_select-ficha" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+    <div class="modal fade" id="m_view-ficha" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5"><strong>Produtos</strong></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
+                                aria-selected="true">Home</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                data-bs-target="#profile-tab-pane" type="button" role="tab"
+                                aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
+                        </li>
+                    </ul>
+                    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+                        tabindex="0">
+                        <embed id="m_ficha-ficha_pdf" type='application/pdf' style="width: 100%; height: 500px;">
+                    </div>
+                    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+                        tabindex="0">
+                        <img id="m_ficha-ficha_imagem" style="width: 100%; height: 500px; overflow-y: auto;"
+                            src="http://tecnikaengenharia.ddns.net/media/Almoxarifado/digitalizacao/116.jpeg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function view_ficha(ldr) {
+                print(ldr.id)
+                const digital = document.getElementById(ldr.prefix + "digital");
+                const digitalizado = document.getElementById(ldr.prefix + "digitalizado");
+                url_base = 'http://tecnikaegenharia.ddns.net/media/Almoxarifado/'
+                apiRequest
+                    .get("ficha_impressao", {
+                        ficha: ldr.id,
+                        force: KeyPressing.isKeyPressed(17)
+                    }).then((reuslt) => {
+                        digital.src = result.url
+                    })
+                apiRequest.get('digitalizado', { 'ficha': ldr.id }).then((result) => {
+                    let last = result[0]
+                    for (row in result) {
+                        if (last.id < row.id) {last = row}
+                    }
+                    digitalizado.src = last.url;
+                })
+                if (
+                    ldr.last != undefined &&
+                    ldr.last.type == "historico"
+                ) {
+                    ldr.myModal.addEventListener(
+                        "hidden.bs.modal",
+                        (event) => {
+                            ldr.last.modal.dispose();
+                            let obj = new Modal(this.last.object, 'historico')
+                            apiRequest.get(this.last.object, { 'colaborador': page.getParam("id") }).then((data) => {
+                                obj.open(data)
+                            })
+                        }
+                    );
+                }
+                ldr.modal.show();
+            }
+        </script>
+    </div>
+    <div class="modal fade" id="m_historico-ficha" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"><strong>Ficha digital</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-1">
                     <div class="modal_list">
+
                         <table class="table table-hover table-bordered table-striped table-sm"
-                            id="m_select-ficha_table">
+                            id="m_historico-ficha_table">
                             <thead>
                                 <tr></tr>
                             </thead>
+
                             <tbody></tbody>
                         </table>
                     </div>

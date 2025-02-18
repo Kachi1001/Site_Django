@@ -3,6 +3,7 @@ from datetime import date
 import time
 
 from decouple import config
+from django.shortcuts import redirect
 from . import util
 api = str(config("API")) # type: ignore
 
@@ -23,6 +24,7 @@ def base(request):
     app = modulo_da_view.split('.')[0]
     media = config("MEDIA_URL") + app + '/'
     token = request.session.get('api_token') or None 
+    redirect = False if request.user.has_perm(f'foo.{config('AMBIENTE_PERM')}') else True
     return {
         # 'ambiente': config('AMBIENTE'),
         'nome': request.user.username,
@@ -45,5 +47,6 @@ def base(request):
             'graph': 'class=bi-graph-up-arrow',
             },
         
-        'table_height': '400'
+        'table_height': '400',
+        'ambiente': config('AMBIENTE_PERM')
         }

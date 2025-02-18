@@ -3,8 +3,11 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
+    {% if not user|can:ambiente %}
+    <script>location.href = 'http://tecnikaengenharia.ddns.net'</script>
+    {%endif%}
 
-<head>
+    <head>
     <title>{{app_name}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -39,10 +42,6 @@
     <script src="{%static 'js/base.js'%}"></script>
     
 </head>
-
-
-
-
 
 
 <body>

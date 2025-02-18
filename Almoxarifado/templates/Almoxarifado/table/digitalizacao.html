@@ -1,0 +1,23 @@
+{%load static%}
+{%include 'tabela.html'%}
+
+    <thead>
+        <!-- <th data-searchable="false" data-formatter="editarFormatter" data-events="editarEvents"></th> -->
+        <th data-field="id" data-sortable="true">ID</th>
+        <th data-field="ficha_id"  data-sortable="false" data-searchable="false">Ficha</th>
+        <th data-field="data" data-sortable="true" data-searchable="true">Data</th>
+        <th data-field="url" data-sortable="true" data-formatter="urlFormatter">Url</th>
+    </thead>
+</table>
+<script>
+    
+
+    function editarFormatter(value) {
+        return '<div id="viewBtn" class="btn-icon bg-info"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit" title="Abrir detalhe"></div></div>'
+    }
+    window.editarEvents = {
+        'click #viewBtn': function (e, value, row, index) {
+            page.redirect('consultas/candidato',{id:row['id']})
+        },
+    }
+</script>

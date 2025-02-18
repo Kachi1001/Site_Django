@@ -10,7 +10,11 @@ class BaseLoader {
     }
     async open(id = undefined) {
         this.id = id;
-        this.inputs = await apiRequest.get(`resource/${this.object}`);
+        try {
+            this.inputs = await apiRequest.get(`resource/${this.object}`);
+        } catch (error) {
+            console.log(error);
+        }
         loader = this;
         return new Promise((resolve, reject) => {
             this[this.type]().then(() => {
@@ -154,7 +158,7 @@ class BaseLoader {
                         });
                         extraBtn.appendChild(editBtn);
                     }
-                    if (feature.includes("view")) {
+                    if (feature.includes("view_ficha")) {
                         const editBtn = document.createElement("i");
                         editBtn.classList.add(
                             "btn-icon",
@@ -165,7 +169,7 @@ class BaseLoader {
 
                         editBtn.addEventListener("click", () => {
                             this.modal.hide();
-                            let modal = new Modal(this.object, "view");
+                            let modal = new Modal('ficha', "ficha");
                             modal.open(obj.id);
                         });
                         extraBtn.appendChild(editBtn);
@@ -192,7 +196,6 @@ class Modal extends BaseLoader {
         super(object, type); // Chama o construtor da classe DataManager
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
-        console.log(this.prefix.slice(0, -1));
         this.modal = new bootstrap.Modal(this.myModal);
         this.refresh;
         this.loader = loader;
@@ -364,25 +367,80 @@ class Modal extends BaseLoader {
     }
     async select() {
         const data = await apiRequest.get(this.object);
-        this.populateTable(data, ['view'], ["id"]).then(() => {
-        this.modal.show();
-        })
+        this.populateTable(data, ["view"], ["id"]).then(() => {
+            this.modal.show();
+        });
     }
     async view() {
-        const data = await apiRequest.get("ficha_impressao/" + this.id);
-        const pdf = document.getElementById(this.prefix + "preview_pdf");
-        pdf.src = data.pdf_path;
-        pdf.style.display = "block";
-        imagem.style.display = "none";
+            const data = this.id;
+            const imagem = document.getElementById(this.prefix + "imagem");
+            const pdf = document.getElementById(this.prefix + "pdf");
 
-        // $("#" + this.prefix + "delete")
-        //     .off()
-        //     .on("click", () => {
-        //         apiRequest.delete("anexos/" + data.id).then(this.refresh);
-        //     });
-        this.modal.show();
+            if (data.tipo == "pdf") {
+                pdf.src = data.url;
+                pdf.style.display = "block";
+                imagem.style.display = "none";
+            } else {
+                imagem.src = data.url;
+                imagem.style.display = "block";
+                pdf.style.display = "none";
+            }
+            if (this.last != undefined && this.last.type == "historico") {
+                loader.myModal.addEventListener("hidden.bs.modal", (event) => {
+                    loader.modal.dispose();
+                    let obj = new Modal(this.last.object, "historico");
+                    apiRequest
+                        .get(this.last.object, {
+                            colaborador: page.getParam("id"),
+                        })
+                        .then((data) => {
+                            obj.open(data);
+                        });
+                });
+            }
+            this.modal.show();
+    }
+    async ficha() {
+        const digital = document.getElementById(this.prefix + "digital");
+        const digitalizado = document.getElementById(this.prefix + "digitalizado");
+        if (
+            this.last != undefined &&
+            this.last.type == "historico"
+        ) {
+            this.myModal.addEventListener(
+                "hidden.bs.modal",
+                (event) => {
+                    this.last.modal.dispose();
+                    let obj = new Modal(this.last.object, 'historico')
+                    apiRequest.get(this.last.object, { 'colaborador': page.getParam("id") }).then((data) => {
+                        obj.open(data)
+                    })
+                }
+            );
+        }
+        apiRequest.get('digitalizacao', { 'ficha': this.id }).then((result) => {
+            let last = {'url': '/static/icons/file-earmark-excel.svg'}
+            for (const row in result) {
+                if (last.id < row.id) {last = row}
+            }
+            digitalizado.src = last.url;
+        })
+        apiRequest
+        .get("ficha_impressao", {
+            ficha: this.id,
+            force: KeyPressing.isKeyPressed(17)
+        }).then((result) => {
+            digital.src = result.url
+            })
     }
 
+    async historico() {
+        const table = await this.id;
+        let feature = ["view_ficha"];
+        this.populateTable(table, feature, ["id"]).then(() => {
+            this.modal.show();
+        });
+    }
     load() {
         if (typeof this.id == "object") {
             this.id.forEach((field) => {

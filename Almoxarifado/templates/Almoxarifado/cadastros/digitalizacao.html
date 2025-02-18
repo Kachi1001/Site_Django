@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'header'%}
+{%endblock%}
+{% block 'main' %}
+<h5>DADOS CADASTRAIS</h5>
+<div class="row">
+    <div class="col-6">
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group input-group-sm mb-2">
+                    <label class="input-group-text">DIGITALIZAÇÃO</label>
+                    <input type="file" class="form-control" id="f_{{resource}}_image" accept="image/*">
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="input-group mb-2 flex-nowrap input-group-sm">
+                    <label class="input-group-text">COLABORADOR:</label>
+                    <select id="f_{{resource}}_colaborador" class="form-select" onchange="ficha_filtrada()"></select>
+                </div>
+            </div>
+
+            <div class="col-auto">
+                <div class="input-group mb-2 flex-nowrap input-group-sm">
+                    <label class="input-group-text">FICHA:</label>
+                    <select id="f_{{resource}}_ficha" class="form-select" tabindex="4"></select>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-end">
+            <div class="col-auto"><button onclick="submit()" class="btn btn-success"
+                    tabindex="8">Cadastrar</button>
+            </div>
+        </div>
+        <div class="submain">{%include app|add:'/table/'|add:resource|add:'.html'%}</div>
+        
+    </div>
+    <div class="col">
+        <div class="text-center">
+            <img src="/static/icons/file-earmark-arrow-up.svg" class="img-thumbnail" alt="Digitalização"
+                style="width: 600px;height: 600px; object-fit: contain; " id="f_{{resource}}_preview">
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    prefix = 'f_{{resource}}_'
+    colab = $('#' + prefix + 'colaborador')
+    function load() {
+        loader = new Form('{{resource}}', 'register')
+        apiRequest.get(`select/colaborador`).then((data) => {
+            loader.populateSelect(data, 'colaborador').then(() =>{
+                ficha_filtrada()
+            });
+        });
+        const preview = document.getElementById(prefix + 'preview');
+        const image = document.getElementById(prefix + 'image');
+
+        $('#'+prefix +'image').change(function () {
+            let reader = new FileReader();
+            reader.onload = () => {
+                preview.src = reader.result;
+            }
+            reader.readAsDataURL(image.files[0]);
+        });
+    }
+    function ficha_filtrada() {
+        apiRequest.get(`ficha?colaborador=${colab.val()}`).then((data) => {
+            var processed_data = []
+            for (row in data){
+                row = data[row]
+                processed_data.push ({'value':row.id, 'text': `${row.pagina} | ${row.completa ? 'Completa' : 'Incompleta'}`})
+            }
+            loader.populateSelect(processed_data, 'ficha');
+        });
+    }
+    function submit(){
+        let image = $('#'+ prefix +'image')[0].files[0];
+        const ficha = $("#"+prefix+"ficha").val() 
+        if (!image) {
+            toasts('warning', { 'method': 'Registro', 'message': "Por favor, selecione um arquivo primeiro." })
+            return;
+        }
+        if (!ficha) {
+            toasts('warning', { 'method': 'Registro', 'message': "Por favor, selecione uma ficha primeiro." })
+            return;
+        }
+
+        let formData = new FormData();
+        formData.append('image', image);
+        formData.append('ficha', ficha)
+        // formData.append(JSON.stringify(parametro));
+        apiRequest.upload('digitalizacao', formData).then(() => {
+            $("#table").bootstrapTable("refresh");
+        })
+    }
+</script>
+{% endblock %}

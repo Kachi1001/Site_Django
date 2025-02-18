@@ -109,12 +109,14 @@
                 <strong>Última Ficha</strong>
             </div>
             <ul class="list-group list-group-flush">
+                <input type="hidden" id="ficha_id">
                 <input type="text" class="list-group-item" id="ficha_pagina" readonly value="Folha: null">
                 <input type="text" class="list-group-item" id="ficha_completa" readonly value="null">
             </ul>
             <div class="card-footer">
                 <button type="button" class="btn btn-secondary btn-sm" id="ficha_historico">Histórico</button>
-                <button type="button" class="btn btn-primary btn-sm" id="ficha_nova">Nova</button>
+                <button type="button" class="btn btn-success btn-sm" id="ficha_nova">Nova</button>
+                <button type="button" class="btn btn-primary btn-sm" id="ficha_ver">Ver</button>
             </div>
         </div>
     </div>
@@ -218,6 +220,7 @@
             $('#ficha_completa').addClass(ultima.completa ? 'bg-danger-subtle' : 'bg-primary-subtle')
             $('#ficha_completa').val(ultima.completa ? 'Completa' : 'Incompleta')
             $(`#ficha_pagina`).val(($('#ficha_pagina').val()).replace('null', ultima.pagina))
+            $(`#ficha_id`).val(ultima.id)
         }).catch(err => {
             if (err.detail == 'No Numeracao matches the given query.') {
                 toasts('warning', { 'method': 'Pesquisa', 'message': 'Não há ficha cadastrada para este colaborador' })
@@ -234,6 +237,21 @@
                 obj.set('colaborador', colab, true)
                 getFicha()
             })
+        })
+        $(`#${resource}_ver`).click(() => {
+            let obj = new Modal('file', 'view')
+            apiRequest.get('ficha_impressao', {'ficha':$('#ficha_id').val()}).then((data)=>{
+                obj.last.type = undefined
+                obj.open(data).then(()=>{
+                    $('#'+ obj.prefix + 'titulo').text('Ficha digital')
+                })
+            })
+        })
+        $(`#${resource}_historico`).click(() => {
+            let obj = new Modal(resource, 'historico')
+            apiRequest.get(resource, {'colaborador':colab}).then((data) => {
+                obj.open(data)
+            }) 
         })
     }
 
