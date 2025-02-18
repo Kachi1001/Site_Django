@@ -16,10 +16,10 @@ class BaseLoader {
             this[this.type]().then(() => {
                 if (this.modal) {
                     try {
-                        customActions[this.type][this.object](this).then(() =>{
+                        customActions[this.type][this.object](this).then(() => {
                             this.modal.show();
                         });
-                    } catch{
+                    } catch {
                         this.modal.show();
                     }
                 }
@@ -91,7 +91,9 @@ class BaseLoader {
                 keys.forEach((key) => {
                     const th = document.createElement("th");
                     th.textContent = key.charAt(0).toUpperCase() + key.slice(1);
-                    th.textContent = th.textContent.replaceAll("_", " ").replaceAll("cao", "ção");
+                    th.textContent = th.textContent
+                        .replaceAll("_", " ")
+                        .replaceAll("cao", "ção");
                     thead.appendChild(th);
                 });
                 if (feature) {
@@ -170,6 +172,7 @@ class BaseLoader {
     }
     async set(field, value, locked = false) {
         const html = $("#" + this.prefix + field);
+        print(value)
         html.val(value);
         html.attr("disabled", locked);
     }
@@ -180,7 +183,7 @@ class Modal extends BaseLoader {
         super(object, type);
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
-        console.log(this)
+        console.log(this);
         this.modal = new bootstrap.Modal(this.myModal);
         loader = this;
         this.loader = loader;
@@ -371,9 +374,11 @@ class Modal extends BaseLoader {
 const customActions = {
     register: {
         area_atuacao_sub: async function (loader) {
-            console.log(loader)
+            console.log(loader);
             $("#" + loader.prefix + "area_atuacao").change(async function () {
-                const data = await apiRequest.get("area_atuacao_sub", {'area_atuacao': this.value});
+                const data = await apiRequest.get("area_atuacao_sub", {
+                    area_atuacao: this.value,
+                });
                 loader.populateTable(data, ["delete"], ["id"]);
             });
         },
@@ -381,21 +386,21 @@ const customActions = {
     lanc: {
         experiencia: async function (loader) {
             setTimeout(() => {
-            chance_area(loader.prefix, 1);
+                chance_area(loader.prefix, 1);
             }, 300);
         },
     },
     update: {
         experiencia: async function (loader) {
             setTimeout(() => {
-            chance_area(loader.prefix);
+                chance_area(loader.prefix);
             }, 300);
         },
         candidato: async function (loader) {
             setTimeout(() => {
-            chance_area(loader.prefix);
+                chance_area(loader.prefix)
             }, 300);
-        }
+        },
     },
 };
 class Form extends BaseLoader {
@@ -511,18 +516,25 @@ $(document).ready(() => {
         console.log("Tela sem inicializador", error);
     }
 });
-function chance_area(prefix, area = document.getElementById(prefix + 'area_atuacao').value) {
-    apiRequest.get('area_atuacao_sub', {
-        area_atuacao: area
-    }).then(data => {
-        let select = document.getElementById(prefix + 'area_atuacao_sub');
-        select.innerHTML = '';
-        data.forEach(sub_area => {
-            let option = document.createElement('option');
-            option.value = sub_area.id;
-            option.innerHTML = sub_area.sub_area;
-            select.appendChild(option);
+async function chance_area(
+    prefix,
+    area = $("#" + prefix + "area_atuacao").val()
+) {
+    value = $("#" + prefix + "area_atuacao_sub").val()
+    apiRequest
+        .get("area_atuacao_sub", {
+            area_atuacao: area,
+        })
+        .then((data) => {
+            let select = document.getElementById(prefix + "area_atuacao_sub");
+            select.innerHTML = "";
+            data.forEach((sub_area) => {
+                let option = document.createElement("option");
+                option.value = sub_area.id;
+                option.innerHTML = sub_area.sub_area;
+                select.appendChild(option);
+            });
+            select.disabled = false;
+            $("#" + prefix + "area_atuacao_sub").val(value) 
         });
-        select.disabled = false;
-    });
 }
