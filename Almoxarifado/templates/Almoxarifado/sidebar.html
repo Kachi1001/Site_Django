@@ -4,7 +4,6 @@
     <a href="/{{app}}/" class="nome_app">{{app_name}} </a>
     
     <div class="accordion accordion-flush" id="accordion">
-        {% if user|can:'Almoxarifado-fichas' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -22,9 +21,7 @@
                 </a>
             </div>
         </div>
-        {%endif%}
         
-        {% if user|can:'Almoxarifado-produto' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <a href="#"  onclick="abrirRegistro('erros')">
@@ -32,8 +29,6 @@
                 </a>
             </h2>
         </div>
-        {%endif%}
-        {% if user|can:'Almoxarifado-produto' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <a href="#"  onclick="abrirRegistro('produto')">
@@ -41,8 +36,6 @@
                 </a>
             </h2>
         </div>
-        {%endif%}
-        {% if user|can:'Almoxarifado-numeracao' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <a href="#"  onclick="abrirRegistro('numeracao')">
@@ -50,18 +43,13 @@
                 </a>
             </h2>
         </div>
-        {%endif%}
     
-        {% if user|can:'Almoxarifado-cadastra_epi' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <!-- <a href="{%url app|add:'_cadastros' 'epi_cadastro'%}"> -->
                 <a href="#" onclick="abrirRegistro('epi_cadastro')"><i {{icon.modal}}></i>Cadastra EPI</a>
             </h2>
         </div>
-        {%endif%}
-        
-        {% if user|can:'Almoxarifado-movimentar' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <a href="{%url app|add:'_cadastros' 'epi_movimentacao'%}">
@@ -69,9 +57,6 @@
                 </a>
             </h2>
         </div>
-        {%endif%}
-        
-        {% if user|can:'Almoxarifado-colaborador' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <a href="{%url app|add:'_tabelas' 'colab_completo'%}">
@@ -79,11 +64,9 @@
                 </a>
             </h2>
         </div>
-        {%endif%}
         {% comment %}
         
         
-        {% if user|can:'Curriculos-consultas' %}
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -93,12 +76,8 @@
         </h2>
         <div id="menu-consulta" class="accordion-collapse collapse" data-bs-parent="#accordion">
             <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i>Consultas pendente</a>
-            <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i>Cargos</a>
-            <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i>Profissão candidatado</a>
-            <a href="{%url app|add:'_tabelas' 'candidato'%}"><i {{icon.table}}></i>Entrevistas</a>
         </div>
     </div>
-    {%endif%}
     {% endcomment %}
         
     
