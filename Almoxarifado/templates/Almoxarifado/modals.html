@@ -366,7 +366,7 @@
                         <div class="col-12">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">PRODUTO:</label>
-                                <select class="form-select" id="m_register-epi_cadastro_produto">
+                                <select class="form-select" id="m_register-epi_cadastro_produto" onchange="epi_cadastro()">
                                 </select>
                             </div>
                         </div>
@@ -417,6 +417,15 @@
                 </div>
             </div>
         </div>
+        <script>
+                function epi_cadastro() {
+                            apiRequest.get("epi_cadastro", {
+                                produto: $('#m_register-epi_cadastro_produto').val(),
+                            }).then((result) => {
+                                loader.populateTable(result, ["delete","edit"], ["id"]);
+                            })
+                    }
+        </script>
     </div>
     <div class="modal fade" id="m_update-epi_cadastro" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">

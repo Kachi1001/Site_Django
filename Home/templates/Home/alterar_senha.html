@@ -90,7 +90,7 @@
         </div>
     </body>
     <script>
-        $('html').attr ('data-bs-theme', localStorage.getItem('theme') || window.matchMedia('(prefers-color-scheme: dark)') ? 'dark' : 'light')
+        $('html').attr ('data-bs-theme', localStorage.getItem('theme') || window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
 
         // const novaSenha = document.getElementById("senha");
         const novaSenha = $("#senha");

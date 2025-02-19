@@ -25,6 +25,7 @@
                 width: 100%;
                 justify-content: center;
                 height: 100%;
+                margin-top: 0px;
             }
 
             p {
@@ -86,7 +87,7 @@
     </main>
     </body>
     <script>
-        $('html').attr ('data-bs-theme', localStorage.getItem('theme') || window.matchMedia('(prefers-color-scheme: dark)') ? 'dark' : 'light')
+        $('html').attr ('data-bs-theme', localStorage.getItem('theme') || window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
         const nome = $("#nome");
         const senha = $("#senha");
         // const confirmarSenha = document.getElementById("senha_2");
