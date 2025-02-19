@@ -10,7 +10,11 @@
     </thead>
 </table>
 <script>
-    
+    function urlFormatter(value) {
+        return (
+        `<a href="${value}" target='_blank'>Abrir</a>`
+        )
+    }
 
     function editarFormatter(value) {
         return '<div id="viewBtn" class="btn-icon bg-info"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit" title="Abrir detalhe"></div></div>'
