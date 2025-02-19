@@ -1,5 +1,5 @@
 var loader;
-
+var loading_modal
 class BaseLoader {
     constructor(object, type) {
         this.last = loader;
@@ -18,9 +18,11 @@ class BaseLoader {
                     try {
                         customActions[this.type][this.object](this).then(() => {
                             this.modal.show();
+                            loading_modal.hide()
                         });
                     } catch {
                         this.modal.show();
+                        loading_modal.hide()
                     }
                 }
                 resolve();
@@ -180,6 +182,8 @@ class BaseLoader {
 var modal_open;
 class Modal extends BaseLoader {
     constructor(object, type) {
+        loading_modal = new bootstrap.Modal('#carregando')
+        loading_modal.show()
         super(object, type);
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));

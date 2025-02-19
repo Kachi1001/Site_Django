@@ -1,5 +1,5 @@
 var loader;
-
+var loading_modal
 class BaseLoader {
     constructor(object, type) {
         this.last = loader;
@@ -20,6 +20,7 @@ class BaseLoader {
             this[this.type]().then(() => {
                 if (this.modal) {
                     this.modal.show();
+                    loading_modal.hide()
                 }
                 resolve();
             });
@@ -169,7 +170,7 @@ class BaseLoader {
 
                         editBtn.addEventListener("click", () => {
                             this.modal.hide();
-                            let modal = new Modal('ficha', "ficha");
+                            let modal = new Modal("ficha", "ficha");
                             modal.open(obj.id);
                         });
                         extraBtn.appendChild(editBtn);
@@ -193,6 +194,8 @@ class BaseLoader {
 var modal_open;
 class Modal extends BaseLoader {
     constructor(object, type) {
+        loading_modal = new bootstrap.Modal('#carregando')
+        loading_modal.show()
         super(object, type); // Chama o construtor da classe DataManager
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
@@ -372,66 +375,63 @@ class Modal extends BaseLoader {
         });
     }
     async view() {
-            const data = this.id;
-            const imagem = document.getElementById(this.prefix + "imagem");
-            const pdf = document.getElementById(this.prefix + "pdf");
+        const data = this.id;
+        const imagem = document.getElementById(this.prefix + "imagem");
+        const pdf = document.getElementById(this.prefix + "pdf");
 
-            if (data.tipo == "pdf") {
-                pdf.src = data.url;
-                pdf.style.display = "block";
-                imagem.style.display = "none";
-            } else {
-                imagem.src = data.url;
-                imagem.style.display = "block";
-                pdf.style.display = "none";
-            }
-            if (this.last != undefined && this.last.type == "historico") {
-                loader.myModal.addEventListener("hidden.bs.modal", (event) => {
-                    loader.modal.dispose();
-                    let obj = new Modal(this.last.object, "historico");
-                    apiRequest
-                        .get(this.last.object, {
-                            colaborador: page.getParam("id"),
-                        })
-                        .then((data) => {
-                            obj.open(data);
-                        });
-                });
-            }
-            this.modal.show();
+        if (data.tipo == "pdf") {
+            pdf.src = data.url;
+            pdf.style.display = "block";
+            imagem.style.display = "none";
+        } else {
+            imagem.src = data.url;
+            imagem.style.display = "block";
+            pdf.style.display = "none";
+        }
+        if (this.last != undefined && this.last.type == "historico") {
+            loader.myModal.addEventListener("hidden.bs.modal", (event) => {
+                loader.modal.dispose();
+                let obj = new Modal(this.last.object, "historico");
+                apiRequest
+                    .get(this.last.object, {
+                        colaborador: page.getParam("id"),
+                    })
+                    .then((data) => {
+                        obj.open(data);
+                    });
+            });
+        }
+        this.modal.show();
     }
     async ficha() {
         const digital = document.getElementById(this.prefix + "digital");
-        const digitalizado = document.getElementById(this.prefix + "digitalizado");
-        if (
-            this.last != undefined &&
-            this.last.type == "historico"
-        ) {
-            this.myModal.addEventListener(
-                "hidden.bs.modal",
-                (event) => {
-                    this.last.modal.dispose();
-                    let obj = new Modal(this.last.object, 'historico')
-                    apiRequest.get(this.last.object, { 'colaborador': page.getParam("id") }).then((data) => {
-                        obj.open(data)
-                    })
-                }
-            );
+        const digitalizado = document.getElementById(
+            this.prefix + "digitalizado"
+        );
+        if (this.last != undefined && this.last.type == "historico") {
+            this.myModal.addEventListener("hidden.bs.modal", (event) => {
+                this.last.modal.dispose();
+                let obj = new Modal(this.last.object, "historico");
+                apiRequest
+                    .get(this.last.object, { colaborador: page.getParam("id") })
+                    .then((data) => {
+                        obj.open(data);
+                    });
+            });
         }
-        apiRequest.get('digitalizacao', { 'ficha': this.id }).then((result) => {
-            let last = {'url': '/static/icons/file-earmark-excel.svg'}
-            for (const row in result) {
-                if (last.id < row.id) {last = row}
+        var data = await apiRequest.get("digitalizacao", { ficha: this.id });
+        let last = { url: "/static/icons/file-earmark-excel.svg",id:0};
+        for (const row in data) {
+            if (last.id < data[row].id) {
+                last = data[row];
             }
-            digitalizado.src = last.url;
-        })
-        apiRequest
-        .get("ficha_impressao", {
+        }
+        digitalizado.src = last.url;
+        data = await apiRequest.get("ficha_impressao", {
             ficha: this.id,
-            force: KeyPressing.isKeyPressed(17)
-        }).then((result) => {
-            digital.src = result.url
-            })
+            force: KeyPressing.isKeyPressed(17),
+        });
+        digital.src = data.url;
     }
 
     async historico() {
