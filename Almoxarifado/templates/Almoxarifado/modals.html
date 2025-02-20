@@ -1,5 +1,5 @@
 <div class="modals">
-    
+
     <div class="modal fade" id="m_register-produto" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -366,7 +366,8 @@
                         <div class="col-12">
                             <div class="input-group mb-2 flex-nowrap input-group-sm">
                                 <label class="input-group-text">PRODUTO:</label>
-                                <select class="form-select" id="m_register-epi_cadastro_produto" onchange="epi_cadastro()">
+                                <select class="form-select" id="m_register-epi_cadastro_produto"
+                                    onchange="epi_cadastro()">
                                 </select>
                             </div>
                         </div>
@@ -418,13 +419,13 @@
             </div>
         </div>
         <script>
-                function epi_cadastro() {
-                            apiRequest.get("epi_cadastro", {
-                                produto: $('#m_register-epi_cadastro_produto').val(),
-                            }).then((result) => {
-                                loader.populateTable(result, ["delete","edit"], ["id"]);
-                            })
-                    }
+            function epi_cadastro() {
+                apiRequest.get("epi_cadastro", {
+                    produto: $('#m_register-epi_cadastro_produto').val(),
+                }).then((result) => {
+                    loader.populateTable(result, ["delete", "edit"], ["id"]);
+                })
+            }
         </script>
     </div>
     <div class="modal fade" id="m_update-epi_cadastro" tabindex="-1" aria-hidden="true">
@@ -995,108 +996,51 @@
     <div class="modal fade" id="m_ficha-ficha" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+                <div class="modal-header pb-0">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <!-- <li class="nav-item" role="presentation">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#informacao-tab-pane"
+                            type="button" role="tab">Informação</button>
+                        </li> -->
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
-                                aria-selected="true">Digital</button>
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#digital-tab-pane"
+                                type="button" role="tab">Digital</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                                data-bs-target="#profile-tab-pane" type="button" role="tab"
-                                aria-controls="profile-tab-pane" aria-selected="false">Digitalização</button>
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#digitalizacao-tab-pane"
+                                type="button" role="tab">Digitalização</button>
                         </li>
                     </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
-                            aria-labelledby="home-tab" tabindex="0">
-                            <embed id="m_ficha-ficha_digital" type='application/pdf' style="width: 100%; height: 500px;">
+                            <button type="button" class="btn-close pb-2" data-bs-dismiss="modal" aria-label="Close" style="margin-bottom: 8px;"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <!-- <div class="tab-pane fade" id="informacao-tab-pane" role="tabpanel" tabindex="0">
+                            <div class="row" style="height: 500px;">
+                                <div class="col"></div>
+                            </div>
+                        </div> -->
+                        <div class="tab-pane fade show active" id="digital-tab-pane" role="tabpanel" tabindex="0">
+                            <embed id="m_ficha-ficha_digital" type='application/pdf'
+                                style="width: 100%; height: 500px;">
                         </div>
-                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
-                            tabindex="0">
+                        <div class="tab-pane fade" id="digitalizacao-tab-pane" role="tabpanel" tabindex="0">
+                            <div class="col-4">
+
+                                <div class="input-group m-1 flex-nowrap input-group-sm">
+                                    <label class="input-group-text">DIGITALIZADO EM:</label>
+                                    <input type="text" id="m_ficha-ficha_ultima_digitalizacao" class="form-control form-control-sm" readonly>
+                                </div>
+                            </div>
                             <div style="overflow-y: auto; height: 500px;">
                                 <img id="m_ficha-ficha_digitalizado" style="width: 100%;"
-                                src="/static/icons/file-earmark-excel.svg">
+                                    src="/static/icons/file-earmark-excel.svg">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade" id="m_view-ficha" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
-                                aria-selected="true">Home</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                                data-bs-target="#profile-tab-pane" type="button" role="tab"
-                                aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
-                        </li>
-                    </ul>
-                    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
-                        tabindex="0">
-                        <embed id="m_ficha-ficha_pdf" type='application/pdf' style="width: 100%; height: 500px;">
-                    </div>
-                    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
-                        tabindex="0">
-                        <img id="m_ficha-ficha_imagem" style="width: 100%; height: 500px; overflow-y: auto;"
-                            src="http://tecnikaengenharia.ddns.net/media/Almoxarifado/digitalizacao/116.jpeg">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-            function view_ficha(ldr) {
-                print(ldr.id)
-                const digital = document.getElementById(ldr.prefix + "digital");
-                const digitalizado = document.getElementById(ldr.prefix + "digitalizado");
-                url_base = 'http://tecnikaegenharia.ddns.net/media/Almoxarifado/'
-                apiRequest
-                    .get("ficha_impressao", {
-                        ficha: ldr.id,
-                        force: KeyPressing.isKeyPressed(17)
-                    }).then((reuslt) => {
-                        digital.src = result.url
-                    })
-                apiRequest.get('digitalizado', { 'ficha': ldr.id }).then((result) => {
-                    let last = result[0]
-                    for (row in result) {
-                        if (last.id < row.id) {last = row}
-                    }
-                    digitalizado.src = last.url;
-                })
-                if (
-                    ldr.last != undefined &&
-                    ldr.last.type == "historico"
-                ) {
-                    ldr.myModal.addEventListener(
-                        "hidden.bs.modal",
-                        (event) => {
-                            ldr.last.modal.dispose();
-                            let obj = new Modal(this.last.object, 'historico')
-                            apiRequest.get(this.last.object, { 'colaborador': page.getParam("id") }).then((data) => {
-                                obj.open(data)
-                            })
-                        }
-                    );
-                }
-                ldr.modal.show();
-            }
-        </script>
     </div>
     <div class="modal fade" id="m_historico-ficha" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">

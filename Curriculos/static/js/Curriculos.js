@@ -138,9 +138,11 @@ class BaseLoader {
                                 "bi-trash3",
                                 "me-1"
                             );
-
+                                
+                            removeButton.title = 'Deletar'
                             removeButton.addEventListener("click", () => {
                                 loader.id = obj.id;
+                                loader.refresh = () =>{$('#table').bootstrapTable('refresh')}
                                 Submit.delete(loader);
                             });
                             extraBtn.appendChild(removeButton);
@@ -153,7 +155,7 @@ class BaseLoader {
                                 "bi-pencil",
                                 "me-1"
                             );
-
+                            editBtn.title = 'Editar'
                             editBtn.addEventListener("click", () => {
                                 this.modal.hide();
                                 let modal = new Modal(this.object, "update");
@@ -161,6 +163,7 @@ class BaseLoader {
                             });
                             extraBtn.appendChild(editBtn);
                         }
+                       
 
                         row.appendChild(extraBtn);
                     }

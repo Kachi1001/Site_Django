@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{%load static%}
+
+
+{%block 'header'%}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">Tabelas</li>
+    <li class="breadcrumb-item active" aria-current="page">{{resource|title}}</li>
+  </ol>  
+  {%include 'consulta.html'%}
+  
+    <thead>
+        <tr>
+            <th data-field="id" data-sortable="true">ID</th>
+            <th data-field="candidato" data-searchable="true">Candidato</th>
+            <th data-field="indicacao" data-searchable="true">Indicação</th>
+            <th data-field="data_recebimento" data-searchable="true" data-formatter="dataFormatter">Recebido</th>
+            <th data-field="data_finalizacao" data-formatter="dataFormatter">Finalizado</th>
+            <th data-field="situacao" data-sortable="true" data-formatter="badgeFormatter">Situação</th>
+            <th data-searchable="false" data-formatter="editarFormatter" data-events="editarEvents">Retornar</th>
+
+        </tr>
+    </thead>
+</table>
+<script>
+    function badgeFormatter(value) {
+        switch (value) {
+            case 'Retornar':
+                return `<h6 class='m-0'><span class="badge bg-warning text-uppercase">${value}</span></h6>`
+            case 'Já encaminhado':
+                return `<h6 class='m-0'><span class="badge bg-primary text-uppercase">${value}</span></h6>`
+            default:
+                return `<h6 class='m-0'><span class="badge bg-success text-uppercase">${value}</span></h6>`
+        }
+    }
+    function editarFormatter(value, row, index) {
+        if (row['situacao'] == 'Retornar') {
+            return '<i class="btn-icon bg-info bi-box-arrow-up fs-6 me-1" id="retornarBtn" href="javascript:void(0)" title="Retornar">'
+        } //else {
+           // return 'Completo!'
+        //}
+    }
+    window.editarEvents = {
+        'click #retornarBtn': function (e, value, row, index) {
+            apiRequest.get('indicacoes/' + row['id']).then((result) =>{
+                result['data_finalizacao'] = hoje
+                apiRequest.update('indicacoes/' + row['id'], result)
+                $('#table').bootstrapTable('refresh')
+            })
+            //page.redirect('consultas/candidato',{id:row['candidato']})
+        },
+    }
+</script>
+{%endblock%}

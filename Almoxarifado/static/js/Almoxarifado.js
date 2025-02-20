@@ -427,11 +427,14 @@ class Modal extends BaseLoader {
             }
         }
         digitalizado.src = last.url;
+        print(last)
+        $('#' + this.prefix + 'ultima_digitalizacao').val(last.data)
         data = await apiRequest.get("ficha_impressao", {
             ficha: this.id,
             force: KeyPressing.isKeyPressed(17),
         });
         digital.src = data.url;
+
     }
 
     async historico() {

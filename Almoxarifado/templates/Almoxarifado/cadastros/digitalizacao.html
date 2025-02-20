@@ -50,11 +50,13 @@
 <script>
     prefix = 'f_{{resource}}_'
     colab = $('#' + prefix + 'colaborador')
+    const urlParams = new URLSearchParams(window.location.search);
     function load() {
         loader = new Form('{{resource}}', 'register')
         apiRequest.get(`select/colaborador`).then((data) => {
             loader.populateSelect(data, 'colaborador').then(() =>{
-                ficha_filtrada()
+                $('#f_{{resource}}_colaborador').val(urlParams.get("colaborador") || 1)
+                ficha_filtrada(true)
             });
         });
         const preview = document.getElementById(prefix + 'preview');
@@ -68,14 +70,18 @@
             reader.readAsDataURL(image.files[0]);
         });
     }
-    function ficha_filtrada() {
+    async function ficha_filtrada(select = false) {
         apiRequest.get(`ficha?colaborador=${colab.val()}`).then((data) => {
             var processed_data = []
             for (row in data){
                 row = data[row]
                 processed_data.push ({'value':row.id, 'text': `${row.pagina} | ${row.completa ? 'Completa' : 'Incompleta'}`})
             }
-            loader.populateSelect(processed_data, 'ficha');
+            loader.populateSelect(processed_data, 'ficha').then(() => {
+                if (select && urlParams.has('ficha')) {
+                    $('#f_{{resource}}_ficha').val(urlParams.get("ficha"))
+                }
+            })
         });
     }
     function submit(){

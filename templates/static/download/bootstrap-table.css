@@ -157,8 +157,9 @@
   border-bottom: 1px solid #dee2e6;
 }
 .bootstrap-table .fixed-table-container.fixed-height .fixed-table-border {
-  border-left: 1px solid #dee2e6;
-  border-right: 1px solid #dee2e6;
+  background-color: #20242854;
+  /* border-left: 1px solid #dee2e6; */
+  /* border-right: 1px solid #dee2e6; */
 }
 .bootstrap-table .fixed-table-container.fixed-height .table-dark thead th {
   border-bottom: 1px solid #32383e;

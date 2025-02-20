@@ -136,6 +136,54 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="m_register-indicacoes" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"><strong>Cadastro de Indicação externa</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-sm mb-2 nowrap">
+                        <label class="input-group-text">Candidato:</label>
+                        <select id="m_register-indicacoes_candidato" class="form-select form-select-sm" onchange="indicacoes()"></select>
+                    </div>
+                    <div class="input-group input-group-sm mb-2 nowrap">
+                        <label class="input-group-text">Indicação:</label>
+                        <input type="text" id="m_register-indicacoes_indicacao" class="form-control form-control-sm">
+                    </div>
+                    <div class="input-group input-group-sm mb-2 nowrap">
+                        <label class="input-group-text">Recebido em:</label>
+                        <input type="date" id="m_register-indicacoes_data_recebimento" class="form-control form-control-sm" value="{{hoje}}">
+                    </div>
+                    <div class="input-group input-group-sm mb-2 nowrap">
+                        <label class="input-group-text">Observação:</label>
+                        <input type="text" id="m_register-indicacoes_observacao" class="form-control form-control-sm">
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2 btn-sm"
+                        id="m_register-indicacoes_submit">Cadastrar</button>
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_register-indicacoes_table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function indicacoes() {
+                apiRequest.get('indicacao', {
+                    candidato: $('#' + loader.prefix +'candidato').val(),
+                }).then((result) => {
+                    loader.populateTable(result, ["delete"], ["id"]);
+                })
+            }
+        </script>
+    </div>
     <div class="modal fade" id="m_lanc-escolaridade" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -789,10 +837,17 @@
                         style="width: 100%; height: 500px; display: none;">
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="abrir_em_outra()">Abrir em outra tela</button>
                     <button type="button" class="btn btn-danger" id="m_file_view-anexos_delete">Deletar</button>
                 </div>
             </div>
         </div>
+        <script>
+            function abrir_em_outra() {
+                let link = $("#m_file_view-anexos_preview_pdf").attr('src') || $("#m_file_view-anexos_preview_pdf").attr('src')
+                page.new(link)
+            }
+        </script>
 </div>
 <script>
    
