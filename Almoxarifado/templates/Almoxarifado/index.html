@@ -109,8 +109,6 @@
       </button>
     </h2>
     <div id="menu-assinar" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
-
-
       <table id="tabela_assinar" data-toggle="table" data-locale="pt-BR" data-url="{{api}}Almoxarifado/tabela/assinar"
         class="table table-hover table-bordered table-striped table-sm" data-height="200">
         <thead>
@@ -166,7 +164,7 @@
     </h2>
     <div id="menu-arquivar" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
       <table data-toggle="table" data-locale="pt-BR" data-url="{{api}}Almoxarifado/tabela/arquivar"
-        class="table table-hover table-bordered table-striped table-sm" data-height="200">
+        class="table table-hover table-bordered table-striped table-sm" data-height="200" id="tabela_arquivar">
         <thead>
           <th data-field="id">Ficha ID</th>
           <th data-field="nome">colaborador</th>
@@ -200,7 +198,7 @@
   }
   function arquivarFormatter() {
     return (
-      '<div class="btn-icon bg-info bi-archive-fill fs-6 me-1" id="digitalizarBtn" title="Arquivar"></div>'
+      '<div class="btn-icon bg-info bi-archive-fill fs-6 me-1" id="arquivarBtn" title="Arquivar"></div>'
     )
   }
   window.btnEvents = {
@@ -219,6 +217,13 @@
     },
     'click #digitalizarBtn': function (e, value, row, index) {
       window.location.href = `${window.location.origin}/Almoxarifado/cadastros/digitalizacao?ficha=${row['id']}&colaborador=${row['colaborador']}`;
+    },
+    'click #arquivarBtn': function (e, value, row, index) {
+      apiRequest.get('ficha/' + row['id']).then((result) => {
+        result['arquivado'] = true
+        apiRequest.update('ficha/' + row['id'], result)
+        $('#tabela_arquivar').bootstrapTable('refresh')
+      })
     },
   }
 </script>
