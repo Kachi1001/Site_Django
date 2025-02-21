@@ -371,3 +371,22 @@ function debounce(func, timeout = 300){
 
     return array.filter(item => !valuesToRemove.has(item));
 }
+
+const generic = {
+    readFields: (loader) => {
+        let data = {};
+        const inputs = loader.inputs;
+        const fields = inputs.text.concat(inputs.select); // Junta os campos de texto e campos de seleção
+
+        fields.forEach((field) => {
+            val = $("#" + loader.prefix + field).val();
+
+            data[field] = val || null;
+        });
+        inputs.check.forEach((check) => {
+            data[check] = $("#" + loader.prefix + check).prop("checked") || false;
+        });
+
+        return data;
+    }
+}

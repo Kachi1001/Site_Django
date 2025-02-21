@@ -474,25 +474,9 @@ class Form extends BaseLoader {
 }
 
 Submit = {
-    readFields: function (loader) {
-        let data = {};
-        const inputs = loader.inputs;
-        const fields = inputs.text.concat(inputs.select); // Junta os campos de texto e campos de seleção
-
-        fields.forEach((field) => {
-            val = $("#" + loader.prefix + field).val();
-
-            data[field] = val || null;
-        });
-        inputs.check.forEach((check) => {
-            data[check] = $("#" + loader.prefix + check).prop("checked");
-        });
-
-        return data;
-    },
     update: function (loader) {
         apiRequest
-            .update(`${loader.object}/${loader.id}`, this.readFields(loader))
+            .update(`${loader.object}/${loader.id}`, generic.readFields(loader))
             .then(() => {
                 loader.modal.hide();
                 loader.refresh();
@@ -500,7 +484,7 @@ Submit = {
     },
     post: function (loader) {
         try {
-            apiRequest.post(loader.object, this.readFields(loader)).then(() => {
+            apiRequest.post(loader.object, generic.readFields(loader)).then(() => {
                 loader.refresh();
             });
         } catch (error) {
@@ -509,7 +493,7 @@ Submit = {
     },
     delete: function (loader) {
         apiRequest
-            .delete(loader.object + "/" + loader.id, this.readFields(loader))
+            .delete(loader.object + "/" + loader.id, generic.readFields(loader))
             .then(() => {
                 loader.modal.hide();
                 loader.refresh();

@@ -64,10 +64,11 @@
         }
     }
     function dataFormatter(value) {
-        return value
+        //return value
         if (value != null) {
             const data = new Date(value);
-            return data.toLocaleDateString("pt-BR", { timeZone: "UTC" });
+            value = data.toLocaleDateString("pt-BR", { timeZone: "UTC" }) 
+            return value ;
            // data = value.split("-");
            // return data[2].concat("/", data[1], "/", data[0]);
         } else {
