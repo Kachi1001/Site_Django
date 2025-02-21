@@ -401,7 +401,7 @@ const customActions = {
         experiencia: async function (loader) {
             setTimeout(() => {
                 chance_area(loader.prefix);
-            }, 300);
+            }, 400);
         },
         candidato: async function (loader) {
             setTimeout(() => {
