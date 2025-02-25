@@ -418,12 +418,12 @@
         c.open(colab).then(() => {
             let btns = ['lancainti','epiedit','lancnr','consumir','processar','recontratar','demissao','alterar','dissidio','edit']
             setTimeout(() => {
-                if (!$('#f_colaborador_ativo').prop('checked')) {
+                colab_ativo = $('#f_colaborador_ativo').prop('checked')
                     for (btn in btns) {
-                        $('#btn-' + btns[btn]).attr('disabled',true)
+                        $('#btn-' + btns[btn]).attr('disabled',!colab_ativo)
                     }
-                    colab_ativo = false
-                }
+                    $('#btn-recontratar').attr('disabled',colab_ativo)
+                    
             }, 1000)
         })
 
