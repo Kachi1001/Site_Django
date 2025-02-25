@@ -8,24 +8,24 @@ class BaseLoader {
         this.prefix = object + "_"; // Prefixo para os campos (modal/form)
         this.id = undefined; // ID de registro, se necessário
     }
-    async open(id = undefined) {
-        this.id = id;
-        try {
-            this.inputs = await apiRequest.get(`resource/${this.object}`);
-        } catch (error) {
-            console.log(error);
-        }
-        loader = this;
-        return new Promise((resolve, reject) => {
-            this[this.type]().then(() => {
-                if (this.modal) {
-                    this.modal.show();
-                    loading_modal.hide()
-                }
-                resolve();
-            });
-        });
+async open(id = undefined) {
+    this.id = id;
+    try {
+        this.inputs = await apiRequest.get(`resource/${this.object}`);
+    } catch (error) {
+        console.log(error);
     }
+    loader = this;
+    return new Promise((resolve, reject) => {
+        this[this.type]().then(() => {
+            if (this.modal) {
+                this.modal.show();
+                loading_modal.hide()
+            }
+            resolve();
+        });
+    });
+}
     async populateSelect(data = [], field = "") {
         try {
             const selectElement = $("#" + this.prefix + field);
@@ -474,9 +474,8 @@ class Form extends BaseLoader {
 
     async view() {
         try {
-            apiRequest.get(this.object + "/" + this.id).then((data) => {
-                this.populateData(data);
-            });
+            data = await apiRequest.get(this.object + "/" + this.id) 
+            this.populateData(data);
         } catch (error) {
             console.error("Error ao carregar", error);
         }

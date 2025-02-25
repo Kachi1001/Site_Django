@@ -1,5 +1,5 @@
 var loader;
-
+var loading_modal
 class BaseLoader {
     constructor(object, type) {
         this.last = loader;
@@ -10,12 +10,17 @@ class BaseLoader {
     }
     async open(id = undefined) {
         this.id = id;
-        this.inputs = await apiRequest.get(`resource/${this.object}`);
+        try {
+            this.inputs = await apiRequest.get(`resource/${this.object}`);
+        } catch (error) {
+            console.log(error);
+        }
         loader = this;
         return new Promise((resolve, reject) => {
             this[this.type]().then(() => {
                 if (this.modal) {
                     this.modal.show();
+                    loading_modal.hide()
                 }
                 resolve();
             });
@@ -154,21 +159,21 @@ class BaseLoader {
                         });
                         extraBtn.appendChild(editBtn);
                     }
-                    if (feature.includes("view")) {
-                        const btn = document.createElement("i");
-                        btn.classList.add(
+                    if (feature.includes("view_ficha")) {
+                        const editBtn = document.createElement("i");
+                        editBtn.classList.add(
                             "btn-icon",
                             "bg-success",
                             "bi-file-earmark",
                             "me-1"
                         );
 
-                        btn.addEventListener("click", () => {
+                        editBtn.addEventListener("click", () => {
                             this.modal.hide();
-                            let modal = new Modal(this.object, "view");
+                            let modal = new Modal("ficha", "ficha");
                             modal.open(obj.id);
                         });
-                        extraBtn.appendChild(btn);
+                        extraBtn.appendChild(editBtn);
                     }
 
                     row.appendChild(extraBtn);
@@ -189,10 +194,11 @@ class BaseLoader {
 var modal_open;
 class Modal extends BaseLoader {
     constructor(object, type) {
+        loading_modal = new bootstrap.Modal('#carregando')
+        loading_modal.show()
         super(object, type); // Chama o construtor da classe DataManager
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
-        console.log(this.prefix.slice(0, -1));
         this.modal = new bootstrap.Modal(this.myModal);
         this.refresh;
         this.loader = loader;
@@ -277,118 +283,46 @@ class Modal extends BaseLoader {
             console.error("Error ao carregar", error);
         }
     }
-
-    async lanc() {
-        try {
-            const data = await apiRequest.get(this.object, {
-                candidato: this.id,
-            });
-            this.populateTable(data, "delete", ["id", "candidato"]).then(() => {
-                this.inputs.select.forEach(async (select) => {
-                    const data = await apiRequest.get(`select/${select}`);
-                    this.populateSelect(data, select);
-                });
-                this.modal.show();
-                $("#" + this.prefix + "submit")
-                    .off()
-                    .on("click", () => {
-                        Submit.post(this);
-                    });
-            });
-            1;
-        } catch (error) {
-            console.error("Error ao carregar", error);
-        }
-    }
-
-    async envio() {
-        try {
-            this.inputs.select.forEach(async (select) => {
-                const data = await apiRequest.get(`select/${select}`);
-                this.populateSelect(data, select);
-            });
-            this.modal.show();
-
-            const file = document.getElementById(this.prefix + "arquivo");
-
-            const imagem = document.getElementById(
-                this.prefix + "preview_imagem"
-            );
-            const pdf = document.getElementById(this.prefix + "preview_pdf");
-            $("#" + this.prefix + "arquivo").change(function () {
-                let reader = new FileReader();
-                var filename = file.value
-                    .replace("C:\\fakepath\\", "")
-                    .split(".");
-                console.log(filename);
-                reader.onload = () => {
-                    if (filename[filename.length - 1] == "pdf") {
-                        pdf.src = reader.result;
-                        pdf.style.display = "block";
-                        imagem.style.display = "none";
-                    } else {
-                        imagem.src = reader.result;
-                        imagem.style.display = "block";
-                        pdf.style.display = "none";
-                    }
-                };
-                reader.readAsDataURL(file.files[0]);
-            });
-            $("#" + this.prefix + "submit")
-                .off()
-                .on("click", () => {
-                    const data = new FormData();
-                    data.append("file", file.files[0]);
-                    let fields = Submit.readFields(loader);
-                    Object.keys(fields).forEach((key) => {
-                        data.append(key, fields[key]);
-                    });
-                    console.log(data);
-                    apiRequest
-                        .upload("anexos", data)
-                        .then(this.refresh)
-                        .then(() => {
-                            document.getElementById(
-                                this.prefix + "nome"
-                            ).value = "";
-                            document.getElementById(
-                                this.prefix + "arquivo"
-                            ).value = "";
-                            pdf.style.display = "none";
-                            imagem.style.display = "none";
-                        });
-                });
-        } catch (error) {
-            console.error("Error ao carregar", error);
-        }
-    }
-    async select() {
-        const data = await apiRequest.get(this.object);
-        this.populateTable(data, ['view'], ["id"]).then(() => {
-        this.modal.show();
-        })
-    }
     async view() {
-        const data = await apiRequest.get("ficha_impressao/" + this.id);
-        const pdf = document.getElementById(this.prefix + "preview_pdf");
-        pdf.src = data.pdf_path;
-        pdf.style.display = "block";
-        imagem.style.display = "none";
+        const data = this.id;
+        const imagem = document.getElementById(this.prefix + "imagem");
+        const pdf = document.getElementById(this.prefix + "pdf");
 
-        // $("#" + this.prefix + "delete")
-        //     .off()
-        //     .on("click", () => {
-        //         apiRequest.delete("anexos/" + data.id).then(this.refresh);
-        //     });
-        this.modal.show();
-    }
-
-    load() {
-        if (typeof this.id == "object") {
-            this.id.forEach((field) => {
-                $("#" + this.prefix + field.key).val(field.value);
+        if (data.tipo == "pdf") {
+            pdf.src = data.url;
+            pdf.style.display = "block";
+            imagem.style.display = "none";
+        } else {
+            imagem.src = data.url;
+            imagem.style.display = "block";
+            pdf.style.display = "none";
+        }
+        if (this.last != undefined && this.last.type == "historico") {
+            loader.myModal.addEventListener("hidden.bs.modal", (event) => {
+                loader.modal.dispose();
+                let obj = new Modal(this.last.object, "historico");
+                apiRequest
+                    .get(this.last.object, {
+                        colaborador: page.getParam("id"),
+                    })
+                    .then((data) => {
+                        obj.open(data);
+                    });
             });
         }
+        this.modal.show();
+    }
+    async import() {
+        const file = document.getElementById(this.prefix + "file");
+
+        $("#" + this.prefix + "submit")
+        .off()
+        .on("click", () => {
+            const data = new FormData();
+            data.append("file", file.files[0]);
+            data.append('user', user)
+            apiRequest.upload(this.object + '_' + this.type, data).then(this.refresh)
+        });
     }
 }
 
@@ -482,25 +416,9 @@ Pos_load = {
     },
 };
 Submit = {
-    readFields: function (loader) {
-        let data = {};
-        const inputs = loader.inputs;
-        const fields = inputs.text.concat(inputs.select); // Junta os campos de texto e campos de seleção
-
-        fields.forEach((field) => {
-            val = $("#" + loader.prefix + field).val();
-
-            data[field] = val || null;
-        });
-        inputs.check.forEach((check) => {
-            data[check] = $("#" + loader.prefix + check).prop("checked");
-        });
-
-        return data;
-    },
     update: function (loader) {
         apiRequest
-            .update(`${loader.object}/${loader.id}`, this.readFields(loader))
+            .update(`${loader.object}/${loader.id}`, generic.readFields(loader))
             .then(() => {
                 loader.modal.hide();
                 loader.refresh();
@@ -508,7 +426,7 @@ Submit = {
     },
     post: function (loader) {
         try {
-            apiRequest.post(loader.object, this.readFields(loader)).then(() => {
+            apiRequest.post(loader.object, generic.readFields(loader)).then(() => {
                 loader.refresh();
             });
         } catch (error) {
@@ -518,7 +436,7 @@ Submit = {
     delete: function (loader) {
         console.log(loader);
         apiRequest
-            .delete(loader.object + "/" + loader.id, this.readFields(loader))
+            .delete(loader.object + "/" + loader.id, generic.readFields(loader))
             .then(() => {
                 loader.modal.hide();
                 loader.refresh();

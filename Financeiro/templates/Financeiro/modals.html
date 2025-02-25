@@ -550,39 +550,9 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_envio-anexos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5"><strong>Envio de anexo</strong></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-2" style="overflow-y: auto; height: 250px;">
-                        <img id="m_envio-anexos_preview_imagem" style="width: 100%;" alt="Pré-visualização do anexo">
-                        <embed id="m_envio-anexos_preview_pdf" type='application/pdf'
-                            style="width: 100%; height: 100%; display: none;">
-                    </div>
-                    <input type="hidden" id="m_envio-anexos_candidato" class="form-control">
-                    <div class="input-group mb-2 flex-nowrap input-group-sm">
-                        <label class="input-group-text">ARQUIVO:</label>
-                        <input type="file" class="form-control" id="m_envio-anexos_arquivo" accept="image/*,.pdf">
-
-                    </div>
-                    <div class="input-group mb-2 flex-nowrap input-group-sm">
-                        <label class="input-group-text">NOME PARA O ARQUIVO:</label>
-                        <input type="text" id="m_envio-anexos_nome" class="form-control">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="m_envio-anexos_submit">Enviar</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" id="m_file_view-anexos" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5"><strong id="m_file_view-anexos_nome"></strong></h1>
@@ -601,6 +571,25 @@
         </div>
     </div>
 
+    <div class="modal fade" id="m_import-caixa" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"><strong>Envio de Caixa</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-2 flex-nowrap input-group-sm">
+                        <label class="input-group-text">ARQUIVO:</label>
+                        <input type="file" class="form-control" id="m_import-caixa_file" accept=".csv">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="m_import-caixa_submit">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 
