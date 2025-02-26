@@ -320,7 +320,7 @@ class Modal extends BaseLoader {
                 .on("click", () => {
                     const data = new FormData();
                     data.append("file", file.files[0]);
-                    let fields = Submit.readFields(loader);
+                    let fields = generic.readFields(loader);
                     Object.keys(fields).forEach((key) => {
                         data.append(key, fields[key]);
                     });
