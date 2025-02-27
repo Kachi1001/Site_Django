@@ -155,19 +155,19 @@
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">CPF:</label>
-                                <input type="number" id="m_update-colaborador_cpf" class="form-control form-control-sm">
+                                <input type="text" id="m_update-colaborador_cpf" class="form-control form-control-sm">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">RG:</label>
-                                <input type="number" id="m_update-colaborador_rg" class="form-control form-control-sm">
+                                <input type="text" id="m_update-colaborador_rg" class="form-control form-control-sm">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">RG:</label>
-                                <input type="number" id="m_update-colaborador_ctps"
+                                <input type="text" id="m_update-colaborador_ctps"
                                     class="form-control form-control-sm">
                             </div>
                         </div>
@@ -1078,16 +1078,22 @@
                 <div class="modal-body">
                     <input type="hidden" id="m_lancamento-integracao_nr_colaborador">
                     <div class="row">
-                        <div class="col">
-                            <div class="input-group mb-2 flex-nowrap">
+                        <div class="col-6">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">NR:</label>
-                                <select class="form-select" id="m_lancamento-integracao_nr_integracao_nr_tipo"></select>
+                                <select class="form-select form-select-sm" id="m_lancamento-integracao_nr_integracao_nr_tipo"></select>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="input-group mb-2 flex-nowrap">
+                        <div class="col-6">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">DATA:</label>
-                                <input type="text" id="m_lancamento-integracao_nr_emissao" class="form-control">
+                                <input type="date" id="m_lancamento-integracao_nr_emissao" class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DESCRIÇÃO:</label>
+                                <input type="text" id="m_lancamento-integracao_nr_observacao" class="form-control form-control-sm">
                             </div>
                         </div>
                     </div>
@@ -1113,14 +1119,14 @@
                     <div class="row">
                         <div class="col">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
-                                <label class="input-group-text">OBRA:</label>
-                                <select class="form-select" id="m_lancamento-integracao_obra"></select>
+                                <label class="input-group-text">EMPRESA:</label>
+                                <select class="form-select form-select-sm" id="m_lancamento-integracao_empresa"></select>
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">DATA:</label>
-                                <input type="date" id="m_lancamento-integracao_validade"
+                                <input type="date" id="m_lancamento-integracao_data_integracao"
                                     class="form-control form-control-sm">
                             </div>
                         </div>
