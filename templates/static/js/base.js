@@ -391,5 +391,41 @@ const generic = {
             });
         }
         return data;
+    },
+    update: function (loader) {
+        apiRequest
+            .update(`${loader.object}/${loader.id}`, this.readFields(loader))
+            .then(() => {
+                loader.modal.hide();
+                loader.refresh();
+            });
+    },
+    post: function (loader) {
+        try {
+            apiRequest.post(loader.object, generic.readFields(loader)).then(() => {
+                loader.refresh();
+            });
+        } catch (error) {
+            throw error;
+        }
+    },
+    delete: function (loader) {
+        console.log(loader);
+        apiRequest
+            .delete(loader.object + "/" + loader.id, this.readFields(loader))
+            .then(() => {
+                loader.modal.hide();
+                loader.refresh();
+            });
+    },  
+    upload: function (loader) {
+        console.log(loader);
+        const file = $('#' + loader.prefix + 'file')[0].files[0]
+        const formData = new FormData();
+        formData.append('file',file)
+        apiRequest.upload(loader.object +'_'+ loader.type , formData).then(() =>{
+            loader.modal.hide()
+            loader.refresh()
+        })
     }
 }

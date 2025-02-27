@@ -4,27 +4,22 @@ import time
 
 from decouple import config
 from django.shortcuts import redirect
-from . import util
-api = str(config("API")) # type: ignore
 
+import Ajuda.models
+api = str(config("API")) # type: ignore
+import Ajuda
 timestamp = int(time.time()),
-translate = {
-    'Home': 'Inicio',
-    'Lancamento_obra': 'Lançamento obra',
-    'Reservas': 'Reservas',
-    'Depto_pessoal': 'Departamento pessoal',
-    'Obra': 'Obra',
-    'Curriculos': 'Currículos',
-    'Almoxarifado':'Almoxarifado',
-    'Ti': 'Ti',
-    'Financeiro': 'Financeiro',
-}
 def base(request):
     modulo_da_view = request.resolver_match.func.__module__
     app = modulo_da_view.split('.')[0]
+    
+    apps = Ajuda.models.App.objects.all().values()
+    try:
+        app_name = apps.get(id = app)['nome']
+    except:
+        app_name = 'Sem nome'
     media = config("MEDIA_URL") + app + '/'
     token = request.session.get('api_token') or None 
-    redirect = False if request.user.has_perm(f'foo.{config('AMBIENTE_PERM')}') else True
     return {
         # 'ambiente': config('AMBIENTE'),
         'nome': request.user.username,
@@ -33,7 +28,7 @@ def base(request):
         'api_external': config("API_EXTERNAL"),
         'media': media,
         'app': app,
-        'app_name': translate[app] if app in translate else 'Sem nome',
+        'app_name': app_name,
         'timestamp': timestamp,
         'hojeJS': date.today().strftime('%Y-%m-%d'),
         'hoje': date.today().strftime('%Y-%m-%d'),
@@ -48,5 +43,7 @@ def base(request):
             },
         
         'table_height': '400',
-        'ambiente': config('AMBIENTE_PERM')
+        'ambiente': config('AMBIENTE_PERM'),
+        'apps': apps,
         }
+    
