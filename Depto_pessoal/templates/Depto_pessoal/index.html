@@ -42,11 +42,31 @@
       </div>
     </div>
   </div>
+  <div class="col-auto">
+    <div class="card" style="width: 18rem;">
+      <div class="card-header">
+        <h5 class="card-title">Calendário</h5>
+      </div>
+      <div class="card-body">
+        <p class="card-text">Calendário é necessário ser aberto todo mês e verificar os feriados presente no mês</small></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Ultima data aberta: <strong id='mes'></strong></li>
+      </ul>
+      <div class="card-body">
+        <button type="button" class="btn btn-primary" onclick="abrirModal('gera_calendario','func')">Abrir</button>
+
+      </div>
+    </div>
+  </div>
 </div>
 <div class="row mt-2">
   <div class="col-3">
     <canvas id="grafico_ativos">
-
+    </canvas>
+  </div>
+  <div class="col-3">
+    <canvas id="grafico_pf">
     </canvas>
   </div>
 </div>
@@ -56,8 +76,7 @@
     'ferias': ['Depto_pessoal:app:ferias:toggle']
   }
   function carregar_all() {
-    carregar('ponto')
-    carregar('ferias')
+
   }
   function carregar(app) {
     apiRequest.get(`app/${app}`).then((data) => {
@@ -72,11 +91,18 @@
       })
     })
   }
+  function carregarMes() {
+    apiRequest.get('dia',{'ordering':'-id'}).then((data) => {
+      let value = new Date(data[0].id);
+      value = value.toLocaleDateString("pt-BR", { timeZone: "UTC" }) 
+      $('#mes').text(value)
+    })
+  }
   function grafico_ativos() {
     apiRequest.get('colaborador').then((data) => {
-      var values = {'ativos':0,'inativos':0}
+      var values = {'ativos':0,'desligados':0}
       for (const row in data) {
-        if (data[row].ativo) { values['ativos'] += 1 } else {values['inativos'] += 1}
+        if (data[row].ativo) { values['ativos'] += 1 } else {values['desligados'] += 1}
       }
       console.log(values)
       const ctx = document.getElementById('grafico_ativos');
@@ -90,6 +116,7 @@
         },
         options: {
           plugins: {
+            
             title: {
               display: true,
               text: 'Gráfico de Colaborador'
@@ -100,11 +127,48 @@
       });
     })
   }
+  function grafico_pf() {
+    apiRequest.get('tabela/ferias_saldo', {'limit':1000}).then((data) => {
+      data = data.rows
+      var values = {}
+      for (const row in data) {
+        if (data[row].saldo_pf != 0) { values[data[row].colaborador] = data[row].saldo_pf }
+      }
+      console.log(values)
+      const ctx = document.getElementById('grafico_pf');
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(values),
+          datasets: [{
+            data: Object.values(values),
+          }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              display: false,
+              
+          },
+            title: {
+              display: true,
+              text: 'Gráfico de saldos PF'
+            }
+          },
+        }
+
+      });
+    })
+  }
   async function load() {
-    carregar_all()
+    //carregar_all()
     // setInterval(carregar_all, 5000)
+    carregar('ponto')
+    carregar('ferias')
+    carregarMes()
     apiRequest.touch('periodo_aquisitivo_funcao')
     grafico_ativos()
+    grafico_pf()
   }
 </script>
 {% endblock %}
