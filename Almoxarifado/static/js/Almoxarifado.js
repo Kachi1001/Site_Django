@@ -427,8 +427,8 @@ class Modal extends BaseLoader {
             }
         }
         digitalizado.src = last.url;
-        print(last)
         $('#' + this.prefix + 'ultima_digitalizacao').val(last.data)
+        print(last.data)
         data = await apiRequest.get("ficha_impressao", {
             ficha: this.id,
             force: KeyPressing.isKeyPressed(17),
@@ -450,6 +450,9 @@ class Modal extends BaseLoader {
                 $("#" + this.prefix + field.key).val(field.value);
             });
         }
+    }
+    async refresh() {
+        $("#table").bootstrapTable("refresh");
     }
 }
 
@@ -474,7 +477,7 @@ class Form extends BaseLoader {
 
     async view() {
         try {
-            data = await apiRequest.get(this.object + "/" + this.id) 
+            const data = await apiRequest.get(this.object + "/" + this.id) 
             this.populateData(data);
         } catch (error) {
             console.error("Error ao carregar", error);
@@ -573,7 +576,7 @@ Submit = {
             });
         } catch (error) {
             throw error;
-        }
+        } 
     },
     delete: function (loader) {
         console.log(loader);

@@ -175,6 +175,32 @@
     </div>
   </div>
 </div>
+<div class="accordion mt-3">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#menu-ca" aria-expanded="false">
+        Validades CA
+      </button>
+    </h2>
+    <div id="menu-ca" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
+      <table data-toggle="table" data-locale="pt-BR" data-url="{{api}}Almoxarifado/tabela/validade_ca"
+        class="table table-hover table-bordered table-striped table-sm">
+        <thead>
+          <tr>
+            <th data-field="id">ID</th>
+            <th data-field="produto">PRODUTO</th>
+            <th data-field="fabricante">FABRICANTE</th>
+            <th data-field="ca">CA</th>
+            <th data-field="validade" data-formatter="dataFormatter">Validade</th>
+            <th data-field="situacao" data-formatter="ca_vencido" >SITUAÇÃO</th>
+            <th data-formatter="atualizarFormatter" data-events="btnEvents">Ação</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</div>
 <script>
   function entregarFormatter() {
     return (
@@ -209,9 +235,22 @@
       '<div class="btn-icon bg-info bi-archive-fill fs-6 me-1" id="arquivarBtn" title="Arquivar"></div>'
     )
   }
+  function ca_vencido(value) {
+    switch (value) {
+      case 'VENCIDO':
+      return `<h6 class='m-0'><span class="badge bg-danger text-uppercase">${value}</span></h6>`
+      default:
+      return `<h6 class='m-0'><span class="badge bg-warning text-uppercase">${value}</span></h6>`
+        }
+}
+  function atualizarFormatter() {
+    return (
+      '<div class="btn-icon bg-info bi-send-check" id="atualizarBtn" title="Atualizar"></div>'
+    )
+  }
   window.btnEvents = {
     'click #entregarBtn': function (e, value, row, index) {
-      window.location.href = `${window.location.origin}/Almoxarifado/cadastros/epi_movimentacao?produto=${row['id_produto']}&colaborador=${row['id_colab']}&devolvido=T`;
+      page.to('/Almoxarifado/cadastros/epi_movimentacao',{'produto':row['id_produto'],'colaborador':row['id_colab'],'reposicao':'T','voltar':'inicio'})
     },
     'click #baixarBtn': function (e, value, row, index) {
       apiRequest.post('funcao/baixar_tecnicon', { 'epi': row['id'], 'obra': row['obra'] }).then(() => {
@@ -233,6 +272,11 @@
         $('#tabela_arquivar').bootstrapTable('refresh')
       })
     },
+    'click #atualizarBtn': function (e, value, row, index) {
+      let modal = new Modal('epi_cadastro', "update");
+      modal.open(row['id']);
+    },
+
   }
 </script>
 {% endblock %}

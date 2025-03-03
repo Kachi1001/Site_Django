@@ -226,6 +226,7 @@ const apiRequest = {
                     message: "Tente atualizar seu navegador <Ctrl + F5>, caso erro persistir entre em contato WhatsApp encontrado no superior direito",
                 });
             });
+        throw error
     },
 };
 
@@ -287,10 +288,10 @@ const page = {
 
         return values[param];
     },
-    refresh: function () {
-        location.reload();
-    },
+    refresh: location.reload,
+    reload: location.reload,
     to: function (path, params) {
+        path.replaceAll('%2F','/').replaceAll('%3F','?').replaceAll('%3D','?')
         queryString = "";
         if (typeof params != "undefined") {
             // Remove parâmetros com valores vazios, nulos ou indefinidos
@@ -412,10 +413,10 @@ const generic = {
     delete: function (loader) {
         console.log(loader);
         apiRequest
-            .delete(loader.object + "/" + loader.id, this.readFields(loader))
+            .delete(loader.object + "/" + loader.id)
             .then(() => {
-                loader.modal.hide();
                 loader.refresh();
+                loader.modal.hide();
             });
     },  
     upload: function (loader) {
@@ -424,8 +425,8 @@ const generic = {
         const formData = new FormData();
         formData.append('file',file)
         apiRequest.upload(loader.object +'_'+ loader.type , formData).then(() =>{
-            loader.modal.hide()
             loader.refresh()
+            loader.modal.hide()
         })
     }
 }

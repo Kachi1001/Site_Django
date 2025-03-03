@@ -31,6 +31,13 @@
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header">
+                <a href="#"  onclick="abrirRegistro('numeracao')">
+                    <i {{icon.modal}}></i>Numeração
+                </a>
+            </h2>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
                 <a href="#"  onclick="abrirRegistro('produto')">
                     <i {{icon.modal}}></i>Produtos
                 </a>
@@ -38,18 +45,11 @@
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header">
-                <a href="#"  onclick="abrirRegistro('numeracao')">
-                    <i {{icon.modal}}></i>Numeração
-                </a>
-            </h2>
-        </div>
-    
-        <div class="accordion-item">
-            <h2 class="accordion-header">
                 <!-- <a href="{%url app|add:'_cadastros' 'epi_cadastro'%}"> -->
                 <a href="#" onclick="abrirRegistro('epi_cadastro')"><i {{icon.modal}}></i>Cadastra EPI</a>
             </h2>
         </div>
+    
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <a href="{%url app|add:'_cadastros' 'epi_movimentacao'%}">

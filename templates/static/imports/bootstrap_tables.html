@@ -75,6 +75,10 @@
             return "";
         }
     }
+    function largeFormatter(value) {
+        if (!value) { return '' }
+        return value.replaceAll('\n', '<br> - ')
+    }
     function realFormatter(value) {
         if (value != null) {
             return "R$ ".concat(value);

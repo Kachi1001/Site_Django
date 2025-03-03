@@ -133,6 +133,7 @@
                 <th data-field="ca" rowspan="2">CA</th>
                 <th data-field="tamanho" rowspan="2">Tamanho</th>
                 <th colspan="3">Validades</th>
+                <th data-formatter="acaoFormatter" data-events="Events" rowspan="2">AÇÃO</th>
             </tr>
             <th data-field="validade_uso" data-formatter="dataFormatter">USO</th>
             <th data-field="validade_ca" data-formatter="dataFormatter">CA</th>
@@ -140,6 +141,16 @@
         </thead>
     </table>
     <script>
+        window.Events = {
+            'click #lancarBtn': function (e, value, row, index) {
+                page.to('Almoxarifado/cadastros/epi_movimentacao',{'colaborador':colab,'ficha':$('#ficha_id').val(),'produto':row['id_produto'],'tamanho':row['tamanho'],'reposicao':row['situacao'] == 'Não entregue' ? 'P' : 'T','voltar':'colaborador'})
+            },
+        }
+        function acaoFormatter(value,row,index) {
+            if (row['situacao'] != 'Ok' && row['situacao'] != 'Durabilidade não cadastrada'){
+                return '<i class="btn-icon text-bg-info bi-box-arrow-right" id="lancarBtn" href="javascript:void(0)" title="Lançar">'
+            } else { return ''}
+        }
         function situacaoFormatter(value) {
             let cl = ''
             switch (value) {
@@ -239,14 +250,9 @@
             })
         })
         $(`#${resource}_ver`).click(() => {
-            let obj = new Modal('file', 'view')
-            apiRequest.get('ficha_impressao', {'ficha':$('#ficha_id').val()}).then((data)=>{
-                obj.last.type = undefined
-                obj.open(data).then(()=>{
-                    $('#'+ obj.prefix + 'titulo').text('Ficha digital')
-                })
-            })
-        })
+            let modal = new Modal("ficha", "ficha")
+            modal.open($('#ficha_id').val())
+        });
         $(`#${resource}_historico`).click(() => {
             let obj = new Modal(resource, 'historico')
             apiRequest.get(resource, {'colaborador':colab}).then((data) => {

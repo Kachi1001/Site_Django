@@ -9,7 +9,7 @@
     <div class="col-auto">
         <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">COLABORADOR:</label>
-        <select class="form-select" id="f_{{resource}}_colaborador" tabindex="1">
+            <select class="form-select" id="f_{{resource}}_colaborador" tabindex="1">
             </select>
             <button class="input-group-text text-bg-secondary" id="numeracao" data-bs-toggle="tooltip"
                 data-bs-placement="right" data-bs-html="true" data-bs-title="Carregando...">
@@ -22,7 +22,9 @@
             <label class="input-group-text">FICHA:</label>
             <select class="form-select" id="f_{{resource}}_ficha" tabindex="2">
             </select>
-            <button class="input-group-text text-bg-secondary" onclick="colab_chance(); toasts('primary',{'method':'Atualizando','message':'Aguarde alguns instante!'})"><i class="bi bi-arrow-clockwise"></i></button>
+            <button class="input-group-text text-bg-secondary"
+                onclick="colab_chance(); toasts('primary',{'method':'Atualizando','message':'Aguarde alguns instante!'})"><i
+                    class="bi bi-arrow-clockwise"></i></button>
         </div>
     </div>
 </div>
@@ -70,7 +72,7 @@
             <option>GG</option>
             <option>XG</option>
             <option>XGG</option>
-            <option>U</option>                                    
+            <option>U</option>
 
         </datalist>
     </div>
@@ -86,6 +88,7 @@
                 <option value="I">I - Inadequado</option>
                 <option value="T">T - Tempo de uso</option>
                 <option value="E">E - Extraviado</option>
+                <option value="P">P - Primeira entrega</option>
                 <option value="O" selected>O - Outros</option>
             </select>
         </div>
@@ -96,6 +99,7 @@
             <input type="date" id="f_{{resource}}_data_entrega" class="form-control" value="{{hojeJS}}" tabindex="8">
         </div>
     </div>
+    <input type="hidden" id="f_{{resource}}_papel" class="form-control" value="false">
 </div>
 
 
@@ -103,7 +107,8 @@
 
 <div class="row justify-content-end">
     <div class="col-auto">
-        <button id="f_{{resource}}_submit" class="btn btn-success" tabindex="9" onclick="document.getElementById('f_{{resource}}_colaborador').focus()">Cadastrar</button>
+        <button id="f_{{resource}}_submit" class="btn btn-success" tabindex="9"
+            onclick="document.getElementById('f_{{resource}}_colaborador').focus(); ">Cadastrar</button>
     </div>
 </div>
 <script>
@@ -157,6 +162,15 @@
                 setTimeout(pos_load, 500);
             })
         })
+        loader.refresh = () => {
+            setTimeout(() => {
+                if (urlParams.get("voltar") == 'colaborador') {
+                    page.to('/Almoxarifado/consultas/colaborador', { 'id': $("#f_{{resource}}_colaborador").val() })
+                } else {
+                    location.pathname = '/Almoxarifado'
+                }
+            }, 200)
+        }
     }
     async function carregarFiltrado() {
         produto = document.getElementById('f_{{resource}}_produto').value
@@ -169,12 +183,13 @@
         loader.populateSelect(result, 'epi_cadastro')
     }
 
+    const urlParams = new URLSearchParams(window.location.search);
     function pos_load() {
-        const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('produto')) {
             $('#f_{{resource}}_produto').val(urlParams.get("produto"))
             $('#f_{{resource}}_colaborador').val(urlParams.get("colaborador"))
             $('#f_{{resource}}_reposicao').val(urlParams.get("reposicao"))
+            $('#f_{{resource}}_tamanho').val(urlParams.get("tamanho"))
         }
         colab_chance()
         carregarFiltrado()

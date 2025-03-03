@@ -1,0 +1,46 @@
+{% load permission_tags %}
+{%load static%}
+<div class="sidenav">
+    <a href="/{{app}}/" class="nome_app">{{app_name}} </a>
+    
+    <div class="accordion accordion-flush">
+        
+        {% for row in apps %}   
+        {% if row.id != 'Home' and row.id != 'Ajuda' %}
+        {% if user|can:row.id or row.livre %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <a href="{%url app|add:'_menus' row.id%}">
+                    <i class="bi bi-book-half"></i>{{row.nome}}
+                </a>
+            </h2>
+        </div>
+        {%endif%}
+        {%endif%}
+            
+        {% endfor %}
+
+        {% if user|can:'Ajuda-cadastros' %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#menu-cadastro" aria-expanded="false">
+                    Cadastros
+                </button>
+            </h2>
+            <div id="menu-cadastro" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                <a href="#" onclick="let modal = new Modal('menu', 'register'); modal.open()"><i {{icon.modal}}></i>Menu</a>
+                <a href="#" onclick="let modal = new Modal('submenu', 'envio'); modal.open()"><i {{icon.modal}}></i>Submenu</a>
+            </div>
+        </div>
+        {%endif%}
+        
+    
+    
+    </div>
+    <script>
+        function abrirRegistro(modal){
+            const load = new Modal(modal,'register')
+        }
+    </script>
+</div>

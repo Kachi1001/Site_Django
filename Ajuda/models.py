@@ -29,7 +29,8 @@ class Submnenu(models.Model):
     nome = models.CharField()
     menu = models.ForeignKey(Menu, models.DO_NOTHING, db_column='menu', blank=True, null=True)
     url = models.CharField()
-
+    data = models.DateField()
+    
     class Meta:
         managed = False
         db_table = 'submenu'

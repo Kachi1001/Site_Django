@@ -167,8 +167,7 @@
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">RG:</label>
-                                <input type="text" id="m_update-colaborador_ctps"
-                                    class="form-control form-control-sm">
+                                <input type="text" id="m_update-colaborador_ctps" class="form-control form-control-sm">
                             </div>
                         </div>
 
@@ -545,15 +544,14 @@
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">INÍCIO:</label>
                                 <input type="date" id="m_alterar-ocupacao_data_inicio"
-                                class="form-control form-control-sm">
+                                    class="form-control form-control-sm">
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <span class="input-group-text">EXTRA:</span>
                                 <div class="input-group-text">
-                                    <input class="form-check-input mt-0" type="checkbox"
-                                        id="m_alterar-ocupacao_extra">
+                                    <input class="form-check-input mt-0" type="checkbox" id="m_alterar-ocupacao_extra">
                                 </div>
                             </div>
                         </div>
@@ -562,14 +560,14 @@
                                 <label class="input-group-text">REMUNERAÇÃO:</label>
                                 <input type="number" id="m_alterar-ocupacao_remuneracao"
                                     class="form-control form-control-sm">
-                                    <label class="input-group-text">R$</label>
+                                <label class="input-group-text">R$</label>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">DIÁRIA:</label>
                                 <input type="number" id="m_alterar-ocupacao_diaria"
-                                class="form-control form-control-sm">
+                                    class="form-control form-control-sm">
                                 <label class="input-group-text">R$</label>
                             </div>
                         </div>
@@ -1081,19 +1079,22 @@
                         <div class="col-6">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">NR:</label>
-                                <select class="form-select form-select-sm" id="m_lancamento-integracao_nr_integracao_nr_tipo"></select>
+                                <select class="form-select form-select-sm"
+                                    id="m_lancamento-integracao_nr_integracao_nr_tipo"></select>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">DATA:</label>
-                                <input type="date" id="m_lancamento-integracao_nr_emissao" class="form-control form-control-sm">
+                                <input type="date" id="m_lancamento-integracao_nr_emissao"
+                                    class="form-control form-control-sm">
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">DESCRIÇÃO:</label>
-                                <input type="text" id="m_lancamento-integracao_nr_observacao" class="form-control form-control-sm">
+                                <input type="text" id="m_lancamento-integracao_nr_observacao"
+                                    class="form-control form-control-sm">
                             </div>
                         </div>
                     </div>
@@ -1120,7 +1121,8 @@
                         <div class="col">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">EMPRESA:</label>
-                                <select class="form-select form-select-sm" id="m_lancamento-integracao_empresa"></select>
+                                <select class="form-select form-select-sm"
+                                    id="m_lancamento-integracao_empresa"></select>
                             </div>
                         </div>
                         <div class="col">
@@ -1146,6 +1148,11 @@
             </div>
         </div>
     </div>
+
+
+
+
+
     <div class="modal fade" id="m_update-integracao_epi" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1295,7 +1302,7 @@
         </div>
     </div>
     <div class="modal fade" id="m_func-gera_calendario" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5">Abrindo calendário</h1>
@@ -1303,12 +1310,32 @@
                 </div>
                 <div class="modal-body">
                     <div class="input-group input-group-sm input-group-sm mb-2">
-                        <label class="input-group-text">Abrir calendário até dia:</label>
+                        <label class="input-group-text">Abrir até dia:</label>
                         <input type="date" class="form-control form-control-sm" id="m_func-gera_calendario_data">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary mb-2" id="m_func-gera_calendario_submit">Abrir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_func-gerar_folha_dp" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Gerando Folhas</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-sm input-group-sm mb-2">
+                        <label class="input-group-text">Mês:</label>
+                        <select class="form-select form-select-sm" id="m_func-gerar_folha_dp_competencia"></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary mb-2" id="m_func-gerar_folha_dp_submit">Gerar
                     </button>
                 </div>
             </div>
@@ -1332,7 +1359,8 @@
                         <div class="col-9">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">COLABORADOR:</label>
-                                <input type="text" class="form-control form-control-sm" id="m_lancamento-readmissao_colaborador">
+                                <input type="text" class="form-control form-control-sm"
+                                    id="m_lancamento-readmissao_colaborador">
                             </div>
                         </div>
                         <div class="col-auto">
@@ -1362,7 +1390,7 @@
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">INÍCIO:</label>
                                 <input type="date" id="m_lancamento-readmissao_data_inicio"
-                                class="form-control form-control-sm">
+                                    class="form-control form-control-sm">
                             </div>
                         </div>
                         <div class="col-auto">
@@ -1379,14 +1407,14 @@
                                 <label class="input-group-text">REMUNERAÇÃO:</label>
                                 <input type="number" id="m_lancamento-readmissao_remuneracao"
                                     class="form-control form-control-sm">
-                                    <label class="input-group-text">R$</label>
+                                <label class="input-group-text">R$</label>
                             </div>
                         </div>
                         <div class="col-auto">
                             <div class="input-group input-group-sm mb-2 flex-nowrap">
                                 <label class="input-group-text">DIÁRIA:</label>
                                 <input type="number" id="m_lancamento-readmissao_diaria"
-                                class="form-control form-control-sm">
+                                    class="form-control form-control-sm">
                                 <label class="input-group-text">R$</label>
                             </div>
                         </div>
@@ -1395,6 +1423,555 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" id="m_lancamento-readmissao_submit">Lançar</button>
 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_register-adicionais_custos" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Registrando Adicionais de custo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_register-adicionais_custos_id"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">TRABALHISTA:</label>
+                                <input type="number" id="m_register-adicionais_custos_trabalhista"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">EPI-UNIFORME:</label>
+                                <input type="number" id="m_register-adicionais_custos_epi_uniforme"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">VALE TRANSPORTE:</label>
+                                <input type="number" id="m_register-adicionais_custos_vale_transporte"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">AUXILIO ESCOLAR:</label>
+                                <input type="number" id="m_register-adicionais_custos_auxilior_escolar"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">SERPLAMED:</label>
+                                <input type="number" id="m_register-adicionais_custos_serplamed"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">SEGURO DE VIDA:</label>
+                                <input type="number" id="m_register-adicionais_custos_seguro_vida"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">TREINAMENTO NR's:</label>
+                                <input type="number" id="m_register-adicionais_custos_treinamento_nrs"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success btn-sm"
+                        id="m_register-adicionais_custos_submit">Registrar</button>
+                    <div class="modal-table">
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_register-adicionais_custos_table">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_update-adicionais_custos" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Atualizando Adicionais de custo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_update-adicionais_custos_id"
+                                    class="form-control form-control-sm" disabled>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">TRABALHISTA:</label>
+                                <input type="number" id="m_update-adicionais_custos_trabalhista"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">EPI-UNIFORME:</label>
+                                <input type="number" id="m_update-adicionais_custos_epi_uniforme"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">VALE TRANSPORTE:</label>
+                                <input type="number" id="m_update-adicionais_custos_vale_transporte"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">AUXILIO ESCOLAR:</label>
+                                <input type="number" id="m_update-adicionais_custos_auxilior_escolar"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">SERPLAMED:</label>
+                                <input type="number" id="m_update-adicionais_custos_serplamed"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">SEGURO DE VIDA:</label>
+                                <input type="number" id="m_update-adicionais_custos_seguro_vida"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">TREINAMENTO NR's:</label>
+                                <input type="number" id="m_update-adicionais_custos_treinamento_nrs"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success"
+                            id="m_update-adicionais_custos_save">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_register-adicionais_folha" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Registrando Adicionais de folha</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">COLABORADOR:</label>
+                                <select class="form-select form-select-sm" id="m_register-adicionais_folha_colaborador"></select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">COMPETÊNCIA:</label>
+                                <select class="form-select form-select-sm" id="m_register-adicionais_folha_competencia"></select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">VALOR:</label>
+                                <input type="number" id="m_register-adicionais_folha_valor"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">HORAS:</label>
+                                <input type="number" id="m_register-adicionais_folha_horas"
+                                class="form-control form-control-sm">
+                                <label class="input-group-text">:</label>
+                                <input type="number" id="m_register-adicionais_folha_minutos"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group input-group-sm mb-2 nowrap">
+                                <span class="input-group-text">DESCONTO</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_register-adicionais_desconto">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DESCRIÇÃO:</label>
+                                <input type="text" id="m_register-adicionais_folha_descricao"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success btn-sm"
+                        id="m_register-adicionais_folha_submit">Registrar</button>
+                    <div class="modal-table">
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_register-adicionais_folha_table">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_update-adicionais_folha" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Atualizando Adicionais de folha</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">COLABORADOR:</label>
+                                <select class="form-select form-select-sm" id="m_update-adicionais_folha_colaborador"></select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">COMPETÊNCIA:</label>
+                                <select class="form-select form-select-sm" id="m_update-adicionais_folha_competencia"></select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">VALOR:</label>
+                                <input type="number" id="m_update-adicionais_folha_valor"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">HORAS:</label>
+                                <input type="number" id="m_update-adicionais_folha_horas"
+                                class="form-control form-control-sm">
+                                <label class="input-group-text">:</label>
+                                <input type="number" id="m_update-adicionais_folha_minutos"
+                                    class="form-control form-control-sm">
+
+                            </div>
+                        </div>
+                        
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 nowrap">
+                                <span class="input-group-text">DESCONTO</span>
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox"
+                                        id="m_update-adicionais_desconto">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DESCRIÇÃO:</label>
+                                <input type="text" id="m_update-adicionais_folha_descricao"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success"
+                            id="m_update-adicionais_folha_save">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_register-adicionais_trabalhista" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Registrando Adicionais de trabalhista</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_register-adicionais_trabalhista_id"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">VALOR:</label>
+                                <input type="number" id="m_register-adicionais_trabalhista_valor"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DESCRIÇÃO:</label>
+                                <input type="text" id="m_register-adicionais_trabalhista_descricao"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success btn-sm"
+                        id="m_register-adicionais_trabalhista_submit">Registrar</button>
+                    <div class="modal-table">
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_register-adicionais_trabalhista_table">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_update-adicionais_trabalhista" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Atualizando Adicionais de trabalhista</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_update-adicionais_trabalhista_id"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">VALOR:</label>
+                                <input type="number" id="m_update-adicionais_trabalhista_valor"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DESCRIÇÃO:</label>
+                                <input type="text" id="m_update-adicionais_trabalhista_descricao"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success"
+                            id="m_update-adicionais_trabalhista_save">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_register-adicional_pf" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Registrando Adicionais PF</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">COLABORADOR:</label>
+                                <select class="form-select form-select-sm" id="m_register-adicional_pf_colaborador"></select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA INICIAL:</label>
+                                <input type="date" id="m_register-adicional_pf_data_inicial"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA FINAL:</label>
+                                <input type="date" id="m_register-adicional_pf_data_final"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">VALOR:</label>
+                                <input type="number" id="m_register-adicional_pf_valor"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success btn-sm"
+                        id="m_register-adicional_pf_submit">Registrar</button>
+                    <div class="modal-table">
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_register-adicional_pf_table">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_update-adicional_pf" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Atualizando Adicionais de PF</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12">
+                        <div class="input-group input-group-sm mb-2 flex-nowrap">
+                            <label class="input-group-text">COLABORADOR:</label>
+                            <select class="form-select form-select-sm" id="m_update-adicional_pf_colaborador"></select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group input-group-sm mb-2 flex-nowrap">
+                            <label class="input-group-text">DATA INICIAL:</label>
+                            <input type="date" id="m_update-adicional_pf_data_inicial"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group input-group-sm mb-2 flex-nowrap">
+                            <label class="input-group-text">DATA FINAL:</label>
+                            <input type="date" id="m_update-adicional_pf_data_final"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group input-group-sm mb-2 flex-nowrap">
+                            <label class="input-group-text">VALOR:</label>
+                            <input type="number" id="m_update-adicional_pf_valor"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success"
+                            id="m_update-adicional_pf_save">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_register-alimentacao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Registrando Vale alimentação</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        
+                        <div class="col-6">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_register-alimentacao_id"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">VALOR:</label>
+                                <input type="number" id="m_register-alimentacao_valor"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success btn-sm"
+                        id="m_register-alimentacao_submit">Registrar</button>
+                    <div class="modal-table">
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_register-alimentacao_table">
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_update-alimentacao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Atualizando Vale alimentação</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                    <div class="col-6">
+                        <div class="input-group input-group-sm mb-2 flex-nowrap">
+                            <label class="input-group-text">DATA:</label>
+                            <input type="date" id="m_update-alimentacao_id"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    
+                    <div class="col-auto">
+                        <div class="input-group input-group-sm mb-2 flex-nowrap">
+                            <label class="input-group-text">VALOR:</label>
+                            <input type="number" id="m_update-alimentacao_valor"
+                                class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success"
+                            id="m_update-alimentacao_save">Salvar</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1416,4 +1993,3 @@
     }
 
 </script>
-</div>

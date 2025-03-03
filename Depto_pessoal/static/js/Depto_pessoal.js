@@ -1,5 +1,5 @@
 var loader;
-
+var colab_ativo
 class BaseLoader {
     constructor(object, type) {
         this.object = object; // Nome do objeto (colaborador, equipe, etc.)
@@ -354,6 +354,12 @@ class Modal extends BaseLoader {
             });
     }
     async func() {
+        if (this.inputs.select) {
+            this.inputs.select.forEach(async (field) => {
+                const selects = await apiRequest.get(`select/${field}`);
+                this.populateSelect(selects, field);
+            });
+        }
         $("#" + this.prefix + "submit")
             .off()
             .on("click", () => {

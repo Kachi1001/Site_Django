@@ -14,23 +14,23 @@
                 <a href="{%url app|add:'_cadastros' 'colaborador'%}"><i {{icon.form}}></i> Cadastrar</a>
                 <a href="#" onclick="abrirRegistro('funcao')"><i {{icon.modal}}></i> Função</a>
                 <a href="#" onclick="abrirRegistro('equipe')"><i {{icon.modal}}></i> Equipe</a>
-                <a href="#" onclick="abrirRegistro('insalubridade')"><i {{icon.modal}}></i> Insalubridade</a>
                 <a href="{%url app|add:'_tabelas' 'colaborador'%}"><i {{icon.table}}></i> Tabela</a>
             </div>
         </div>
+    
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#menu-ferias" aria-expanded="false">
-                    Férias
-                </button>
-            </h2>
-            <div id="menu-ferias" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_tabelas' 'periodo_aquisitivo'%}"><i {{icon.table}}></i> Período aquisitivo</a>
-                <a href="{%url app|add:'_tabelas' 'ferias_processadas'%}"><i {{icon.table}}></i> Ferias Processadas</a>
-                <a href="{%url app|add:'_tabelas' 'ferias_utilizadas'%}"><i {{icon.table}}></i> Ferias Utilizadas</a>
-                <a href="{%url app|add:'_consultas' 'ferias_saldo'%}"><i {{icon.table}}></i> Saldos</a>
-            </div>
+                data-bs-target="#menu-ferias" aria-expanded="false">
+                Férias
+            </button>
+        </h2>
+        <div id="menu-ferias" class="accordion-collapse collapse" data-bs-parent="#accordion">
+            <a href="{%url app|add:'_tabelas' 'periodo_aquisitivo'%}"><i {{icon.table}}></i> Período aquisitivo</a>
+            <a href="{%url app|add:'_tabelas' 'ferias_processadas'%}"><i {{icon.table}}></i> Ferias Processadas</a>
+            <a href="{%url app|add:'_tabelas' 'ferias_utilizadas'%}"><i {{icon.table}}></i> Ferias Utilizadas</a>
+            <a href="{%url app|add:'_consultas' 'ferias_saldo'%}"><i {{icon.table}}></i> Saldos</a>
+        </div>
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -42,18 +42,26 @@
             <div id="menu-integracao" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <a href="{%url app|add:'_consultas' 'epi_nr'%}"><i {{icon.table}}></i> Consulta</a>
                 <a href="#" onclick="abrirRegistro('integracao_nr_tipo')"><i {{icon.modal}}></i> Cadastrar NR</a>
-
+                
             </div>
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#menu-tabelas" aria-expanded="false">
-                    Tabelas
-                </button>
-            </h2>
-            <div id="menu-tabelas" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <a href="{%url app|add:'_tabelas' 'fechamento_mensal'%}"><i {{icon.table}}></i> Fechamento</a>
+                data-bs-target="#menu-tabelas" aria-expanded="false">
+                Fechamento
+            </button>
+        </h2>
+        <div id="menu-tabelas" class="accordion-collapse collapse" data-bs-parent="#accordion">
+            <a href="{%url app|add:'_tabelas' 'fechamento_mensal'%}"><i {{icon.table}}></i> Tabela</a>
+            <a href="#" onclick="abrirModal('gerar_folha_dp','func')"><i {{icon.modal}}></i>Gerar folha</a>
+            <a href="#" onclick="abrirRegistro('insalubridade')"><i {{icon.modal}}></i> Insalubridade</a>
+            <a href="#" onclick="abrirRegistro('adicionais_custos')"><i {{icon.modal}}></i> Adic. Custos</a>
+            <a href="#" onclick="abrirRegistro('adicionais_folha')"><i {{icon.modal}}></i> Adic. Folha</a>
+            <a href="#" onclick="abrirRegistro('adicionais_trabalhista')"><i {{icon.modal}}></i> Adic. Trabalhista</a>
+            <a href="#" onclick="abrirRegistro('adicional_pf')"><i {{icon.modal}}></i> Adic. PF</a>
+            <a href="#" onclick="abrirRegistro('alimentacao')"><i {{icon.modal}}></i> Alimentação</a>
+
             </div>
         </div>
         
