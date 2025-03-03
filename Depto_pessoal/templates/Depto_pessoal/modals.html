@@ -1106,6 +1106,48 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="m_update-integracao_nr" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Atualizando integração NR</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="m_update-integracao_nrr_colaborador">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">NR:</label>
+                                <select class="form-select form-select-sm"
+                                    id="m_update-integracao_nr_integracao_nr_tipo"></select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DATA:</label>
+                                <input type="date" id="m_update-integracao_nr_emissao"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group input-group-sm mb-2 flex-nowrap">
+                                <label class="input-group-text">DESCRIÇÃO:</label>
+                                <input type="text" id="m_update-integracao_nr_observacao"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger"
+                            id="m_update-integracao_nr_del">Deletar</button>
+                        <button type="button" class="btn btn-primary"
+                            id="m_update-integracao_nr_save">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="modal fade" id="m_lancamento-integracao" tabindex="-1" aria-hidden="true">
