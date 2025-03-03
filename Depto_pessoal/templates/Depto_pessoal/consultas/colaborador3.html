@@ -1,0 +1,470 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'header'%}
+{%endblock%}
+{% block 'main' %}
+
+<h3 class="mb-2"><strong>Informações gerais</strong></h3>
+<div class="row align-items-center">
+    <div class="col-auto">
+        <h5 class="mb-0"><small>Cadastro</small></h5>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm" onclick="abrirUpdate('colaborador')">Editar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-danger btn-sm" id="btn-demissao">Desligamento</button>
+    </div>
+    <hr class="mt-2">
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ID:</label>
+            <input type="text" id="f_colaborador_id" class="form-control">
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">NOME:</label>
+            <input type="text" id="f_colaborador_nome" class="form-control">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CPF:</label>
+            <input type="number" id="f_colaborador_cpf" class="form-control form-control-sm">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">RG:</label>
+            <input type="number" id="f_colaborador_rg" class="form-control form-control-sm">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">EMISSOR:</label>
+            <input type="number" id="f_colaborador_rg_emissor" class="form-control form-control-sm">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CTPS:</label>
+            <input type="number" id="f_colaborador_ctps" class="form-control form-control-sm">
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">NASCIMENTO:</label>
+            <input type="date" id="f_colaborador_nascimento" class="form-control form-control-sm">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">TELEFONE:</label>
+            <input type="text" id="f_colaborador_fone" class="form-control form-control-sm">
+            <label class="input-group-text bg-success-subtle" onclick="abrirWhats('f_colaborador_fone')" style="user-select: none;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para abrir no WhatsApp!">WhatsApp</label>
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <span class="input-group-text">ATIVO:</span>
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" id="f_colaborador_ativo">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">PASTA:</label>
+            <input type="text" id="f_colaborador_pasta_servidor" class="form-control">
+            <button class="input-group-text bg-secondary-subtle" style="user-select: none;" onclick="let text = document.getElementById('f_colaborador_pasta_servidor'); text.disabled = false; text.select(); document.execCommand('copy'); text.disabled = true; toasts('success',{'method':'Sucesso!','message':'Copiado com sucesso o caminho.'})" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para copiar o caminho no servidor!">Copiar</button>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <span class="input-group-text">MENSAGEM PONTO:</span>
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" id="f_colaborador_aviso_ponto">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row align-items-center mt-3">
+    <div class="col-auto">
+        <h5 class="mb-0"><small>Função atual</small></h5>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-success btn-sm"
+            onclick="abrirLancamento('ocupacao_alterar')">Alterar cargo</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
+            onclick="abrirLancamento('ocupacao_dissidio')">Dissídio</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('ocupacao')">Histórico</button></div>
+    <hr class="mt-2">
+</div>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ID:</label>
+            <input type="text" class="form-control form-control-sm" id="f_ocupacao_id">
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">FUNÇÃO:</label>
+            <select class="form-control" id="f_ocupacao_funcao">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">EQUIPE:</label>
+            <select class="form-control" id="f_ocupacao_equipe">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <span class="input-group-text">REMUNERAÇÃO:</span>
+            <input type="text" class="form-control form-control-sm" id="f_ocupacao_remuneracao">
+            <span class="input-group-text">R$</span>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DATA INICIO:</label>
+            <input type="date" class="form-control form-control-sm" id="f_ocupacao_data_inicio">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DATA FIM:</label>
+            <input type="date" class="form-control form-control-sm" id="f_ocupacao_data_fim">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CONTINUO:</label>
+            <div class="input-group-text">
+                <input type="checkbox" class="form-check-input mt-0" id="f_ocupacao_continuo">
+            </div>
+        </div>
+    </div>
+</div>
+<h3 class="mb-2 mt-5"><strong>Férias</strong></h3>
+
+<div class="row align-items-center">
+    <div class="col-auto">
+        <h5 class="mb-0"><small>Período aquisitivo</small></h5>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('periodoaquisitivo')">Histórico</button></div>
+    <hr class="mt-3">
+</div>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ID:</label>
+            <input type="text" class="form-control form-control-sm" id="f_periodoaquisitivo_id">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ADQUIRIDO EM:</label>
+            <input type="date" class="form-control form-control-sm" id="f_periodoaquisitivo_adquirido_em">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">PERÍODO:</label>
+            <input type="text" class="form-control form-control-sm" id="f_periodoaquisitivo_periodo">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CONSUMIDO:</label>
+            <div class="input-group-text">
+                <input type="checkbox" class="form-check-input mt-0" id="f_periodoaquisitivo_consumido">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row align-items-center mt-4">
+    <div class="col-auto">
+        <h5 class="mb-0"><small>Férias processadas</small></h5>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
+            onclick="abrirProcesso('feriasprocessadas')">Processar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('feriasprocessadas')">Histórico</button></div>
+    <hr class="mt-3">
+</div>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">PERÍODO AQUISITIVO:</label>
+            <select class="form-control" id="f_feriasprocessadas_periodo_aquisitivo">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DATA INICIO:</label>
+            <input type="date" class="form-control form-control-sm" id="f_feriasprocessadas_data_inicio">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DIAS PROCESSADOS:</label>
+            <input type="text" class="form-control form-control-sm" id="f_feriasprocessadas_dias_processados">
+        </div>
+    </div>
+</div>
+<div class="row align-items-center mt-4">
+    <div class="col-auto">
+        <h5 class="mb-0"><small>Férias utilizadas</small></h5>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-success btn-sm"
+            onclick="abrirProcesso('feriasutilizadas')">Consumir</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('feriasutilizadas')">Histórico</button></div>
+
+    <hr class="mt-2">
+</div>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">PERÍODO AQUISITIVO:</label>
+            <select class="form-control" id="f_feriasutilizadas_periodo_aquisitivo">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DATA INICIO:</label>
+            <input type="date" class="form-control form-control-sm" id="f_feriasutilizadas_data_inicio">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DIAS UTILIZADOS:</label>
+            <input type="text" class="form-control form-control-sm" id="f_feriasutilizadas_dias_utilizados">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ANTECIPAÇÃO:</label>
+            <div class="input-group-text">
+                <input type="checkbox" class="form-check-input mt-0" id="f_feriasutilizadas_antecipacao_periodo">
+            </div>
+        </div>
+    </div>
+</div>
+<h3 class="mb-2 mt-5"><strong>Integrações</strong></h3>
+
+<div class="row align-items-center">
+    <div class="col-auto">
+        <h5 class="mb-0"><small>NR's</small></h5>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
+        onclick="abrirLancamento_integracao('integracao_nr')">Lançar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('integracao_nr')">Histórico</button></div>
+    <hr class="mt-3">
+</div>
+<div class="row">
+    <input type="hidden" id="f_integracao_nr_id">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">NR:</label>
+            <input type="text" class="form-control form-control-sm" id="f_integracao_nr_integracao_nr_tipo">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">VALIDADE:</label>
+            <input type="date" class="form-control form-control-sm" id="f_integracao_nr_validade">
+        </div>
+    </div>
+</div>
+<div class="row align-items-center mt-4">
+    <div class="col-auto">
+        <h5 class="mb-0"><small>EPI</small></h5>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
+            onclick="abrirUpdate('integracao_epi')">Editar</button></div>
+    <hr class="mt-3">
+</div>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ASO:</label>
+            <div class="input-group-text">
+                <input type="checkbox" class="form-check-input mt-0" id="f_integracao_epi_aso">
+            </div>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">ASO VALIDADE:</label>
+            <input type="date" class="form-control form-control-sm" id="f_integracao_epi_aso_valid">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">EPI:</label>
+            <div class="input-group-text">
+                <input type="checkbox" class="form-check-input mt-0" id="f_integracao_epi_epi">
+            </div>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">EPI VALIDADE:</label>
+            <input type="date" class="form-control form-control-sm" id="f_integracao_epi_epi_valid">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">OS:</label>
+            <div class="input-group-text">
+                <input type="checkbox" class="form-check-input mt-0" id="f_integracao_epi_os">
+            </div>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">OS VALIDADE:</label>
+            <input type="date" class="form-control form-control-sm" id="f_integracao_epi_os_valid">
+        </div>
+    </div>
+    
+</div>
+<div class="row align-items-center mt-4">
+    <div class="col-auto">
+        <h5 class="mb-0"><small>Integração</small></h5>
+    </div>
+    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
+            onclick="abrirLancamento_integracao('integracao')">Lançar</button></div>
+    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
+            onclick="abrirHistorico('integracao')">Histórico</button></div>
+
+    <hr class="mt-2">
+</div>
+<div class="row">
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">EMPRESA:</label>
+            <select class="form-control" id="f_integracao_empresa">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">VALIDADE:</label>
+            <input type="date" class="form-control form-control-sm" id="f_integracao_validade">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DESCRIÇÃO:</label>
+            <input type="text" class="form-control form-control-sm" id="f_integracao_descricao">
+        </div>
+    </div>
+</div>
+
+
+<!-- , 'ferias_utilizadas', 'ferias_processadas', 'periodoaquisitivo', 'ocupacao' -->
+<script>
+    const colab = page.getParam('id')
+    var objs = ['periodoaquisitivo', 'ocupacao', 'feriasutilizadas', 'feriasprocessadas','integracao_nr','integracao_epi','integracao']
+    function carregarDados() {
+        let c = new Form('colaborador', 'view', colab)
+        c.open(colab)
+
+        for (x in objs) {
+            x = new Form(objs[x], 'filter')
+            x.open({ 'colaborador': colab })
+        }
+    }
+    function load() {
+        carregarDados()
+    }
+    function refresh() {
+        load()
+        loader.modal.hide()
+    }
+
+    $('#btn-demissao').click(function () {
+        let obj = new Modal('colaborador', 'desligamento')
+        obj.open([{
+            'key': 'colaborador',
+            'value': $("#f_colaborador_id").val()
+        }, {
+            'key': 'id',
+            'value': $("#f_ocupacao_id").val()
+        }])
+    })
+    function abrirUpdate(modal){
+        let obj = new Modal(modal, 'update')
+        obj.refresh = refresh
+        obj.open(colab)
+    }
+    function abrirLancamento(modal) {
+        let data = {}
+        modal_split = modal.split('_')
+        let registro = new Modal(modal_split[0], modal_split[1])
+
+        data = $("#f_ocupacao_id").val()
+        registro.refresh = refresh
+        registro.open(data)
+    }
+    function abrirLancamento_integracao(modal) {
+        let registro = new Modal(modal, 'lancamento')
+
+        registro.refresh = refresh
+        registro.open()
+        console.log("#"+ registro.prefix +"colaborador")
+        $("#"+ registro.prefix +"colaborador").val(colab)
+    }
+    function abrirProcesso(modal) {
+
+        let registro = new Modal(modal, 'processo')
+
+        data = {
+            'colaborador': $("#f_colaborador_id").val(),
+            'periodo_aquisitivo': $("#f_periodoaquisitivo_id").val()
+        }
+        registro.refresh = refresh
+
+        registro.open(data)
+
+    }
+    function confirmarAntecipacao() {
+        let field = $("#m_processo-feriasutilizadas_antecipacao")
+        let periodo = $("#m_processo-feriasutilizadas_aquisitivo_id")
+        if (field.prop("checked")) {
+            if (!confirm('Tens certeza que deseja selecionar antecipação?')) {
+                field.prop('checked', false);
+            }
+        }
+        if (field.prop("checked")) {
+            periodo.val('').attr('disabled', true)
+
+        } else {
+            periodo.val($("#m_processo-feriasutilizadas_id").val()).attr('disabled', false)
+        }
+    }
+
+    function abrirHistorico(resource) {
+        let modal = new Modal(resource, 'historico')
+        modal.refresh = refresh
+        modal.open(colab)
+    }
+</script>
+{% endblock %}

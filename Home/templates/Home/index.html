@@ -4,18 +4,22 @@
 {%block 'style'%}
 <style>
   @media (max-width: 800px) {
-    body{
+    body {
       justify-content: flex-start;
       padding-top: 0px;
     }
+
     main {
       margin-right: 20px;
       margin-left: 20px;
     }
   }
-  .card{
+
+  .card {
     width: 270px;
     margin-bottom: 24px;
+    border: none';
+
   }
 </style>
 {%endblock%}
@@ -24,166 +28,59 @@
 
 {%block 'main'%}
 
-    <div class="row text-center justify-content-center">
-      {% if user|can:'Lancamento_obra' %}
-      <div class="col-auto">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="card-title">Lançamento obra</h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text">Ferramenta de controle de delegação de ações em obra</p>
-          </div>
-          <div class="card-footer">
-            <a href="{%url 'Lancamento_obra'%}" class="stretched-link">Abrir Aplicação</a>
-          </div>
+<div class="row text-center justify-content-center">
+
+  {% for row in apps %}
+  
+  {% if row.id != 'Home' %}
+    {% if user|can:row.id or row.livre%}
+    <div class="col-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">{{row.nome}}</h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text">{{row.descricao}}</p>
+        </div>
+        <div class="card-footer">
+          <a href="{%url row.id %}" class="stretched-link">Abrir Aplicação</a>
         </div>
       </div>
-      {%endif%}
-
-      <div class="col-auto">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="card-title">Reservas</h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text">Controle de reserva para as salas de reuniões</p>
-          </div>
-          <div class="card-footer">
-            <a href="{%url 'Reservas'%}" class="stretched-link">Abrir Aplicação</a>
-          </div>
-        </div>
-      </div>
-
-
-      
-      {% if user|can:'ti' %}
-      <div class="col-auto">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="card-title">TI</h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text">App de uso exclusivo da equipe de TI</p>
-          </div>
-          <div class="card-footer">
-            <a href="{%url 'Ti'%}" class="stretched-link">Abrir Aplicação</a>
-          </div>
-        </div>
-      </div>
-      {%endif%}
-      {% if user|can:'Depto_pessoal' %}
-      <div class="col-auto">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="card-title">Departamento pessoal</h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text">Administração de recursos do departamento</p>
-          </div>
-          <div class="card-footer">
-            <a href="{%url 'Depto_pessoal'%}" class="stretched-link">Abrir Aplicação</a>
-          </div>
-        </div>
-      </div>
-      {%endif%}
-      {% if user|can:'Obra' %}
-      <div class="col-auto">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="card-title">Obra</h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text">Administração de recursos relacionado a obra</p>
-          </div>
-          <div class="card-footer">
-            <a href="{%url 'Obra'%}" class="stretched-link">Abrir Aplicação</a>
-          </div>
-        </div>
-      </div>
-      {%endif%}
-      {% if user|can:'Curriculos' %}
-      <div class="col-auto">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="card-title">Currículos</h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text">App para gerencia banco de talento</p>
-          </div>
-          <div class="card-footer">
-            <a href="{%url 'Curriculos'%}" class="stretched-link">Abrir Aplicação</a>
-          </div>
-        </div>
-      </div>
-      {%endif%}
-      {% if user|can:'Almoxarifado' %}
-      <div class="col-auto">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="card-title">Almoxarifado</h5>
-          </div>
-          <div class="card-body"> 
-            <p class="card-text">App para gerir ficha de EPI</p>
-          </div>
-          <div class="card-footer">
-            <a href="{%url 'Almoxarifado'%}" class="stretched-link">Abrir Aplicação</a>
-          </div>
-        </div>
-      </div>
-      {%endif%}
-      
-      {% if user|can:'Financeiro' %}
-      <div class="col-auto">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="card-title">Financeiro</h5>
-          </div>
-          <div class="card-body"> 
-            <p class="card-text">App para auxiliar Financeiro</p>
-          </div>
-          <div class="card-footer">
-            <a href="{%url 'Financeiro'%}" class="stretched-link">Abrir Aplicação</a>
-          </div>
-        </div>
-      </div>
-      {%endif%}
-
-
-
-
-
-
-
-      {% if user|can:'master' %}
-      <div class="col-auto">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="card-title">Painel admin</h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text">Painel com informações de admin</p>
-          </div>
-          <div class="card-footer">
-            <a href="/admin/" class="stretched-link">Abrir Aplicação</a>
-          </div>
-        </div>
-      </div>
-      {%endif%}
-      {% if user|can:'master' %}
-      <div class="col-auto">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="card-title">Painel WebMain</h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text">Painel com informações do servidor</p>
-          </div>
-          <div class="card-footer">
-            <a href="http://10.0.0.139:10000" class="stretched-link">Abrir Aplicação</a>
-          </div>
-        </div>
-      </div>
-      {%endif%}
     </div>
-{%endblock%}
+    {%endif%}
+  {% endif %}
+  
+  {% endfor %}
+
+
+  {% if user|can:'master' %}
+  <div class="col-auto">
+    <div class="card">
+      <div class="card-header bg-danger">
+        <h5 class="card-title">Painel admin</h5>
+      </div>
+      <div class="card-body">
+        <p class="card-text">Painel com informações de admin</p>
+      </div>
+      <div class="card-footer">
+        <a href="/admin/" class="stretched-link">Abrir Aplicação</a>
+      </div>
+    </div>
+  </div>
+  {%endif%}
+  {% if user|can:'master' %}
+  <div class="col-auto">
+    <div class="card ">
+      <div class="card-header bg-danger">
+        <h5 class="card-title">Painel WebMain</h5>
+      </div>
+      <div class="card-body">
+        <p class="card-text">Painel com informações do servidor</p>
+      </div>
+      <div class="card-footer">
+        <a href="http://10.0.0.139:10000" class="stretched-link">Abrir Aplicação</a>
+      </div>
+    </div>
+  </div>
+  {%endif%}
+  {%endblock%}

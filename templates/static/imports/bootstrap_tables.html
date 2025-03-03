@@ -1,11 +1,12 @@
 {%load static%}
 
 <!-- Bootstrap Table CSS -->
-<link rel="stylesheet" href="https://unpkg.com/bootstrap-table/dist/bootstrap-table.min.css">
+<!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap-table/dist/bootstrap-table.min.css"> -->
+<link rel="stylesheet" href="{%static 'download/bootstrap-table.css'%}">
 
 <!-- Bootstrap Table JS -->
-<script src="https://unpkg.com/bootstrap-table/dist/bootstrap-table.js"></script>
-<!-- <script src="{%static 'js/bootstrap-table.js'%}"></script> -->
+<!-- <script src="https://unpkg.com/bootstrap-table/dist/bootstrap-table.js"></script> -->
+<script src="{%static 'download/bootstrap-table.js'%}"></script>
 
 
 <!-- Extensão resizable -->
@@ -14,21 +15,27 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/extensions/resizable/bootstrap-table-resizable.min.js"></script> -->
 
 <!-- Extensão Export -->
-<script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.29.0/tableExport.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.29.0/libs/jsPDF/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/extensions/export/bootstrap-table-export.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.29.0/tableExport.min.js"></script> -->
+<script src="{%static 'download/tableExport.min.js'%}"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.29.0/libs/jsPDF/jspdf.umd.min.js"></script> -->
+<script src="{%static 'download/jspdf.umd.min.js'%}"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/extensions/export/bootstrap-table-export.js"></script> -->
+<script src="{%static 'download/bootstrap-table-export.js'%}"></script>
 
 <!-- Extensão cookie -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/extensions/cookie/bootstrap-table-cookie.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/extensions/cookie/bootstrap-table-cookie.js"></script> -->
+<script src="{%static 'download/bootstrap-table-cookie.js'%}"></script>
 
 <!-- Extensão refresh -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/extensions/auto-refresh/bootstrap-table-auto-refresh.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/extensions/auto-refresh/bootstrap-table-auto-refresh.js"></script> -->
+<script src="{%static 'download/bootstrap-table-auto-refresh.js'%}"></script>
 
 <!-- Extensão advancedSearch -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/extensions/toolbar/bootstrap-table-toolbar.min.js"></script> -->
 
 <!-- Extensão Tradução -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/bootstrap-table-locale-all.min.js"></script>
+<script src="{%static 'download/bootstrap-table-locale-all.js'%}"></script>
 <script>
     function Formatter(value) {
         if (value != null) {
@@ -48,6 +55,7 @@
             '<i class="btn-icon bg-info bi-pencil fs-6 me-1" id="editarBtn" href="javascript:void(0)" title="Editar">'
         )
     }
+    
     function checkFormatter(value) {
         if (value) {
             return '<input class="form-check-input mt-0" type="checkbox" checked disabled>';
@@ -56,14 +64,20 @@
         }
     }
     function dataFormatter(value) {
+        //return value
         if (value != null) {
             const data = new Date(value);
-            return data.toLocaleDateString("pt-BR", { timeZone: "UTC" });
+            value = data.toLocaleDateString("pt-BR", { timeZone: "UTC" }) 
+            return value ;
            // data = value.split("-");
            // return data[2].concat("/", data[1], "/", data[0]);
         } else {
             return "";
         }
+    }
+    function largeFormatter(value) {
+        if (!value) { return '' }
+        return value.replaceAll('\n', '<br> - ')
     }
     function realFormatter(value) {
         if (value != null) {

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{%load static%}
+
+
+{%block 'header'%}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">Tabelas</li>
+    <li class="breadcrumb-item active" aria-current="page">{{resource|title}}</li>
+  </ol>  
+  {%include 'consulta.html'%}
+  
+    <thead>
+        <tr>
+            <th data-searchable="false" colspan="3">Candidato</th>
+            <th rowspan="2" data-field="revisar_experiencias" data-sortable="true">Experiências a serem revisadas</th>
+            <th rowspan="2" data-field="sub_area" data-sortable="true" data-formatter="badgeFormatter">Subárea</th>
+        </tr>
+        <tr>
+            <th data-searchable="false" data-formatter="editarFormatter" data-events="editarEvents">Abrir</th>
+            <th data-field="candidato" data-sortable="true">ID</th>
+            <th data-field="nome">Nome</th>
+        </tr>
+    </thead>
+</table>
+<script>
+    function badgeFormatter(value) {
+        switch (value) {
+            case 'REVISAR':
+                return `<h6 class='m-0'><span class="badge bg-danger text-uppercase">${value}</span></h6>`
+            case 'CADASTRO':
+                return `<h6 class='m-0'><span class="badge bg-warning text-uppercase">${value}</span></h6>`
+            default:
+                return `<h6 class='m-0'><span class="badge bg-primary text-uppercase">${value}</span></h6>`
+        }
+    }
+    function editarFormatter(value) {
+        return '<div id="viewBtn" class="btn-icon bg-info"><img src="{% static "icons/file-earmark-text.svg"%}" alt="edit" title="Abrir detalhe"></div></div>'
+    }
+    window.editarEvents = {
+        'click #viewBtn': function (e, value, row, index) {
+            page.redirect('consultas/candidato',{id:row['candidato']})
+        },
+    }
+</script>
+{%endblock%}

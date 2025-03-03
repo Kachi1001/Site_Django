@@ -1,19 +1,31 @@
 var loader;
-
+var loading_modal
 class BaseLoader {
     constructor(object, type) {
+        this.last = loader;
         this.object = object; // Nome do objeto (colaborador, equipe, etc.)
         this.type = type; // Tipo do loader (post, view, update, etc...)
         this.prefix = object + "_"; // Prefixo para os campos (modal/form)
         this.id = undefined; // ID de registro, se necessário
     }
-    async open(id = undefined) {
-        this.id = id;
+async open(id = undefined) {
+    this.id = id;
+    try {
         this.inputs = await apiRequest.get(`resource/${this.object}`);
-        loader = this;
-
-        this[this.type](); // Registra ou atualiza conforme o tipo
+    } catch (error) {
+        console.log(error);
     }
+    loader = this;
+    return new Promise((resolve, reject) => {
+        this[this.type]().then(() => {
+            if (this.modal) {
+                this.modal.show();
+                loading_modal.hide()
+            }
+            resolve();
+        });
+    });
+}
     async populateSelect(data = [], field = "") {
         try {
             const selectElement = $("#" + this.prefix + field);
@@ -105,20 +117,23 @@ class BaseLoader {
                         cell.textContent = obj[key];
                         if (isValidDate(obj[key])) {
                             const data = new Date(obj[key]);
-                            cell.textContent = data.toLocaleDateString("pt-BR");
+                            cell.textContent = data.toLocaleDateString(
+                                "pt-BR",
+                                { timeZone: "UTC" }
+                            );
                         }
                     }
                     row.appendChild(cell);
                 });
                 if (feature) {
                     const extraBtn = document.createElement("td");
+                    extraBtn.classList.add("d-inline-flex", "col-12");
                     if (feature.includes("delete")) {
                         const removeButton = document.createElement("i");
                         removeButton.classList.add(
                             "btn-icon",
                             "bg-danger",
                             "bi-trash3",
-                            "fs-6",
                             "me-1"
                         );
 
@@ -134,13 +149,28 @@ class BaseLoader {
                             "btn-icon",
                             "bg-primary",
                             "bi-pencil",
-                            "fs-6",
                             "me-1"
                         );
 
                         editBtn.addEventListener("click", () => {
+                            this.modal.hide();
                             let modal = new Modal(this.object, "update");
-                            modal.refresh = this.refresh;
+                            modal.open(obj.id);
+                        });
+                        extraBtn.appendChild(editBtn);
+                    }
+                    if (feature.includes("view_ficha")) {
+                        const editBtn = document.createElement("i");
+                        editBtn.classList.add(
+                            "btn-icon",
+                            "bg-success",
+                            "bi-file-earmark",
+                            "me-1"
+                        );
+
+                        editBtn.addEventListener("click", () => {
+                            this.modal.hide();
+                            let modal = new Modal("ficha", "ficha");
                             modal.open(obj.id);
                         });
                         extraBtn.appendChild(editBtn);
@@ -155,15 +185,22 @@ class BaseLoader {
             throw error;
         }
     }
+    async set(field, value, locked = false) {
+        const html = $("#" + this.prefix + field);
+        html.val(value);
+        html.attr("disabled", locked);
+    }
 }
 var modal_open;
 class Modal extends BaseLoader {
     constructor(object, type) {
+        loading_modal = new bootstrap.Modal('#carregando')
+        loading_modal.show()
         super(object, type); // Chama o construtor da classe DataManager
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
-        console.log(this.prefix.slice(0, -1));
         this.modal = new bootstrap.Modal(this.myModal);
+        this.refresh;
         this.loader = loader;
     }
 
@@ -173,30 +210,65 @@ class Modal extends BaseLoader {
             this.populateSelect(data, select);
         });
         const table = await apiRequest.get(this.object);
-        this.populateTable(table, "delete", ["id"]).then(() => {
+        let feature = ["delete", "edit"];
+        if (
+            this.object == "ficha" ||
+            this.object == "ficha_padrao" ||
+            this.object == "erros"
+        ) {
+            feature = "delete";
+        }
+        this.populateTable(table, feature, ["id"]).then(() => {
             this.modal.show();
         });
-        if (this.object in Pos_load){ Pos_load[this.object]( loader ) }
-        
-        $("#" + this.prefix + "submit")
-        .off()
-        .click(function () {
-            loader.refresh = async () => {
-                const table = await apiRequest.get(loader.object);
-                loader.populateTable(table, "delete", ["id"]);
-            };
-            Submit.post(loader);
-        });
+        if (this.object in Pos_load) {
+            Pos_load[this.object](loader);
+        }
 
-        
+        $("#" + this.prefix + "submit")
+            .off()
+            .click(function () {
+                if (loader.refresh == undefined) {
+                    loader.refresh = async () => {
+                        const table = await apiRequest.get(loader.object);
+                        loader.populateTable(table, "delete", ["id"]);
+                    };
+                }
+                Submit.post(loader);
+            });
     }
     async update() {
         try {
             const data = await apiRequest.get(this.object + "/" + this.id);
             this.populateData(data).then(() => {
-                this.modal.show();
-
-                $("#" + this.prefix + "save")
+                if (
+                    this.last.modal &&
+                    this.last.object == this.object &&
+                    this.last.type == "register"
+                ) {
+                    loader.myModal.addEventListener(
+                        "hidden.bs.modal",
+                        (event) => {
+                            loader.modal.dispose();
+                            const candidato = page.getParam("id");
+                            let registro = new Modal(
+                                loader.last.object,
+                                this.last.type
+                            );
+                            registro.refresh = () => {
+                                registro.open(candidato);
+                            };
+                            registro.open(candidato);
+                            $("#" + registro.prefix + "candidato").val(
+                                candidato
+                            );
+                        }
+                    );
+                }
+                if (this.object in Pos_load) {
+                    Pos_load[this.object](loader);
+                }
+                $("#" + this.prefix + "submit")
                     .off()
                     .click(function () {
                         Submit.update(loader);
@@ -296,30 +368,82 @@ class Modal extends BaseLoader {
             console.error("Error ao carregar", error);
         }
     }
-
-    async file_view() {
-        const data = await apiRequest.get("anexos/" + this.id);
-        const imagem = document.getElementById(this.prefix + "preview_imagem");
-        const pdf = document.getElementById(this.prefix + "preview_pdf");
-        $("#" + this.prefix + "nome").text(data.nome);
+    async select() {
+        const data = await apiRequest.get(this.object);
+        this.populateTable(data, ["view"], ["id"]).then(() => {
+            this.modal.show();
+        });
+    }
+    async view() {
+        const data = this.id;
+        const imagem = document.getElementById(this.prefix + "imagem");
+        const pdf = document.getElementById(this.prefix + "pdf");
 
         if (data.tipo == "pdf") {
-            pdf.src = data.link;
+            pdf.src = data.url;
             pdf.style.display = "block";
             imagem.style.display = "none";
         } else {
-            imagem.src = data.link;
+            imagem.src = data.url;
             imagem.style.display = "block";
             pdf.style.display = "none";
         }
-        $("#" + this.prefix + "delete")
-            .off()
-            .on("click", () => {
-                apiRequest.delete("anexos/" + data.id).then(this.refresh);
+        if (this.last != undefined && this.last.type == "historico") {
+            loader.myModal.addEventListener("hidden.bs.modal", (event) => {
+                loader.modal.dispose();
+                let obj = new Modal(this.last.object, "historico");
+                apiRequest
+                    .get(this.last.object, {
+                        colaborador: page.getParam("id"),
+                    })
+                    .then((data) => {
+                        obj.open(data);
+                    });
             });
+        }
         this.modal.show();
     }
+    async ficha() {
+        const digital = document.getElementById(this.prefix + "digital");
+        const digitalizado = document.getElementById(
+            this.prefix + "digitalizado"
+        );
+        if (this.last != undefined && this.last.type == "historico") {
+            this.myModal.addEventListener("hidden.bs.modal", (event) => {
+                this.last.modal.dispose();
+                let obj = new Modal(this.last.object, "historico");
+                apiRequest
+                    .get(this.last.object, { colaborador: page.getParam("id") })
+                    .then((data) => {
+                        obj.open(data);
+                    });
+            });
+        }
+        var data = await apiRequest.get("digitalizacao", { ficha: this.id });
+        let last = { url: "/static/icons/file-earmark-excel.svg",id:0};
+        for (const row in data) {
+            if (last.id < data[row].id) {
+                last = data[row];
+            }
+        }
+        digitalizado.src = last.url;
+        $('#' + this.prefix + 'ultima_digitalizacao').val(last.data)
+        print(last.data)
+        data = await apiRequest.get("ficha_impressao", {
+            ficha: this.id,
+            force: KeyPressing.isKeyPressed(17),
+        });
+        digital.src = data.url;
 
+    }
+
+    async historico() {
+        const table = await this.id;
+        let feature = ["view_ficha"];
+        this.populateTable(table, feature, ["id"]).then(() => {
+            this.modal.show();
+        });
+    }
     load() {
         if (typeof this.id == "object") {
             this.id.forEach((field) => {
@@ -327,9 +451,8 @@ class Modal extends BaseLoader {
             });
         }
     }
-
-    refresh() {
-        // page.refresh();
+    async refresh() {
+        $("#table").bootstrapTable("refresh");
     }
 }
 
@@ -339,7 +462,7 @@ class Form extends BaseLoader {
         this.prefix = "f_" + this.prefix; // Prefixo de modal
     }
     // Registro
-    register() {
+    async register() {
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
@@ -354,15 +477,14 @@ class Form extends BaseLoader {
 
     async view() {
         try {
-            apiRequest.get(this.object + "/" + this.id).then((data) => {
-                this.populateData(data);
-            });
+            const data = await apiRequest.get(this.object + "/" + this.id) 
+            this.populateData(data);
         } catch (error) {
             console.error("Error ao carregar", error);
         }
     }
 
-    refresh() {
+    async refresh() {
         $("#table").bootstrapTable("refresh");
         carregarDados();
     }
@@ -398,34 +520,29 @@ class Form extends BaseLoader {
 }
 Pos_load = {
     ficha: (loader) => {
-        const colaborador = $('#' + loader.prefix + 'colaborador') 
-        const pagina = $('#' + loader.prefix + 'pagina') 
-        function getFicha(){
-            apiRequest.get('ficha?colaborador='+colaborador.val()).then((response) =>{
-                pag = 1
-                response.forEach((row) => {
-                    if (row.pagina >= pag) {pag = row.pagina}
-                })
-                pagina.val(pag)
-            })    
-        }
-        colaborador.change(getFicha)
-        getFicha()
-        const mudar = $('#' + loader.prefix + 'mudar')
-        mudar.on('click',() =>{
-            if (pagina.attr('disabled')) {
-                if (confirm('Não garantimos funcionalidade total ao alterar manualmente')) {
-                    pagina.attr('disabled', !pagina.attr('disabled'))
-                    mudar.textContent('Deixar automático')
+        const colaborador = $("#" + loader.prefix + "colaborador");
+        const pagina = $("#" + loader.prefix + "pagina");
+
+        colaborador.on("change", getFicha);
+        getFicha();
+        const mudar = $("#" + loader.prefix + "mudar");
+        mudar.off().on("click", () => {
+            if (pagina.attr("disabled")) {
+                if (
+                    confirm(
+                        "Não garantimos funcionalidade total ao alterar manualmente"
+                    )
+                ) {
+                    pagina.attr("disabled", !pagina.attr("disabled"));
+                    mudar.text("Deixar automático");
                 }
             } else {
-                pagina.attr('disabled', !pagina.attr('disabled'))                
-                mudar.textContent = 'Alterar manualmente' 
-                getFicha()
+                pagina.attr("disabled", !pagina.attr("disabled"));
+                mudar.text("Alterar manualmente");
+                getFicha();
             }
-    
-        })
-    }
+        });
+    },
 };
 Submit = {
     readFields: function (loader) {
@@ -459,7 +576,7 @@ Submit = {
             });
         } catch (error) {
             throw error;
-        }
+        } 
     },
     delete: function (loader) {
         console.log(loader);
@@ -478,3 +595,13 @@ $(document).ready(() => {
         console.log("Tela sem inicializador", error);
     }
 });
+
+modal = {
+    open: function (type, object, id) {
+        const obj = new Modal(object, type);
+        obj.open(id);
+    },
+};
+function abrir_site(ca) {
+    page.new(`https://consultaca.com/${ca}`);
+}

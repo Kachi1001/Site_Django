@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+
+{% block 'header' %}
+{%include 'static/imports/graficos.html'%} <!-- Graficos -->
+{% endblock %}
+
+{% block 'main' %}
+<canvas id="grafico_1"></canvas>
+{% endblock %}
+
+
+{% block 'script' %}
+<script>
+  function load() {
+    apiRequest.get('tabela/fechamento_mensal?sort=competencia&order=asc&limit=100000').then((data) => {
+      data = data['rows']
+      var values = {}
+      for (const key in data) {
+        if (values[data[key].competencia] == undefined) { values[data[key].competencia] = { 'salario_insalub': 0, 'horas_totais': 0 } }
+        values[data[key].competencia]['salario_insalub'] += parseFloat(data[key].salario_insalub) >= 1 ? parseFloat(data[key].salario_insalub) : 0
+        values[data[key].competencia]['horas_totais'] += parseFloat(data[key].horas_totais) >= 1 ? parseFloat(data[key].horas_totais) : 0
+      }
+      data = []
+      for (const comp in values) {
+        data.push({ 'competencia': comp, 'salario_insalub': values[comp]['salario_insalub'], 'horas_totais': values[comp]['horas_totais'], 'total_folha': values[comp]['horas_totais'] + values[comp]['salario_insalub'] })
+      }
+      const ctx = document.getElementById('grafico_1');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [{
+            label: 'Total da folha',
+            data: data,
+            parsing: {
+              yAxisKey: 'total_folha'
+            },
+            type: 'line',
+            yAxisID: 'y2',
+            borderColor: color.blue80,
+            backgroundColor: color.blue,
+
+          }, {
+            label: 'Salario + insalubridade',
+            data: data,
+            parsing: {
+              yAxisKey: 'salario_insalub'
+            },
+            type: 'bar',
+
+            backgroundColor: color.green80,
+          }, {
+            label: 'Horas extra',
+            data: data,
+            parsing: {
+              yAxisKey: 'horas_totais'
+            },
+            type: 'bar',
+
+            backgroundColor: color.orange80,
+
+          }]
+        },
+        options: {
+          parsing: {
+            xAxisKey: 'competencia',
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: 'Custos salarias - Obras'
+            }
+          },
+          scales: {
+            y: {
+              type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+              position: 'left',
+
+            },
+            y2: {
+              min: -50000,
+              type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+              position: 'right',
+
+              grid: {
+                drawOnChartArea: false // only want the grid lines for one axis to show up
+              }
+            }
+          }
+        }
+
+      });
+    })
+  }
+
+</script>
+{% endblock %}

@@ -5,173 +5,198 @@
 {%endblock%}
 {% block 'main' %}
 <h5>DADOS CADASTRAIS</h5>
-<div class="row">
+<div class="row mb-1">
     <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">COLABORADOR:</label>
-            <select class="form-select" id="f_{{resource}}_colaborador" onchange="colab_chance()">
+            <select class="form-select" id="f_{{resource}}_colaborador" tabindex="1">
             </select>
-            <label class="input-group-text bg-secondary-subtle" id="numeracao" data-bs-toggle="tooltip" data-bs-placement="right"
-                data-bs-html="true" data-bs-title="Carregando...">
+            <button class="input-group-text text-bg-secondary" id="numeracao" data-bs-toggle="tooltip"
+                data-bs-placement="right" data-bs-html="true" data-bs-title="Carregando...">
                 Numeração
-            </label>
+            </button>
         </div>
     </div>
     <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">FICHA:</label>
-            <select class="form-select" id="f_{{resource}}_ficha">
+            <select class="form-select" id="f_{{resource}}_ficha" tabindex="2">
             </select>
+            <button class="input-group-text text-bg-secondary"
+                onclick="colab_chance(); toasts('primary',{'method':'Atualizando','message':'Aguarde alguns instante!'})"><i
+                    class="bi bi-arrow-clockwise"></i></button>
         </div>
     </div>
+</div>
+<div class="row mb-1">
     <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">OBRA:</label>
-            <select class="form-select" id="f_{{resource}}_obra">
+            <select class="form-select" id="f_{{resource}}_obra" tabindex="3">
             </select>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+<div class="row mb-1">
+    <div class="col-6">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">PRODUTO:</label>
-            <select class="form-select" id="f_{{resource}}_produto" onchange="carregarFiltrado()">
+            <select class="form-select" id="f_{{resource}}_produto" onchange="carregarFiltrado()" tabindex="4">
             </select>
         </div>
     </div>
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+    <div class="col-6">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">EPI:</label>
-            <select class="form-select" id="f_{{resource}}_epi_cadastro">
+            <select class="form-select" id="f_{{resource}}_epi_cadastro" tabindex="5">
             </select>
         </div>
     </div>
     <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">QUANTIDADE:</label>
-            <input type="number" id="f_{{resource}}_quantidade" class="form-control">
+            <input type="number" id="f_{{resource}}_quantidade" class="form-control" tabindex="6">
         </div>
+    </div>
+
+    <div class="col-auto">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
+            <label class="input-group-text">TAMANHO:</label>
+            <input class="form-control" list="f_tamanho" id="f_{{resource}}_tamanho" tabindex="6" value="U">
+        </div>
+        <datalist id="f_tamanho">
+            <option>PP</option>
+            <option>P</option>
+            <option>M</option>
+            <option>G</option>
+            <option>GG</option>
+            <option>XG</option>
+            <option>XGG</option>
+            <option>U</option>
+
+        </datalist>
     </div>
 </div>
-<div class="row">
+<div class="row mb-1">
 
     <div class="col-auto">
-
-        <div class="input-group mb-2 nowrap input-group-sm">
-            <label class="input-group-text">DEVOLVIDO?</label>
-            <select class="form-select" id="f_{{resource}}_devolvido">
+        <div class="input-group mb-1 nowrap input-group-sm">
+            <label class="input-group-text">REPOSIÇÃO?</label>
+            <select class="form-select" id="f_{{resource}}_reposicao" tabindex="7">
                 <option value="A">A - Acidente</option>
                 <option value="D">D - Danificado</option>
                 <option value="I">I - Inadequado</option>
                 <option value="T">T - Tempo de uso</option>
                 <option value="E">E - Extraviado</option>
+                <option value="P">P - Primeira entrega</option>
                 <option value="O" selected>O - Outros</option>
             </select>
         </div>
     </div>
     <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
+        <div class="input-group mb-1 flex-nowrap input-group-sm">
             <label class="input-group-text">DATA ENTREGA:</label>
-            <input type="date" id="f_{{resource}}_data_entrega" class="form-control" value="{{hojeJS}}">
+            <input type="date" id="f_{{resource}}_data_entrega" class="form-control" value="{{hojeJS}}" tabindex="8">
         </div>
     </div>
+    <input type="hidden" id="f_{{resource}}_papel" class="form-control" value="false">
+</div>
 
 
 
 
-    <div class="row justify-content-end">
-        <div class="col-auto"><button id="f_{{resource}}_submit" class="btn btn-success">Cadastrar</button></div>
+<div class="row justify-content-end">
+    <div class="col-auto">
+        <button id="f_{{resource}}_submit" class="btn btn-success" tabindex="9"
+            onclick="document.getElementById('f_{{resource}}_colaborador').focus(); ">Cadastrar</button>
     </div>
-    <script>
-        var epis = {}
-        var loader
-        var fichas = {}
-        
-        function colab_chance() {
-            const ficha_field = $('#f_{{resource}}_ficha');
-            const colab = $('#f_{{resource}}_colaborador').val()
-            try {
-                ficha_field.empty();
-                fichas.forEach((option) => {
-                    if (option.colaborador == colab) {
-                        let opt = document.createElement("option");
-                        opt.value = option.value || option.id;
-                        opt.text = option.text || opt.value;
-                        ficha_field.append(opt);
-                    }
-                });
-            } catch (error) {
-                console.error(error);
-            }
-            apiRequest.get('numeracao/' + colab).then((response) => {
-                var keys = Object.keys(response)
-                keys.splice(keys.indexOf('colaborador'), 1);
-                keys.splice(keys.indexOf('id'), 1);
-                var text = ''
-                keys.forEach((key) => {
-                    if (key == 'calca') { text += 'Calça: ' + response[key] + '<br>'; }
-                    else { text += key[0].toUpperCase() + key.substring(1) + ': ' + response[key] + '<br>' }
+</div>
+<script>
+    var epis = {}
+    var loader
+    var ficha = {}
+    var numeracao = {}
+    $('#f_{{resource}}_colaborador').on('change', debounce(colab_chance, 300));
+    async function colab_chance() {
+        const colab = $('#f_{{resource}}_colaborador').val();
+        const ficha_field = $('#f_{{resource}}_ficha');
 
-                })
-                const tooltip = bootstrap.Tooltip.getInstance('#numeracao') // Returns a Bootstrap tooltip instance
+        // Cache de elementos
+        const $numeracao = $('#numeracao');
+        const tooltip = bootstrap.Tooltip.getInstance($numeracao[0]) || new bootstrap.Tooltip($numeracao[0]);
 
-                // setContent example
-                tooltip.setContent({ '.tooltip-inner': text })
-            }).catch((err) => {
-                const tooltip = bootstrap.Tooltip.getInstance('#numeracao') // Returns a Bootstrap tooltip instance
+        // Executar requests em paralelo
+        const [fichasResponse, numeracaoResponse] = await Promise.all([
+            apiRequest.get(`ficha?colaborador=${colab}`),
+            apiRequest.get(`numeracao/${colab}`).catch(() => ({ error: true }))
+        ]);
 
-                // setContent example
-                tooltip.setContent({ '.tooltip-inner': 'Não cadastrado' })
-            });
-            
-        }
-        async function load() {
-            fichas = await apiRequest.get('select/ficha')
-            loader = new Form('{{resource}}', 'register')
-            loader.open().then(() => {
-                apiRequest.get('select/epi_cadastro').then((result) => {
-                    epis = result
-                    setTimeout(pos_load, 500);
+        // Atualizar ficha
+        ficha_field.empty().html(
+            fichasResponse
+                .filter(row => row?.id)  // Melhor validação
+                .map(row =>
+                    `<option value="${row.id}">
+                            Página - ${row.pagina} | ${row.completa ? 'Completa' : 'Incompleta'}
+                        </option>`
+                )
+        );
 
-                })
+        // Atualizar tooltip
+        const tooltipContent = numeracaoResponse.error
+            ? 'Não cadastrado'
+            : Object.entries(numeracaoResponse)
+                .filter(([key]) => !['colaborador', 'id'].includes(key))
+                .map(([key, val]) =>
+                    `${key === 'calca' ? 'Calça' : key.charAt(0).toUpperCase() + key.slice(1)}: ${val}`
+                ).join('<br>');
+
+        tooltip.setContent({ '.tooltip-inner': tooltipContent });
+    }
+
+    async function load() {
+        loader = new Form('{{resource}}', 'register')
+        loader.open().then(() => {
+            apiRequest.get('select/epi_cadastro').then((result) => {
+                epis = result
+                setTimeout(pos_load, 500);
             })
-        }
-        async function carregarFiltrado() {
-            produto = document.getElementById('f_{{resource}}_produto').value
-            result = []
-            for (const item in epis) {
-                if (epis[item]['produto'] == produto) {
-                    result.push(epis[item])
+        })
+        loader.refresh = () => {
+            setTimeout(() => {
+                if (urlParams.get("voltar") == 'colaborador') {
+                    page.to('/Almoxarifado/consultas/colaborador', { 'id': $("#f_{{resource}}_colaborador").val() })
+                } else {
+                    location.pathname = '/Almoxarifado'
                 }
-            }
-            loader.populateSelect(result, 'epi_cadastro')
+            }, 200)
         }
-        async function getFicha(carregado) {
-            field = document.getElementById('f_{{resource}}_ficha')
-            if (carregado) {
+    }
+    async function carregarFiltrado() {
+        produto = document.getElementById('f_{{resource}}_produto').value
+        result = []
+        for (const item in epis) {
+            if (epis[item]['produto'] == produto) {
+                result.push(epis[item])
+            }
+        }
+        loader.populateSelect(result, 'epi_cadastro')
+    }
 
-            }
-            for (const item in epis) {
-                if (epis[item]['produto'] == produto) {
-                    result.push(epis[item])
-                }
-            }
-            loader.populateSelect(result, 'epi_cadastro')
+    const urlParams = new URLSearchParams(window.location.search);
+    function pos_load() {
+        if (urlParams.has('produto')) {
+            $('#f_{{resource}}_produto').val(urlParams.get("produto"))
+            $('#f_{{resource}}_colaborador').val(urlParams.get("colaborador"))
+            $('#f_{{resource}}_reposicao').val(urlParams.get("reposicao"))
+            $('#f_{{resource}}_tamanho').val(urlParams.get("tamanho"))
         }
-        function pos_load() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('produto')) {
-                $('#f_{{resource}}_produto').val(urlParams.get("produto"))
-                $('#f_{{resource}}_colaborador').val(urlParams.get("colaborador"))
-                $('#f_{{resource}}_devolvido').val(urlParams.get("devolvido"))
-            }
-            colab_chance()
-            carregarFiltrado()
-        }
-    </script>
-    {% endblock %}
+        colab_chance()
+        carregarFiltrado()
+    }
+</script>
+{% endblock %}
 
-    {%block 'footer'%}
-    <div class="submain">{%include app|add:'/table/'|add:resource|add:'.html'%}</div>
-    {%endblock%}
+{%block 'footer'%}
+<div class="submain">{%include app|add:'/table/'|add:resource|add:'.html'%}</div>
+{%endblock%}

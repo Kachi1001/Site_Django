@@ -1,20 +1,3 @@
-.submain .col {
-    border-radius: 5px;
-    background-color: white;
-    margin-left: 10px;
-    margin-bottom: 5px;
-}
-
-.table {
-    margin: 0;
-}
-
-.form-check-input {
-    height: 15px;
-    width: 15px;
-    box-shadow: 2px 2px 3px lightgray;
-    margin-top: 0px;
-}
 
 .div_legenda {
     padding-top: 5px;

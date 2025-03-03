@@ -11,20 +11,21 @@ body {
     z-index: 1;
     left: 0;
     top: 50px;
-    box-shadow:  3px 0px 15px rgb(145, 145, 145);
-    background-color: var(--cor5);
+    box-shadow:  0.5px 0px 10px rgba(0, 0, 0, 0.623);
+    background-color: var(--bs-secondary-bg);
+  }
+  [data-bs-theme="light"] .sidenav {
+    background-color: #bdc0c3;
   }
   
   /* Styl the sidenav links and the dropdown button */
-.sidenav a {
-    padding: 8px 8px 8px 30px;
+.sidenav a{
     text-decoration: none;
     font-size: 15px;
-    color: black;
+    color: var(--bs-text-secondary);
     display: block; 
     border: none;
     background: none;
-    width: 100%;
     text-align: left;
     cursor: pointer;
     outline: none;
@@ -36,11 +37,16 @@ body {
     background-color: #4b4b4bb6;
   }
 
-  
+.sidenav i {
+  padding-right: 6px;
+}
+
+
 .sidenav .nome_app{
     color: #f1f1f1;
-    font-size: larger;
-    padding: 20px 10px 20px 10px;
+    font-size: x-large;
+    font-weight: 500;
+    padding: 16px 0px 16px 0px;
     /* padding-bottom: 20px;
     padding-top: 20px; */
     text-align: center;
@@ -55,11 +61,22 @@ body {
       margin-left: 0px;
     }
   }
-  .accordion-header{
+  .sidenav .accordion-header{
     font-size: medium;
     margin: 4px, none ,none, 4px;
   }
-  .accordion-button{
+  .sidenav .accordion-button{
     font-weight: 500;
+    padding: 12px 16px 12px 16px; 
+  }
+  .sidenav .accordion-header a {
+    padding: 12px 0px 12px 16px; 
+    font-size: 16px
   }
 
+  .sidenav .accordion-collapse a{
+    padding-left: 15px;
+    border-left: 1px solid #bdc0c3;
+    margin-left: 15px;
+    padding: 4px 0px 4px 16px;
+  }

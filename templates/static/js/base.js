@@ -1,11 +1,18 @@
 const True = true;
 const False = false;
-
+print = console.log
+class KeyPressing{static k=[];static i(){document.addEventListener('keydown',(e)=>{const c=e.keyCode;if(KeyPressing.k.includes(c)==!1){KeyPressing.k.push(c)}}); document.addEventListener('keyup',(e)=>{const c=e.keyCode;if(KeyPressing.k.includes(c)==!0){const a=KeyPressing.k.indexOf(c);if(a!==-1){KeyPressing.k.splice(a,1)}}})} static isKeyPressed(c){return KeyPressing.k.includes(c)}}KeyPressing.i()
 $(document).ready(() =>{
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }) 
-    
+function set_theme() {
+    if (!localStorage.getItem('theme')) {
+        localStorage.setItem('theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    }
+    $('html').attr ('data-bs-theme', localStorage.getItem('theme'))
+}
+set_theme()
 const date = {
     adicionarZero: function (value) {
         if (value <= 9) return "0" + value;
@@ -219,6 +226,7 @@ const apiRequest = {
                     message: "Tente atualizar seu navegador <Ctrl + F5>, caso erro persistir entre em contato WhatsApp encontrado no superior direito",
                 });
             });
+        throw error
     },
 };
 
@@ -250,6 +258,25 @@ const page = {
         // Redireciona para a nova URL
         window.location.href = newUrl;
     },
+    setParam: function (param, value) {
+        const params = new URLSearchParams(window.location.search); // Pega a query string da URL
+        const values = {};
+
+        // Itera sobre todos os parâmetros e armazena no objeto values
+        result = '?'
+        params.forEach((value, key) => {
+            values[key] = value.replaceAll("%20", " ");
+        });
+        values[param] = value
+
+        for (x in values) {
+            result += `${x}=${values[x]}&`
+        }
+        console.log(result)
+
+
+        location.search = result
+    },
     getParam: function (param) {
         const params = new URLSearchParams(window.location.search); // Pega a query string da URL
         const values = {};
@@ -261,10 +288,10 @@ const page = {
 
         return values[param];
     },
-    refresh: function () {
-        location.reload();
-    },
+    refresh: location.reload,
+    reload: location.reload,
     to: function (path, params) {
+        path.replaceAll('%2F','/').replaceAll('%3F','?').replaceAll('%3D','?')
         queryString = "";
         if (typeof params != "undefined") {
             // Remove parâmetros com valores vazios, nulos ou indefinidos
@@ -324,5 +351,82 @@ function abrirWhats(id) {
         number = number.replaceAll('(','').replaceAll(')','').replaceAll('-','').replaceAll(' ','').replaceAll('+','')
         url = `https://wa.me/${number}`
         page.new(url)
+    }
+}
+function debounce(func, timeout = 300){
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+  }
+
+  function removeFromArray(array, value) {
+    if (!Array.isArray(array)) {
+        throw new Error("O primeiro argumento deve ser um array.");
+    }
+
+    const valuesToRemove = new Set(
+        Array.isArray(value) ? value : [value]
+    );
+
+    return array.filter(item => !valuesToRemove.has(item));
+}
+
+const generic = {
+    readFields: (loader) => {
+        let data = {};
+        const inputs = loader.inputs || [];
+        const fields = inputs.text.concat(inputs.select) || []; // Junta os campos de texto e campos de seleção
+        try {
+            fields.forEach((field) => {
+                val = $("#" + loader.prefix + field).val();
+                data[field] = val || null;
+            });
+        } catch (error) {
+            console.error(error)
+        }
+        if (inputs.check != undefined) {
+            inputs.check.forEach((check) => {
+                data[check] = $("#" + loader.prefix + check).prop("checked") || false;
+            });
+        }
+        return data;
+    },
+    update: function (loader) {
+        apiRequest
+            .update(`${loader.object}/${loader.id}`, this.readFields(loader))
+            .then(() => {
+                loader.modal.hide();
+                loader.refresh();
+            });
+    },
+    post: function (loader) {
+        try {
+            apiRequest.post(loader.object, generic.readFields(loader)).then(() => {
+                loader.refresh();
+            });
+        } catch (error) {
+            throw error;
+        }
+    },
+    delete: function (loader) {
+        console.log(loader);
+        apiRequest
+            .delete(loader.object + "/" + loader.id)
+            .then(() => {
+                loader.refresh();
+                loader.modal.hide();
+            });
+    },  
+    upload: function (loader) {
+        console.log(loader);
+        const file = $('#' + loader.prefix + 'file')[0].files[0]
+        const formData = new FormData();
+        formData.append('file',file)
+        apiRequest.upload(loader.object +'_'+ loader.type , formData).then(() =>{
+            loader.refresh()
+            loader.modal.hide()
+        })
     }
 }

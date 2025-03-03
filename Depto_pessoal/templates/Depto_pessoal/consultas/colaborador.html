@@ -2,6 +2,8 @@
 {% load static %}
 
 {%block 'header'%}
+{% include 'static/imports/bootstrap_tables.html' %}
+
 {%endblock%}
 {% block 'main' %}
 
@@ -10,20 +12,26 @@
     <div class="col-auto">
         <h5 class="mb-0"><small>Cadastro</small></h5>
     </div>
-    <div class="col-auto"><button type="button" class="btn btn-primary btn-sm" onclick="abrirUpdate('colaborador')">Editar</button></div>
-    <div class="col-auto"><button type="button" class="btn btn-danger btn-sm" id="btn-demissao">Desligamento</button>
+    <div class="col-auto">
+        <button type="button" class="btn btn-primary btn-sm" onclick="abrirUpdate('colaborador')" id="btn-edit">Editar</button>
+    </div>
+    <div class="col-auto">
+        <button type="button" class="btn btn-danger btn-sm" id="btn-demissao">Desligamento</button>
+    </div>
+    <div class="col-auto">
+        <button type="button" class="btn btn-success btn-sm" id="btn-recontratar">Recontratar</button>
     </div>
     <hr class="mt-2">
 </div>
 
 <div class="row">
-    <div class="col-auto">
+    <div class="col">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">ID:</label>
             <input type="text" id="f_colaborador_id" class="form-control">
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-5">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">NOME:</label>
             <input type="text" id="f_colaborador_nome" class="form-control">
@@ -32,13 +40,25 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">CPF:</label>
-            <input type="number" id="f_colaborador_cpf" class="form-control form-control-sm">
+            <input type="text" id="f_colaborador_cpf" class="form-control form-control-sm">
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">RG:</label>
-            <input type="number" id="f_colaborador_rg" class="form-control form-control-sm">
+            <input type="text" id="f_colaborador_rg" class="form-control form-control-sm">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">EMISSOR:</label>
+            <input type="text" id="f_colaborador_rg_emissor" class="form-control form-control-sm">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">CTPS:</label>
+            <input type="text" id="f_colaborador_ctps" class="form-control form-control-sm">
         </div>
     </div>
 
@@ -52,7 +72,9 @@
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">TELEFONE:</label>
             <input type="text" id="f_colaborador_fone" class="form-control form-control-sm">
-            <label class="input-group-text bg-success-subtle" onclick="abrirWhats('f_colaborador_fone')" style="user-select: none;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para abrir no WhatsApp!">WhatsApp</label>
+            <label class="input-group-text text-bg-success" onclick="abrirWhats('f_colaborador_fone')"
+                style="user-select: none;" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                data-bs-title="Clique para abrir no WhatsApp!">WhatsApp</label>
         </div>
     </div>
 
@@ -69,7 +91,10 @@
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">PASTA:</label>
             <input type="text" id="f_colaborador_pasta_servidor" class="form-control">
-            <button class="input-group-text bg-secondary-subtle" style="user-select: none;" onclick="let text = document.getElementById('f_colaborador_pasta_servidor'); text.disabled = false; text.select(); document.execCommand('copy'); text.disabled = true; toasts('success',{'method':'Sucesso!','message':'Copiado com sucesso o caminho.'})" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para copiar o caminho no servidor!">Copiar</button>
+            <button class="input-group-text text-bg-secondary" style="user-select: none;"
+                onclick="let text = document.getElementById('f_colaborador_pasta_servidor'); text.disabled = false; text.select(); document.execCommand('copy'); text.disabled = true; toasts('success',{'method':'Sucesso!','message':'Copiado com sucesso o caminho.'})"
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                data-bs-title="Clique para copiar o caminho no servidor!">Copiar</button>
         </div>
     </div>
     <div class="col-auto">
@@ -86,9 +111,9 @@
         <h5 class="mb-0"><small>Função atual</small></h5>
     </div>
     <div class="col-auto"><button type="button" class="btn btn-success btn-sm"
-            onclick="abrirLancamento('ocupacao_alterar')">Alterar cargo</button></div>
+            onclick="abrirLancamento('ocupacao_alterar')" id="btn-alterar">Alterar cargo</button></div>
     <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
-            onclick="abrirLancamento('ocupacao_dissidio')">Dissídio</button></div>
+            onclick="abrirLancamento('ocupacao_dissidio')" id="btn-dissidio">Dissídio</button></div>
     <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
             onclick="abrirHistorico('ocupacao')">Histórico</button></div>
     <hr class="mt-2">
@@ -111,7 +136,7 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">EQUIPE:</label>
-            <select class="form-control" id="f_ocupacao_equipe">
+            <select class="form-control form-control-sm" id="f_ocupacao_equipe">
             </select>
         </div>
     </div>
@@ -143,40 +168,35 @@
         </div>
     </div>
 </div>
+
 <h3 class="mb-2 mt-5"><strong>Férias</strong></h3>
 
 <div class="row align-items-center">
     <div class="col-auto">
         <h5 class="mb-0"><small>Período aquisitivo</small></h5>
     </div>
-    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
-            onclick="abrirHistorico('periodoaquisitivo')">Histórico</button></div>
     <hr class="mt-3">
 </div>
 <div class="row">
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">ID:</label>
-            <input type="text" class="form-control form-control-sm" id="f_periodoaquisitivo_id">
-        </div>
-    </div>
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">ADQUIRIDO EM:</label>
-            <input type="date" class="form-control form-control-sm" id="f_periodoaquisitivo_adquirido_em">
-        </div>
-    </div>
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">PERÍODO:</label>
-            <input type="text" class="form-control form-control-sm" id="f_periodoaquisitivo_periodo">
-        </div>
-    </div>
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">CONSUMIDO:</label>
-            <div class="input-group-text">
-                <input type="checkbox" class="form-check-input mt-0" id="f_periodoaquisitivo_consumido">
+    <div class="accordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#menu-periodo_aquisitivo" aria-expanded="false">
+                    Histórico
+                </button>
+            </h2>
+            <div id="menu-periodo_aquisitivo" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
+                <table data-toggle="table" data-locale="pt-BR" id="tabela_periodo_aquisitivo"
+                    class="table table-hover table-bordered table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th data-field="adquirido_em">Adquirido em</th>
+                            <th data-field="periodo">Periodo</th>
+                            <th data-field="consumido" data-formatter="checkFormatter">Consumido</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
@@ -186,29 +206,32 @@
         <h5 class="mb-0"><small>Férias processadas</small></h5>
     </div>
     <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
-            onclick="abrirProcesso('feriasprocessadas')">Processar</button></div>
-    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
-            onclick="abrirHistorico('feriasprocessadas')">Histórico</button></div>
+            onclick="abrirProcesso('ferias_processadas')" id="btn-processar">Processar</button></div>
     <hr class="mt-3">
 </div>
-<div class="row">
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">PERÍODO AQUISITIVO:</label>
-            <select class="form-control" id="f_feriasprocessadas_periodo_aquisitivo">
-            </select>
-        </div>
-    </div>
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">DATA INICIO:</label>
-            <input type="date" class="form-control form-control-sm" id="f_feriasprocessadas_data_inicio">
-        </div>
-    </div>
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">DIAS PROCESSADOS:</label>
-            <input type="text" class="form-control form-control-sm" id="f_feriasprocessadas_dias_processados">
+<div class="accordion">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#menu-feriasprocessadas" aria-expanded="false">
+                Histórico
+            </button>
+        </h2>
+        <div id="menu-feriasprocessadas" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
+            <table data-toggle="table" data-locale="pt-BR" id="tabela_ferias_processadas"
+                class="table table-hover table-bordered table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th data-field="id">ID</th>
+                        <th data-field="periodo_aquisitivo">Periodo</th>
+                        <th data-field="dias_processados">Dias processados</th>
+                        <th data-field="data_inicio">Inicio</th>
+                        <th data-field="consumido">Consumido</th>
+                        <th data-field="observacao">Observação</th>
+                        <th data-formatter="processadas" data-events="btnEvents"></th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
 </div>
@@ -217,38 +240,35 @@
         <h5 class="mb-0"><small>Férias utilizadas</small></h5>
     </div>
     <div class="col-auto"><button type="button" class="btn btn-success btn-sm"
-            onclick="abrirProcesso('feriasutilizadas')">Consumir</button></div>
-    <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
-            onclick="abrirHistorico('feriasutilizadas')">Histórico</button></div>
+            onclick="abrirProcesso('ferias_utilizadas')" id="btn-consumir">Consumir</button></div>
 
     <hr class="mt-2">
 </div>
-<div class="row">
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">PERÍODO AQUISITIVO:</label>
-            <select class="form-control" id="f_feriasutilizadas_periodo_aquisitivo">
-            </select>
-        </div>
-    </div>
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">DATA INICIO:</label>
-            <input type="date" class="form-control form-control-sm" id="f_feriasutilizadas_data_inicio">
-        </div>
-    </div>
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">DIAS UTILIZADOS:</label>
-            <input type="text" class="form-control form-control-sm" id="f_feriasutilizadas_dias_utilizados">
-        </div>
-    </div>
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">ANTECIPAÇÃO:</label>
-            <div class="input-group-text">
-                <input type="checkbox" class="form-check-input mt-0" id="f_feriasutilizadas_antecipacao_periodo">
-            </div>
+<div class="accordion">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#menu-ferias_utilizadas" aria-expanded="false">
+                Histórico
+            </button>
+        </h2>
+        <div id="menu-ferias_utilizadas" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
+            <table data-toggle="table" data-locale="pt-BR" id="tabela_ferias_utilizadas"
+                class="table table-hover table-bordered table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th data-field="id">ID</th>
+                        <th data-field="periodo_aquisitivo">Periodo</th>
+                        <th data-field="dias_utilizados">Dias utilizados</th>
+                        <th data-field="data_inicio">Inicio</th>
+                        <th data-field="antecipacao_periodo" data-formatter="checkFormatter">Antecipado</th>
+                        <th data-field="consumido" data-formatter="checkFormatter">Consumido</th>
+                        <th data-field="observacao">Observação</th>
+                        <th data-formatter="utilizadas" data-events="btnEvents"></th>
+
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
 </div>
@@ -259,7 +279,7 @@
         <h5 class="mb-0"><small>NR's</small></h5>
     </div>
     <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
-        onclick="abrirLancamento_integracao('integracao_nr')">Lançar</button></div>
+            onclick="abrirLancamento_integracao('integracao_nr')" id="btn-lancnr">Lançar</button></div>
     <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
             onclick="abrirHistorico('integracao_nr')">Histórico</button></div>
     <hr class="mt-3">
@@ -269,7 +289,19 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">NR:</label>
-            <input type="text" class="form-control form-control-sm" id="f_integracao_nr_nr">
+            <input type="text" class="form-control form-control-sm" id="f_integracao_nr_integracao_nr_tipo">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">DESCRIÇÃO:</label>
+            <input type="text" class="form-control form-control-sm" id="f_integracao_nr_observacao">
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">EMISSÃO:</label>
+            <input type="date" class="form-control form-control-sm" id="f_integracao_nr_emissao">
         </div>
     </div>
     <div class="col-auto">
@@ -281,10 +313,10 @@
 </div>
 <div class="row align-items-center mt-4">
     <div class="col-auto">
-        <h5 class="mb-0"><small>EPI</small></h5>
+        <h5 class="mb-0"><small>ASO</small></h5>
     </div>
     <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
-            onclick="abrirUpdate('integracao_epi')">Editar</button></div>
+            onclick="abrirUpdate('integracao_epi')" id="btn-epiedit">Editar</button></div>
     <hr class="mt-3">
 </div>
 <div class="row">
@@ -304,20 +336,6 @@
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">EPI:</label>
-            <div class="input-group-text">
-                <input type="checkbox" class="form-check-input mt-0" id="f_integracao_epi_epi">
-            </div>
-        </div>
-    </div>
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">EPI VALIDADE:</label>
-            <input type="date" class="form-control form-control-sm" id="f_integracao_epi_epi_valid">
-        </div>
-    </div>
-    <div class="col-auto">
-        <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">OS:</label>
             <div class="input-group-text">
                 <input type="checkbox" class="form-check-input mt-0" id="f_integracao_epi_os">
@@ -330,14 +348,14 @@
             <input type="date" class="form-control form-control-sm" id="f_integracao_epi_os_valid">
         </div>
     </div>
-    
+
 </div>
 <div class="row align-items-center mt-4">
     <div class="col-auto">
         <h5 class="mb-0"><small>Integração</small></h5>
     </div>
     <div class="col-auto"><button type="button" class="btn btn-primary btn-sm"
-            onclick="abrirLancamento_integracao('integracao')">Lançar</button></div>
+            onclick="abrirLancamento_integracao('integracao')" id="btn-lancainti">Lançar</button></div>
     <div class="col-auto"><button type="button" class="btn btn-secondary btn-sm"
             onclick="abrirHistorico('integracao')">Histórico</button></div>
 
@@ -346,9 +364,15 @@
 <div class="row">
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
-            <label class="input-group-text">OBRA:</label>
-            <select class="form-control" id="f_integracao_obra">
+            <label class="input-group-text">EMPRESA:</label>
+            <select class="form-control" id="f_integracao_empresa">
             </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group mb-2 flex-nowrap input-group-sm">
+            <label class="input-group-text">INTEGRADO:</label>
+            <input type="date" class="form-control form-control-sm" id="f_integracao_data_integracao">
         </div>
     </div>
     <div class="col-auto">
@@ -366,21 +390,67 @@
 </div>
 
 
-<!-- , 'ferias_utilizadas', 'ferias_processadas', 'periodoaquisitivo', 'ocupacao' -->
+<!-- , 'ferias_utilizadas', 'ferias_processadas', 'periodo_aquisitivo', 'ocupacao' -->
 <script>
+    var colab_ativo
+    function processadas(value) {
+        if (colab_ativo) { return '' }
+        return (
+            '<i class="btn-icon bg-info bi-pencil fs-6 me-1" id="processadas" href="javascript:void(0)" title="Editar">'
+        )
+    }
+    function utilizadas(value) {
+        if (colab_ativo) { return '' }
+        return (
+            '<i class="btn-icon bg-info bi-pencil fs-6 me-1" id="utilizadas" href="javascript:void(0)" title="Editar">'
+        )
+    }
+    window.btnEvents = {
+        'click #processadas': function (e, value, row, index) {
+            let obj = new Modal('ferias_processadas', 'update')
+            obj.refresh = () => {
+                $('#tabela_ferias_processadas').bootstrapTable('refresh')
+            }
+            obj.open(row['id'])
+        },
+        'click #utilizadas': function (e, value, row, index) {
+            let obj = new Modal('ferias_utilizadas', 'update')
+            obj.refresh = () => {
+                $('#tabela_ferias_utilizadas').bootstrapTable('refresh')
+
+            }
+            obj.open(row['id'])
+        },
+    }
     const colab = page.getParam('id')
-    var objs = ['periodoaquisitivo', 'ocupacao', 'feriasutilizadas', 'feriasprocessadas','integracao_nr','integracao_epi','integracao']
+    var objs = ['ocupacao', 'integracao_nr', 'integracao_epi', 'integracao']
+    const tabelas = ['ferias_utilizadas', 'ferias_processadas', 'periodo_aquisitivo']
     function carregarDados() {
         let c = new Form('colaborador', 'view', colab)
-        c.open(colab)
+        c.open(colab).then(() => {
+            let btns = ['lancainti','epiedit','lancnr','consumir','processar','recontratar','demissao','alterar','dissidio','edit']
+            setTimeout(() => {
+                colab_ativo = $('#f_colaborador_ativo').prop('checked')
+                    for (btn in btns) {
+                        $('#btn-' + btns[btn]).attr('disabled',!colab_ativo)
+                    }
+                    $('#btn-recontratar').attr('disabled',colab_ativo)
+                    
+            }, 1000)
+        })
 
         for (x in objs) {
             x = new Form(objs[x], 'filter')
             x.open({ 'colaborador': colab })
         }
+        for (x in tabelas)
+            $("#tabela_" + tabelas[x]).bootstrapTable('refreshOptions', {
+                url: `{{api}}Depto_pessoal/${tabelas[x]}?colaborador=${colab}`,
+            })
     }
     function load() {
         carregarDados()
+
     }
     function refresh() {
         load()
@@ -397,7 +467,16 @@
             'value': $("#f_ocupacao_id").val()
         }])
     })
-    function abrirUpdate(modal){
+    $('#btn-recontratar').click(function () {
+        let obj = new Modal('readmissao', 'lancamento')
+        obj.open().then(() => {
+            obj.set('colaborador', $('#f_colaborador_nome').val(), true)
+            obj.set('id', $('#f_ocupacao_id').val(), true)
+        }).catch((err) => {
+
+        });
+    })
+    function abrirUpdate(modal) {
         let obj = new Modal(modal, 'update')
         obj.refresh = refresh
         obj.open(colab)
@@ -416,8 +495,7 @@
 
         registro.refresh = refresh
         registro.open()
-        console.log("#"+ registro.prefix +"colaborador")
-        $("#"+ registro.prefix +"colaborador").val(colab)
+        $("#" + registro.prefix + "colaborador").val(colab)
     }
     function abrirProcesso(modal) {
 
@@ -425,7 +503,7 @@
 
         data = {
             'colaborador': $("#f_colaborador_id").val(),
-            'periodo_aquisitivo': $("#f_periodoaquisitivo_id").val()
+            'periodo_aquisitivo': $("#f_periodo_aquisitivo_id").val()
         }
         registro.refresh = refresh
 
@@ -433,8 +511,8 @@
 
     }
     function confirmarAntecipacao() {
-        let field = $("#m_processo-feriasutilizadas_antecipacao")
-        let periodo = $("#m_processo-feriasutilizadas_aquisitivo_id")
+        let field = $("#m_processo-ferias_utilizadas_antecipacao")
+        let periodo = $("#m_processo-ferias_utilizadas_aquisitivo_id")
         if (field.prop("checked")) {
             if (!confirm('Tens certeza que deseja selecionar antecipação?')) {
                 field.prop('checked', false);
@@ -444,7 +522,7 @@
             periodo.val('').attr('disabled', true)
 
         } else {
-            periodo.val($("#m_processo-feriasutilizadas_id").val()).attr('disabled', false)
+            periodo.val($("#m_processo-ferias_utilizadas_id").val()).attr('disabled', false)
         }
     }
 

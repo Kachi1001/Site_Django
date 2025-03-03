@@ -32,6 +32,7 @@ class app_Depto_pessoal(AbstractUserRole):
         f'{app}-lembrete': True,
         f'{app}-feriado': True,
         f'{app}-graficos': True,
+        f'{app}-import': True,
     }
     role_name=f'app_{app}'
 
@@ -58,7 +59,12 @@ class app_Almoxarifado(AbstractUserRole):
     app = 'Almoxarifado'
     available_permissions = {
         f'{app}': True,
-        f'{app}-produtos': True,
-        f'{app}-epi': True
+        f'{app}-produto': True,
+        f'{app}-ficha_padrao': True,
+        f'{app}-numeracao': True,
+        f'{app}-ficha': True,
+        f'{app}-cadastra_epi': True,
+        f'{app}-movimentar': True,
+        f'{app}-colaborador': True,
     }
     role_name=f'app_{app}'

@@ -1,5 +1,5 @@
 var loader;
-
+var colab_ativo
 class BaseLoader {
     constructor(object, type) {
         this.object = object; // Nome do objeto (colaborador, equipe, etc.)
@@ -11,13 +11,20 @@ class BaseLoader {
         this.id = id;
         try {
             this.inputs = await apiRequest.get(`resource/${this.object}`);
-        } catch(error) {
-            console.error('Erro ao baixar o resource',error)
-        } 
+        } catch (error) {
+            console.log(error);
+        }
         loader = this;
-
-        this[this.type](); // Registra ou atualiza conforme o tipo
+        return new Promise((resolve, reject) => {
+            this[this.type]().then(() => {
+                if (this.modal) {
+                    this.modal.show();
+                }
+                resolve();
+            });
+        });
     }
+    
     async populateSelect(data = [], field = "") {
         try {
             const selectElement = $("#" + this.prefix + field);
@@ -114,13 +121,13 @@ class BaseLoader {
                     });
 
                     const extraBtn = document.createElement("td");
+                    extraBtn.classList.add("d-inline-flex", "col-12");
                     if (this.type != "historico") {
                         const removeButton = document.createElement("i");
                         removeButton.classList.add(
                             "btn-icon",
                             "bg-danger",
                             "bi-trash3",
-                            "fs-6",
                             "me-1"
                         );
 
@@ -131,19 +138,20 @@ class BaseLoader {
                         extraBtn.appendChild(removeButton);
                     }
                     if (
-                        this.object != "periodoaquisitivo" &&
+                        this.object != "periodo_aquisitivo" &&
                         this.object != "funcao" &&
                         this.object != "equipe" &&
                         this.object != "feriado" &&
                         this.object != "tipoavaliacao" &&
-                        this.object != "insalubridade"
+                        //this.object != "integracao_nr_tipo" &&
+                        this.object != "insalubridade" &&
+                        colab_ativo != false
                     ) {
                         const editBtn = document.createElement("i");
                         editBtn.classList.add(
                             "btn-icon",
                             "bg-primary",
                             "bi-pencil",
-                            "fs-6",
                             "me-1"
                         );
 
@@ -163,6 +171,12 @@ class BaseLoader {
         } catch (error) {
             throw error;
         }
+    }
+    async set(field, value, locked = false) {
+        const html = $("#" + this.prefix + field);
+        print(html)
+        html.val(value);
+        html.attr("disabled", locked);
     }
 }
 var modal_open;
@@ -253,7 +267,7 @@ class Modal extends BaseLoader {
     async processo() {
         try {
             apiRequest
-                .get("periodoaquisitivo", { colaborador: this.id.colaborador })
+                .get("periodo_aquisitivo", { colaborador: this.id.colaborador })
                 .then((data) => {
                     this.populateSelect(data, "periodo_aquisitivo").then(() => {
                         $("#" + this.prefix + "periodo_aquisitivo").val(
@@ -333,12 +347,23 @@ class Modal extends BaseLoader {
     }
 
     async import() {
-        this.modal.show();
-
         $("#" + this.prefix + "submit")
             .off()
             .on("click", () => {
                 Submit.upload(this);
+            });
+    }
+    async func() {
+        if (this.inputs.select) {
+            this.inputs.select.forEach(async (field) => {
+                const selects = await apiRequest.get(`select/${field}`);
+                this.populateSelect(selects, field);
+            });
+        }
+        $("#" + this.prefix + "submit")
+            .off()
+            .on("click", () => {
+                Submit.post(this);
             });
     }
 
@@ -420,7 +445,7 @@ Submit = {
     },
     post: function (loader) {
         try {
-            apiRequest.post(loader.object, this.readFields(loader)).then(() => {
+            apiRequest.post(loader.object, generic.readFields(loader)).then(() => {
                 loader.refresh();
             });
         } catch (error) {

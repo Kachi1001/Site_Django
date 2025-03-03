@@ -15,13 +15,13 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">CPF:</label>
-            <input type="number" id="f_candidato_cpf" class="form-control">
+            <input type="text" id="f_candidato_cpf" class="form-control">
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">RG:</label>
-            <input type="number" id="f_candidato_rg" class="form-control">
+            <input type="text" id="f_candidato_rg" class="form-control">
         </div>
     </div>
     <div class="col-auto">
@@ -42,12 +42,15 @@
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">TELEFONE 1º:</label>
             <input type="number" id="f_candidato_telefone" class="form-control">
+            <label class="input-group-text bg-success-subtle" onclick="abrirWhats('f_candidato_telefone')" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para abrir no WhatsApp!">WhatsApp</label>
+
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">TELEFONE 2º:</label>
             <input type="number" id="f_candidato_telefone2" class="form-control">
+            <label class="input-group-text bg-success-subtle" onclick="abrirWhats('f_candidato_telefone2')" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para abrir no WhatsApp!">WhatsApp</label>
         </div>
     </div>
     <div class="col-auto">
@@ -68,9 +71,23 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">INDICAÇÃO:</label>
-            <input class="form-control" list="f_{{resource}}_indicacao" >
+            <input class="form-control" list="f_{{resource}}_indicacao_colaboradores" id="f_{{resource}}_indicacao">
         </div>
-        <datalist id="f_{{resource}}_indicacao"></datalist>
+        <datalist id="f_{{resource}}_indicacao_colaboradores"></datalist>
+    </div>
+    <div class="col-auto">
+        <div class="input-group input-group-sm mb-2 nowrap">
+            <label class="input-group-text">VAGA TECNIKA:</label>
+            <select id="f_{{resource}}_area_atuacao" class="form-select form-control-sm" onchange="chance_area('f_{{resource}}_')">
+            </select>
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group input-group-sm mb-2 nowrap">
+            <label class="input-group-text">SUB ÁREA:</label>
+            <select id="f_{{resource}}_area_atuacao_sub" class="form-select form-control-sm">
+            </select>
+        </div>
     </div>
     <h5>DADOS DE ENDEREÇO</h5>
     <div class="col-auto">
@@ -111,10 +128,12 @@
         loader = new Form('candidato', 'register')
         loader.open().then(() => {
             $("#f_candidato_nome").focus();
+            chance_area(loader.prefix, 1);
+
             setTimeout(() => {
                 $("#f_candidato_cnh").val('Não informado');
                 $("#f_candidato_estado_civil").val('Não informado');
-                $("#f_candidato_estado").val('N/A');
+                $("#f_candidato_estado").val('RS');
             }, 400)
         })
     }

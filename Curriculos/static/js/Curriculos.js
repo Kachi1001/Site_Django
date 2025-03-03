@@ -1,5 +1,5 @@
 var loader;
-
+var loading_modal
 class BaseLoader {
     constructor(object, type) {
         this.last = loader;
@@ -7,19 +7,27 @@ class BaseLoader {
         this.type = type; // Tipo do loader (post, view, update, etc...)
         this.prefix = object + "_"; // Prefixo para os campos (modal/form)
         this.id = undefined; // ID de registro, se necessário
-        console.log(this);
     }
     async open(id = undefined) {
         this.id = id;
         this.inputs = await apiRequest.get(`resource/${this.object}`);
         loader = this;
-
-        if (this.modal) {
-                this[this.type]().then(() => {
-                this.modal.show()
-            }); // Registra ou atualiza conforme o tipo
-        } else {this[this.type]()}
-
+        return new Promise((resolve, reject) => {
+            this[this.type]().then(() => {
+                if (this.modal) {
+                    try {
+                        customActions[this.type][this.object](this).then(() => {
+                            this.modal.show();
+                            loading_modal.hide()
+                        });
+                    } catch {
+                        this.modal.show();
+                        loading_modal.hide()
+                    }
+                }
+                resolve();
+            });
+        });
     }
     async populateSelect(data = [], field = "") {
         try {
@@ -63,7 +71,11 @@ class BaseLoader {
         }
     }
 
-    async populateTable(response, feature = undefined, not = []) {
+    async populateTable(
+        response = [{ Tabelas: "Sem registro" }],
+        feature = undefined,
+        not = []
+    ) {
         try {
             const tabela = document.getElementById(this.prefix + "table");
             const thead = tabela.querySelector("thead tr");
@@ -81,7 +93,9 @@ class BaseLoader {
                 keys.forEach((key) => {
                     const th = document.createElement("th");
                     th.textContent = key.charAt(0).toUpperCase() + key.slice(1);
-                    th.textContent = th.textContent.replace("_", " ");
+                    th.textContent = th.textContent
+                        .replaceAll("_", " ")
+                        .replaceAll("cao", "ção");
                     thead.appendChild(th);
                 });
                 if (feature) {
@@ -112,11 +126,10 @@ class BaseLoader {
                         }
                         row.appendChild(cell);
                     });
-                    
+
                     if (feature) {
-                        
                         const extraBtn = document.createElement("td");
-                        extraBtn.classList.add("d-inline-flex",'col-12');
+                        extraBtn.classList.add("d-inline-flex", "col-12");
                         if (feature.includes("delete")) {
                             const removeButton = document.createElement("i");
                             removeButton.classList.add(
@@ -125,9 +138,11 @@ class BaseLoader {
                                 "bi-trash3",
                                 "me-1"
                             );
-
+                                
+                            removeButton.title = 'Deletar'
                             removeButton.addEventListener("click", () => {
                                 loader.id = obj.id;
+                                loader.refresh = () =>{$('#table').bootstrapTable('refresh')}
                                 Submit.delete(loader);
                             });
                             extraBtn.appendChild(removeButton);
@@ -140,14 +155,15 @@ class BaseLoader {
                                 "bi-pencil",
                                 "me-1"
                             );
-
+                            editBtn.title = 'Editar'
                             editBtn.addEventListener("click", () => {
-                                this.modal.hide()
+                                this.modal.hide();
                                 let modal = new Modal(this.object, "update");
                                 modal.open(obj.id);
                             });
                             extraBtn.appendChild(editBtn);
                         }
+                       
 
                         row.appendChild(extraBtn);
                     }
@@ -159,26 +175,35 @@ class BaseLoader {
             throw error;
         }
     }
+    async set(field, value, locked = false) {
+        const html = $("#" + this.prefix + field);
+        print(value)
+        html.val(value);
+        html.attr("disabled", locked);
+    }
 }
 var modal_open;
 class Modal extends BaseLoader {
     constructor(object, type) {
-        super(object, type); // Chama o construtor da classe DataManager
+        loading_modal = new bootstrap.Modal('#carregando')
+        loading_modal.show()
+        super(object, type);
         this.prefix = "m_" + this.type + "-" + this.prefix; // Prefixo de modal
         this.myModal = document.getElementById(this.prefix.slice(0, -1));
+        console.log(this);
         this.modal = new bootstrap.Modal(this.myModal);
-        loader = this
+        loader = this;
         this.loader = loader;
     }
-    
+
     async register() {
         this.inputs.select.forEach(async (select) => {
             const data = await apiRequest.get(`select/${select}`);
             this.populateSelect(data, select);
         });
         const table = await apiRequest.get(this.object);
-        
-        this.populateTable(table, ['delete'], ["id"])
+
+        this.populateTable(table, ["delete"], ["id"]);
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
@@ -193,29 +218,41 @@ class Modal extends BaseLoader {
         try {
             const data = await apiRequest.get(this.object + "/" + this.id);
             this.populateData(data).then(() => {
-                if (this.last.modal && this.last.object == this.object && this.last.type == 'lanc') {
-                    loader.myModal.addEventListener('hidden.bs.modal', event => {
-                        loader.modal.dispose()
-                        const candidato = page.getParam("id");
-                        let registro = new Modal(loader.last.object, "lanc");
-                        registro.refresh = () => {
+                if (
+                    this.last.modal &&
+                    this.last.object == this.object &&
+                    this.last.type == "lanc"
+                ) {
+                    loader.myModal.addEventListener(
+                        "hidden.bs.modal",
+                        (event) => {
+                            loader.modal.dispose();
+                            const candidato = page.getParam("id");
+                            let registro = new Modal(
+                                loader.last.object,
+                                "lanc"
+                            );
+                            registro.refresh = () => {
+                                registro.open(candidato);
+                            };
                             registro.open(candidato);
-                        };
-                        registro.open(candidato);
-                        $("#" + registro.prefix + "candidato").val(candidato);
-                      })
+                            $("#" + registro.prefix + "candidato").val(
+                                candidato
+                            );
+                        }
+                    );
                 }
-                
+
                 $("#" + this.prefix + "save")
-                .off()
-                .click(function () {
-                    Submit.update(loader);
-                });
+                    .off()
+                    .click(function () {
+                        Submit.update(loader);
+                    });
                 $("#" + this.prefix + "del")
-                .off()
-                .click(function () {
-                    Submit.delete(loader);
-                });
+                    .off()
+                    .click(function () {
+                        Submit.delete(loader);
+                    });
             });
         } catch (error) {
             console.error("Error ao carregar", error);
@@ -227,20 +264,20 @@ class Modal extends BaseLoader {
             const data = await apiRequest.get(this.object, {
                 candidato: this.id,
             });
-            var feature = ['delete']
-            if (this.object == "experiencia" || this.object == 'escolaridade') {
+            var feature = ["delete"];
+            if (this.object == "experiencia" || this.object == "escolaridade") {
                 feature.push("edit");
-            } 
+            }
             this.populateTable(data, feature, ["id", "candidato"]).then(() => {
                 this.inputs.select.forEach(async (select) => {
                     const data = await apiRequest.get(`select/${select}`);
                     this.populateSelect(data, select);
                 });
                 $("#" + this.prefix + "submit")
-                .off()
-                .on("click", () => {
-                    Submit.post(this);
-                });
+                    .off()
+                    .on("click", () => {
+                        Submit.post(this);
+                    });
             });
         } catch (error) {
             console.error("Error ao carregar", error);
@@ -283,7 +320,7 @@ class Modal extends BaseLoader {
                 .on("click", () => {
                     const data = new FormData();
                     data.append("file", file.files[0]);
-                    let fields = Submit.readFields(loader);
+                    let fields = generic.readFields(loader);
                     Object.keys(fields).forEach((key) => {
                         data.append(key, fields[key]);
                     });
@@ -337,18 +374,49 @@ class Modal extends BaseLoader {
     }
 
     refresh() {
-        this.modal.toggle()
+        this.modal.toggle();
         // page.refresh();
     }
 }
-
+const customActions = {
+    register: {
+        area_atuacao_sub: async function (loader) {
+            console.log(loader);
+            $("#" + loader.prefix + "area_atuacao").change(async function () {
+                const data = await apiRequest.get("area_atuacao_sub", {
+                    area_atuacao: this.value,
+                });
+                loader.populateTable(data, ["delete"], ["id"]);
+            });
+        },
+    },
+    lanc: {
+        experiencia: async function (loader) {
+            setTimeout(() => {
+                chance_area(loader.prefix, 1);
+            }, 300);
+        },
+    },
+    update: {
+        experiencia: async function (loader) {
+            setTimeout(() => {
+                chance_area(loader.prefix);
+            }, 400);
+        },
+        candidato: async function (loader) {
+            setTimeout(() => {
+                chance_area(loader.prefix)
+            }, 300);
+        },
+    },
+};
 class Form extends BaseLoader {
     constructor(object, type) {
         super(object, type); // Chama o construtor da classe DataManager
         this.prefix = "f_" + this.prefix; // Prefixo de modal
     }
     // Registro
-    register() {
+    async register() {
         $("#" + this.prefix + "submit")
             .off()
             .click(function () {
@@ -371,7 +439,7 @@ class Form extends BaseLoader {
         }
     }
 
-    refresh() {
+    async refresh() {
         $("#table").bootstrapTable("refresh");
         carregarDados();
     }
@@ -406,25 +474,9 @@ class Form extends BaseLoader {
 }
 
 Submit = {
-    readFields: function (loader) {
-        let data = {};
-        const inputs = loader.inputs;
-        const fields = inputs.text.concat(inputs.select); // Junta os campos de texto e campos de seleção
-
-        fields.forEach((field) => {
-            val = $("#" + loader.prefix + field).val();
-
-            data[field] = val || null;
-        });
-        inputs.check.forEach((check) => {
-            data[check] = $("#" + loader.prefix + check).prop("checked");
-        });
-
-        return data;
-    },
     update: function (loader) {
         apiRequest
-            .update(`${loader.object}/${loader.id}`, this.readFields(loader))
+            .update(`${loader.object}/${loader.id}`, generic.readFields(loader))
             .then(() => {
                 loader.modal.hide();
                 loader.refresh();
@@ -432,7 +484,7 @@ Submit = {
     },
     post: function (loader) {
         try {
-            apiRequest.post(loader.object, this.readFields(loader)).then(() => {
+            apiRequest.post(loader.object, generic.readFields(loader)).then(() => {
                 loader.refresh();
             });
         } catch (error) {
@@ -441,7 +493,7 @@ Submit = {
     },
     delete: function (loader) {
         apiRequest
-            .delete(loader.object + "/" + loader.id, this.readFields(loader))
+            .delete(loader.object + "/" + loader.id, generic.readFields(loader))
             .then(() => {
                 loader.modal.hide();
                 loader.refresh();
@@ -455,3 +507,25 @@ $(document).ready(() => {
         console.log("Tela sem inicializador", error);
     }
 });
+async function chance_area(
+    prefix,
+    area = $("#" + prefix + "area_atuacao").val()
+) {
+    value = $("#" + prefix + "area_atuacao_sub").val()
+    apiRequest
+        .get("area_atuacao_sub", {
+            area_atuacao: area,
+        })
+        .then((data) => {
+            let select = document.getElementById(prefix + "area_atuacao_sub");
+            select.innerHTML = "";
+            data.forEach((sub_area) => {
+                let option = document.createElement("option");
+                option.value = sub_area.id;
+                option.innerHTML = sub_area.sub_area;
+                select.appendChild(option);
+            });
+            select.disabled = false;
+            $("#" + prefix + "area_atuacao_sub").val(value) 
+        });
+}

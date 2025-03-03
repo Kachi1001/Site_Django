@@ -6,43 +6,41 @@
 {% block 'main' %}
 <h5>DADOS CADASTRAIS</h5>
 <div class="row">
-    <div class="auto">
-
-        
-        
-    </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">PRODUTO:</label>
-            <select class="form-select" id="f_{{resource}}_produto">
+            <select class="form-select" id="f_{{resource}}_produto" tabindex="1">
             </select>
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">CA:</label>
-            <input type="number" id="f_{{resource}}_ca" class="form-control">
+            <input type="number" id="f_{{resource}}_ca" class="form-control" tabindex="2">
+            <button  tabindex="3" class="input-group-text bg-secondary-subtle" onclick="abrir_site($('#f_{{resource}}_ca').val())" style="user-select: none;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Clique para abrir o ConsultaCA!">Consultar CA</button>
         </div>
     </div>
 
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">VALIDADE:</label>
-            <input type="date" id="f_{{resource}}_validade" class="form-control">
+            <input type="date" id="f_{{resource}}_validade" class="form-control" tabindex="4">
+
+            <!-- <label class="input-group-text">ABRIR SITE</label> -->
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">OBSERVAÇÃO:</label>
-            <textarea type="number" id="f_{{resource}}_observacao" class="form-control"></textarea>
+            <textarea type="number" id="f_{{resource}}_observacao" class="form-control" tabindex="5"></textarea>
         </div>
     </div>
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">TAMANHO:</label>
-            <input class="form-control" list="f_{{resource}}_tamanho" >
+            <input class="form-control" list="f_tamanho" id="f_{{resource}}_tamanho" tabindex="6">
         </div>
-        <datalist id="f_{{resource}}_tamanho">
+        <datalist id="f_tamanho">
             <option>PP</option>
             <option>P</option>
             <option>M</option>
@@ -55,7 +53,7 @@
     <div class="col-auto">
         <div class="input-group mb-2 flex-nowrap input-group-sm">
             <label class="input-group-text">FABRICANTE:</label>
-            <input type="text" id="f_{{resource}}_fabricante" class="form-control">
+            <input type="text" id="f_{{resource}}_fabricante" class="form-control"  tabindex="7">
         </div>
     </div>
 </div>
@@ -64,7 +62,7 @@
 
 
 <div class="row justify-content-end">
-    <div class="col-auto"><button id="f_{{resource}}_submit" class="btn btn-success">Cadastrar</button></div>
+    <div class="col-auto"><button id="f_{{resource}}_submit" class="btn btn-success" tabindex="8">Cadastrar</button></div>
 </div>
 <script>
     function load() {
@@ -72,7 +70,9 @@
         loader.open()
         $("#f_candidato_nome").focus()
     }
-    
+    function abrir_site(ca) {
+        page.new(`https://consultaca.com/${ca}`)
+    }
 </script>
 {% endblock %}
 

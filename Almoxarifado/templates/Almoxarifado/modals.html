@@ -1,22 +1,10 @@
-<style>
-    .modal_list {
-        height: 200px;
-        overflow: auto;
-        border-top: 1px solid #dee2e6;
-    }
-
-    th {
-        font-size: small;
-    }
-</style>
-
-
 <div class="modals">
+
     <div class="modal fade" id="m_register-produto" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Produtos</h1>
+                    <h1 class="modal-title fs-5"><strong>Produtos</strong></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -48,17 +36,101 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="m_register-erros" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"><strong>Erros encontrado nas fichas físicas</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal_list">
+                    <table class="table table-hover table-bordered table-striped table-sm" id="m_register-erros_table">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="input-group input-group-sm mb-2 nowrap ">
+                        <label class="input-group-text">Descrição:</label>
+                        <textarea id="m_register-erros_texto" class="form-control form-control-sm"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2 btn-sm"
+                        id="m_register-erros_submit">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_register-ficha_padrao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"><strong>Itens padrão da ficha</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-sm mb-2 nowrap ">
+                        <label class="input-group-text">Produto:</label>
+                        <select id="m_register-ficha_padrao_produto" class="form-select form-select-sm"></select>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2 btn-sm"
+                        id="m_register-ficha_padrao_submit">Cadastrar</button>
+                </div>
+                <div class="modal-footer">
+                    <div class="modal_list">
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_register-ficha_padrao_table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_update-produto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Produtos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-sm mb-2 nowrap ">
+                        <label class="input-group-text">Nome:</label>
+                        <input type="text" id="m_update-produto_produto" class="form-control form-control-sm">
+                    </div>
+                    <div class="input-group input-group-sm mb-2 nowrap ">
+                        <label class="input-group-text">Descrição:</label>
+                        <input type="text" id="m_update-produto_descricao" class="form-control form-control-sm">
+                    </div>
+                    <div class="input-group input-group-sm mb-2 nowrap ">
+                        <label class="input-group-text">Durabilidade:</label>
+                        <input type="number" id="m_update-produto_durabilidade" class="form-control form-control-sm">
+                        <label class="input-group-text">Dias</label>
+                    </div>
+                    <button type="button" class="btn btn-success mb-2 btn-sm"
+                        id="m_update-produto_submit">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="m_register-ficha" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Ficha</h1>
+                    <h1 class="modal-title fs-5"><strong>Ficha</strong></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="input-group input-group-sm mb-2 nowrap ">
                         <label class="input-group-text">Colaborador:</label>
-                        <select class="form-select" id="m_register-ficha_colaborador">
+                        <select class="form-select" id="m_register-ficha_colaborador" onchange="getFicha()">
                         </select>
                     </div>
                     <div class="input-group input-group-sm mb-2 nowrap ">
@@ -68,7 +140,8 @@
                     </div>
                     <input type="hidden" id="m_register-ficha_id" value="1">
                     <input type="hidden" id="m_register-ficha_completa" value="false">
-                    
+                    <input type="hidden" id="m_register-ficha_arquivado" value="false">
+
                     <button type="button" class="btn btn-primary mb-2 btn-sm"
                         id="m_register-ficha_submit">Cadastrar</button>
                     <div class="modal_list">
@@ -83,6 +156,21 @@
                 </div>
             </div>
         </div>
+        <script>
+            function getFicha() {
+                apiRequest
+                    .get("ficha?colaborador=" + $("#" + loader.prefix + "colaborador").val())
+                    .then((response) => {
+                        pag = 0;
+                        response.forEach((row) => {
+                            if (row.pagina >= pag) {
+                                pag = row.pagina;
+                            }
+                        });
+                        $("#" + loader.prefix + "pagina").val(pag + 1);
+                    });
+            }
+        </script>
     </div>
     <div class="modal fade" id="m_register-numeracao" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -128,6 +216,7 @@
                                     <option>G</option>
                                     <option>GG</option>
                                     <option>XG</option>
+                                    <option>XGG</option>
                                     <option>U</option>
                                 </select>
                             </div>
@@ -142,6 +231,7 @@
                                     <option>G</option>
                                     <option>GG</option>
                                     <option>XG</option>
+                                    <option>XGG</option>
                                     <option>U</option>
                                 </select>
                             </div>
@@ -156,6 +246,7 @@
                                     <option>G</option>
                                     <option>GG</option>
                                     <option>XG</option>
+                                    <option>XGG</option>
                                     <option>U</option>
                                 </select>
                             </div>
@@ -176,18 +267,149 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_lanc-escolaridade" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="m_update-numeracao" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Formações</h1>
+                    <h1 class="modal-title fs-5">Editando numeração</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body p-1">
-                    <div class="modal_list">
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" id="m_update-numeracao_id" value="-1">
+                        <div class="col-12">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">NOME:</label>
+                                <select class="form-select" id="m_update-numeracao_colaborador">
+                                </select>
+                            </div>
+                        </div>
 
+                        <div class="col-6">
+
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">BOTA:</label>
+                                <input type="number" id="m_update-numeracao_bota" class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-6">
+
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">BOTINA:</label>
+                                <input type="number" id="m_update-numeracao_botina"
+                                    class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">LUVA:</label>
+                                <select class="form-select" id="m_update-numeracao_luva">
+                                    <option>PP</option>
+                                    <option>P</option>
+                                    <option>M</option>
+                                    <option>G</option>
+                                    <option>GG</option>
+                                    <option>XG</option>
+                                    <option>XGG</option>
+                                    <option>U</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">CAMISA:</label>
+                                <select class="form-select" id="m_update-numeracao_camisa">
+                                    <option>PP</option>
+                                    <option>P</option>
+                                    <option>M</option>
+                                    <option>G</option>
+                                    <option>GG</option>
+                                    <option>XG</option>
+                                    <option>XGG</option>
+                                    <option>U</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">CALÇA:</label>
+                                <select class="form-select" id="m_update-numeracao_calca">
+                                    <option>PP</option>
+                                    <option>P</option>
+                                    <option>M</option>
+                                    <option>G</option>
+                                    <option>GG</option>
+                                    <option>XG</option>
+                                    <option>XGG</option>
+                                    <option>U</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success mb-2 btn-sm"
+                        id="m_update-numeracao_submit">Salvar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_register-epi_cadastro" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"><strong>Cadastrando EPI</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">PRODUTO:</label>
+                                <select class="form-select" id="m_register-epi_cadastro_produto"
+                                    onchange="epi_cadastro()">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">CA:</label>
+                                <input type="number" id="m_register-epi_cadastro_ca" class="form-control">
+                                <button class="input-group-text bg-secondary-subtle"
+                                    onclick="abrir_site($('#m_register-epi_cadastro_ca').val())"
+                                    style="user-select: none;" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                    data-bs-title="Clique para abrir o ConsultaCA!">Consultar</button>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">VALIDADE:</label>
+                                <input type="date" id="m_register-epi_cadastro_validade" class="form-control">
+
+                                <!-- <label class="input-group-text">ABRIR SITE</label> -->
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">FABRICANTE:</label>
+                                <input type="text" id="m_register-epi_cadastro_fabricante" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">OBSERVAÇÃO:</label>
+                                <textarea type="number" id="m_register-epi_cadastro_observacao"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2 btn-sm"
+                        id="m_register-epi_cadastro_submit">Cadastrar</button>
+                    <div class="modal_list">
                         <table class="table table-hover table-bordered table-striped table-sm"
-                            id="m_lanc-escolaridade_table">
+                            id="m_register-epi_cadastro_table">
                             <thead>
                                 <tr></tr>
                             </thead>
@@ -195,23 +417,179 @@
                         </table>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <input type="hidden" id="m_lanc-escolaridade_candidato">
-                    <div class="input-group input-group-sm mb-2 nowrap">
-                        <label class="input-group-text">ESCOLARIDADE:</label>
-                        <select id="m_lanc-escolaridade_escolaridade" class="form-select form-control-sm"></select>
-                    </div>
-                    <div class="input-group input-group-sm mb-2 nowrap">
-                        <label class="input-group-text">DETALHE:</label>
-                        <input type="text" id="m_lanc-escolaridade_detalhe" class="form-control form-control-sm">
-                    </div>
-                    <div class="input-group input-group-sm mb-2 nowrap">
-                        <label class="input-group-text">CONCLUSÃO:</label>
-                        <input type="date" id="m_lanc-escolaridade_conclusao" class="form-control form-control-sm">
-                    </div>
-                    <button type="button" class="btn btn-sm btn-primary mb-2"
-                        id="m_lanc-escolaridade_submit">ADICIONAR</button>
+            </div>
+        </div>
+        <script>
+            function epi_cadastro() {
+                apiRequest.get("epi_cadastro", {
+                    produto: $('#m_register-epi_cadastro_produto').val(),
+                }).then((result) => {
+                    loader.populateTable(result, ["delete", "edit"], ["id"]);
+                })
+            }
+        </script>
+    </div>
+    <div class="modal fade" id="m_update-epi_cadastro" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Editando cadastro</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">PRODUTO:</label>
+                                <select class="form-select" id="m_update-epi_cadastro_produto">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">CA:</label>
+                                <input type="number" id="m_update-epi_cadastro_ca" class="form-control">
+                                <button class="input-group-text bg-secondary-subtle"
+                                    onclick="abrir_site($('#m_update-epi_cadastro_ca').val())"
+                                    style="user-select: none;" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                    data-bs-title="Clique para abrir o ConsultaCA!">Consultar</button>
+                            </div>
+                        </div>
 
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">VALIDADE:</label>
+                                <input type="date" id="m_update-epi_cadastro_validade" class="form-control">
+
+                                <!-- <label class="input-group-text">ABRIR SITE</label> -->
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">FABRICANTE:</label>
+                                <input type="text" id="m_update-epi_cadastro_fabricante" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">OBSERVAÇÃO:</label>
+                                <textarea type="number" id="m_update-epi_cadastro_observacao"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success mb-2 btn-sm"
+                        id="m_update-epi_cadastro_submit">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="m_update-epi_movimentacao" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Editando movimentação</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">COLABORADOR:</label>
+                                <select class="form-select" id="m_update-epi_movimentacao_colaborador"
+                                    disabled></select>
+                                <label class="input-group-text bg-secondary-subtle" id="numeracao"
+                                    data-bs-toggle="tooltip" data-bs-placement="right" data-bs-html="true"
+                                    data-bs-title="Carregando...">
+                                    Numeração
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">FICHA:</label>
+                                <select class="form-select" id="m_update-epi_movimentacao_ficha" disabled>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">OBRA:</label>
+                                <select class="form-select" id="m_update-epi_movimentacao_obra" tabindex="3">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-12">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">PRODUTO:</label>
+                                <select class="form-select" id="m_update-epi_movimentacao_produto" disabled>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">EPI:</label>
+                                <select class="form-select" id="m_update-epi_movimentacao_epi_cadastro" disabled>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">QUANTIDADE:</label>
+                                <input type="number" id="m_update-epi_movimentacao_quantidade" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">TAMANHO:</label>
+                                <input class="form-control" list="f_tamanho" id="m_update-epi_movimentacao_tamanho">
+                            </div>
+                            <datalist id="f_tamanho">
+                                <option>PP</option>
+                                <option>P</option>
+                                <option>M</option>
+                                <option>G</option>
+                                <option>GG</option>
+                                <option>XG</option>
+                                <option>U</option>
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+
+                        <div class="col-auto">
+                            <div class="input-group mb-2 nowrap input-group-sm">
+                                <label class="input-group-text">REPOSIÇÃO?</label>
+                                <select class="form-select" id="m_update-epi_movimentacao_reposicao">
+                                    <option value="A">A - Acidente</option>
+                                    <option value="D">D - Danificado</option>
+                                    <option value="I">I - Inadequado</option>
+                                    <option value="T">T - Tempo de uso</option>
+                                    <option value="E">E - Extraviado</option>
+                                    <option value="O" selected>O - Outros</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2 flex-nowrap input-group-sm">
+                                <label class="input-group-text">DATA ENTREGA:</label>
+                                <input type="date" id="m_update-epi_movimentacao_data_entrega" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer mb-2">
+                    <button type="button" class="btn btn-danger btn-sm"
+                        id="m_update-epi_movimentacao_del">Deletar</button>
+                    <button type="button" class="btn btn-success btn-sm"
+                        id="m_update-epi_movimentacao_submit">Salvar</button>
                 </div>
             </div>
         </div>
@@ -616,27 +994,75 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="m_file_view-anexos" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+    <div class="modal fade" id="m_ficha-ficha" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5"><strong id="m_file_view-anexos_nome"></strong></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header pb-0">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <!-- <li class="nav-item" role="presentation">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#informacao-tab-pane"
+                            type="button" role="tab">Informação</button>
+                        </li> -->
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#digital-tab-pane"
+                                type="button" role="tab">Digital</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#digitalizacao-tab-pane"
+                                type="button" role="tab">Digitalização</button>
+                        </li>
+                    </ul>
+                            <button type="button" class="btn-close pb-2" data-bs-dismiss="modal" aria-label="Close" style="margin-bottom: 8px;"></button>
                 </div>
                 <div class="modal-body">
-                    <img id="m_file_view-anexos_preview_imagem" style="width: 100%; height: 100%;"
-                        src="http://tecnikaengenharia.ddns.net/media/icons/file.png">
-                    <embed id="m_file_view-anexos_preview_pdf" type='application/pdf'
-                        style="width: 100%; height: 500px; display: none;">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="m_file_view-anexos_delete">Deletar</button>
+                    <div class="tab-content">
+                        <!-- <div class="tab-pane fade" id="informacao-tab-pane" role="tabpanel" tabindex="0">
+                            <div class="row" style="height: 500px;">
+                                <div class="col"></div>
+                            </div>
+                        </div> -->
+                        <div class="tab-pane fade show active" id="digital-tab-pane" role="tabpanel" tabindex="0">
+                            <embed id="m_ficha-ficha_digital" type='application/pdf'
+                                style="width: 100%; height: 500px;">
+                        </div>
+                        <div class="tab-pane fade" id="digitalizacao-tab-pane" role="tabpanel" tabindex="0">
+                                <div class="input-group m-1 flex-nowrap input-group-sm">
+                                    <label class="input-group-text">DIGITALIZADO EM:</label>
+                                    <input type="text" id="m_ficha-ficha_ultima_digitalizacao" class="form-control form-control-sm" readonly>
+                                </div>
+                            <div style="overflow-y: auto; height: 500px;">
+                                <img id="m_ficha-ficha_digitalizado" style="width: 100%;"
+                                    src="/static/icons/file-earmark-excel.svg">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="m_historico-ficha" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5"><strong>Ficha digital</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-1">
+                    <div class="modal_list">
 
+                        <table class="table table-hover table-bordered table-striped table-sm"
+                            id="m_historico-ficha_table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 

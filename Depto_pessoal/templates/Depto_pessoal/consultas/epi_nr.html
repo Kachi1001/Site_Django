@@ -14,8 +14,9 @@
       <th data-field="colaborador" data-sortable="true">Nome</th>
       <th data-field="tipo" data-sortable="true">tipo</th>
       <th data-field="emitido" data-formatter="checkFormatter" data-sortable="true">emitido</th>
-      <th data-field="validade" data-formatter="dataFormatter" data-sortable="true">validade</th>
-      <th data-field="observacao"data-sortable="true">observacao</th>
+      <th data-field="validade"  data-sortable="true">validade</th>
+      <th data-field="observacao"data-sortable="true">observação</th>
+      <th data-field="situacao"data-sortable="true" data-formatter="situacaoFormatter">situação</th>
       <th data-formatter="editarFormatter" data-events="editarEvents"></th>
     </thead>
 </table>
@@ -27,6 +28,25 @@
         'click #viewBtn': function (e, value, row, index) {
             page.redirect('consultas/colaborador',{id:row['id']})
         },
+    }
+    function situacaoFormatter(value) {
+        let cl = ''
+        switch (value) {
+            case 'Vencido':
+                cl = 'bg-danger'
+                break
+            case 'Vence nos próximos 30 dias':
+                cl = 'bg-warning'
+                break
+            case 'Vence entre 30 e 90 dias':
+                cl = 'bg-primary'
+                break
+            default:
+                value = 'Vazio'
+                cl = 'bg-success'
+                break
+        }
+        return `<h6 class='m-0'><span class="badge ${cl} text-uppercase">${value}</span></h6>`
     }
 </script>
 {%endblock%}

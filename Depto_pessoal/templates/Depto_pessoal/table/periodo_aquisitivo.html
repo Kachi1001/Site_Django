@@ -1,0 +1,20 @@
+{%load static%}
+{%include 'tabela.html'%}
+
+    <thead>
+        <th data-field="colaborador" data-sortable="true">Colaborador</th>
+        <th data-field="adquirido_em" data-sortable="true">Adquirido em</th>
+        <th data-field="periodo" data-sortable="true">Período</th>
+        <th data-field="consumido"data-sortable="true" data-formatter="checkFormatter">Consumido</th>
+    </thead>
+</table>
+<script>
+    function editarFormatter(value) {
+        return '<a class="editarBtn" href="javascript:void(0)" title="Like"> <div class="btn-icon" style="background-color: skyblue;"><img src="{% static "icons/pencil.svg"%}" alt="edit"></div></div>'
+    }
+    window.editarEvents = {
+        'click .editarBtn': function (e, value, row, index) {
+            loadModal('update_colaborador', row['id'])
+        },
+    }
+</script>

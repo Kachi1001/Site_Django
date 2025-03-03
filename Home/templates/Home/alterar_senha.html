@@ -32,7 +32,7 @@
         </style>
     </head>
     <body>
-        <div class="card" style="width: 18rem; box-shadow: 5px 5px 5px gray">
+        <div class="card" style="width: 18rem;">
             <div class="card-header">Tela de redefinição de senha</div>
             <div class="card-body">
                 <form action="{% url 'alterar_senha'%}" method="post">
@@ -90,6 +90,8 @@
         </div>
     </body>
     <script>
+        $('html').attr ('data-bs-theme', localStorage.getItem('theme') || window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+
         // const novaSenha = document.getElementById("senha");
         const novaSenha = $("#senha");
         // const confirmarSenha = document.getElementById("senha_2");
