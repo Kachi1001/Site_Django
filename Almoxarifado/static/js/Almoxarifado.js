@@ -485,7 +485,7 @@ class Form extends BaseLoader {
     }
 
     async refresh() {
-        $("#table").bootstrapTable("refresh");
+    $("#table").bootstrapTable("refresh");
         carregarDados();
     }
 
