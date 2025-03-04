@@ -165,3 +165,15 @@ CSRF_TRUSTED_ORIGINS = ['http://10.0.0.139:81', 'https://publicly-noted-penguin.
 APPEND_SLASH=False  
 
 DATA_UPLOAD_MAX_MEMORY_SIZE= 10485760
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://10.0.0.139:6379/1',  # Use o endereço do Redis
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'KEY_PREFIX': '',
+            'VERSION': 0
+        }
+    }
+}

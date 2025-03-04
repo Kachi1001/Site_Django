@@ -103,6 +103,7 @@ def proxy_api(request, path):
 from django.core.cache import cache
 def refresh_token(refresh_token):
     cache_key = f"token_refresh_{refresh_token}"
+    print(cache_key)
     if cached := cache.get(cache_key):
         return cached
     """Renova o token de acesso de forma segura"""
