@@ -81,8 +81,11 @@
     }
     function realFormatter(value) {
         if (value != null) {
-            return "R$ ".concat(value);
+            return "R$ ".concat(value.replace('.',','));
         }
+    }
+    function numericFormatter(value) {
+        return value.replaceAll('.',',')
     }
     function horaFormatter(value) {
         if (value != null) {
