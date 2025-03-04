@@ -7,7 +7,7 @@
     async function load() {
         const resource = await generics.load.resource('{{resource}}')
 
-        const prefix = 'form_colaborador_'
+        prefix = 'form_colaborador_'
 
         resource.select.forEach(async (select) => {
             data = await apiRequest.get(`select/${select}`)
@@ -20,8 +20,16 @@
                 $("#table").bootstrapTable("refresh");
             })
         })
+        pos_load()
     }
-
+    function pos_load() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('nome')) {
+            $('#form_{{resource}}_nome').val(urlParams.get("nome").replaceAll('%20',' '))
+            $('#form_{{resource}}_admissao').val(urlParams.get("data_inicio"))
+            if (urlParams.get("terceiro") == 'true') {$('#form_{{resource}}_contrato').val('Terceiro'); $('#form_{{resource}}_diaria').val(urlParams.get("diaria")); toggleDiaria()}
+        }
+    }
 </script>
 
 {% endblock %}

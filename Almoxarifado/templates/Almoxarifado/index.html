@@ -47,24 +47,17 @@
       </button>
     </h2>
     <div id="menu-papel" class="accordion-collapse collapse mb-3" data-bs-parent="#accordion">
-      <table data-toggle="table" data-locale="pt-BR" data-url="{{api}}Almoxarifado/tabela/papel"
+      <table id="tabela_papel" data-toggle="table" data-locale="pt-BR" data-url="{{api}}Almoxarifado/tabela/papel"
         class="table table-hover table-bordered table-striped table-sm">
         <thead>
           <tr>
-            <th colspan="3">COLABORADOR</th>
-            <th colspan="5">PRODUTO</th>
-            <th rowspan="2" data-formatter="entregarFormatter" data-events="btnEvents"></th>
-
-          </tr>
-          <tr>
-            <th data-field="id_colab">ID</th>
-            <th data-field="nome">Nome</th>
-            <th data-field="funcao">Função</th>
-            <th data-field="id_produto">ID</th>
-            <th data-field="produto">Nome</th>
-            <th data-field="tamanho">Tamanho</th>
-            <th data-field="reposicao" data-formatter="dataFormatter">Validade</th>
-            <th data-field="situacao">Situação</th>
+            <th data-field="quantidade">Qtd.</th>
+            <th data-field="produto">Descrição</th>
+            <th data-field="tamanho">Tam.</th>
+            <th data-field="data_retirada" data-formatter="dataFormatter">Data<br>retirada</th>
+            <th data-field="fabricante">Fabricante</th>
+            <th data-field="ca">CA</th>
+            <th data-formatter="passarFormatter" data-events="btnEvents"></th>
           </tr>
         </thead>
       </table>
@@ -225,6 +218,11 @@
       '<div class="btn-icon bg-info bi-pencil fs-6 me-1" id="assinarBtn" title="Assinar"></div>'
     )
   }
+  function passarFormatter() {
+    return (
+      '<div class="btn-icon bg-info bi-pencil-square fs-6 me-1" id="passarBtn" title="Passar"></div>'
+    )
+  }
   function digitalizarFormatter() {
     return (
       '<div class="btn-icon bg-info bi-file-break fs-6 me-1" id="digitalizarBtn" title="Digitalizar"></div>'
@@ -252,6 +250,14 @@
     'click #entregarBtn': function (e, value, row, index) {
       page.to('/Almoxarifado/cadastros/epi_movimentacao',{'produto':row['id_produto'],'colaborador':row['id_colab'],'reposicao':'T','voltar':'inicio'})
     },
+    'click #passarBtn': function (e, value, row, index) {
+      apiRequest.get('epi_movimentacao/' + row['id']).then((result) => {
+        result['papel'] = true
+        apiRequest.update('epi_movimentacao/' + row['id'], result).then(() => {
+          $('#tabela_papel').bootstrapTable('refresh')
+        })
+      })
+    },
     'click #baixarBtn': function (e, value, row, index) {
       apiRequest.post('funcao/baixar_tecnicon', { 'epi': row['id'], 'obra': row['obra'] }).then(() => {
         $('#tabela_baixar').bootstrapTable('refresh')
@@ -268,8 +274,9 @@
     'click #arquivarBtn': function (e, value, row, index) {
       apiRequest.get('ficha/' + row['id']).then((result) => {
         result['arquivado'] = true
-        apiRequest.update('ficha/' + row['id'], result)
-        $('#tabela_arquivar').bootstrapTable('refresh')
+        apiRequest.update('ficha/' + row['id'], result).then(() =>{
+          $('#tabela_arquivar').bootstrapTable('refresh')
+        })
       })
     },
     'click #atualizarBtn': function (e, value, row, index) {

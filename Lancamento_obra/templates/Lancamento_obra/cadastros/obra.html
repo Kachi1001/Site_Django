@@ -7,7 +7,7 @@
     async function load() {
         const resource = await generics.load.resource('{{resource}}')
 
-        const prefix = 'form_{{resource}}_'
+        prefix = 'form_{{resource}}_'
 
         resource.select.forEach(async (select) => {
             data = await apiRequest.get(`select/${select}`)
