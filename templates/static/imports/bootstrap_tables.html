@@ -79,21 +79,22 @@
         if (!value) { return '' }
         return value.replaceAll('\n', '<br> - ')
     }
+    function listFormatter(value) {
+        if (!value) { return '' }
+        return '- ' + value.replaceAll('\n', '<br> - ')
+    }
     function realFormatter(value) {
         if (value != null) {
-            return "R$ ".concat(value);
+            return "R$ ".concat(value.replace('.',','));
         }
+    }
+    function numericFormatter(value) {
+        return value.replaceAll('.',',')
     }
     function horaFormatter(value) {
         if (value != null) {
             return value.concat(" H");
         }
-    }
-    function listFormatter(value) {
-        if (value != null) {
-            test = value.split('\n')
-            return test.join('<br>')
-        } else { return ''}
     }
     function intervalFormatter(value) {
         if (!value) {

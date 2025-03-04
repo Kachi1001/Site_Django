@@ -166,8 +166,10 @@
             setTimeout(() => {
                 if (urlParams.get("voltar") == 'colaborador') {
                     page.to('/Almoxarifado/consultas/colaborador', { 'id': $("#f_{{resource}}_colaborador").val() })
+                } else if (urlParams.get("voltar") == 'inicio') {
+                    location.pathname = '/Almoxarifado/'
                 } else {
-                    location.pathname = '/Almoxarifado'
+                    $("#table").bootstrapTable("refresh");
                 }
             }, 200)
         }

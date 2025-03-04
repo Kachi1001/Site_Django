@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{%load static%}
+
+
+{%block 'header'%}
+  {%include 'consulta.html'%}
+    <thead>
+        <tr>
+            <th data-field="id" data-sortable="true">ID</th>
+            <th data-field="nome" data-searchable="true"  data-sortable="true">Candidato</th>
+            <th data-field="indicacao" data-searchable="true"  data-sortable="true">Indicação</th>
+            <th data-field="banco_talentos" data-searchable="true"  data-sortable="true">Banco</th>
+            <th data-field="area" data-searchable="true"  data-sortable="true">Área</th>
+            <th data-field="sub_area" data-searchable="true"  data-sortable="true">Subárea</th>
+        </tr>
+    </thead>
+</table>
+{%endblock%}

@@ -1,9 +1,7 @@
 {% extends app|add:'/base.html' %}
 
-{%block 'caminho'%}
-  <li class="breadcrumb-item active" aria-current="page">Home</li>
-{%endblock%}
 {%block 'header'%}
+  {% include 'static/imports/bootstrap_tables.html' %}
   <h2>Lançamento de Obras</h2>
 {%endblock%}
 
@@ -12,5 +10,46 @@
   <p>Ferramenta para gerir Efetividades em obra</p>
   <p>Acesso a menu na barra lateral</p>
 </div>
+<div class="accordion mt-3">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#menu-colab"
+        aria-expanded="false">
+        Colaboradores não cadastrado
+      </button>
+    </h2>
+    <div id="menu-colab" class="accordion-collapse collapse">
+      <table data-toggle="table" data-locale="pt-BR" data-url="{{api}}Lancamento_obra/tabela/novos_colaboradores"
+        class="table table-hover table-bordered table-striped table-sm">
+        <thead>
+          <tr>
+            <th data-field="nome">ID</th>
+            <th data-field="funcao">Função</th>
+            <th data-field="categoria">Categoria</th>
+            <th data-field="data_inicio" data-formatter="dataFormatter">Inicio</th>
+            <th data-field="data_fim" data-formatter="dataFormatter">Fim</th>
+            <th data-field="terceiro" data-formatter="checkFormatter">Terceiro</th>
+            <th data-field="continuo" data-formatter="checkFormatter">Continuo</th>
+            <th data-field="diaria">Diária</th>
+            <th data-formatter="redirecFormatter" data-events="btnEvents">Criar</th>
+
+          </tr>
+        </thead>
+      </table>
+      <script>
+        function redirecFormatter() {
+          return (
+            '<div class="btn-icon bg-info bi-send" id="redirecBtn" title="Atualizar"></div>'
+          )
+        }
+        window.btnEvents = {
+          'click #redirecBtn': function (e, value, row, index) {
+            page.to('Lancamento_obra/cadastros/colaborador',row)
+          },
+        }
+      </script>
+    </div>
+  </div>
+  </div>
 {% endblock %}
   

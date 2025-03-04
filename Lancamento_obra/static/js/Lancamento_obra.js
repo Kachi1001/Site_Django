@@ -8,6 +8,7 @@ function removeColumns(value) {
     }
 }
 var loaded = {'resource':'','reload':'function'}
+var prefix
 $(document).ready(async () => {
     try {
         load();
@@ -199,6 +200,7 @@ const generics = {
         },
     },
 };
+loader = {}
 const modal = {
     open: async function (method, resource, id = undefined) {
         modal_name = `m_${method}-${resource}`;
@@ -206,6 +208,7 @@ const modal = {
         const modal = new bootstrap.Modal(document.getElementById(modal_name));
         loaded.resource = resource
         const prefix = modal_name + "_";
+        loader.prefix = prefix
         const resource_fields = await generics.load.resource(resource);
         switch (method) {
             case "register":
@@ -283,3 +286,12 @@ const modal = {
         }
     },
 };
+function toggleDiaria() {
+    diaria = $("#".concat(prefix, "diaria"));
+    if ($("#".concat(prefix, "contrato")).val() == "Terceiro") {
+        diaria.attr("disabled", false);
+    } else {
+        diaria.attr("disabled", true);
+        diaria.val("");
+    }
+}

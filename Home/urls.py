@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from . import views
+from . import views, proxy
 
 urlpatterns = [
     path("", views.index, name= "home"),
@@ -9,5 +9,5 @@ urlpatterns = [
     path("teste", views.teste),
     path("minigames/<str:game>", views.minigames),
     path("alterar_senha", views.alterar_senha, name='alterar_senha'), # type: ignore
-    re_path(r'^proxy-api/(?P<path>.*)$', views.proxy_api, name='proxy_api'), # type: ignore
-]
+    re_path(r'^proxy-api/(?P<path>.*)$', proxy.proxy_api, name='proxy_api'), # type: ignore
+]   
