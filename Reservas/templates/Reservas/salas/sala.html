@@ -12,7 +12,7 @@
     $(document).ready(function () {
         $("#data-picker").val(page.getParam('data') || '{{hojeJS}}')
         load()
-        setInterval(load, 5000)
+        // setInterval(load, 5000)
     })
     function isDate(value) {
         let date = new Date(value);
